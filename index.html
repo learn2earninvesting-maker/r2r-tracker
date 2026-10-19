@@ -569,7 +569,7 @@ let AUTH = null, DEMO = params.get('demo') === '1';
 async function fetchData() {
   if (DEMO) { const r = await fetch('demo-data.json', { cache:'no-store' }); return r.json(); }
   if (!AUTH) return null;
-  const url = `${API_URL}?c=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&t=${Date.now()}`;
+  const url = `${API_URL}?cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&t=${Date.now()}`;
   const r = await fetch(url, { redirect:'follow' });
   if (!r.ok) throw new Error('Server responded ' + r.status);
   return r.json();
