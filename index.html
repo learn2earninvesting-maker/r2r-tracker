@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R2R Financial Tracker</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#04080f">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="R2R">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:#04080f; --bg2:#0b1120; --bg3:#101928; --card:#111c2e; --border:#1e2f47;
+    --amber:#f0a500; --amber2:#f5c842; --amber-dim:rgba(240,165,0,0.12);
+    --green:#22c55e; --red:#ef4444; --blue:#3b82f6; --purple:#a855f7; --cyan:#06b6d4;
+    --text:#e2e8f0; --text2:#94a3b8; --text3:#64748b;
+    --syne:'Syne',sans-serif; --dm:'DM Sans',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  body { background:var(--bg); color:var(--text); font-family:var(--dm); min-height:100vh; overflow-x:hidden; }
+
+  #loader { position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px; }
+  .loader-brand { font-family:var(--syne);font-size:28px;font-weight:800;color:var(--amber); }
+  .loader-bar { width:200px;height:3px;background:var(--bg3);border-radius:4px;overflow:hidden; }
+  .loader-fill { height:100%;background:var(--amber);border-radius:4px;animation:load 1.8s ease-in-out infinite; }
+  .loader-msg { font-size:12px;color:var(--text3);font-family:var(--mono); }
+  @keyframes load { 0%{width:0%} 60%{width:80%} 100%{width:100%} }
+
+  #error-banner { display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#fca5a5;font-size:13px;padding:12px 20px;border-radius:8px;margin:16px 20px; }
+
+  .topbar { position:sticky;top:0;z-index:100;background:rgba(4,8,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px; }
+  .brand { font-family:var(--syne);font-weight:800;font-size:18px;letter-spacing:-0.5px;color:var(--amber); }
+  .brand span { color:var(--text2);font-weight:400;font-size:13px;margin-left:10px; }
+  .topbar-right { display:flex;align-items:center;gap:10px; }
+  .updated { font-family:var(--mono);font-size:11px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:20px; }
+  .refresh-btn { background:var(--amber-dim);border:1px solid var(--amber);color:var(--amber);font-family:var(--dm);font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px; }
+  .refresh-btn:hover { background:rgba(240,165,0,0.25); }
+  .refresh-btn.spinning .icon { display:inline-block;animation:spin 1s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  .nav-tabs { display:flex;gap:4px;padding:12px 20px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none; }
+  .nav-tabs::-webkit-scrollbar { display:none; }
+  .tab-btn { background:transparent;border:1px solid transparent;color:var(--text3);font-family:var(--dm);font-size:13px;font-weight:500;padding:7px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:all 0.2s; }
+  .tab-btn:hover { color:var(--text);border-color:var(--border);background:var(--bg3); }
+  .tab-btn.active { background:var(--amber-dim);border-color:var(--amber);color:var(--amber); }
+
+  .main { padding:20px;max-width:1200px;margin:0 auto; }
+  .panel { display:none; }
+  .panel.active { display:block;animation:fadeUp 0.3s ease; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+  .kpi-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px; }
+  .kpi { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;position:relative;overflow:hidden;transition:border-color 0.2s; }
+  .kpi:hover { border-color:var(--amber); }
+  .kpi::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--amber));border-radius:12px 12px 0 0; }
+  .kpi-label { font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px; }
+  .kpi-val { font-family:var(--syne);font-size:22px;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px; }
+  .kpi-sub { font-size:11px;color:var(--text2);font-family:var(--mono); }
+  .kpi-icon { position:absolute;top:14px;right:14px;font-size:20px;opacity:0.25; }
+
+  .section-title { font-family:var(--syne);font-size:14px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin:24px 0 12px;display:flex;align-items:center;gap:8px; }
+  .section-title::after { content:'';flex:1;height:1px;background:var(--border); }
+
+  .nw-display { background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:24px;text-align:center; }
+  .nw-item-label { font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px; }
+  .nw-item-val { font-family:var(--syne);font-size:26px;font-weight:800; }
+  .nw-item-val.amber{color:var(--amber)} .nw-item-val.green{color:var(--green)} .nw-item-val.red{color:var(--red)}
+  .nw-item-raw { font-size:11px;color:var(--text3);font-family:var(--mono);margin-top:4px; }
+
+  .alloc-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px; }
+  @media(max-width:640px){.alloc-grid{grid-template-columns:1fr}}
+  .chart-card { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px; }
+  .chart-title { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text2);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.6px; }
+
+  .donut-wrap { display:flex;align-items:center;gap:20px;flex-wrap:wrap; }
+  .donut-legend { flex:1;min-width:140px; }
+  .legend-item { display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px; }
+  .legend-dot { width:10px;height:10px;border-radius:50%;flex-shrink:0; }
+  .legend-name { color:var(--text2);flex:1; }
+  .legend-pct { font-family:var(--mono);color:var(--amber);font-size:11px; }
+
+  .bar-list { display:flex;flex-direction:column;gap:10px; }
+  .bar-meta { display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px; }
+  .bar-name { color:var(--text2); }
+  .bar-val { font-family:var(--mono);color:var(--amber); }
+  .bar-track { height:6px;background:var(--bg3);border-radius:4px;overflow:hidden; }
+  .bar-fill { height:100%;border-radius:4px;transition:width 1s cubic-bezier(.4,0,.2,1);width:0; }
+
+  .data-table { width:100%;border-collapse:collapse;font-size:12px;margin-bottom:24px; }
+  .data-table thead th { background:var(--bg3);color:var(--amber);font-family:var(--syne);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;padding:10px 12px;text-align:left;border-bottom:2px solid var(--amber);white-space:nowrap; }
+  .data-table tbody tr { border-bottom:1px solid var(--border);transition:background 0.15s; }
+  .data-table tbody tr:hover { background:rgba(240,165,0,0.04); }
+  .data-table tbody td { padding:10px 12px;color:var(--text2);vertical-align:middle; }
+  .data-table tfoot td { padding:10px 12px;background:var(--bg3);font-family:var(--syne);font-size:11px;font-weight:700;color:var(--amber);border-top:2px solid var(--border); }
+  .num { font-family:var(--mono);text-align:right; }
+  .gain-pos { color:var(--green);font-family:var(--mono); }
+  .gain-neg { color:var(--red);font-family:var(--mono); }
+
+  .ins-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:24px; }
+  .ins-card { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;border-left:3px solid var(--accent,var(--amber));position:relative; }
+  .ins-name { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px;padding-right:70px; }
+  .ins-meta { display:grid;grid-template-columns:1fr 1fr;gap:6px; }
+  .ins-row { font-size:11px; }
+  .ins-row-label { color:var(--text3);display:block;margin-bottom:2px; }
+  .ins-row-val { color:var(--text2);font-family:var(--mono); }
+  .ins-abs-badge { position:absolute;top:14px;right:14px;font-size:10px;padding:2px 8px;border-radius:12px;font-weight:600; }
+
+  .bank-group { background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden; }
+  .bank-group-header { display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--bg3);border-bottom:1px solid var(--border); }
+  .bank-group-name { font-family:var(--syne);font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px; }
+  .bank-logo { width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0; }
+  .bank-group-total { font-family:var(--mono);font-size:13px;color:var(--green);font-weight:600; }
+  .bank-account-row { display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);gap:8px;transition:background 0.15s; }
+  .bank-account-row:last-child { border-bottom:none; }
+  .bank-account-row:hover { background:rgba(240,165,0,0.04); }
+  .bank-acc-holder { font-size:12px;color:var(--text2);flex:1; }
+  .bank-acc-type { font-size:10px;font-weight:600;padding:2px 7px;border-radius:12px;white-space:nowrap; }
+  .acc-nre{background:rgba(34,197,94,0.15);color:#4ade80} .acc-nro{background:rgba(59,130,246,0.15);color:#60a5fa} .acc-gen{background:var(--bg3);color:var(--text3)}
+  .bank-acc-bal { font-family:var(--mono);font-size:12px;color:var(--amber);white-space:nowrap; }
+
+  .pay-month { display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border); }
+  .pay-month-label { font-family:var(--syne);font-size:11px;font-weight:700;color:var(--amber);min-width:36px;padding-top:2px; }
+  .pay-items { flex:1;display:flex;flex-direction:column;gap:4px; }
+  .pay-item { background:var(--bg3);border-radius:6px;padding:6px 10px;display:flex;justify-content:space-between;align-items:center;gap:8px; }
+  .pay-name { font-size:12px;color:var(--text2);flex:1; }
+  .pay-date { font-family:var(--mono);font-size:10px;color:var(--text3); }
+  .pay-amt { font-family:var(--mono);font-size:12px;color:var(--amber);white-space:nowrap; }
+
+  .inv-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-bottom:8px; }
+  .inv-card { background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden; }
+  .inv-card-header { display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border); }
+  .inv-card-left { display:flex;align-items:center;gap:10px; }
+  .inv-cat-icon { width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0; }
+  .inv-cat-name { font-family:var(--syne);font-size:13px;font-weight:700;color:var(--text); }
+  .inv-cat-count { font-size:10px;color:var(--text3);margin-top:1px; }
+  .inv-cat-total { font-family:var(--mono);font-size:14px;font-weight:700;text-align:right; }
+  .inv-cat-pct { font-size:10px;color:var(--text3);text-align:right;margin-top:1px; }
+  .inv-progress { height:3px;background:var(--bg3); }
+  .inv-progress-fill { height:100%;transition:width 1s ease; }
+  .inv-instrument { display:flex;align-items:center;justify-content:space-between;padding:9px 16px;gap:10px;border-bottom:1px solid rgba(30,47,71,0.5);transition:background 0.15s; }
+  .inv-instrument:last-child { border-bottom:none; }
+  .inv-instrument:hover { background:rgba(240,165,0,0.04); }
+  .inv-inst-name { font-size:12px;color:var(--text2);flex:1; }
+  .inv-inst-val { font-family:var(--mono);font-size:12px;color:var(--text);white-space:nowrap; }
+  .inv-inst-bar { width:60px;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;flex-shrink:0; }
+  .inv-inst-bar-fill { height:100%;border-radius:2px; }
+
+  /* FIRE */
+  .fire-params { display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:24px; }
+  .fire-param { background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px; }
+  .fire-param-label { font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px; }
+  .fire-param-val { font-family:var(--mono);font-size:16px;font-weight:600;color:var(--amber); }
+  .fire-chart-wrap { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px;overflow-x:auto; }
+  .fire-chart-title { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text2);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.6px; }
+  .fire-bars { display:flex;align-items:flex-end;gap:5px;height:200px;min-width:400px; }
+  .fire-bar-col { display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:18px; }
+  .fire-bar-yr { font-family:var(--mono);font-size:8px;color:var(--text3); }
+  .fire-legend { display:flex;gap:16px;margin-top:12px; }
+  .fire-legend-item { display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2); }
+  .fire-legend-dot { width:10px;height:10px;border-radius:2px;flex-shrink:0; }
+  .fire-crossover { background:rgba(240,165,0,0.1);border:1px solid var(--amber);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap; }
+
+  /* ── CASH FLOW ── */
+  .cf-month-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:24px; }
+  .cf-month-card { background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden; }
+  .cf-month-header { display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--bg3);border-bottom:1px solid var(--border); }
+  .cf-month-name { font-family:var(--syne);font-size:13px;font-weight:700;color:var(--amber); }
+  .cf-month-total { font-family:var(--mono);font-size:12px;color:var(--text2); }
+  .cf-row { display:flex;align-items:center;justify-content:space-between;padding:7px 16px;border-bottom:1px solid rgba(30,47,71,0.4);font-size:12px; }
+  .cf-row:last-child { border-bottom:none; }
+  .cf-row-label { color:var(--text3); }
+  .cf-row-val { font-family:var(--mono);color:var(--text2); }
+  .cf-row-val.neg { color:var(--red); }
+  .cf-row-val.pos { color:var(--green); }
+  .cf-row-val.amber { color:var(--amber); }
+  .cf-summary-bar { display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px; }
+  .cf-annual-chart { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px; }
+  .cf-bar-row { display:flex;align-items:center;gap:10px;margin-bottom:8px; }
+  .cf-bar-month { font-family:var(--mono);font-size:10px;color:var(--text3);width:28px;flex-shrink:0; }
+  .cf-bar-track { flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;position:relative; }
+  .cf-bar-fill { height:100%;border-radius:4px;transition:width 1s ease; }
+  .cf-bar-amt { font-family:var(--mono);font-size:10px;color:var(--text2);width:72px;text-align:right;flex-shrink:0; }
+  /* Overview cashflow mini widget */
+  .cf-mini { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:24px; }
+  .cf-mini-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:14px; }
+  .cf-mini-title { font-family:var(--syne);font-size:13px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.8px; }
+  .cf-mini-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px; }
+  .cf-mini-item { background:var(--bg3);border-radius:8px;padding:10px 12px; }
+  .cf-mini-label { font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.6px; }
+  .cf-mini-val { font-family:var(--syne);font-size:15px;font-weight:700; }
+  .cf-mini-bars { display:flex;gap:4px;align-items:flex-end;height:80px;padding-bottom:28px;position:relative; }
+  .cf-mini-col { flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer; }
+  .cf-mini-col:hover .cf-mini-bar { opacity:0.75; }
+  .cf-mini-bar { width:100%;border-radius:2px 2px 0 0;min-height:3px;transition:height 0.6s ease; }
+  .cf-mini-month { font-family:var(--mono);font-size:8px;color:var(--text3);white-space:nowrap; }
+  .cf-mini-amt { font-family:var(--mono);font-size:8px;color:var(--text2);white-space:nowrap; }
+
+  @media(max-width:768px) {
+    .nav-tabs { display:none; }
+    .mobile-nav { position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--bg2);border-top:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none; }
+    .mobile-nav::-webkit-scrollbar { display:none; }
+    .mob-tab { flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 12px;cursor:pointer;color:var(--text3);font-size:9px;font-family:var(--dm);font-weight:500;transition:color 0.2s;white-space:nowrap;border:none;background:transparent; }
+    .mob-tab.active { color:var(--amber); }
+    .mob-tab .icon { font-size:18px; }
+    .main { padding:16px 12px 80px; }
+    .kpi-grid { grid-template-columns:1fr 1fr; }
+    .nw-display { grid-template-columns:1fr; }
+  }
+  @media(min-width:769px){.mobile-nav{display:none}}
+
+  /* Debug panel */
+  #debug-panel { background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px;font-family:var(--mono);font-size:11px;color:var(--text3);max-height:300px;overflow-y:auto;display:none; }
+  .debug-toggle { background:transparent;border:1px solid var(--border);color:var(--text3);font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:var(--mono); }
+  .debug-toggle:hover { color:var(--text);border-color:var(--amber); }
+
+  /* ── PARAMETERS TAB ── */
+  .param-header { background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px; }
+  .param-score-circle { width:80px;height:80px;border-radius:50%;border:3px solid var(--amber);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0; }
+  .param-score-num { font-family:var(--syne);font-size:24px;font-weight:800;color:var(--amber);line-height:1; }
+  .param-score-label { font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.6px;margin-top:2px; }
+  .param-score-meta { flex:1;min-width:180px; }
+  .param-score-title { font-family:var(--syne);font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px; }
+  .param-score-sub { font-size:12px;color:var(--text3); }
+  .param-score-bar-wrap { flex:1;min-width:160px; }
+  .param-score-bar-track { height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:8px; }
+  .param-score-bar-fill { height:100%;border-radius:4px;transition:width 1s ease; }
+
+  .param-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:24px; }
+  .param-card { background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color 0.2s; }
+  .param-card:hover { border-color:var(--amber); }
+  .param-card-header { padding:14px 16px 10px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px; }
+  .param-card-icon { font-size:22px;line-height:1;flex-shrink:0;margin-top:2px; }
+  .param-card-title { font-family:var(--syne);font-size:13px;font-weight:700;color:var(--text);flex:1; }
+  .param-card-status { font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0; }
+  .status-pass  { background:rgba(34,197,94,0.15);color:#4ade80; }
+  .status-warn  { background:rgba(245,158,11,0.15);color:#fbbf24; }
+  .status-fail  { background:rgba(239,68,68,0.15);color:#f87171; }
+  .status-na    { background:var(--bg3);color:var(--text3); }
+  .param-card-body { padding:12px 16px 14px; }
+  .param-vals { display:flex;align-items:baseline;gap:10px;margin-bottom:10px; }
+  .param-actual { font-family:var(--syne);font-size:26px;font-weight:800;line-height:1; }
+  .param-benchmark { font-size:11px;color:var(--text3);font-family:var(--mono); }
+  .param-bar-track { height:6px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-bottom:8px; }
+  .param-bar-fill { height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(.4,0,.2,1); }
+  .param-note { font-size:11px;color:var(--text3);line-height:1.4; }
+  .param-suggestion { margin-top:10px;background:rgba(240,165,0,0.08);border:1px solid rgba(240,165,0,0.25);border-left:3px solid var(--amber);border-radius:8px;padding:8px 12px; }
+  .param-suggestion-label { font-size:9px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px; }
+  .param-suggestion-text { font-size:11px;color:var(--text2);line-height:1.4; }
+
+  .param-legend { display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px; }
+  .param-legend-item { display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2); }
+  .param-legend-dot { width:10px;height:10px;border-radius:50%; }
+
+  /* ── additions for the client edition ── */
+  .brand .client { color:var(--text);font-weight:600;font-size:13px;margin-left:10px;font-family:var(--dm); }
+  .empty { background:var(--card);border:1px dashed var(--border);border-radius:12px;padding:18px;color:var(--text3);font-size:12px;text-align:center;margin-bottom:20px; }
+  .muted { color:var(--text3); }
+  .tag { display:inline-block;font-size:10px;padding:2px 8px;border-radius:12px;background:var(--bg3);color:var(--text2);white-space:nowrap; }
+  .tag.amber { background:var(--amber-dim);color:var(--amber); }
+  .tag.red { background:rgba(239,68,68,.15);color:#f87171; }
+  .tag.green { background:rgba(34,197,94,.15);color:#4ade80; }
+  .table-wrap { overflow-x:auto;margin-bottom:24px; }
+  .table-wrap .data-table { margin-bottom:0; }
+  .upcoming { display:flex;flex-direction:column;gap:6px;margin-bottom:24px; }
+  .up-item { background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:12px; }
+  .up-date { font-family:var(--mono);font-size:11px;color:var(--amber);min-width:62px; }
+  .up-name { flex:1;font-size:12px;color:var(--text2); }
+  .up-amt { font-family:var(--mono);font-size:12px;color:var(--text);white-space:nowrap; }
+  .gate { position:fixed;inset:0;z-index:998;background:var(--bg);display:none;align-items:center;justify-content:center;padding:24px; }
+  .gate-card { max-width:420px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center; }
+  .gate-card h1 { font-family:var(--syne);color:var(--amber);font-size:26px;margin-bottom:10px; }
+  .gate-card p { color:var(--text2);font-size:14px;line-height:1.55;margin-bottom:10px; }
+  .gate-card a { color:var(--amber); }
+  .disclaimer { max-width:1200px;margin:8px auto 24px;padding:0 20px;font-size:11px;color:var(--text3);line-height:1.5; }
+  .offline-note { display:none;background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.3);color:var(--amber2);font-size:12px;padding:10px 16px;border-radius:8px;margin:12px 20px 0; }
+  .ins-summary { display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:8px; }
+  .pay-month.now .pay-month-label { color:var(--green); }
+  .pay-item.past { opacity:.55; }
+  .fire-input-note { font-size:11px;color:var(--text3);margin:-14px 0 20px; }
+  .cf-two { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px; }
+  @media(max-width:640px){ .cf-two { grid-template-columns:1fr; } .cf-mini-grid2 { grid-template-columns:1fr !important; } }
+  @media(max-width:480px){ .updated { display:none; } .brand span, .brand .client { display:none; } }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-brand">R2R</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-msg" id="loader-msg">Loading your tracker…</div>
+</div>
+
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <h1>R2R</h1>
+    <p id="gate-msg">Open this app using the personal link your advisor sent you. The link is your key — please don't share it.</p>
+    <p class="muted" style="font-size:12px;">Just exploring? <a href="?demo=1">See a demo</a></p>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="brand">R2R<span>Financial Tracker</span><span class="client" id="client-name"></span></div>
+  <div class="topbar-right">
+    <div class="updated" id="last-updated">Loading…</div>
+    <button class="refresh-btn" id="refresh-btn" onclick="loadAllData(true)"><span class="icon">↻</span> Refresh</button>
+    <button class="refresh-btn" id="install-btn" style="display:none" onclick="doInstall()">⬇ Install</button>
+  </div>
+</header>
+<div class="offline-note" id="offline-note"></div>
+<div id="error-banner"></div>
+
+<nav class="nav-tabs" id="nav-tabs"></nav>
+
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <section class="panel active" id="panel-overview">
+    <div class="nw-display">
+      <div><div class="nw-item-label">Total Assets</div><div class="nw-item-val amber" id="nw-assets">—</div><div class="nw-item-raw" id="nw-assets-raw">—</div></div>
+      <div><div class="nw-item-label">Total Liabilities</div><div class="nw-item-val red" id="nw-liab">—</div><div class="nw-item-raw" id="nw-liab-raw">—</div></div>
+      <div><div class="nw-item-label">Net Worth</div><div class="nw-item-val green" id="nw-net">—</div><div class="nw-item-raw" id="nw-net-raw">—</div></div>
+    </div>
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <div class="section-title">Coming Up</div>
+    <div id="ov-upcoming"></div>
+
+    <div class="section-title">Asset Inventory</div>
+    <div class="inv-grid" id="asset-inventory"></div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+      <span style="font-family:var(--syne);font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">Total Portfolio</span>
+      <span style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--amber);" id="tbl-assets-total">—</span>
+    </div>
+
+    <div class="section-title" style="margin-top:28px;">Monthly Cash Flow</div>
+    <div class="cf-mini">
+      <div class="cf-mini-header">
+        <div>
+          <div class="cf-mini-title">Annual Outflow Snapshot</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px;">🔵 Normal &nbsp;🟡 Big payment month &nbsp;🔴 Exceeds income</div>
+        </div>
+        <button onclick="switchTab('cashflow')" style="background:var(--amber-dim);border:1px solid var(--amber);color:var(--amber);font-size:11px;padding:4px 12px;border-radius:16px;cursor:pointer;font-family:var(--dm);">Full View →</button>
+      </div>
+      <div class="cf-mini-grid2" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;" id="cf-mini-split"></div>
+      <div class="cf-mini-bars" id="cf-mini-bars"></div>
+    </div>
+  </section>
+
+  <!-- ALLOCATION -->
+  <section class="panel" id="panel-allocation">
+    <div class="alloc-grid" style="margin-bottom:20px;">
+      <div class="chart-card">
+        <div class="chart-title">By Asset Class</div>
+        <div class="donut-wrap">
+          <svg id="donut-svg" width="140" height="140" viewBox="0 0 140 140"></svg>
+          <div class="donut-legend" id="donut-legend"></div>
+        </div>
+      </div>
+      <div class="chart-card"><div class="chart-title">Value by Class (₹)</div><div class="bar-list" id="bar-list"></div></div>
+    </div>
+    <div class="chart-card" style="margin-bottom:20px;">
+      <div class="chart-title">Portfolio Composition</div>
+      <div id="stacked-bar" style="display:flex;height:28px;border-radius:8px;overflow:hidden;gap:2px;margin-bottom:10px;"></div>
+      <div id="stacked-bar-legend" style="display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:10px;"></div>
+    </div>
+    <div id="class-breakdowns" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:20px;"></div>
+    <div class="chart-card">
+      <div class="chart-title">Assets vs Liabilities</div>
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;" id="gauges"></div>
+        <div style="text-align:center;min-width:120px;">
+          <div style="font-size:11px;color:var(--text3);margin-bottom:6px;">Leverage Ratio</div>
+          <div style="font-family:var(--syne);font-size:32px;font-weight:800;color:var(--amber);" id="gauge-ratio">—</div>
+          <div style="font-size:10px;color:var(--text3);">Debt / Assets</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOLDINGS -->
+  <section class="panel" id="panel-holdings"><div id="holdings-body"></div></section>
+
+  <!-- INSURANCE -->
+  <section class="panel" id="panel-insurance">
+    <div class="ins-summary" id="ins-summary"></div>
+    <div id="ins-body"></div>
+    <div style="font-size:11px;color:var(--text3);margin-bottom:24px;">* Premiums usually change with age and applicable tax.</div>
+  </section>
+
+  <!-- PAYMENTS -->
+  <section class="panel" id="panel-payments">
+    <div class="section-title">Payment Calendar — next 12 months</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">Insurance premiums and non-monthly payments from the cash-flow plan | All amounts in ₹</div>
+    <div id="pay-grid"></div>
+    <div style="margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;">Total Annual Premiums</div><div style="font-family:var(--syne);font-size:24px;font-weight:800;color:var(--amber);" id="pay-total">—</div></div>
+      <div><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;">All scheduled payments</div><div style="font-family:var(--syne);font-size:18px;font-weight:700;color:var(--text2);" id="pay-all">—</div></div>
+      <div style="text-align:right;"><div style="font-size:11px;color:var(--text3);">Premiums — monthly equivalent</div><div style="font-family:var(--syne);font-size:18px;font-weight:700;color:var(--text2);" id="pay-monthly">—</div></div>
+    </div>
+  </section>
+
+  <!-- FIRE -->
+  <section class="panel" id="panel-fire">
+    <div class="fire-crossover" id="fire-crossover" style="display:none;">
+      <div style="font-size:28px;">🔥</div>
+      <div><div style="font-size:11px;color:var(--text3);">FIRE Crossover</div><div style="font-family:var(--syne);font-size:20px;font-weight:800;color:var(--amber);" id="fire-crossover-yr">—</div></div>
+      <div style="margin-left:auto;text-align:right;"><div style="font-size:11px;color:var(--text3);">Portfolio at Crossover</div><div style="font-family:var(--syne);font-size:20px;font-weight:800;color:var(--amber);" id="fire-crossover-val">—</div></div>
+    </div>
+    <div class="section-title">Key Parameters</div>
+    <div class="fire-params" id="fire-params"></div>
+    <div class="fire-input-note" id="fire-note"></div>
+    <div class="fire-chart-wrap">
+      <div class="fire-chart-title">Investment Growth vs FIRE Target (₹ Lakhs)</div>
+      <div class="fire-bars" id="fire-bars"></div>
+      <div class="fire-legend">
+        <div class="fire-legend-item"><div class="fire-legend-dot" style="background:var(--blue);"></div>Projected Corpus</div>
+        <div class="fire-legend-item"><div class="fire-legend-dot" style="background:var(--amber);"></div>FIRE Target</div>
+      </div>
+    </div>
+    <div class="section-title">Year-by-Year Projection</div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Year</th><th class="num">Income (L)</th><th class="num">Saving (L)</th><th class="num">Corpus (L)</th><th class="num">FIRE Target (L)</th><th class="num">Status</th></tr></thead>
+        <tbody id="tbl-fire"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CASH FLOW -->
+  <section class="panel" id="panel-cashflow">
+    <div class="cf-summary-bar" id="cf-kpi-row"></div>
+    <div class="section-title">Fixed Monthly Commitments</div>
+    <div class="cf-two" id="cf-fixed-grid"></div>
+    <div class="section-title">Month-by-Month Breakdown</div>
+    <div class="cf-month-grid" id="cf-month-grid"></div>
+    <div class="section-title">Annual Summary Table</div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Month</th><th class="num">Income</th><th class="num">Expenses</th><th class="num">Insurance</th><th class="num">EMI</th><th class="num">Savings</th><th class="num">Total Out</th><th class="num">Surplus</th></tr></thead>
+        <tbody id="tbl-cashflow"></tbody>
+        <tfoot id="tfoot-cashflow"></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- HEALTH CHECK -->
+  <section class="panel" id="panel-parameters">
+    <div class="param-header">
+      <div class="param-score-circle" id="param-score-circle"><div class="param-score-num" id="param-score-num">—</div><div class="param-score-label">Score</div></div>
+      <div class="param-score-meta">
+        <div class="param-score-title" id="param-score-title">Financial Health Score</div>
+        <div class="param-score-sub" id="param-score-sub">—</div>
+        <div class="param-score-bar-wrap"><div class="param-score-bar-track"><div class="param-score-bar-fill" id="param-score-bar" style="width:0%;background:var(--amber);"></div></div></div>
+      </div>
+      <div style="text-align:right;min-width:120px;">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Passed</div>
+        <div style="font-family:var(--syne);font-size:20px;font-weight:800;color:var(--text);" id="param-checks">—</div>
+        <div style="font-size:11px;color:var(--text3);">benchmarks</div>
+      </div>
+    </div>
+    <div class="param-legend">
+      <div class="param-legend-item"><div class="param-legend-dot" style="background:#22c55e;"></div>✅ On Track</div>
+      <div class="param-legend-item"><div class="param-legend-dot" style="background:#f59e0b;"></div>⚠️ Watch</div>
+      <div class="param-legend-item"><div class="param-legend-dot" style="background:#ef4444;"></div>❌ Action Needed</div>
+      <div class="param-legend-item"><div class="param-legend-dot" style="background:#64748b;"></div>N/A — data not in sheet</div>
+    </div>
+    <div class="param-grid" id="param-grid"></div>
+    <div class="section-title">Benchmark Reference</div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Parameter</th><th>Benchmark</th><th class="num">Your Value</th><th>Status</th><th>Derivation</th></tr></thead>
+        <tbody id="tbl-params"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<p class="disclaimer">R2R · Risks to Reward — an educational tracking tool built from the data you maintain. Benchmarks are general rules of thumb, not personalised investment, tax or insurance advice. Projections are illustrative and not guaranteed.</p>
+
+<nav class="mobile-nav" id="mobile-nav"></nav>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  CONFIG — paste your Apps Script web-app URL (ends in /exec)
+// ═══════════════════════════════════════════════════════
+const API_URL = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+// ═══════════════════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════════════════
+const TABS = [
+  ['overview','Overview','🏠','Overview'], ['allocation','Allocation','🥧','Alloc'],
+  ['holdings','Holdings','📊','Holdings'], ['insurance','Insurance','🛡️','Insure'],
+  ['payments','Payments','📅','Payments'], ['fire','FIRE Tracker','🔥','FIRE'],
+  ['cashflow','Cash Flow','💸','Cash Flow'], ['parameters','🩺 Health Check','🩺','Health'],
+];
+document.getElementById('nav-tabs').innerHTML = TABS.map((t,i)=>`<button class="tab-btn${i?'':' active'}" data-tab="${t[0]}" onclick="switchTab('${t[0]}')">${t[1]}</button>`).join('');
+document.getElementById('mobile-nav').innerHTML = TABS.map((t,i)=>`<button class="mob-tab${i?'':' active'}" data-tab="${t[0]}" onclick="switchTab('${t[0]}')"><span class="icon">${t[2]}</span>${t[3]}</button>`).join('');
+function switchTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+  document.querySelectorAll('.tab-btn,.mob-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  try { sessionStorage.setItem('r2r_tab', id); } catch (e) {}
+}
+
+// ═══════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const CLASS_META = {
+  'Equity':       { color:'#3b82f6', icon:'📈' },
+  'Debt':         { color:'#a855f7', icon:'🏦' },
+  'Liquid':       { color:'#22c55e', icon:'💧' },
+  'Gold':         { color:'#f0a500', icon:'🪙' },
+  'REITs/InvITs': { color:'#06b6d4', icon:'🏗️' },
+  'Real Estate':  { color:'#f97316', icon:'🏠' },
+  'Other':        { color:'#94a3b8', icon:'📦' },
+};
+const CLASS_ORDER = Object.keys(CLASS_META);
+const INVESTABLE = ['Equity','Debt','Gold','REITs/InvITs','Other'];
+const FREQ_N = { 'monthly':12, 'quarterly':4, 'half-yearly':2, 'annual':1, 'one-time':1 };
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const blank = v => v === '' || v === null || v === undefined;
+const num = v => { if (typeof v === 'number') return v; const n = parseFloat(String(v ?? '').replace(/[₹,\s%]/g,'')); return isNaN(n) ? 0 : n; };
+const inrDigits = n => Math.round(n).toLocaleString('en-IN');
+const fmtINR = n => (n === null || isNaN(n)) ? '—' : (n < 0 ? '-₹' : '₹') + inrDigits(Math.abs(n));
+const fmtCr = n => {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  const a = Math.abs(n), s = n < 0 ? '-₹' : '₹';
+  if (a >= 1e7) return s + (a/1e7).toFixed(2) + ' Cr';
+  if (a >= 1e5) return s + (a/1e5).toFixed(1) + ' L';
+  if (a >= 1e3) return s + (a/1e3).toFixed(1) + 'K';
+  return s + Math.round(a);
+};
+const pctOf = (p, w) => w ? (p / w * 100) : 0;
+const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+const setHTML = (id, h) => { const e = document.getElementById(id); if (e) e.innerHTML = h; };
+const parseDate = v => {
+  if (blank(v)) return null;
+  const s = String(v).trim();
+  let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if (m) return new Date(+m[1], +m[2]-1, +m[3]);
+  m = s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})$/); if (m) return new Date(+m[3], +m[2]-1, +m[1]);
+  const d = new Date(s); return isNaN(d) ? null : d;
+};
+const fmtDate = d => d ? `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}` : '—';
+const monthIdx = s => MONTHS.findIndex(m => String(s).trim().toLowerCase().startsWith(m.toLowerCase()));
+const empty = msg => `<div class="empty">${msg}</div>`;
+
+// ═══════════════════════════════════════════════════════
+//  FETCH
+// ═══════════════════════════════════════════════════════
+const params = new URLSearchParams(location.search);
+let AUTH = null, DEMO = params.get('demo') === '1';
+(function initAuth() {
+  if (params.get('c') && params.get('k')) {
+    AUTH = { c: params.get('c'), k: params.get('k') };
+    try { localStorage.setItem('r2r_auth', JSON.stringify(AUTH)); } catch (e) {}
+    history.replaceState(null, '', location.pathname);   // keep the key out of the address bar
+  } else {
+    try { AUTH = JSON.parse(localStorage.getItem('r2r_auth') || 'null'); } catch (e) { AUTH = null; }
+  }
+})();
+
+async function fetchData() {
+  if (DEMO) { const r = await fetch('demo-data.json', { cache:'no-store' }); return r.json(); }
+  if (!AUTH) return null;
+  const url = `${API_URL}?c=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&t=${Date.now()}`;
+  const r = await fetch(url, { redirect:'follow' });
+  if (!r.ok) throw new Error('Server responded ' + r.status);
+  return r.json();
+}
+
+async function loadAllData(manual) {
+  const btn = document.getElementById('refresh-btn');
+  btn.classList.add('spinning');
+  document.getElementById('error-banner').style.display = 'none';
+  let data = null, fromCache = false;
+  try {
+    data = await fetchData();
+    if (data === null) { showGate(); return; }
+    if (!data.ok) throw Object.assign(new Error(data.error || 'Could not load data'), { auth: true });
+    if (!DEMO) try { localStorage.setItem('r2r_cache', JSON.stringify(data)); } catch (e) {}
+  } catch (err) {
+    if (!err.auth && !DEMO) {
+      try { data = JSON.parse(localStorage.getItem('r2r_cache') || 'null'); } catch (e) {}
+      if (data) fromCache = true;
+    }
+    if (!data) {
+      if (err.auth) { showGate(err.message); return; }
+      const b = document.getElementById('error-banner');
+      b.textContent = '⚠️ ' + err.message + ' — check your internet connection and tap Refresh.';
+      b.style.display = 'block';
+    }
+  } finally {
+    btn.classList.remove('spinning');
+    document.getElementById('loader').style.display = 'none';
+  }
+  if (!data) return;
+  const note = document.getElementById('offline-note');
+  note.style.display = fromCache ? 'block' : 'none';
+  note.textContent = fromCache ? '📴 Offline — showing the last saved copy. Tap Refresh when you are back online.' : '';
+  try { renderAll(model(data)); }
+  catch (e) {
+    console.error(e);
+    const b = document.getElementById('error-banner');
+    b.textContent = '⚠️ Some data could not be read: ' + e.message; b.style.display = 'block';
+  }
+}
+
+function showGate(msg) {
+  document.getElementById('loader').style.display = 'none';
+  if (msg) set('gate-msg', msg);
+  document.getElementById('gate').style.display = 'flex';
+}
+
+// ═══════════════════════════════════════════════════════
+//  MODEL — turn sheet rows into everything the views need
+// ═══════════════════════════════════════════════════════
+function rowsOf(tab) {
+  if (!tab || !tab.length) return [];
+  const head = tab[0].map(h => String(h).trim());
+  return tab.slice(1).map(r => { const o = {}; head.forEach((h, j) => { if (h) o[h] = r[j]; }); return o; })
+    .filter(o => Object.values(o).some(v => !blank(v)));
+}
+const canonClass = c => CLASS_ORDER.find(k => k.toLowerCase().replace(/\W/g,'') === String(c||'').toLowerCase().replace(/\W/g,'')) || (blank(c) ? 'Other' : String(c).trim());
+
+function model(api) {
+  const t = api.tabs || {};
+  const profile = {};
+  rowsOf(t.Profile).forEach(r => { if (!blank(r.Field)) profile[String(r.Field).trim()] = r.Value; });
+  const P = (k, d) => blank(profile[k]) ? d : num(profile[k]);
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  // Assets
+  const assets = rowsOf(t.Assets).map(r => {
+    const units = num(r['Units']), avg = num(r['Avg Buy Price']), cmp = num(r['Current Price']);
+    const value = !blank(r['Current Value (₹)']) ? num(r['Current Value (₹)']) : units * cmp;
+    const invested = !blank(r['Invested (₹)']) ? num(r['Invested (₹)']) : (units && avg ? units * avg : null);
+    return { cls: canonClass(r['Asset Class']), type: String(r['Type'] ?? '').trim() || 'Other',
+      name: String(r['Name'] ?? '').trim() || String(r['Type'] ?? 'Holding'), holder: r['Holder'] ?? '',
+      platform: r['Platform / Bank'] ?? '', units: blank(r['Units']) ? null : units,
+      avg: blank(r['Avg Buy Price']) ? null : avg, cmp: blank(r['Current Price']) ? null : cmp,
+      invested, value, pnl: invested !== null ? value - invested : null, ticker: r['Ticker / Code'] ?? '', notes: r['Notes'] ?? '' };
+  });
+  const byClass = {};
+  assets.forEach(a => { byClass[a.cls] = (byClass[a.cls] || 0) + a.value; });
+  const classes = Object.keys(byClass).sort((a, b) => (CLASS_ORDER.indexOf(a)+99*(CLASS_ORDER.indexOf(a)<0)) - (CLASS_ORDER.indexOf(b)+99*(CLASS_ORDER.indexOf(b)<0)));
+  const totalAssets = assets.reduce((s, a) => s + a.value, 0);
+
+  // Liabilities
+  const liabilities = rowsOf(t.Liabilities).map(r => ({
+    type: String(r['Loan Type'] ?? 'Loan').trim(), lender: r['Lender'] ?? '', borrower: r['Borrower'] ?? '',
+    outstanding: num(r['Outstanding (₹)']), emi: num(r['EMI (₹/month)']), rate: blank(r['Interest Rate %']) ? null : num(r['Interest Rate %']),
+    ends: parseDate(r['Ends On']), limit: blank(r['Credit Limit (₹)']) ? null : num(r['Credit Limit (₹)']), notes: r['Notes'] ?? '' }));
+  const totalLiab = liabilities.reduce((s, l) => s + l.outstanding, 0);
+  const loans = liabilities.filter(l => !/credit card/i.test(l.type));
+  const cards = liabilities.filter(l => /credit card/i.test(l.type));
+  const emiMonthly = loans.reduce((s, l) => s + l.emi, 0);
+  const homeEmi = loans.filter(l => /home|property/i.test(l.type)).reduce((s, l) => s + l.emi, 0);
+
+  // Insurance
+  const insurance = rowsOf(t.Insurance).map(r => {
+    const freq = String(r['Frequency'] ?? 'Annual').trim() || 'Annual';
+    const n = FREQ_N[freq.toLowerCase()] ?? 1;
+    const premium = num(r['Premium (₹)']);
+    let due = parseDate(r['Next Due Date']);
+    const step = { 12:1, 4:3, 2:6, 1:12 }[n] || 12;
+    // roll an overdue date forward so the calendar shows the next real payment
+    let rolled = due ? new Date(due) : null, overdue = false;
+    if (rolled && freq.toLowerCase() !== 'one-time') {
+      while (rolled < today) { rolled.setMonth(rolled.getMonth() + step); overdue = true; }
+    }
+    const months = rolled ? (freq.toLowerCase() === 'one-time' ? [rolled.getMonth()] : Array.from({ length: n }, (_, i) => (rolled.getMonth() + i * step) % 12)) : null;
+    const oneTimeThisYear = freq.toLowerCase() !== 'one-time' || (rolled && (rolled - today) < 365 * 864e5);
+    return { cat: String(r['Category'] ?? 'Other').trim() || 'Other', name: String(r['Policy Name'] ?? 'Policy'), insurer: r['Insurer'] ?? '',
+      insured: r['Insured'] ?? '', cover: blank(r['Sum Assured (₹)']) ? null : num(r['Sum Assured (₹)']), premium, freq, n,
+      annual: oneTimeThisYear ? premium * n : 0, due, next: rolled, overdueRolled: overdue, months, till: r['Premium Paying Till'] ?? '', notes: r['Notes'] ?? '' };
+  });
+
+  // Cash-flow items → occurrences per calendar month
+  const cfItems = rowsOf(t.CashFlow).map(r => {
+    const type = String(r['Type'] ?? '').trim().toLowerCase();
+    const freq = String(r['Frequency'] ?? 'Monthly').trim() || 'Monthly';
+    const amt = num(r['Amount (₹)']);
+    const listed = String(r['Months'] ?? '').split(/[,;/&]+|\s+and\s+/i).map(monthIdx).filter(i => i >= 0);
+    let perMonth = Array(12).fill(0), spread = false;
+    if (listed.length) listed.forEach(i => perMonth[i] += amt);
+    else if (freq.toLowerCase() === 'monthly') perMonth = perMonth.map(() => amt);
+    else { const n = FREQ_N[freq.toLowerCase()] ?? 1; perMonth = perMonth.map(() => amt * n / 12); spread = true; }
+    return { type: type.startsWith('inc') ? 'income' : type.startsWith('sav') ? 'saving' : 'expense', cat: String(r['Category'] ?? '').trim(),
+      item: String(r['Item'] ?? r['Category'] ?? 'Item'), amt, freq, listed, perMonth, spread, monthly: !listed.length && freq.toLowerCase() === 'monthly' };
+  });
+  const months = MONTHS.map((m, i) => {
+    const sumT = ty => cfItems.filter(c => c.type === ty).reduce((s, c) => s + c.perMonth[i], 0);
+    const ins = insurance.reduce((s, p) => s + (p.annual ? (p.months ? (p.months.includes(i) ? p.premium : 0) : p.annual / 12) : 0), 0);
+    const income = sumT('income'), expense = sumT('expense'), saving = sumT('saving');
+    const out = expense + ins + emiMonthly + saving;
+    return { m, i, income, expense, saving, ins, emi: emiMonthly, out, surplus: income - out,
+      items: cfItems.filter(c => c.type !== 'income' && c.perMonth[i] > 0 && !c.monthly).map(c => ({ name: c.item, amt: c.perMonth[i], type: c.type, spread: c.spread })),
+      premiums: insurance.filter(p => p.annual && p.months && p.months.includes(i)) };
+  });
+  const yr = k => months.reduce((s, m) => s + m[k], 0);
+  const annual = { income: yr('income'), expense: yr('expense'), saving: yr('saving'), ins: yr('ins'), emi: yr('emi'), out: yr('out'), surplus: yr('surplus') };
+  const monthlyIncome = annual.income / 12;
+  const annualSpend = annual.expense + annual.ins + annual.emi;           // everything except savings
+  const monthlySpend = annualSpend / 12;
+
+  // FIRE
+  const g = P('Income Growth %', 8) / 100, r = P('Expected Return %', 11) / 100, inf = P('Inflation %', 6) / 100;
+  const mult = P('FIRE Multiple', 25), years = Math.max(5, Math.min(50, P('Projection Years', 30)));
+  const includesAll = /all/i.test(String(profile['FIRE Corpus Includes'] ?? ''));
+  const corpus0 = includesAll ? totalAssets : INVESTABLE.reduce((s, c) => s + (byClass[c] || 0), 0);
+  const retireMonthly = P('Retirement Monthly Expenses (₹)', null) ?? ((annual.expense + annual.ins) / 12);
+  const target0 = P('FIRE Target Corpus (₹)', null) ?? retireMonthly * 12 * mult;
+  const saving0 = Math.max(0, annual.income - annualSpend);
+  const fireRows = [];
+  let corpus = corpus0;
+  for (let y = 1; y <= years; y++) {
+    const growth = Math.pow(1 + g, y - 1);
+    const saving = saving0 * growth;
+    corpus = corpus * (1 + r) + saving;
+    fireRows.push({ yr: y, year: today.getFullYear() + y - 1, income: annual.income * growth / 1e5, saving: saving / 1e5, invest: corpus / 1e5, fireAmt: target0 * Math.pow(1 + inf, y - 1) / 1e5 });
+  }
+  const fire = { g, r, inf, mult, years, corpus0, target0, saving0, retireMonthly, includesAll, rows: fireRows,
+    explicitTarget: !blank(profile['FIRE Target Corpus (₹)']) };
+
+  return { client: api.client || profile['Client Name'] || '', updated: api.updated, profile, P, today,
+    assets, byClass, classes, totalAssets, liabilities, loans, cards, totalLiab, netWorth: totalAssets - totalLiab,
+    emiMonthly, homeEmi, insurance, cfItems, months, annual, monthlyIncome, monthlySpend, annualSpend, fire };
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════
+function renderAll(d) {
+  set('client-name', d.client ? '· ' + d.client : '');
+  document.title = d.client ? `R2R · ${d.client}` : 'R2R Financial Tracker';
+  const u = d.updated ? new Date(d.updated) : null;
+  set('last-updated', (DEMO ? 'DEMO · ' : '') + (u && !isNaN(u) ? 'Sheet updated ' + u.toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Updated'));
+  renderOverview(d); renderAllocation(d); renderHoldings(d); renderInsurance(d);
+  renderPayments(d); renderFIRE(d); renderCashflow(d); renderParameters(d);
+  requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
+}
+
+function upcomingList(d, days) {
+  const until = new Date(d.today); until.setDate(until.getDate() + days);
+  const ev = [];
+  d.insurance.forEach(p => { if (p.next && p.annual && p.next <= until) ev.push({ date: p.next, name: `${p.name}${p.insurer ? ' · ' + p.insurer : ''}`, amt: p.premium, kind: 'Premium' }); });
+  // non-monthly cash-flow outflows with listed months
+  for (let k = 0; k <= Math.ceil(days / 30); k++) {
+    const dt = new Date(d.today.getFullYear(), d.today.getMonth() + k, 1);
+    if (dt > until) break;
+    d.cfItems.filter(c => c.type !== 'income' && c.listed.length && c.listed.includes(dt.getMonth()))
+      .forEach(c => ev.push({ date: dt, name: c.item, amt: c.amt, kind: c.type === 'saving' ? 'Saving' : 'Payment', monthOnly: true }));
+  }
+  d.liabilities.forEach(l => { if (l.ends && l.ends >= d.today && l.ends <= until) ev.push({ date: l.ends, name: `${l.type} ends${l.lender ? ' · ' + l.lender : ''}`, amt: null, kind: 'Loan' }); });
+  return ev.sort((a, b) => a.date - b.date);
+}
+
+function renderOverview(d) {
+  set('nw-assets', fmtCr(d.totalAssets)); set('nw-assets-raw', fmtINR(d.totalAssets));
+  set('nw-liab', fmtCr(d.totalLiab) === '—' ? '₹0' : fmtCr(d.totalLiab)); set('nw-liab-raw', fmtINR(d.totalLiab));
+  set('nw-net', fmtCr(d.netWorth)); set('nw-net-raw', fmtINR(d.netWorth));
+  const kpis = d.classes.map(c => { const m = CLASS_META[c] || CLASS_META.Other;
+    return `<div class="kpi" style="--accent:${m.color};"><div class="kpi-icon">${m.icon}</div><div class="kpi-label">${esc(c)}</div><div class="kpi-val">${fmtCr(d.byClass[c])}</div><div class="kpi-sub">${pctOf(d.byClass[c], d.totalAssets).toFixed(1)}% of assets</div></div>`; });
+  if (d.totalLiab) kpis.push(`<div class="kpi" style="--accent:#ef4444;"><div class="kpi-icon">🏠</div><div class="kpi-label">Loans</div><div class="kpi-val">${fmtCr(d.totalLiab)}</div><div class="kpi-sub">EMI ${fmtCr(d.emiMonthly)}/mo</div></div>`);
+  setHTML('kpi-grid', kpis.join('') || empty('No assets yet — add them in the Assets tab of the sheet.'));
+
+  const up = upcomingList(d, 60);
+  setHTML('ov-upcoming', up.length ? `<div class="upcoming">${up.slice(0, 6).map(e => `<div class="up-item"><div class="up-date">${e.monthOnly ? MONTHS[e.date.getMonth()] + ' ' + e.date.getFullYear() : e.date.getDate() + ' ' + MONTHS[e.date.getMonth()]}</div><div class="up-name">${esc(e.name)} <span class="tag${e.kind==='Premium'?' amber':''}">${e.kind}</span></div><div class="up-amt">${e.amt ? fmtINR(e.amt) : ''}</div></div>`).join('')}</div>` : empty('Nothing due in the next 60 days.'));
+
+  setHTML('asset-inventory', d.classes.map(c => {
+    const m = CLASS_META[c] || CLASS_META.Other;
+    const groups = {};
+    d.assets.filter(a => a.cls === c).forEach(a => { groups[a.type] = (groups[a.type] || 0) + a.value; });
+    const items = Object.entries(groups).sort((a, b) => b[1] - a[1]);
+    const total = d.byClass[c];
+    return `<div class="inv-card">
+      <div class="inv-card-header"><div class="inv-card-left"><div class="inv-cat-icon" style="background:${m.color}22;">${m.icon}</div><div><div class="inv-cat-name">${esc(c)}</div><div class="inv-cat-count">${items.length} type${items.length===1?'':'s'}</div></div></div>
+      <div><div class="inv-cat-total" style="color:${m.color};">${fmtCr(total)}</div><div class="inv-cat-pct">${pctOf(total, d.totalAssets).toFixed(1)}%</div></div></div>
+      <div class="inv-progress"><div class="inv-progress-fill" style="background:${m.color};width:0" data-w="${pctOf(total, d.totalAssets)}%"></div></div>
+      ${items.map(([n, v]) => `<div class="inv-instrument"><div class="inv-inst-name">${esc(n)}</div><div class="inv-inst-bar"><div class="inv-inst-bar-fill" style="background:${m.color};width:0" data-w="${pctOf(v, total)}%"></div></div><div class="inv-inst-val">${fmtCr(v)}</div></div>`).join('')}
+    </div>`; }).join(''));
+  set('tbl-assets-total', fmtINR(d.totalAssets));
+
+  const a = d.annual, mo = { income: a.income/12, saving: a.saving/12, spend: d.monthlySpend };
+  const split = (label, inc, sav, spend) => {
+    const rem = inc - sav - spend, sp = pctOf(sav, inc), ep = pctOf(spend, inc), rp = Math.max(0, 100 - sp - ep);
+    return `<div style="background:var(--bg3);border-radius:10px;padding:14px;">
+      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">${label}</div>
+      ${[['Income', inc, 'var(--green)'], ['📈 Savings', sav, 'var(--blue)'], ['💸 Spending (incl. EMI & insurance)', spend, 'var(--red)'], ['Surplus', rem, rem >= 0 ? 'var(--amber)' : 'var(--red)']]
+        .map(([l, v, c]) => `<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:11px;color:var(--text2);">${l}</span><span style="font-family:var(--mono);font-size:11px;color:${c};">${fmtINR(v)}</span></div>`).join('')}
+      <div style="height:10px;border-radius:6px;overflow:hidden;display:flex;gap:2px;margin:8px 0 6px;">
+        <div style="background:var(--blue);width:0" data-w="${Math.min(100, sp)}%"></div><div style="background:var(--red);width:0" data-w="${Math.min(100, ep)}%"></div><div style="background:var(--green);width:0" data-w="${rp}%"></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;"><span style="color:var(--blue)">${sp.toFixed(0)}% saved</span><span style="color:var(--red)">${ep.toFixed(0)}% spent</span><span style="color:var(--green)">${(inc ? 100 - sp - ep : 0).toFixed(0)}% surplus</span></div></div>`;
+  };
+  setHTML('cf-mini-split', a.income || a.out ? split('Monthly (average)', mo.income, mo.saving, mo.spend) + split('Annual', a.income, a.saving, d.annualSpend) : empty('Add income, expenses and savings in the CashFlow tab.'));
+  const maxOut = Math.max(...d.months.map(m => m.out), 1), avgOut = a.out / 12;
+  setHTML('cf-mini-bars', d.months.map(m => {
+    const col = m.out > m.income && m.income ? 'var(--red)' : m.out > avgOut * 1.2 ? 'var(--amber)' : 'var(--blue)';
+    return `<div class="cf-mini-col" onclick="switchTab('cashflow')" title="${m.m}: out ${fmtINR(m.out)} · surplus ${fmtINR(m.surplus)}"><div class="cf-mini-amt">${fmtCr(m.out).replace('₹','')}</div><div class="cf-mini-bar" style="height:${(m.out/maxOut*48).toFixed(0)}px;background:${col};"></div><div class="cf-mini-month">${m.m}</div></div>`; }).join(''));
+}
+
+function renderAllocation(d) {
+  const C = 2 * Math.PI * 50; let off = 0;
+  const segs = d.classes.map(c => { const v = d.byClass[c], len = d.totalAssets ? v / d.totalAssets * C : 0;
+    const s = `<circle cx="70" cy="70" r="50" fill="none" stroke="${(CLASS_META[c]||CLASS_META.Other).color}" stroke-width="22" stroke-dasharray="${len.toFixed(2)} ${(C-len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 70 70)"><title>${esc(c)} ${fmtCr(v)}</title></circle>`; off += len; return s; });
+  setHTML('donut-svg', `<circle cx="70" cy="70" r="50" fill="none" stroke="var(--bg3)" stroke-width="22"/>${segs.join('')}<text x="70" y="68" text-anchor="middle" fill="var(--text)" font-family="Syne,sans-serif" font-size="14" font-weight="700">${fmtCr(d.totalAssets)}</text><text x="70" y="84" text-anchor="middle" fill="var(--text3)" font-family="DM Sans,sans-serif" font-size="10">Total Assets</text>`);
+  setHTML('donut-legend', d.classes.map(c => `<div class="legend-item"><div class="legend-dot" style="background:${(CLASS_META[c]||CLASS_META.Other).color};"></div><div class="legend-name">${esc(c)}</div><div class="legend-pct">${pctOf(d.byClass[c], d.totalAssets).toFixed(1)}%</div></div>`).join(''));
+  const maxC = Math.max(...d.classes.map(c => d.byClass[c]), 1);
+  setHTML('bar-list', d.classes.map(c => `<div><div class="bar-meta"><span class="bar-name">${esc(c)}</span><span class="bar-val">${fmtCr(d.byClass[c])}</span></div><div class="bar-track"><div class="bar-fill" style="background:${(CLASS_META[c]||CLASS_META.Other).color};" data-w="${pctOf(d.byClass[c], maxC)}%"></div></div></div>`).join(''));
+  setHTML('stacked-bar', d.classes.map(c => `<div title="${esc(c)} ${pctOf(d.byClass[c], d.totalAssets).toFixed(1)}%" style="background:${(CLASS_META[c]||CLASS_META.Other).color};width:${pctOf(d.byClass[c], d.totalAssets)}%;"></div>`).join(''));
+  setHTML('stacked-bar-legend', d.classes.map(c => `<div class="legend-item" style="margin:0"><div class="legend-dot" style="background:${(CLASS_META[c]||CLASS_META.Other).color};"></div><span class="legend-name">${esc(c)} ${pctOf(d.byClass[c], d.totalAssets).toFixed(1)}%</span></div>`).join(''));
+  setHTML('class-breakdowns', d.classes.map(c => {
+    const color = (CLASS_META[c]||CLASS_META.Other).color, g = {};
+    d.assets.filter(a => a.cls === c).forEach(a => g[a.type] = (g[a.type] || 0) + a.value);
+    const tot = d.byClass[c];
+    return `<div class="chart-card"><div class="chart-title">${esc(c)} Breakdown</div><div class="bar-list">${Object.entries(g).sort((a, b) => b[1] - a[1]).map(([n, v]) => `<div><div class="bar-meta"><span class="bar-name">${esc(n)}</span><span class="bar-val">${fmtCr(v)} · ${pctOf(v, tot).toFixed(0)}%</span></div><div class="bar-track"><div class="bar-fill" style="background:${color};" data-w="${pctOf(v, tot)}%"></div></div></div>`).join('')}</div></div>`; }).join(''));
+  const mx = Math.max(d.totalAssets, 1);
+  setHTML('gauges', [['Total Assets', d.totalAssets, 'var(--green)'], ['Total Liabilities', d.totalLiab, 'var(--red)'], ['Net Worth', d.netWorth, 'var(--amber)']].map(([l, v, c]) =>
+    `<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px;"><span style="color:var(--text3);">${l}</span><span style="font-family:var(--mono);color:${c};">${fmtCr(v)}</span></div><div style="height:10px;background:var(--bg3);border-radius:6px;overflow:hidden;margin-bottom:10px;"><div style="height:100%;background:${c};border-radius:6px;width:0;transition:width 1s ease;" data-w="${Math.max(0, pctOf(v, mx))}%"></div></div>`).join(''));
+  set('gauge-ratio', pctOf(d.totalLiab, d.totalAssets).toFixed(1) + '%');
+}
+
+function renderHoldings(d) {
+  if (!d.assets.length && !d.liabilities.length) { setHTML('holdings-body', empty('No holdings yet. Add them in the Assets tab of the sheet, or tell the Telegram bot.')); return; }
+  let html = '';
+  d.classes.forEach(c => {
+    const list = d.assets.filter(a => a.cls === c).sort((a, b) => b.value - a.value);
+    const has = k => list.some(a => !blank(a[k]) && a[k] !== 0);
+    const tot = d.byClass[c], inv = list.reduce((s, a) => s + (a.invested ?? 0), 0), withInv = list.filter(a => a.invested !== null);
+    const pnl = withInv.reduce((s, a) => s + a.pnl, 0);
+    const cols = [['Name', a => `<span style="color:var(--text)">${esc(a.name)}</span>${a.ticker ? `<div class="muted" style="font-size:10px;font-family:var(--mono)">${esc(a.ticker)}</div>` : ''}`],
+      ['Type', a => `<span class="tag">${esc(a.type)}</span>`],
+      has('holder') && ['Holder', a => esc(a.holder)], has('platform') && ['Platform / Bank', a => esc(a.platform)],
+      has('units') && ['Units', a => a.units === null ? '' : a.units.toLocaleString('en-IN', { maximumFractionDigits: 3 }), 1],
+      has('avg') && ['Avg Price', a => a.avg === null ? '' : a.avg.toLocaleString('en-IN', { maximumFractionDigits: 2 }), 1],
+      has('cmp') && ['CMP', a => a.cmp === null ? '' : a.cmp.toLocaleString('en-IN', { maximumFractionDigits: 2 }), 1],
+      withInv.length && ['Invested (₹)', a => a.invested === null ? '' : fmtINR(a.invested), 1],
+      ['Current (₹)', a => `<span style="color:var(--text)">${fmtINR(a.value)}</span>`, 1],
+      withInv.length && ['P&L', a => a.pnl === null ? '' : `<span class="${a.pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${a.pnl >= 0 ? '+' : ''}${fmtINR(a.pnl)}<br><small>${a.invested ? (a.pnl / a.invested * 100).toFixed(1) + '%' : ''}</small></span>`, 1],
+      ['% of class', a => pctOf(a.value, tot).toFixed(1) + '%', 1]].filter(Boolean);
+    const curIdx = cols.findIndex(x => x[0] === 'Current (₹)');
+    const foot = cols.map((col, i) => i === 0 ? `<td>Total ${esc(c)}</td>` : col[0] === 'Current (₹)' ? `<td class="num">${fmtINR(tot)}</td>` : col[0] === 'Invested (₹)' ? `<td class="num">${fmtINR(inv)}</td>` : col[0] === 'P&L' ? `<td class="num ${pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${pnl >= 0 ? '+' : ''}${fmtINR(pnl)}</td>` : '<td></td>').join('');
+    html += `<div class="section-title">${(CLASS_META[c]||CLASS_META.Other).icon} ${esc(c)} <span class="tag amber" style="margin-left:4px">${fmtCr(tot)}</span></div>`;
+    if (c === 'Liquid') html += liquidBlock(list);
+    html += `<div class="table-wrap"><table class="data-table"><thead><tr>${cols.map(x => `<th${x[2] ? ' class="num"' : ''}>${x[0]}</th>`).join('')}</tr></thead><tbody>${list.map(a => `<tr${a.value === 0 ? ' style="opacity:.5"' : ''}>${cols.map(x => `<td${x[2] ? ' class="num"' : ''}>${x[1](a)}</td>`).join('')}</tr>`).join('')}</tbody><tfoot><tr>${foot}</tr></tfoot></table></div>`;
+    void curIdx;
+  });
+  if (d.liabilities.length) {
+    html += `<div class="section-title">🏠 Liabilities <span class="tag red" style="margin-left:4px">${fmtCr(d.totalLiab)}</span></div>
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Loan</th><th>Lender</th><th>Borrower</th><th class="num">Outstanding (₹)</th><th class="num">EMI / month</th><th class="num">Rate</th><th>Ends</th></tr></thead><tbody>
+    ${d.liabilities.map(l => `<tr><td style="color:var(--text)">${esc(l.type)}${l.limit ? `<div class="muted" style="font-size:10px">Limit ${fmtINR(l.limit)} · ${pctOf(l.outstanding, l.limit).toFixed(0)}% used</div>` : ''}</td><td>${esc(l.lender)}</td><td>${esc(l.borrower)}</td><td class="num" style="color:var(--red)">${fmtINR(l.outstanding)}</td><td class="num">${l.emi ? fmtINR(l.emi) : ''}</td><td class="num">${l.rate !== null ? l.rate + '%' : ''}</td><td>${l.ends ? fmtDate(l.ends) : ''}</td></tr>`).join('')}
+    </tbody><tfoot><tr><td colspan="3">Total</td><td class="num">${fmtINR(d.totalLiab)}</td><td class="num">${fmtINR(d.emiMonthly)}</td><td></td><td></td></tr></tfoot></table></div>`;
+  }
+  setHTML('holdings-body', html);
+}
+
+function liquidBlock(list) {
+  const fd = list.filter(a => /fd|fixed|rd|recurring/i.test(a.type)).reduce((s, a) => s + a.value, 0);
+  const sa = list.filter(a => /saving/i.test(a.type)).reduce((s, a) => s + a.value, 0);
+  const tot = list.reduce((s, a) => s + a.value, 0);
+  const banks = {};
+  list.filter(a => /saving/i.test(a.type)).forEach(a => { const b = String(a.platform || 'Other').trim() || 'Other'; (banks[b] = banks[b] || []).push(a); });
+  const bankColors = { hdfc:'#004c8f', icici:'#b02a30', sbi:'#22409a', kotak:'#ed1c24', idfc:'#9c1d26', axis:'#97144d', yes:'#0055a5' };
+  const bc = b => bankColors[Object.keys(bankColors).find(k => b.toLowerCase().includes(k))] || '#334155';
+  return `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px;">
+    <div class="kpi" style="--accent:#22c55e;"><div class="kpi-label">Fixed / Recurring Deposits</div><div class="kpi-val">${fmtCr(fd)}</div></div>
+    <div class="kpi" style="--accent:#4ade80;"><div class="kpi-label">Savings Accounts</div><div class="kpi-val">${fmtCr(sa)}</div></div>
+    <div class="kpi" style="--accent:#86efac;"><div class="kpi-label">Total Liquid</div><div class="kpi-val">${fmtCr(tot)}</div></div></div>
+    ${Object.keys(banks).length ? `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:16px;">${Object.entries(banks).sort((a, b) => b[1].reduce((s, x) => s + x.value, 0) - a[1].reduce((s, x) => s + x.value, 0)).map(([b, accs]) => `
+      <div class="bank-group"><div class="bank-group-header"><div class="bank-group-name"><div class="bank-logo" style="background:${bc(b)}">${esc(b.charAt(0).toUpperCase())}</div>${esc(b)}</div><div class="bank-group-total">${fmtINR(accs.reduce((s, x) => s + x.value, 0))}</div></div>
+      ${accs.map(a => { const t = /nre/i.test(a.name) ? 'acc-nre' : /nro/i.test(a.name) ? 'acc-nro' : 'acc-gen'; return `<div class="bank-account-row"><div class="bank-acc-holder">${esc(a.name)}${a.holder ? ' · ' + esc(a.holder) : ''}</div><span class="bank-acc-type ${t}">${t === 'acc-nre' ? 'NRE' : t === 'acc-nro' ? 'NRO' : 'SB'}</span><div class="bank-acc-bal">${fmtINR(a.value)}</div></div>`; }).join('')}</div>`).join('')}</div>` : ''}`;
+}
+
+function renderInsurance(d) {
+  const ins = d.insurance;
+  const cats = ['Term','Health','Critical Illness','Personal Accident','Motor','Life (Savings)','Home','Other'];
+  const present = [...cats.filter(c => ins.some(p => p.cat === c)), ...[...new Set(ins.map(p => p.cat))].filter(c => !cats.includes(c))];
+  const colors = { 'Term':'#3b82f6', 'Health':'#22c55e', 'Critical Illness':'#ef4444', 'Personal Accident':'#f97316', 'Motor':'#94a3b8', 'Life (Savings)':'#a855f7', 'Home':'#06b6d4', 'Other':'#64748b' };
+  const sumCover = c => ins.filter(p => p.cat === c).reduce((s, p) => s + (p.cover || 0), 0);
+  const totPrem = ins.reduce((s, p) => s + p.annual, 0);
+  setHTML('ins-summary', ins.length ? [
+    ['Life cover (Term)', fmtCr(sumCover('Term')), d.annual.income ? (sumCover('Term') / d.annual.income).toFixed(1) + '× annual income' : '', '#3b82f6'],
+    ['Health cover', fmtCr(sumCover('Health')), 'incl. top-ups', '#22c55e'],
+    ['Critical illness', fmtCr(sumCover('Critical Illness')), '', '#ef4444'],
+    ['Premiums / year', fmtCr(totPrem), pctOf(totPrem, d.annual.income).toFixed(1) + '% of income', '#f0a500'],
+  ].map(([l, v, s, c]) => `<div class="kpi" style="--accent:${c}"><div class="kpi-label">${l}</div><div class="kpi-val">${v}</div><div class="kpi-sub">${s}</div></div>`).join('') : '');
+  setHTML('ins-body', ins.length ? present.map(c => `<div class="section-title">${esc(c)}</div><div class="ins-grid">${ins.filter(p => p.cat === c).map(p => {
+    const daysTo = p.next ? Math.round((p.next - d.today) / 864e5) : null;
+    const badge = daysTo === null ? '' : daysTo <= 30 ? `<span class="ins-abs-badge" style="background:rgba(239,68,68,.15);color:#f87171;">Due in ${daysTo}d</span>` : daysTo <= 90 ? `<span class="ins-abs-badge" style="background:rgba(245,158,11,.15);color:#fbbf24;">Due in ${daysTo}d</span>` : '';
+    return `<div class="ins-card" style="--accent:${colors[c] || '#64748b'}">${badge}<div class="ins-name">${esc(p.name)}</div><div class="ins-meta">
+      ${[['Insurer', esc(p.insurer) || '—'], ['Insured', esc(p.insured) || '—'], ['Cover', p.cover ? fmtCr(p.cover) : '—'], ['Premium', fmtINR(p.premium) + ' · ' + esc(p.freq)],
+        ['Next due', p.next ? fmtDate(p.next) + (p.overdueRolled ? ' *' : '') : '—'], ['Per year', fmtINR(p.annual)], p.till ? ['Pay till', esc(p.till)] : null].filter(Boolean)
+        .map(([l, v]) => `<div class="ins-row"><span class="ins-row-label">${l}</span><span class="ins-row-val">${v}</span></div>`).join('')}
+      </div>${p.notes ? `<div style="font-size:11px;color:var(--text3);margin-top:10px;line-height:1.4;">${esc(p.notes)}</div>` : ''}${p.overdueRolled ? `<div style="font-size:10px;color:var(--amber);margin-top:6px;">* Date in sheet has passed — showing the next cycle. Update the sheet after paying.</div>` : ''}</div>`; }).join('')}</div>`).join('') : empty('No policies yet. Add them in the Insurance tab of the sheet.'));
+}
+
+function renderPayments(d) {
+  const start = d.today.getMonth(), Y = d.today.getFullYear();
+  const rows = [];
+  for (let k = 0; k < 12; k++) {
+    const mi = (start + k) % 12, yy = Y + Math.floor((start + k) / 12), m = d.months[mi];
+    const items = [
+      ...m.premiums.map(p => { const day = p.next ? p.next.getDate() : null; return { name: `${p.name}${p.insurer ? ' · ' + p.insurer : ''}`, sub: 'Premium', day, amt: p.premium }; }),
+      ...m.items.filter(x => !x.spread).map(x => ({ name: x.name, sub: x.type === 'saving' ? 'Saving' : 'Payment', day: null, amt: x.amt })),
+    ].sort((a, b) => (a.day ?? 99) - (b.day ?? 99));
+    rows.push({ label: `${MONTHS[mi]}${yy !== Y ? " '" + String(yy).slice(2) : ''}`, items, now: k === 0, total: items.reduce((s, x) => s + x.amt, 0) });
+  }
+  setHTML('pay-grid', rows.some(r => r.items.length) ? rows.map(r => `<div class="pay-month${r.now ? ' now' : ''}"><div class="pay-month-label">${r.label}</div><div class="pay-items">${r.items.length ? r.items.map(x => `<div class="pay-item${r.now && x.day && x.day < d.today.getDate() ? ' past' : ''}"><div class="pay-name">${esc(x.name)} <span class="tag${x.sub === 'Premium' ? ' amber' : ''}">${x.sub}</span></div><div class="pay-date">${x.day ? x.day + ' ' + r.label.slice(0, 3) : ''}</div><div class="pay-amt">${fmtINR(x.amt)}</div></div>`).join('') + (r.items.length > 1 ? `<div style="text-align:right;font-family:var(--mono);font-size:10px;color:var(--text3);padding-right:10px;">Month total ${fmtINR(r.total)}</div>` : '') : '<div class="muted" style="font-size:11px;padding:4px 0">—</div>'}</div></div>`).join('') : empty('No scheduled payments. Insurance premiums and non-monthly items (school fees, PPF…) appear here.'));
+  const prem = d.insurance.reduce((s, p) => s + p.annual, 0);
+  set('pay-total', fmtINR(prem)); set('pay-monthly', fmtINR(prem / 12)); set('pay-all', fmtINR(rows.reduce((s, r) => s + r.total, 0)));
+}
+
+function renderFIRE(d) {
+  const f = d.fire;
+  setHTML('fire-params', [
+    ['Income Growth', (f.g * 100).toFixed(1) + '%'], ['Investment Return', (f.r * 100).toFixed(1) + '%'], ['Inflation', (f.inf * 100).toFixed(1) + '%'],
+    ['FIRE Target (today)', fmtCr(f.target0)], ['Starting Corpus', fmtCr(f.corpus0)], ['Yearly Investable', fmtCr(f.saving0)],
+    ['Monthly Income', fmtINR(d.monthlyIncome)], ['Monthly Spend', fmtINR(d.monthlySpend)],
+    ['Saving Rate', d.annual.income ? pctOf(f.saving0, d.annual.income).toFixed(1) + '%' : '—'],
+  ].map(([l, v]) => `<div class="fire-param"><div class="fire-param-label">${l}</div><div class="fire-param-val">${v}</div></div>`).join(''));
+  set('fire-note', `Corpus = ${f.includesAll ? 'all assets' : 'investments (excl. liquid & real estate)'}. Target = ${f.explicitTarget ? 'fixed amount from the sheet' : fmtINR(f.retireMonthly) + '/month × 12 × ' + f.mult}, grown by inflation. Yearly investable = income − spending (incl. EMI & insurance), growing with income. Change assumptions in the Profile tab.`);
+  if (!f.rows.length || (!f.corpus0 && !f.saving0)) { setHTML('fire-bars', empty('Add assets and cash flow to see the projection.')); setHTML('tbl-fire', ''); return; }
+  const cross = f.rows.find(r => r.invest >= r.fireAmt);
+  const box = document.getElementById('fire-crossover');
+  box.style.display = 'flex';
+  if (cross) { set('fire-crossover-yr', `Year ${cross.yr} · ${cross.year}`); set('fire-crossover-val', fmtCr(cross.invest * 1e5)); }
+  else { set('fire-crossover-yr', `Not within ${f.years} years`); set('fire-crossover-val', fmtCr(f.rows[f.rows.length - 1].invest * 1e5)); }
+  const maxV = Math.max(...f.rows.flatMap(r => [r.invest, r.fireAmt]), 1);
+  setHTML('fire-bars', f.rows.map(r => { const ih = (r.invest / maxV * 180).toFixed(1), fh = (r.fireAmt / maxV * 180).toFixed(1), ok = r.invest >= r.fireAmt;
+    return `<div class="fire-bar-col" title="Year ${r.yr} (${r.year}): corpus ${fmtCr(r.invest * 1e5)} · target ${fmtCr(r.fireAmt * 1e5)}"><div style="display:flex;align-items:flex-end;width:100%;height:180px;gap:1px;"><div style="flex:1;height:${ih}px;background:var(--blue);border-radius:2px 2px 0 0;min-height:1px;opacity:.9"></div><div style="flex:1;height:${fh}px;background:${ok ? 'var(--green)' : 'var(--amber)'};border-radius:2px 2px 0 0;min-height:1px;"></div></div><div class="fire-bar-yr">${r.yr}</div></div>`; }).join(''));
+  setHTML('tbl-fire', f.rows.map(r => { const ok = r.invest >= r.fireAmt;
+    return `<tr${cross && r.yr === cross.yr ? ' style="background:rgba(34,197,94,.08)"' : ''}><td style="font-family:var(--mono);color:var(--text3);font-size:11px;">${r.yr} · ${r.year}</td><td class="num">${r.income.toFixed(1)}</td><td class="num">${r.saving.toFixed(1)}</td><td class="num" style="color:var(--blue)">${r.invest.toFixed(1)}</td><td class="num" style="color:var(--amber)">${r.fireAmt.toFixed(1)}</td><td class="num">${ok ? '<span style="color:var(--green)">✅ FIRE</span>' : `<span class="muted">${(r.invest / r.fireAmt * 100).toFixed(0)}%</span>`}</td></tr>`; }).join(''));
+}
+
+function renderCashflow(d) {
+  const a = d.annual;
+  if (!d.cfItems.length && !d.emiMonthly && !d.insurance.length) {
+    ['cf-kpi-row','cf-fixed-grid','cf-month-grid','tbl-cashflow','tfoot-cashflow'].forEach(id => setHTML(id, ''));
+    setHTML('cf-kpi-row', empty('Add income, expenses and savings in the CashFlow tab of the sheet.')); return;
+  }
+  setHTML('cf-kpi-row', [['Annual Income', fmtINR(a.income), 'var(--green)'], ['Annual Outgoings', fmtINR(a.out), 'var(--red)'], ['Net Surplus', fmtINR(a.surplus), a.surplus >= 0 ? 'var(--amber)' : 'var(--red)'],
+    ['Avg Monthly Out', fmtCr(a.out / 12), 'var(--text)'], ['Insurance / yr', fmtINR(a.ins), 'var(--purple)'], ['Savings / yr', fmtINR(a.saving), 'var(--blue)']]
+    .map(([l, v, c]) => `<div class="kpi" style="--accent:${c}"><div class="kpi-label">${l}</div><div class="kpi-val" style="font-size:18px;color:${c};">${v}</div></div>`).join(''));
+  const monthlyItems = t => d.cfItems.filter(c => c.type === t && c.monthly);
+  const sav = monthlyItems('saving'), exp = monthlyItems('expense');
+  const savExtra = d.cfItems.filter(c => c.type === 'saving' && !c.monthly).reduce((s, c) => s + c.perMonth.reduce((x, y) => x + y, 0), 0) / 12;
+  const card = (title, color, rows, total) => `<div class="cf-month-card"><div class="cf-month-header"><div class="cf-month-name" style="color:${color}">${title}</div><div class="cf-month-total">${fmtINR(total)}/mo · ${pctOf(total, d.monthlyIncome).toFixed(0)}% of income</div></div>${rows.map(([l, v]) => `<div class="cf-row"><span class="cf-row-label">${esc(l)}</span><span class="cf-row-val">${v}</span></div>`).join('') || '<div class="cf-row"><span class="cf-row-label">—</span></div>'}</div>`;
+  const savRows = sav.map(c => [c.item, fmtINR(c.amt)]); if (savExtra) savRows.push(['Non-monthly savings (avg)', fmtINR(savExtra)]);
+  const expRows = [...exp.map(c => [c.item, fmtINR(c.amt)]), ...d.loans.filter(l => l.emi).map(l => [`${l.type} EMI${l.lender ? ' · ' + l.lender : ''}`, fmtINR(l.emi)])];
+  setHTML('cf-fixed-grid', card('📈 Savings', 'var(--blue)', savRows, sav.reduce((s, c) => s + c.amt, 0) + savExtra) + card('💸 Expenses & EMIs', 'var(--red)', expRows, exp.reduce((s, c) => s + c.amt, 0) + d.emiMonthly));
+  setHTML('cf-month-grid', d.months.map(m => {
+    const lines = [['Income', m.income, 'pos'], ['Living expenses', m.expense, ''], ['Insurance', m.ins, m.ins ? 'amber' : ''], ['EMI', m.emi, ''], ['Savings', m.saving, '']].filter(x => x[1]);
+    const extras = [...m.premiums.map(p => `${p.name} ${fmtCr(p.premium)}`), ...m.items.filter(x => !x.spread).map(x => `${x.name} ${fmtCr(x.amt)}`)];
+    return `<div class="cf-month-card"><div class="cf-month-header"><div class="cf-month-name">${m.m}</div><div class="cf-month-total">Out ${fmtINR(m.out)}</div></div>${lines.map(([l, v, c]) => `<div class="cf-row"><span class="cf-row-label">${l}</span><span class="cf-row-val ${c}">${fmtINR(v)}</span></div>`).join('')}<div class="cf-row"><span class="cf-row-label" style="color:var(--text2)">Surplus</span><span class="cf-row-val ${m.surplus >= 0 ? 'pos' : 'neg'}">${fmtINR(m.surplus)}</span></div>${extras.length ? `<div style="padding:6px 16px 10px;font-size:10px;color:var(--text3);line-height:1.5">Includes: ${extras.map(esc).join(' · ')}</div>` : ''}</div>`; }).join(''));
+  const cell = (v, cls) => `<td class="num${cls ? ' ' + cls : ''}">${v ? fmtINR(v) : '—'}</td>`;
+  setHTML('tbl-cashflow', d.months.map(m => `<tr><td style="font-family:var(--syne);font-weight:700;color:var(--amber);font-size:11px">${m.m}</td>${cell(m.income, 'gain-pos')}${cell(m.expense)}${cell(m.ins)}${cell(m.emi)}${cell(m.saving)}${cell(m.out)}<td class="num ${m.surplus >= 0 ? 'gain-pos' : 'gain-neg'}">${fmtINR(m.surplus)}</td></tr>`).join(''));
+  setHTML('tfoot-cashflow', `<tr><td>Annual Total</td>${['income','expense','ins','emi','saving','out','surplus'].map(k => `<td class="num">${fmtINR(a[k])}</td>`).join('')}</tr>`);
+}
+
+function renderParameters(d) {
+  const inc = d.monthlyIncome, annInc = d.annual.income, spendM = d.monthlySpend, annSpend = d.annualSpend;
+  const liq = d.byClass['Liquid'] || 0, invest = INVESTABLE.reduce((s, c) => s + (d.byClass[c] || 0), 0);
+  const nw = d.netWorth, emergencyTarget = d.P('Emergency Fund (months)', 6);
+  const cardLimit = d.cards.reduce((s, c) => s + (c.limit || 0), 0), cardBal = d.cards.reduce((s, c) => s + c.outstanding, 0);
+  const rent = d.cfItems.filter(c => c.type === 'expense' && /^rent$/i.test(c.cat)).reduce((s, c) => s + c.perMonth.reduce((x, y) => x + y, 0), 0) / 12;
+  const term = d.insurance.filter(p => p.cat === 'Term').reduce((s, p) => s + (p.cover || 0), 0);
+  const health = d.insurance.filter(p => p.cat === 'Health').reduce((s, p) => s + (p.cover || 0), 0);
+  const noInc = !annInc;
+  const mk = (o) => {
+    const v = o.value;
+    if (o.na || v === null || !isFinite(v)) return { ...o, na: true, fmt: 'N/A', status: 'na', barPct: 0, barColor: '#64748b' };
+    const pass = o.hib ? v >= o.pass : v <= o.pass, warn = o.hib ? v >= o.warn : v <= o.warn;
+    const status = pass ? 'pass' : warn ? 'warn' : 'fail';
+    return { ...o, status, fmt: o.f(v), barPct: Math.max(2, Math.min(100, o.bar(v))), barColor: status === 'pass' ? '#22c55e' : status === 'warn' ? '#f59e0b' : '#ef4444' };
+  };
+  const params = [
+    mk({ icon:'💰', label:'Saving Rate', benchmark:'≥ 20% (15% min)', hib:true, pass:20, warn:15, na:noInc, value: pctOf(d.annual.saving, annInc), f: v => v.toFixed(1) + '%', bar: v => v / 30 * 100,
+      note: `Planned savings (SIP, PPF, etc.) of ${fmtCr(d.annual.saving)}/yr on income of ${fmtCr(annInc)}/yr.`, derivation:'Yearly savings ÷ Yearly income',
+      suggestion: `Reaching 20% means saving about ${fmtINR(Math.max(0, (annInc * 0.2 - d.annual.saving) / 12))} more each month. A yearly SIP step-up is an easy way to get there.` }),
+    mk({ icon:'💳', label:'Credit Utilisation', benchmark:'< 30%', hib:false, pass:30, warn:50, na: !cardLimit, value: pctOf(cardBal, cardLimit), f: v => v.toFixed(1) + '%', bar: v => v,
+      note: cardLimit ? `Card balances ${fmtINR(cardBal)} on limits of ${fmtINR(cardLimit)}.` : 'No credit card limits in the sheet. Add cards in Liabilities (Loan Type “Credit Card”) with balance and limit.', derivation:'Card balances ÷ Card limits',
+      suggestion: 'Pay card balances in full before the statement date, or keep usage under 30% of the limit to protect your credit score.' }),
+    mk({ icon:'🏠', label:'Housing Cost', benchmark:'< 30% of income', hib:false, pass:25, warn:30, na: noInc, value: pctOf(d.homeEmi + rent, inc), f: v => v.toFixed(1) + '%', bar: v => v / 50 * 100,
+      note: `Home-loan EMI${rent ? ' + rent' : ''} of ${fmtINR(d.homeEmi + rent)}/month on income of ${fmtINR(inc)}.`, derivation:'(Home EMI + Rent) ÷ Monthly income',
+      suggestion: `Keeping housing under 30% means about ${fmtINR(inc * 0.3)}/month. Part-prepayments of the home loan reduce the EMI or the tenure.` }),
+    mk({ icon:'⚖️', label:'Debt Servicing Ratio', benchmark:'< 35% of income', hib:false, pass:30, warn:35, na: noInc, value: pctOf(d.emiMonthly, inc), f: v => v.toFixed(1) + '%', bar: v => v / 50 * 100,
+      note: `All EMIs ${fmtINR(d.emiMonthly)}/month on income of ${fmtINR(inc)}.`, derivation:'Total EMIs ÷ Monthly income',
+      suggestion: `Lenders and planners prefer total EMIs under ${fmtINR(inc * 0.3)}/month (30%). Close the costliest loan first.` }),
+    mk({ icon:'📊', label:'Debt-to-Asset Ratio', benchmark:'< 50%', hib:false, pass:40, warn:50, na: !d.totalAssets, value: pctOf(d.totalLiab, d.totalAssets), f: v => v.toFixed(1) + '%', bar: v => v,
+      note: `Liabilities ${fmtCr(d.totalLiab)} against assets of ${fmtCr(d.totalAssets)}.`, derivation:'Total liabilities ÷ Total assets',
+      suggestion: 'Growing investments and prepaying loans both improve this ratio.' }),
+    mk({ icon:'💧', label:'Liquid Assets', benchmark:'≥ 15% of net worth', hib:true, pass:20, warn:15, na: nw <= 0, value: pctOf(liq, nw), f: v => v.toFixed(1) + '%', bar: v => v / 30 * 100,
+      note: `Liquid holdings (savings, FDs) of ${fmtCr(liq)} against net worth of ${fmtCr(nw)}.`, derivation:'Liquid assets ÷ Net worth',
+      suggestion: `15% of net worth is ${fmtCr(nw * 0.15)}. Build it with FDs or liquid funds before adding risk.` }),
+    mk({ icon:'🛟', label:'Emergency Fund', benchmark:`≥ ${emergencyTarget} months of spending`, hib:true, pass:emergencyTarget, warn:Math.max(3, emergencyTarget / 2), na: !spendM, value: liq / spendM, f: v => v.toFixed(1) + ' mo', bar: v => v / (emergencyTarget * 1.5) * 100,
+      note: `Liquid money covers ${(liq / (spendM || 1)).toFixed(1)} months of spending (${fmtINR(spendM)}/month incl. EMI & insurance).`, derivation:'Liquid assets ÷ Monthly spending',
+      suggestion: `Target ${fmtCr(spendM * emergencyTarget)} in savings, FDs or liquid funds.` }),
+    mk({ icon:'📈', label:'Investment Assets', benchmark:'≥ 50% of net worth', hib:true, pass:60, warn:50, na: nw <= 0, value: pctOf(invest, nw), f: v => v.toFixed(1) + '%', bar: v => v,
+      note: `Investments (equity, debt, gold, REITs) of ${fmtCr(invest)} vs net worth of ${fmtCr(nw)}.`, derivation:'(Equity + Debt + Gold + REITs) ÷ Net worth',
+      suggestion: 'Money parked beyond the emergency fund can move into the long-term plan agreed with your advisor.' }),
+    mk({ icon:'🏖️', label:'Retirement Savings', benchmark:'≥ 25× yearly spending', hib:true, pass:25, warn:15, na: !annSpend, value: d.totalAssets / annSpend, f: v => v.toFixed(1) + '×', bar: v => v / 30 * 100,
+      note: `Assets of ${fmtCr(d.totalAssets)} cover ${(d.totalAssets / (annSpend || 1)).toFixed(1)}× yearly spending of ${fmtCr(annSpend)}. The 4% rule needs 25×.`, derivation:'Total assets ÷ Yearly spending',
+      suggestion: `25× today's spending is ${fmtCr(annSpend * 25)}. The FIRE tab shows when the plan reaches it.` }),
+    mk({ icon:'🛡️', label:'Life Cover', benchmark:'≥ 10× yearly income', hib:true, pass:10, warn:7, na: noInc, value: term / annInc, f: v => v.toFixed(1) + '×', bar: v => v / 15 * 100,
+      note: `Term cover of ${fmtCr(term)} on yearly income of ${fmtCr(annInc)}.`, derivation:'Total term cover ÷ Yearly income',
+      suggestion: `10× income is ${fmtCr(annInc * 10)}${d.totalLiab ? ', plus outstanding loans of ' + fmtCr(d.totalLiab) : ''}. Pure term plans are the cheapest way to close the gap.` }),
+    mk({ icon:'🏥', label:'Health Cover', benchmark:'≥ ₹10 L (family)', hib:true, pass:1e6, warn:5e5, value: health, f: v => fmtCr(v), bar: v => v / 2e6 * 100,
+      note: `Health cover (base + top-ups) of ${fmtCr(health)}.`, derivation:'Sum of health policies incl. super top-ups',
+      suggestion: 'A super top-up is a low-cost way to raise cover above the base policy.' }),
+  ];
+  params.forEach((p, i) => p.no = i + 1);
+  const meas = params.filter(p => !p.na), pass = meas.filter(p => p.status === 'pass').length, warn = meas.filter(p => p.status === 'warn').length, fail = meas.length - pass - warn, na = params.length - meas.length;
+  const score = meas.length ? Math.round((pass + warn * 0.5) / meas.length * 100) : 0;
+  const col = score >= 75 ? '#22c55e' : score >= 50 ? '#f59e0b' : '#ef4444';
+  document.getElementById('param-score-circle').style.borderColor = col;
+  const sn = document.getElementById('param-score-num'); sn.textContent = score; sn.style.color = col;
+  set('param-score-title', `Financial Health: ${score >= 75 ? 'Good' : score >= 50 ? 'Fair' : 'Needs Work'}`);
+  set('param-score-sub', `${pass} of ${meas.length} benchmarks met · ${warn} watch · ${fail} action needed${na ? ` · ${na} N/A` : ''}`);
+  set('param-checks', `${pass}/${meas.length}`);
+  const bar = document.getElementById('param-score-bar'); bar.style.background = col; bar.style.width = score + '%';
+  const badge = s => ({ pass:['status-pass','✅ On Track'], warn:['status-warn','⚠️ Watch'], fail:['status-fail','❌ Action'], na:['status-na','N/A'] }[s]);
+  setHTML('param-grid', params.map(p => { const [cls, txt] = badge(p.status);
+    return `<div class="param-card"><div class="param-card-header"><div class="param-card-icon">${p.icon}</div><div class="param-card-title">${p.label}</div><div class="param-card-status ${cls}">${txt}</div></div>
+      <div class="param-card-body"><div class="param-vals"><div class="param-actual" style="color:${p.barColor}">${p.fmt}</div><div class="param-benchmark">Benchmark: ${p.benchmark}</div></div>
+      <div class="param-bar-track"><div class="param-bar-fill" style="background:${p.barColor};width:0" data-w="${p.barPct}%"></div></div><div class="param-note">${p.note}</div>
+      ${p.status === 'warn' || p.status === 'fail' ? `<div class="param-suggestion"><div class="param-suggestion-label">💡 Worth discussing</div><div class="param-suggestion-text">${p.suggestion}</div></div>` : ''}</div></div>`; }).join(''));
+  setHTML('tbl-params', params.map(p => `<tr><td class="muted">${p.no}</td><td style="color:var(--text)">${p.icon} ${p.label}</td><td style="font-family:var(--mono);font-size:11px;color:var(--amber)">${p.benchmark}</td><td class="num">${p.fmt}</td><td><span class="param-card-status ${badge(p.status)[0]}">${badge(p.status)[1]}</span></td><td class="muted" style="font-size:11px">${p.derivation}</td></tr>`).join(''));
+}
+
+// ═══════════════════════════════════════════════════════
+//  PWA
+// ═══════════════════════════════════════════════════════
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; document.getElementById('install-btn').style.display = 'flex'; });
+function doInstall() { if (!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.finally(() => { deferredPrompt = null; document.getElementById('install-btn').style.display = 'none'; }); }
+if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+
+try { const t = sessionStorage.getItem('r2r_tab'); if (t) switchTab(t); } catch (e) {}
+loadAllData();
+</script>
+</body>
+</html>
