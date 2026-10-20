@@ -1,9 +1,10 @@
 {
+  "id": "/r2r-tracker/",
   "name": "R2R Financial Tracker",
   "short_name": "R2R",
-  "description": "Your personal finance dashboard \u2014 net worth, allocation, insurance, FIRE and cash flow.",
-  "start_url": "./",
-  "scope": "./",
+  "description": "Your personal finance dashboard — net worth, allocation, insurance, FIRE and cash flow.",
+  "start_url": "./index.html",
+  "scope": "./index.html",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#04080f",
