@@ -1,5 +1,5 @@
 // Bump this string whenever you deploy a change you want pushed to installed apps.
-const CACHE = 'r2r-client-v3';
+const CACHE = 'r2r-client-v4';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-512-maskable.png', './apple-touch-icon.png',
   './expenses.html', './expenses.webmanifest', './expenses-icon-192.png', './expenses-icon-512.png', './expenses-icon-512-maskable.png', './expenses-touch-icon.png'];
 

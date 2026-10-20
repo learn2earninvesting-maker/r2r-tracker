@@ -446,7 +446,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8
 // ═══════════════════════════════════════════════════════
 const TABS = [
   ['overview','Overview','🏠','Overview'], ['allocation','Allocation','🥧','Alloc'],
-  ['holdings','Holdings','📊','Holdings'], ['stocks','Shares','📈','Shares'], ['funds','Mutual Funds','🧺','MFs'],
+  ['holdings','Holdings','📊','Holdings'], ['stocks','Indian Stocks','📈','Stocks'], ['funds','Mutual Funds','🧺','MFs'],
   ['insurance','Insurance','🛡️','Insure'],
   ['payments','Payments','📅','Payments'], ['parameters','🩺 Health Check','🩺','Health'],
   // FIRE Tracker and Cash Flow are switched off for now (they need income/spending data).
@@ -802,23 +802,34 @@ function renderAllocation(d) {
 }
 
 function renderHoldings(d) {
-  const manual = d.assets.filter(a => !a.fromFile);
-  const shares = d.assets.filter(a => a.kind === 'stock'), funds = d.assets.filter(a => a.kind === 'mf');
   const sum = l => l.reduce((s, a) => s + a.value, 0);
+  // Items from the holdings files show here as ONE summary line per section; the detail is on their own tabs
+  const summary = [];
+  [['stock', 'stocks', 'Indian Stocks'], ['mf', 'funds', 'Mutual Funds']].forEach(([kind, tab, label]) => {
+    const all = d.assets.filter(a => a.kind === kind);
+    [...new Set(all.map(a => a.cls))].forEach(c => {
+      const part = all.filter(a => a.cls === c), withInv = part.filter(a => a.invested !== null);
+      const types = [...new Set(part.map(a => a.type))];
+      const name = kind === 'stock' ? (c === 'Equity' ? 'Indian Stocks' : types.map(t => ({ SGB: 'Gold bonds (SGB)', 'Gold ETF': 'Gold ETFs', REIT: 'REITs', InvIT: 'InvITs' })[t] || t).join(' & '))
+        : (c === 'Equity' && types.includes('Hybrid MF') ? 'Mutual funds (equity + hybrid)' : 'Mutual funds');
+      const invested = withInv.length === part.length ? withInv.reduce((s, a) => s + a.invested, 0) : null, value = sum(part);
+      summary.push({ cls: c, name, type: label, holder: [...new Set(part.map(a => a.holder).filter(Boolean))].join(', '),
+        platform: [...new Set(part.map(a => a.platform).filter(Boolean))].join(', '), units: null, avg: null, cmp: null,
+        invested, value, pnl: invested !== null ? value - invested : null, ticker: part.length + (kind === 'stock' ? ' holding' : ' fund') + (part.length === 1 ? '' : 's') + ' · open ' + label + ' tab →', link: tab });
+    });
+  });
+  const manual = d.assets.filter(a => !a.fromFile).concat(summary);
   let html = '';
-  if (shares.length || funds.length) html += `<div class="kpi-grid" style="margin-top:4px">${[
-    shares.length && ['stocks', '📈', 'Shares', sum(shares), shares.length + ' line' + (shares.length === 1 ? '' : 's') + ' · see the Shares tab', '#3b82f6'],
-    funds.length && ['funds', '🧺', 'Mutual Funds', sum(funds), funds.length + ' fund' + (funds.length === 1 ? '' : 's') + ' · see the Mutual Funds tab', '#a855f7']].filter(Boolean).map(([id, ic, l, v, sub, col]) =>
-    `<div class="kpi" style="--accent:${col};cursor:pointer" onclick="switchTab('${id}')"><div class="kpi-icon">${ic}</div><div class="kpi-label">${l}</div><div class="kpi-val">${fmtCr(v)}</div><div class="kpi-sub">${sub} →</div></div>`).join('')}</div>`;
-  if (!manual.length && !d.liabilities.length) { setHTML('holdings-body', html + empty(shares.length || funds.length ? 'Everything else you own (bank balances, FDs, PPF, gold, property…) goes in the Assets tab of your sheet.' : 'No holdings yet. Add them in the Assets tab of the sheet, or send your broker holdings file to the Telegram bot.')); return; }
+  if (!manual.length && !d.liabilities.length) { setHTML('holdings-body', empty('No holdings yet. Add them in the Assets tab of the sheet, or send your broker holdings file to the Telegram bot.')); return; }
   const mClasses = d.classes.filter(c => manual.some(a => a.cls === c));
   mClasses.forEach(c => {
     const list = manual.filter(a => a.cls === c).sort((a, b) => b.value - a.value);
     const has = k => list.some(a => !blank(a[k]) && a[k] !== 0);
     const tot = sum(list), inv = list.reduce((s, a) => s + (a.invested ?? 0), 0), withInv = list.filter(a => a.invested !== null);
     const pnl = withInv.reduce((s, a) => s + a.pnl, 0);
-    const cols = [['Name', a => `<span style="color:var(--text)">${esc(a.name)}</span>${a.ticker ? `<div class="muted" style="font-size:10px;font-family:var(--mono)">${esc(a.ticker)}</div>` : ''}`],
-      ['Type', a => `<span class="tag">${esc(a.type)}</span>`],
+    const cols = [['Name', a => a.link ? `<a href="#" onclick="switchTab('${a.link}');return false" style="color:var(--amber);text-decoration:none;font-weight:600">${esc(a.name)}</a><div class="muted" style="font-size:10px">${esc(a.ticker)}</div>`
+        : `<span style="color:var(--text)">${esc(a.name)}</span>${a.ticker ? `<div class="muted" style="font-size:10px;font-family:var(--mono)">${esc(a.ticker)}</div>` : ''}`],
+      ['Type', a => `<span class="tag${a.link ? ' amber' : ''}">${esc(a.type)}</span>`],
       has('holder') && ['Holder', a => esc(a.holder)], has('platform') && ['Platform / Bank', a => esc(a.platform)],
       has('units') && ['Units', a => a.units === null ? '' : a.units.toLocaleString('en-IN', { maximumFractionDigits: 3 }), 1],
       has('avg') && ['Avg Price', a => a.avg === null ? '' : a.avg.toLocaleString('en-IN', { maximumFractionDigits: 2 }), 1],
@@ -829,9 +840,8 @@ function renderHoldings(d) {
       ['% of class', a => pctOf(a.value, tot).toFixed(1) + '%', 1]].filter(Boolean);
     const curIdx = cols.findIndex(x => x[0] === 'Current (₹)');
     const foot = cols.map((col, i) => i === 0 ? `<td>Total ${esc(c)}</td>` : col[0] === 'Current (₹)' ? `<td class="num">${fmtINR(tot)}</td>` : col[0] === 'Invested (₹)' ? `<td class="num">${fmtINR(inv)}</td>` : col[0] === 'P&L' ? `<td class="num ${pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${pnl >= 0 ? '+' : ''}${fmtINR(pnl)}</td>` : '<td></td>').join('');
-    const extra = d.byClass[c] - tot;
-    html += `<div class="section-title">${(CLASS_META[c]||CLASS_META.Other).icon} ${esc(c)} <span class="tag amber" style="margin-left:4px">${fmtCr(tot)}</span>${extra > 1 ? `<span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">+ ${fmtCr(extra)} in Shares / Mutual Funds · ${esc(c)} total ${fmtCr(d.byClass[c])}</span>` : ''}</div>`;
-    if (c === 'Liquid') html += liquidBlock(list);
+    html += `<div class="section-title">${(CLASS_META[c]||CLASS_META.Other).icon} ${esc(c)} <span class="tag amber" style="margin-left:4px">${fmtCr(tot)}</span></div>`;
+    if (c === 'Liquid') html += liquidBlock(list.filter(a => !a.link));
     html += `<div class="table-wrap"><table class="data-table"><thead><tr>${cols.map(x => `<th${x[2] ? ' class="num"' : ''}>${x[0]}</th>`).join('')}</tr></thead><tbody>${list.map(a => `<tr${a.value === 0 ? ' style="opacity:.5"' : ''}>${cols.map(x => `<td${x[2] ? ' class="num"' : ''}>${x[1](a)}</td>`).join('')}</tr>`).join('')}</tbody><tfoot><tr>${foot}</tr></tfoot></table></div>`;
     void curIdx;
   });
@@ -844,8 +854,8 @@ function renderHoldings(d) {
   setHTML('holdings-body', html);
 }
 
-// ── Shares tab: everything from the broker holdings file(s)
-const STOCK_GROUPS = [['Shares', a => a.type === 'Stocks'], ['Equity ETFs', a => a.type === 'ETF' && a.cls === 'Equity'],
+// ── Indian Stocks tab: everything from the broker holdings file(s)
+const STOCK_GROUPS = [['Stocks', a => a.type === 'Stocks'], ['Equity ETFs', a => a.type === 'ETF' && a.cls === 'Equity'],
   ['Gold bonds (SGB)', a => a.type === 'SGB'], ['Gold & silver ETFs', a => /gold etf|silver/i.test(a.type)],
   ['REITs & InvITs', a => /reit|invit/i.test(a.type)], ['Debt ETFs', a => a.cls === 'Debt'], ['Other', () => true]];
 function fileTable(list, total, cols) {
@@ -871,7 +881,7 @@ function fileUpdated(list) {
 }
 function renderStocks(d) {
   const list = d.assets.filter(a => a.kind === 'stock').sort((a, b) => b.value - a.value);
-  if (!list.length) { setHTML('stocks-body', empty('No shares yet. Send your broker\'s holdings file (Zerodha Console → Portfolio → Holdings → XLSX, or the Excel/CSV from Groww, Upstox…) to the Tracker bot. Shares, ETFs, gold bonds and REITs from it show here.')); return; }
+  if (!list.length) { setHTML('stocks-body', empty('No Indian stocks yet. Send your broker\'s holdings file (Zerodha Console → Portfolio → Holdings → XLSX, or the Excel/CSV from Groww, Upstox…) to the Tracker bot. Shares, ETFs, gold bonds and REITs from it show here.')); return; }
   const total = list.reduce((s, a) => s + a.value, 0);
   const plats = [...new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · ')).filter(Boolean))];
   let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list);
@@ -885,7 +895,7 @@ function renderStocks(d) {
   STOCK_GROUPS.forEach(([g, test]) => {
     const part = list.filter(a => !used.has(a) && test(a)); if (!part.length) return; part.forEach(a => used.add(a));
     const v = part.reduce((s, a) => s + a.value, 0);
-    const note = g === 'Shares' || g === 'Equity ETFs' ? 'counted in Equity' : /gold/i.test(g) ? 'counted in Gold' : /reit/i.test(g) ? 'counted in REITs / InvITs' : g === 'Debt ETFs' ? 'counted in Debt' : '';
+    const note = g === 'Stocks' || g === 'Equity ETFs' ? 'counted in Equity' : /gold/i.test(g) ? 'counted in Gold' : /reit/i.test(g) ? 'counted in REITs / InvITs' : g === 'Debt ETFs' ? 'counted in Debt' : '';
     html += `<div class="section-title">${esc(g)} <span class="tag amber" style="margin-left:4px">${fmtCr(v)}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(v, total).toFixed(1)}%${note ? ' · ' + note : ''}</span></div>` + fileTable(part, total, cols);
   });
   setHTML('stocks-body', html);
