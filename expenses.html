@@ -9,6 +9,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="R2R Expenses">
 <title>R2R Expenses</title>
+<link rel="manifest" href="expenses.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="expenses-icon-192.png">
+<link rel="apple-touch-icon" href="expenses-touch-icon.png">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
@@ -105,6 +109,7 @@ footer{color:var(--faint);font-size:12px;padding-block:6px 30px;display:flex;gap
       <div class="who"><h1>Expenses</h1><p id="who">Loading…</p></div>
       <select id="period" aria-label="Period" style="width:auto;min-width:150px"></select>
     </div>
+    <div class="hint" id="install-bar" hidden style="align-items:center;margin-bottom:10px"><div style="flex:1;min-width:0">Add <b>R2R Expenses</b> to your home screen</div><button class="btn pri" type="button" id="install-btn">Install</button></div>
     <nav class="tabs" role="tablist" id="tabs" aria-label="Sections"></nav>
   </div>
 </header>
@@ -280,17 +285,35 @@ function render(){
 }
 function showError(title,text){ $("#who").textContent=""; $("#main").replaceChildren(h("div",{class:"err",role:"alert"},h("h2",null,title),h("p",null,text))); $("#foot").replaceChildren(); }
 function skeleton(){ $("#main").replaceChildren(h("div",{class:"kpis"},[1,2,3,4].map(()=>h("div",{class:"card kpi"},h("div",{class:"skel",style:"width:50%"}),h("div",{class:"skel",style:"height:26px;width:70%"})))),h("div",{class:"card"},h("div",{class:"skel",style:"height:180px"}))); }
+/* ───── who is this? Keys come from the link once, then live on the phone ───── */
+function keysFrom(text){ try{ const u=new URL(String(text).trim(),location.href), c=u.searchParams.get("c"), k=u.searchParams.get("k"); return c&&k?{c,k}:null; }catch(e){ return null; } }
+function getAuth(){
+  const fromUrl=keysFrom(location.href);
+  if(fromUrl){ store.set("r2rx_auth",JSON.stringify(fromUrl)); return fromUrl; }
+  for(const key of ["r2rx_auth","r2r_auth"]){ try{ const a=JSON.parse(store.get(key)||"null"); if(a&&a.c&&a.k) return a; }catch(e){} }   // r2r_auth = the tracker app's key (same key)
+  return null;
+}
+function showLinkGate(msg){
+  const inp=h("input",{type:"search",placeholder:"Paste your expense link here","aria-label":"Your expense link",autocomplete:"off"});
+  const go=h("button",{class:"btn pri",type:"button",onclick:()=>{ const a=keysFrom(inp.value); if(!a){ note.textContent="That link isn't complete. Copy the whole link from your advisor's WhatsApp message."; return; } store.set("r2rx_auth",JSON.stringify(a)); S.auth=a; load(); }},"Open");
+  const note=h("p",{class:"sub"},"");
+  $("#who").textContent="";
+  $("#main").replaceChildren(h("div",{class:"card"},h("h2",null,"Open your expenses"),h("p",null,msg||"Open the personal link your advisor sent you, or paste it below. You only need to do this once on this phone."),h("div",{class:"row"},h("div",{style:"flex:1;min-width:200px"},inp),go),note));
+  $("#foot").replaceChildren();
+}
 async function load(){
-  const p=new URLSearchParams(location.search), c=p.get("c"), k=p.get("k");
   if(!/^https:\/\/script\.google\.com\//.test(API_URL)) return showError("Not set up yet","Your advisor still needs to finish setting up this page.");
-  if(!c||!k) return showError("Link incomplete","Open the full link your advisor sent you. It ends with your personal key.");
+  const a=S.auth||(S.auth=getAuth());
+  if(!a) return showLinkGate();
+  if(!S.data){ try{ const cached=JSON.parse(store.get("r2rx_cache")||"null"); if(cached&&cached.ok){ S.data=cached; S.txs=parseTxs(); $("#who").textContent=cached.client; render(); } }catch(e){} }
   if(!S.data) skeleton();
   try{
-    const res=await fetch(API_URL+"?x="+encodeURIComponent(c)+"&k="+encodeURIComponent(k),{cache:"no-store"});
+    const res=await fetch(API_URL+"?x="+encodeURIComponent(a.c)+"&k="+encodeURIComponent(a.k)+"&t="+Date.now(),{cache:"no-store"});
     const j=await res.json();
-    if(!j.ok) return showError("Can't open your expenses",j.error||"Please ask your advisor for a fresh link.");
+    if(!j.ok){ S.data=null; try{ localStorage.removeItem("r2rx_cache"); }catch(e){} return showLinkGate(j.error||"Please ask your advisor for a fresh link."); }
     S.data=j; S.txs=parseTxs(); $("#who").textContent=j.client; render();
-  }catch(e){ if(S.data){ render(); } else showError("Couldn't load","Check your internet connection and try again."); }
+    store.set("r2rx_cache",JSON.stringify(j));
+  }catch(e){ if(S.data){ render(); $("#foot").prepend(h("span",{class:"pill warn"},"Offline — showing your last update")); } else showError("Couldn't load","Check your internet connection and try again."); }
 }
 (function boot(){
   const pv=store.get("r2rx.period"); if(pv&&PERIODS.some(p=>p[0]===pv)) S.period=pv;
@@ -298,6 +321,12 @@ async function load(){
   S.month=todayISO().slice(0,7);
   const ps=$("#period"); PERIODS.forEach(([v,l])=>ps.append(h("option",{value:v,selected:v===S.period?true:null},l)));
   ps.addEventListener("change",()=>{ S.period=ps.value; store.set("r2rx.period",ps.value); if(S.data) render(); });
+  // Install on the phone (Android/Chrome shows the button; iPhone: Share → Add to Home Screen)
+  let promptEvt=null; const ib=$("#install-bar");
+  window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); promptEvt=e; ib.hidden=false; });
+  $("#install-btn").addEventListener("click",()=>{ if(!promptEvt) return; promptEvt.prompt(); promptEvt.userChoice.finally(()=>{ promptEvt=null; ib.hidden=true; }); });
+  window.addEventListener("appinstalled",()=>{ ib.hidden=true; });
+  if("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("sw.js").catch(()=>{});
   load();
 })();
 </script>
