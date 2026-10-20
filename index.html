@@ -400,6 +400,9 @@
   <!-- MUTUAL FUNDS (from the MF holdings statement) -->
   <section class="panel" id="panel-funds"><div id="funds-body"></div></section>
 
+  <!-- OTHER ASSETS (gold bonds, gold/silver ETFs, REITs, InvITs, debt ETFs from the broker file) -->
+  <section class="panel" id="panel-other"><div id="other-body"></div></section>
+
   <!-- INSURANCE -->
   <section class="panel" id="panel-insurance">
     <div class="ins-summary" id="ins-summary"></div>
@@ -467,7 +470,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8
 // ═══════════════════════════════════════════════════════
 const TABS = [
   ['overview','Overview','🏠','Overview'], ['allocation','Allocation','🥧','Alloc'],
-  ['holdings','Holdings','📊','Holdings'], ['stocks','Indian Stocks','📈','Stocks'], ['funds','Mutual Funds','🧺','MFs'],
+  ['holdings','Holdings','📊','Holdings'], ['stocks','Indian Stocks','📈','Stocks'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'],
   ['insurance','Insurance','🛡️','Insure'],
   ['payments','Payments','📅','Payments'], ['parameters','🩺 Health Check','🩺','Health'],
   // FIRE Tracker and Cash Flow are switched off for now (they need income/spending data).
@@ -767,7 +770,7 @@ function renderAll(d) {
   document.title = d.client ? `R2R · ${d.client}` : 'R2R Financial Tracker';
   const u = d.updated ? new Date(d.updated) : null;
   set('last-updated', (DEMO ? 'DEMO · ' : '') + (u && !isNaN(u) ? 'Sheet updated ' + u.toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Updated'));
-  renderOverview(d); renderAllocation(d); renderHoldings(d); renderStocks(d); renderFunds(d); renderInsurance(d);
+  renderOverview(d); renderAllocation(d); renderHoldings(d); renderStocks(d); renderOther(d); renderFunds(d); renderInsurance(d);
   renderPayments(d); renderParameters(d);   // renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
 }
@@ -842,9 +845,11 @@ function renderHoldings(d) {
       const name = kind === 'stock' ? (c === 'Equity' ? 'Indian Stocks' : types.map(t => ({ SGB: 'Gold bonds (SGB)', 'Gold ETF': 'Gold ETFs', REIT: 'REITs', InvIT: 'InvITs' })[t] || t).join(' & '))
         : (c === 'Equity' && types.includes('Hybrid MF') ? 'Mutual funds (equity + hybrid)' : 'Mutual funds');
       const invested = withInv.length === part.length ? withInv.reduce((s, a) => s + a.invested, 0) : null, value = sum(part);
-      summary.push({ cls: c, name, type: label, holder: [...new Set(part.map(a => a.holder).filter(Boolean))].join(', '),
+      summary.push({ cls: c, name, holder: [...new Set(part.map(a => a.holder).filter(Boolean))].join(', '),
         platform: [...new Set(part.map(a => a.platform).filter(Boolean))].join(', '), units: null, avg: null, cmp: null,
-        invested, value, pnl: invested !== null ? value - invested : null, ticker: part.length + (kind === 'stock' ? ' holding' : ' fund') + (part.length === 1 ? '' : 's') + ' · open ' + label + ' tab →', link: tab });
+        invested, value, pnl: invested !== null ? value - invested : null,
+        ticker: part.length + (kind === 'stock' ? ' holding' : ' fund') + (part.length === 1 ? '' : 's') + ' · open ' + (kind === 'stock' && c !== 'Equity' ? 'Other Assets' : label) + ' tab →',
+        link: kind === 'stock' && c !== 'Equity' ? 'other' : tab, type: kind === 'stock' && c !== 'Equity' ? 'Other Assets' : label });
     });
   });
   const manual = d.assets.filter(a => !a.fromFile).concat(summary);
@@ -909,8 +914,14 @@ function fileUpdated(list) {
   return ds.length ? `<div class="muted" style="font-size:11px;margin:-8px 0 18px">File last sent ${fmtDate(ds[0])} · prices update by themselves on weekdays. Send the latest file again at month-end.</div>` : '';
 }
 function renderStocks(d) {
-  const list = d.assets.filter(a => a.kind === 'stock').sort((a, b) => b.value - a.value);
-  if (!list.length) { setHTML('stocks-body', empty('No Indian stocks yet. Send your broker\'s holdings file (Zerodha Console → Portfolio → Holdings → XLSX, or the Excel/CSV from Groww, Upstox…) to the Tracker bot. Shares, ETFs, gold bonds and REITs from it show here.')); return; }
+  renderBrokerTab(d, 'stocks-body', a => a.cls === 'Equity', 'No Indian stocks yet. Send your broker\'s holdings file (Zerodha Console → Portfolio → Holdings → XLSX, or the Excel/CSV from Groww, Upstox…) to the Tracker bot. Shares and equity ETFs from it show here; gold bonds, gold ETFs and REITs go to the Other Assets tab.');
+}
+function renderOther(d) {
+  renderBrokerTab(d, 'other-body', a => a.cls !== 'Equity', 'Nothing here yet. Gold bonds (SGB), gold and silver ETFs, REITs, InvITs and debt ETFs from your broker\'s holdings file show here. They are counted in your Gold, REITs / InvITs and Debt totals.');
+}
+function renderBrokerTab(d, bodyId, filter, emptyMsg) {
+  const list = d.assets.filter(a => a.kind === 'stock' && filter(a)).sort((a, b) => b.value - a.value);
+  if (!list.length) { setHTML(bodyId, empty(emptyMsg)); return; }
   const total = list.reduce((s, a) => s + a.value, 0);
   const plats = [...new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · ')).filter(Boolean))];
   let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list);
@@ -927,7 +938,7 @@ function renderStocks(d) {
     const note = g === 'Stocks' || g === 'Equity ETFs' ? 'counted in Equity' : /gold/i.test(g) ? 'counted in Gold' : /reit/i.test(g) ? 'counted in REITs / InvITs' : g === 'Debt ETFs' ? 'counted in Debt' : '';
     html += `<div class="section-title">${esc(g)} <span class="tag amber" style="margin-left:4px">${fmtCr(v)}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(v, total).toFixed(1)}%${note ? ' · ' + note : ''}</span></div>` + fileTable(part, total, cols);
   });
-  setHTML('stocks-body', html);
+  setHTML(bodyId, html);
 }
 // ── Mutual Funds tab: everything from the MF holdings statement(s)
 const MF_META = { Equity: ['#3b82f6', 'Equity funds', 'counted in Equity'], Hybrid: ['#06b6d4', 'Hybrid funds', 'counted in Equity'],
