@@ -615,6 +615,24 @@ function model(api) {
     }
     assets.push(...stocks);
   }
+  // Mutual funds from the holdings statement (Mutual Funds tab). Hybrid funds count towards Equity
+  // but keep the "Hybrid MF" label. When present they replace manual mutual-fund rows in Assets.
+  const MF_TYPE = { Equity: 'Equity MF', Hybrid: 'Hybrid MF', Debt: 'Debt MF', Gold: 'Gold MF', Other: 'Other MF' };
+  const funds = rowsOf(t['Mutual Funds']).map(r => {
+    const units = num(r['Units']), avg = num(r['Avg NAV']), nav = num(r['Current NAV']);
+    const value = !blank(r['Current Value (₹)']) ? num(r['Current Value (₹)']) : units * nav;
+    const invested = !blank(r['Invested (₹)']) ? num(r['Invested (₹)']) : (units && avg ? units * avg : null);
+    const ac = String(r['Asset Class'] ?? '').trim() || 'Equity';
+    const sub = [String(r['Category'] ?? '').trim(), String(r['Plan'] ?? '').trim()].filter(Boolean).join(' · ');
+    return { cls: ac === 'Hybrid' ? 'Equity' : canonClass(ac), type: MF_TYPE[ac] || 'Other MF',
+      name: String(r['Scheme'] ?? '').trim() || 'Mutual fund', holder: r['Holder'] ?? '', platform: r['Platform'] ?? '',
+      units: blank(r['Units']) ? null : units, avg: blank(r['Avg NAV']) ? null : avg, cmp: blank(r['Current NAV']) ? null : nav,
+      invested, value, pnl: invested !== null ? value - invested : null, ticker: sub, notes: '', fromFile: true };
+  }).filter(a => a.units || a.value);
+  if (funds.length) {
+    for (let i = assets.length - 1; i >= 0; i--) if (!assets[i].fromFile && /^(equity|debt|hybrid|gold) mf$/i.test(assets[i].type)) assets.splice(i, 1);
+    assets.push(...funds);
+  }
   const byClass = {};
   assets.forEach(a => { byClass[a.cls] = (byClass[a.cls] || 0) + a.value; });
   const classes = Object.keys(byClass).sort((a, b) => (CLASS_ORDER.indexOf(a)+99*(CLASS_ORDER.indexOf(a)<0)) - (CLASS_ORDER.indexOf(b)+99*(CLASS_ORDER.indexOf(b)<0)));
