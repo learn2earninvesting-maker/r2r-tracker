@@ -337,18 +337,6 @@
       <span style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--amber);" id="tbl-assets-total">—</span>
     </div>
 
-    <div class="section-title" style="margin-top:28px;">Monthly Cash Flow</div>
-    <div class="cf-mini">
-      <div class="cf-mini-header">
-        <div>
-          <div class="cf-mini-title">Annual Outflow Snapshot</div>
-          <div style="font-size:11px;color:var(--text3);margin-top:2px;">🔵 Normal &nbsp;🟡 Big payment month &nbsp;🔴 Exceeds income</div>
-        </div>
-        <button onclick="switchTab('cashflow')" style="background:var(--amber-dim);border:1px solid var(--amber);color:var(--amber);font-size:11px;padding:4px 12px;border-radius:16px;cursor:pointer;font-family:var(--dm);">Full View →</button>
-      </div>
-      <div class="cf-mini-grid2" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;" id="cf-mini-split"></div>
-      <div class="cf-mini-bars" id="cf-mini-bars"></div>
-    </div>
   </section>
 
   <!-- ALLOCATION -->
@@ -395,7 +383,7 @@
   <!-- PAYMENTS -->
   <section class="panel" id="panel-payments">
     <div class="section-title">Payment Calendar — next 12 months</div>
-    <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">Insurance premiums and non-monthly payments from the cash-flow plan | All amounts in ₹</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">Insurance premiums from your policies | All amounts in ₹</div>
     <div id="pay-grid"></div>
     <div style="margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
       <div><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;">Total Annual Premiums</div><div style="font-family:var(--syne);font-size:24px;font-weight:800;color:var(--amber);" id="pay-total">—</div></div>
@@ -404,49 +392,7 @@
     </div>
   </section>
 
-  <!-- FIRE -->
-  <section class="panel" id="panel-fire">
-    <div class="fire-crossover" id="fire-crossover" style="display:none;">
-      <div style="font-size:28px;">🔥</div>
-      <div><div style="font-size:11px;color:var(--text3);">FIRE Crossover</div><div style="font-family:var(--syne);font-size:20px;font-weight:800;color:var(--amber);" id="fire-crossover-yr">—</div></div>
-      <div style="margin-left:auto;text-align:right;"><div style="font-size:11px;color:var(--text3);">Portfolio at Crossover</div><div style="font-family:var(--syne);font-size:20px;font-weight:800;color:var(--amber);" id="fire-crossover-val">—</div></div>
-    </div>
-    <div class="section-title">Key Parameters</div>
-    <div class="fire-params" id="fire-params"></div>
-    <div class="fire-input-note" id="fire-note"></div>
-    <div class="fire-chart-wrap">
-      <div class="fire-chart-title">Investment Growth vs FIRE Target (₹ Lakhs)</div>
-      <div class="fire-bars" id="fire-bars"></div>
-      <div class="fire-legend">
-        <div class="fire-legend-item"><div class="fire-legend-dot" style="background:var(--blue);"></div>Projected Corpus</div>
-        <div class="fire-legend-item"><div class="fire-legend-dot" style="background:var(--amber);"></div>FIRE Target</div>
-      </div>
-    </div>
-    <div class="section-title">Year-by-Year Projection</div>
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead><tr><th>Year</th><th class="num">Income (L)</th><th class="num">Saving (L)</th><th class="num">Corpus (L)</th><th class="num">FIRE Target (L)</th><th class="num">Status</th></tr></thead>
-        <tbody id="tbl-fire"></tbody>
-      </table>
-    </div>
-  </section>
 
-  <!-- CASH FLOW -->
-  <section class="panel" id="panel-cashflow">
-    <div class="cf-summary-bar" id="cf-kpi-row"></div>
-    <div class="section-title">Fixed Monthly Commitments</div>
-    <div class="cf-two" id="cf-fixed-grid"></div>
-    <div class="section-title">Month-by-Month Breakdown</div>
-    <div class="cf-month-grid" id="cf-month-grid"></div>
-    <div class="section-title">Annual Summary Table</div>
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead><tr><th>Month</th><th class="num">Income</th><th class="num">Expenses</th><th class="num">Insurance</th><th class="num">EMI</th><th class="num">Savings</th><th class="num">Total Out</th><th class="num">Surplus</th></tr></thead>
-        <tbody id="tbl-cashflow"></tbody>
-        <tfoot id="tfoot-cashflow"></tfoot>
-      </table>
-    </div>
-  </section>
 
   <!-- HEALTH CHECK -->
   <section class="panel" id="panel-parameters">
@@ -480,7 +426,7 @@
   </section>
 </main>
 
-<p class="disclaimer">R2R · Risks to Reward — an educational tracking tool built from the data you maintain. Benchmarks are general rules of thumb, not personalised investment, tax or insurance advice. Projections are illustrative and not guaranteed.</p>
+<p class="disclaimer">R2R · Risks to Reward — an educational tracking tool built from the data you maintain. Benchmarks are general rules of thumb, not personalised investment, tax or insurance advice.</p>
 
 <nav class="mobile-nav" id="mobile-nav"></nav>
 
@@ -495,8 +441,9 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8
 const TABS = [
   ['overview','Overview','🏠','Overview'], ['allocation','Allocation','🥧','Alloc'],
   ['holdings','Holdings','📊','Holdings'], ['insurance','Insurance','🛡️','Insure'],
-  ['payments','Payments','📅','Payments'], ['fire','FIRE Tracker','🔥','FIRE'],
-  ['cashflow','Cash Flow','💸','Cash Flow'], ['parameters','🩺 Health Check','🩺','Health'],
+  ['payments','Payments','📅','Payments'], ['parameters','🩺 Health Check','🩺','Health'],
+  // FIRE Tracker and Cash Flow are switched off for now (they need income/spending data).
+  // To bring them back, re-add: ['fire','FIRE Tracker','🔥','FIRE'], ['cashflow','Cash Flow','💸','Cash Flow'],
 ];
 document.getElementById('nav-tabs').innerHTML = TABS.map((t,i)=>`<button class="tab-btn${i?'':' active'}" data-tab="${t[0]}" onclick="switchTab('${t[0]}')">${t[1]}</button>`).join('');
 document.getElementById('mobile-nav').innerHTML = TABS.map((t,i)=>`<button class="mob-tab${i?'':' active'}" data-tab="${t[0]}" onclick="switchTab('${t[0]}')"><span class="icon">${t[2]}</span>${t[3]}</button>`).join('');
@@ -743,7 +690,7 @@ function renderAll(d) {
   const u = d.updated ? new Date(d.updated) : null;
   set('last-updated', (DEMO ? 'DEMO · ' : '') + (u && !isNaN(u) ? 'Sheet updated ' + u.toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Updated'));
   renderOverview(d); renderAllocation(d); renderHoldings(d); renderInsurance(d);
-  renderPayments(d); renderFIRE(d); renderCashflow(d); renderParameters(d);
+  renderPayments(d); renderParameters(d);   // renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
 }
 
@@ -752,12 +699,6 @@ function upcomingList(d, days) {
   const ev = [];
   d.insurance.forEach(p => { if (p.next && p.annual && p.next <= until) ev.push({ date: p.next, name: `${p.name}${p.insurer ? ' · ' + p.insurer : ''}`, amt: p.premium, kind: 'Premium' }); });
   // non-monthly cash-flow outflows with listed months
-  for (let k = 0; k <= Math.ceil(days / 30); k++) {
-    const dt = new Date(d.today.getFullYear(), d.today.getMonth() + k, 1);
-    if (dt > until) break;
-    d.cfItems.filter(c => c.type !== 'income' && c.listed.length && c.listed.includes(dt.getMonth()))
-      .forEach(c => ev.push({ date: dt, name: c.item, amt: c.amt, kind: c.type === 'saving' ? 'Saving' : 'Payment', monthOnly: true }));
-  }
   d.liabilities.forEach(l => { if (l.ends && l.ends >= d.today && l.ends <= until) ev.push({ date: l.ends, name: `${l.type} ends${l.lender ? ' · ' + l.lender : ''}`, amt: null, kind: 'Loan' }); });
   return ev.sort((a, b) => a.date - b.date);
 }
@@ -788,22 +729,6 @@ function renderOverview(d) {
     </div>`; }).join(''));
   set('tbl-assets-total', fmtINR(d.totalAssets));
 
-  const a = d.annual, mo = { income: a.income/12, saving: a.saving/12, spend: d.monthlySpend };
-  const split = (label, inc, sav, spend) => {
-    const rem = inc - sav - spend, sp = pctOf(sav, inc), ep = pctOf(spend, inc), rp = Math.max(0, 100 - sp - ep);
-    return `<div style="background:var(--bg3);border-radius:10px;padding:14px;">
-      <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">${label}</div>
-      ${[['Income', inc, 'var(--green)'], ['📈 Savings', sav, 'var(--blue)'], ['💸 Spending (incl. EMI & insurance)', spend, 'var(--red)'], ['Surplus', rem, rem >= 0 ? 'var(--amber)' : 'var(--red)']]
-        .map(([l, v, c]) => `<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:11px;color:var(--text2);">${l}</span><span style="font-family:var(--mono);font-size:11px;color:${c};">${fmtINR(v)}</span></div>`).join('')}
-      <div style="height:10px;border-radius:6px;overflow:hidden;display:flex;gap:2px;margin:8px 0 6px;">
-        <div style="background:var(--blue);width:0" data-w="${Math.min(100, sp)}%"></div><div style="background:var(--red);width:0" data-w="${Math.min(100, ep)}%"></div><div style="background:var(--green);width:0" data-w="${rp}%"></div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;"><span style="color:var(--blue)">${sp.toFixed(0)}% saved</span><span style="color:var(--red)">${ep.toFixed(0)}% spent</span><span style="color:var(--green)">${(inc ? 100 - sp - ep : 0).toFixed(0)}% surplus</span></div></div>`;
-  };
-  setHTML('cf-mini-split', a.income || a.out ? split('Monthly (average)', mo.income, mo.saving, mo.spend) + split('Annual', a.income, a.saving, d.annualSpend) : empty('Add income, expenses and savings in the CashFlow tab.'));
-  const maxOut = Math.max(...d.months.map(m => m.out), 1), avgOut = a.out / 12;
-  setHTML('cf-mini-bars', d.months.map(m => {
-    const col = m.out > m.income && m.income ? 'var(--red)' : m.out > avgOut * 1.2 ? 'var(--amber)' : 'var(--blue)';
-    return `<div class="cf-mini-col" onclick="switchTab('cashflow')" title="${m.m}: out ${fmtINR(m.out)} · surplus ${fmtINR(m.surplus)}"><div class="cf-mini-amt">${fmtCr(m.out).replace('₹','')}</div><div class="cf-mini-bar" style="height:${(m.out/maxOut*48).toFixed(0)}px;background:${col};"></div><div class="cf-mini-month">${m.m}</div></div>`; }).join(''));
 }
 
 function renderAllocation(d) {
@@ -908,11 +833,10 @@ function renderPayments(d) {
     const mi = (start + k) % 12, yy = Y + Math.floor((start + k) / 12), m = d.months[mi];
     const items = [
       ...m.premiums.map(p => { const day = p.next ? p.next.getDate() : null; return { name: `${p.name}${p.insurer ? ' · ' + p.insurer : ''}`, sub: 'Premium', day, amt: p.premium }; }),
-      ...m.items.filter(x => !x.spread).map(x => ({ name: x.name, sub: x.type === 'saving' ? 'Saving' : 'Payment', day: null, amt: x.amt })),
     ].sort((a, b) => (a.day ?? 99) - (b.day ?? 99));
     rows.push({ label: `${MONTHS[mi]}${yy !== Y ? " '" + String(yy).slice(2) : ''}`, items, now: k === 0, total: items.reduce((s, x) => s + x.amt, 0) });
   }
-  setHTML('pay-grid', rows.some(r => r.items.length) ? rows.map(r => `<div class="pay-month${r.now ? ' now' : ''}"><div class="pay-month-label">${r.label}</div><div class="pay-items">${r.items.length ? r.items.map(x => `<div class="pay-item${r.now && x.day && x.day < d.today.getDate() ? ' past' : ''}"><div class="pay-name">${esc(x.name)} <span class="tag${x.sub === 'Premium' ? ' amber' : ''}">${x.sub}</span></div><div class="pay-date">${x.day ? x.day + ' ' + r.label.slice(0, 3) : ''}</div><div class="pay-amt">${fmtINR(x.amt)}</div></div>`).join('') + (r.items.length > 1 ? `<div style="text-align:right;font-family:var(--mono);font-size:10px;color:var(--text3);padding-right:10px;">Month total ${fmtINR(r.total)}</div>` : '') : '<div class="muted" style="font-size:11px;padding:4px 0">—</div>'}</div></div>`).join('') : empty('No scheduled payments. Insurance premiums and non-monthly items (school fees, PPF…) appear here.'));
+  setHTML('pay-grid', rows.some(r => r.items.length) ? rows.map(r => `<div class="pay-month${r.now ? ' now' : ''}"><div class="pay-month-label">${r.label}</div><div class="pay-items">${r.items.length ? r.items.map(x => `<div class="pay-item${r.now && x.day && x.day < d.today.getDate() ? ' past' : ''}"><div class="pay-name">${esc(x.name)} <span class="tag${x.sub === 'Premium' ? ' amber' : ''}">${x.sub}</span></div><div class="pay-date">${x.day ? x.day + ' ' + r.label.slice(0, 3) : ''}</div><div class="pay-amt">${fmtINR(x.amt)}</div></div>`).join('') + (r.items.length > 1 ? `<div style="text-align:right;font-family:var(--mono);font-size:10px;color:var(--text3);padding-right:10px;">Month total ${fmtINR(r.total)}</div>` : '') : '<div class="muted" style="font-size:11px;padding:4px 0">—</div>'}</div></div>`).join('') : empty('No premiums due. Add policies with a Next Due Date in the Insurance tab of the sheet.'));
   const prem = d.insurance.reduce((s, p) => s + p.annual, 0);
   set('pay-total', fmtINR(prem)); set('pay-monthly', fmtINR(prem / 12)); set('pay-all', fmtINR(rows.reduce((s, r) => s + r.total, 0)));
 }
@@ -981,36 +905,18 @@ function renderParameters(d) {
     return { ...o, status, fmt: o.f(v), barPct: Math.max(2, Math.min(100, o.bar(v))), barColor: status === 'pass' ? '#22c55e' : status === 'warn' ? '#f59e0b' : '#ef4444' };
   };
   const params = [
-    mk({ icon:'💰', label:'Saving Rate', benchmark:'≥ 20% (15% min)', hib:true, pass:20, warn:15, na:noInc, value: pctOf(d.annual.saving, annInc), f: v => v.toFixed(1) + '%', bar: v => v / 30 * 100,
-      note: `Planned savings (SIP, PPF, etc.) of ${fmtCr(d.annual.saving)}/yr on income of ${fmtCr(annInc)}/yr.`, derivation:'Yearly savings ÷ Yearly income',
-      suggestion: `Reaching 20% means saving about ${fmtINR(Math.max(0, (annInc * 0.2 - d.annual.saving) / 12))} more each month. A yearly SIP step-up is an easy way to get there.` }),
     mk({ icon:'💳', label:'Credit Utilisation', benchmark:'< 30%', hib:false, pass:30, warn:50, na: !cardLimit, value: pctOf(cardBal, cardLimit), f: v => v.toFixed(1) + '%', bar: v => v,
       note: cardLimit ? `Card balances ${fmtINR(cardBal)} on limits of ${fmtINR(cardLimit)}.` : 'No credit card limits in the sheet. Add cards in Liabilities (Loan Type “Credit Card”) with balance and limit.', derivation:'Card balances ÷ Card limits',
       suggestion: 'Pay card balances in full before the statement date, or keep usage under 30% of the limit to protect your credit score.' }),
-    mk({ icon:'🏠', label:'Housing Cost', benchmark:'< 30% of income', hib:false, pass:25, warn:30, na: noInc, value: pctOf(d.homeEmi + rent, inc), f: v => v.toFixed(1) + '%', bar: v => v / 50 * 100,
-      note: `Home-loan EMI${rent ? ' + rent' : ''} of ${fmtINR(d.homeEmi + rent)}/month on income of ${fmtINR(inc)}.`, derivation:'(Home EMI + Rent) ÷ Monthly income',
-      suggestion: `Keeping housing under 30% means about ${fmtINR(inc * 0.3)}/month. Part-prepayments of the home loan reduce the EMI or the tenure.` }),
-    mk({ icon:'⚖️', label:'Debt Servicing Ratio', benchmark:'< 35% of income', hib:false, pass:30, warn:35, na: noInc, value: pctOf(d.emiMonthly, inc), f: v => v.toFixed(1) + '%', bar: v => v / 50 * 100,
-      note: `All EMIs ${fmtINR(d.emiMonthly)}/month on income of ${fmtINR(inc)}.`, derivation:'Total EMIs ÷ Monthly income',
-      suggestion: `Lenders and planners prefer total EMIs under ${fmtINR(inc * 0.3)}/month (30%). Close the costliest loan first.` }),
     mk({ icon:'📊', label:'Debt-to-Asset Ratio', benchmark:'< 50%', hib:false, pass:40, warn:50, na: !d.totalAssets, value: pctOf(d.totalLiab, d.totalAssets), f: v => v.toFixed(1) + '%', bar: v => v,
       note: `Liabilities ${fmtCr(d.totalLiab)} against assets of ${fmtCr(d.totalAssets)}.`, derivation:'Total liabilities ÷ Total assets',
       suggestion: 'Growing investments and prepaying loans both improve this ratio.' }),
     mk({ icon:'💧', label:'Liquid Assets', benchmark:'≥ 15% of net worth', hib:true, pass:20, warn:15, na: nw <= 0, value: pctOf(liq, nw), f: v => v.toFixed(1) + '%', bar: v => v / 30 * 100,
       note: `Liquid holdings (savings, FDs) of ${fmtCr(liq)} against net worth of ${fmtCr(nw)}.`, derivation:'Liquid assets ÷ Net worth',
       suggestion: `15% of net worth is ${fmtCr(nw * 0.15)}. Build it with FDs or liquid funds before adding risk.` }),
-    mk({ icon:'🛟', label:'Emergency Fund', benchmark:`≥ ${emergencyTarget} months of spending`, hib:true, pass:emergencyTarget, warn:Math.max(3, emergencyTarget / 2), na: !spendM, value: liq / spendM, f: v => v.toFixed(1) + ' mo', bar: v => v / (emergencyTarget * 1.5) * 100,
-      note: `Liquid money covers ${(liq / (spendM || 1)).toFixed(1)} months of spending (${fmtINR(spendM)}/month incl. EMI & insurance).`, derivation:'Liquid assets ÷ Monthly spending',
-      suggestion: `Target ${fmtCr(spendM * emergencyTarget)} in savings, FDs or liquid funds.` }),
     mk({ icon:'📈', label:'Investment Assets', benchmark:'≥ 50% of net worth', hib:true, pass:60, warn:50, na: nw <= 0, value: pctOf(invest, nw), f: v => v.toFixed(1) + '%', bar: v => v,
       note: `Investments (equity, debt, gold, REITs) of ${fmtCr(invest)} vs net worth of ${fmtCr(nw)}.`, derivation:'(Equity + Debt + Gold + REITs) ÷ Net worth',
       suggestion: 'Money parked beyond the emergency fund can move into the long-term plan agreed with your advisor.' }),
-    mk({ icon:'🏖️', label:'Retirement Savings', benchmark:'≥ 25× yearly spending', hib:true, pass:25, warn:15, na: !annSpend, value: d.totalAssets / annSpend, f: v => v.toFixed(1) + '×', bar: v => v / 30 * 100,
-      note: `Assets of ${fmtCr(d.totalAssets)} cover ${(d.totalAssets / (annSpend || 1)).toFixed(1)}× yearly spending of ${fmtCr(annSpend)}. The 4% rule needs 25×.`, derivation:'Total assets ÷ Yearly spending',
-      suggestion: `25× today's spending is ${fmtCr(annSpend * 25)}. The FIRE tab shows when the plan reaches it.` }),
-    mk({ icon:'🛡️', label:'Life Cover', benchmark:'≥ 10× yearly income', hib:true, pass:10, warn:7, na: noInc, value: term / annInc, f: v => v.toFixed(1) + '×', bar: v => v / 15 * 100,
-      note: `Term cover of ${fmtCr(term)} on yearly income of ${fmtCr(annInc)}.`, derivation:'Total term cover ÷ Yearly income',
-      suggestion: `10× income is ${fmtCr(annInc * 10)}${d.totalLiab ? ', plus outstanding loans of ' + fmtCr(d.totalLiab) : ''}. Pure term plans are the cheapest way to close the gap.` }),
     mk({ icon:'🏥', label:'Health Cover', benchmark:'≥ ₹10 L (family)', hib:true, pass:1e6, warn:5e5, value: health, f: v => fmtCr(v), bar: v => v / 2e6 * 100,
       note: `Health cover (base + top-ups) of ${fmtCr(health)}.`, derivation:'Sum of health policies incl. super top-ups',
       suggestion: 'A super top-up is a low-cost way to raise cover above the base policy.' }),
@@ -1042,7 +948,7 @@ window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferr
 function doInstall() { if (!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.finally(() => { deferredPrompt = null; document.getElementById('install-btn').style.display = 'none'; }); }
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 
-try { const t = sessionStorage.getItem('r2r_tab'); if (t) switchTab(t); } catch (e) {}
+try { const t = sessionStorage.getItem('r2r_tab'); if (t && TABS.some(x => x[0] === t)) switchTab(t); } catch (e) {}
 loadAllData();
 </script>
 </body>
