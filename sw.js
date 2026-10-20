@@ -1,5 +1,5 @@
 // Bump this string whenever you deploy a change you want pushed to installed apps.
-const CACHE = 'r2r-client-v4';
+const CACHE = 'r2r-client-v5';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-512-maskable.png', './apple-touch-icon.png',
   './expenses.html', './expenses.webmanifest', './expenses-icon-192.png', './expenses-icon-512.png', './expenses-icon-512-maskable.png', './expenses-touch-icon.png'];
 
@@ -23,8 +23,12 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
 
   // Network first, fall back to cache when offline.
+  // Pages are always re-checked with GitHub (cache: 'no-cache'), so an update shows on the next open
+  // instead of up to 10 minutes later from the browser's own saved copy.
+  const path = new URL(req.url).pathname;
+  const page = req.mode === 'navigate' || /(\/|\.html|\.webmanifest|\.json)$/.test(path);
   e.respondWith(
-    fetch(req)
+    (page ? fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }) : fetch(req))
       .then((res) => {
         const copy = res.clone();
         caches.open(CACHE).then((c) => c.put(req, copy));
