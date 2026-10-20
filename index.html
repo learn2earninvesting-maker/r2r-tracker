@@ -594,6 +594,27 @@ function model(api) {
       avg: blank(r['Avg Buy Price']) ? null : avg, cmp: blank(r['Current Price']) ? null : cmp,
       invested, value, pnl: invested !== null ? value - invested : null, ticker: r['Ticker / Code'] ?? '', notes: r['Notes'] ?? '' };
   });
+  // Shares from the broker's holdings file (Stocks tab). When present they replace manual
+  // "Stocks" rows in Assets, and any Assets row with the same ticker, so nothing counts twice.
+  const stocks = rowsOf(t.Stocks).map(r => {
+    const units = num(r['Quantity']), avg = num(r['Avg Buy Price']), cmp = num(r['Current Price']);
+    const value = !blank(r['Current Value (₹)']) ? num(r['Current Value (₹)']) : units * cmp;
+    const invested = !blank(r['Invested (₹)']) ? num(r['Invested (₹)']) : (units && avg ? units * avg : null);
+    const sym = String(r['Symbol'] ?? '').trim();
+    return { cls: canonClass(r['Asset Class'] || 'Equity'), type: String(r['Type'] ?? '').trim() || 'Stocks',
+      name: String(r['Company'] ?? '').trim() || sym || 'Share', holder: r['Holder'] ?? '', platform: r['Platform'] ?? '',
+      units: blank(r['Quantity']) ? null : units, avg: blank(r['Avg Buy Price']) ? null : avg, cmp: blank(r['Current Price']) ? null : cmp,
+      invested, value, pnl: invested !== null ? value - invested : null, ticker: sym, notes: '', fromFile: true };
+  }).filter(a => a.units || a.value);
+  if (stocks.length) {
+    const tick = x => String(x || '').toUpperCase().replace(/^(NSE|BOM|BSE):/, '').trim();
+    const held = new Set(stocks.map(a => tick(a.ticker)).filter(Boolean));
+    for (let i = assets.length - 1; i >= 0; i--) {
+      const a = assets[i];
+      if (/^stocks$/i.test(a.type) || (a.ticker && held.has(tick(a.ticker)))) assets.splice(i, 1);
+    }
+    assets.push(...stocks);
+  }
   const byClass = {};
   assets.forEach(a => { byClass[a.cls] = (byClass[a.cls] || 0) + a.value; });
   const classes = Object.keys(byClass).sort((a, b) => (CLASS_ORDER.indexOf(a)+99*(CLASS_ORDER.indexOf(a)<0)) - (CLASS_ORDER.indexOf(b)+99*(CLASS_ORDER.indexOf(b)<0)));
@@ -753,7 +774,7 @@ function renderAllocation(d) {
 }
 
 function renderHoldings(d) {
-  if (!d.assets.length && !d.liabilities.length) { setHTML('holdings-body', empty('No holdings yet. Add them in the Assets tab of the sheet, or tell the Telegram bot.')); return; }
+  if (!d.assets.length && !d.liabilities.length) { setHTML('holdings-body', empty('No holdings yet. Add them in the Assets tab of the sheet, or send your broker holdings file to the Telegram bot.')); return; }
   let html = '';
   d.classes.forEach(c => {
     const list = d.assets.filter(a => a.cls === c).sort((a, b) => b.value - a.value);

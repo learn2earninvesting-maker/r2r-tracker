@@ -1,1 +1,618 @@
-{"ok": true, "client": "Demo Family", "updated": "2026-10-19T09:00:00+05:30", "tabs": {"Profile": [["Field", "Value", "Help"], ["Client Name", "Demo Family", "Shown at the top of the dashboard"], ["Income Growth %", 7, "Expected yearly rise in income (FIRE projection)"], ["Expected Return %", 11, "Expected yearly return on investments (FIRE projection)"], ["Inflation %", 6, "Yearly inflation used for the FIRE target"], ["FIRE Multiple", 25, "Corpus needed as a multiple of yearly expenses (25 = 4% rule)"], ["FIRE Target Corpus (₹)", "", "Optional. Fixed target in today's ₹. Leave blank to use expenses × multiple"], ["Retirement Monthly Expenses (₹)", "", "Optional. Leave blank to use current monthly expenses"], ["FIRE Corpus Includes", "Investments only", "'Investments only' (excludes liquid & real estate) or 'All assets'"], ["Projection Years", 30, "How many years the FIRE table projects"], ["Emergency Fund (months)", 6, "Months of expenses to hold as liquid buffer"], ["Last Reviewed", "", "Date of your last review with the client"]], "Assets": [["Asset Class", "Type", "Name", "Holder", "Platform / Bank", "Units", "Avg Buy Price", "Current Price", "Invested (₹)", "Current Value (₹)", "Ticker / Code", "Notes"], ["Equity", "Stocks", "Direct equity", "Rahul", "Zerodha", "", "", "", "", 1850000, "", ""], ["Equity", "Equity MF", "Parag Parikh Flexi Cap", "Rahul", "Kuvera", "", "", "", 610000, 920000, "", ""], ["Equity", "Equity MF", "Nifty 50 Index Fund", "Priya", "Groww", "", "", "", 500000, 640000, "", ""], ["Equity", "NPS Tier 1", "NPS Tier 1", "Rahul", "", "", "", "", "", 410000, "", ""], ["Debt", "EPF", "EPF", "Rahul", "", "", "", "", "", 1320000, "", ""], ["Debt", "PPF", "PPF", "Priya", "SBI", "", "", "", "", 780000, "", ""], ["Debt", "SSY", "SSY", "Anaya", "SBI", "", "", "", "", 260000, "", ""], ["Debt", "Debt MF", "Short duration fund", "Rahul", "Kuvera", "", "", "", 270000, 300000, "", ""], ["Liquid", "Savings Account", "Salary account", "Rahul", "HDFC", "", "", "", "", 240000, "", ""], ["Liquid", "Savings Account", "Savings", "Priya", "ICICI", "", "", "", "", 95000, "", ""], ["Liquid", "FD", "Emergency FD", "Rahul", "HDFC", "", "", "", "", 500000, "", ""], ["Gold", "SGB", "SGB 2028", "Priya", "", 30, 5100, 12900, "", "", "", ""], ["Gold", "Gold ETF", "Gold BeES", "Rahul", "Zerodha", 1500, 52.4, 120.2, "", "", "NSE:GOLDBEES", ""], ["REITs/InvITs", "REIT", "Embassy REIT", "Rahul", "Zerodha", 400, 360, 435.46, "", "", "NSE:EMBASSY", ""]], "Liabilities": [["Loan Type", "Lender", "Borrower", "Outstanding (₹)", "EMI (₹/month)", "Interest Rate %", "Ends On", "Credit Limit (₹)", "Notes"], ["Home Loan", "SBI", "Rahul", 4200000, 42000, 8.5, "2039-06-05", "", ""], ["Car Loan", "HDFC", "Rahul", 380000, 14500, 9.1, "2028-11-05", "", ""], ["Credit Card", "HDFC", "Rahul", 48000, "", "", "", 300000, ""]], "Insurance": [["Category", "Policy Name", "Insurer", "Insured", "Sum Assured (₹)", "Premium (₹)", "Frequency", "Next Due Date", "Premium Paying Till", "Notes"], ["Term", "Click 2 Protect", "HDFC Life", "Rahul", 15000000, 18500, "Annual", "2027-02-14", "", ""], ["Health", "Family floater", "Niva Bupa", "Family", 1000000, 26800, "Annual", "2026-11-08", "", ""], ["Health", "Super top-up", "Care", "Family", 5000000, 7200, "Annual", "2026-11-08", "", ""], ["Motor", "Car insurance", "ICICI Lombard", "", "", 14200, "Annual", "2027-04-22", "", ""]], "CashFlow": [["Type", "Category", "Item", "Amount (₹)", "Frequency", "Months", "Notes"], ["Income", "Salary", "Rahul salary", 185000, "Monthly", "", ""], ["Income", "Salary", "Priya salary", 65000, "Monthly", "", ""], ["Expense", "Household", "Household & groceries", 55000, "Monthly", "", ""], ["Expense", "Utilities", "Bills & subscriptions", 9000, "Monthly", "", ""], ["Expense", "School Fees", "School fees", 90000, "Quarterly", "Apr, Jul, Oct, Jan", ""], ["Expense", "Travel", "Family holiday", 150000, "Annual", "Dec", ""], ["Saving", "SIP", "Mutual fund SIPs", 45000, "Monthly", "", ""], ["Saving", "PPF", "PPF", 150000, "Annual", "Apr", ""], ["Saving", "SSY", "SSY", 50000, "Annual", "Apr", ""]]}}
+{
+ "ok": true,
+ "client": "Demo Family",
+ "updated": "2026-10-19T09:00:00+05:30",
+ "tabs": {
+  "Profile": [
+   [
+    "Field",
+    "Value",
+    "Help"
+   ],
+   [
+    "Client Name",
+    "Demo Family",
+    "Shown at the top of the dashboard"
+   ],
+   [
+    "Income Growth %",
+    7,
+    "Expected yearly rise in income (FIRE projection)"
+   ],
+   [
+    "Expected Return %",
+    11,
+    "Expected yearly return on investments (FIRE projection)"
+   ],
+   [
+    "Inflation %",
+    6,
+    "Yearly inflation used for the FIRE target"
+   ],
+   [
+    "FIRE Multiple",
+    25,
+    "Corpus needed as a multiple of yearly expenses (25 = 4% rule)"
+   ],
+   [
+    "FIRE Target Corpus (₹)",
+    "",
+    "Optional. Fixed target in today's ₹. Leave blank to use expenses × multiple"
+   ],
+   [
+    "Retirement Monthly Expenses (₹)",
+    "",
+    "Optional. Leave blank to use current monthly expenses"
+   ],
+   [
+    "FIRE Corpus Includes",
+    "Investments only",
+    "'Investments only' (excludes liquid & real estate) or 'All assets'"
+   ],
+   [
+    "Projection Years",
+    30,
+    "How many years the FIRE table projects"
+   ],
+   [
+    "Emergency Fund (months)",
+    6,
+    "Months of expenses to hold as liquid buffer"
+   ],
+   [
+    "Last Reviewed",
+    "",
+    "Date of your last review with the client"
+   ]
+  ],
+  "Assets": [
+   [
+    "Asset Class",
+    "Type",
+    "Name",
+    "Holder",
+    "Platform / Bank",
+    "Units",
+    "Avg Buy Price",
+    "Current Price",
+    "Invested (₹)",
+    "Current Value (₹)",
+    "Ticker / Code",
+    "Notes"
+   ],
+   [
+    "Equity",
+    "Stocks",
+    "Direct equity",
+    "Rahul",
+    "Zerodha",
+    "",
+    "",
+    "",
+    "",
+    1850000,
+    "",
+    ""
+   ],
+   [
+    "Equity",
+    "Equity MF",
+    "Parag Parikh Flexi Cap",
+    "Rahul",
+    "Kuvera",
+    "",
+    "",
+    "",
+    610000,
+    920000,
+    "",
+    ""
+   ],
+   [
+    "Equity",
+    "Equity MF",
+    "Nifty 50 Index Fund",
+    "Priya",
+    "Groww",
+    "",
+    "",
+    "",
+    500000,
+    640000,
+    "",
+    ""
+   ],
+   [
+    "Equity",
+    "NPS Tier 1",
+    "NPS Tier 1",
+    "Rahul",
+    "",
+    "",
+    "",
+    "",
+    "",
+    410000,
+    "",
+    ""
+   ],
+   [
+    "Debt",
+    "EPF",
+    "EPF",
+    "Rahul",
+    "",
+    "",
+    "",
+    "",
+    "",
+    1320000,
+    "",
+    ""
+   ],
+   [
+    "Debt",
+    "PPF",
+    "PPF",
+    "Priya",
+    "SBI",
+    "",
+    "",
+    "",
+    "",
+    780000,
+    "",
+    ""
+   ],
+   [
+    "Debt",
+    "SSY",
+    "SSY",
+    "Anaya",
+    "SBI",
+    "",
+    "",
+    "",
+    "",
+    260000,
+    "",
+    ""
+   ],
+   [
+    "Debt",
+    "Debt MF",
+    "Short duration fund",
+    "Rahul",
+    "Kuvera",
+    "",
+    "",
+    "",
+    270000,
+    300000,
+    "",
+    ""
+   ],
+   [
+    "Liquid",
+    "Savings Account",
+    "Salary account",
+    "Rahul",
+    "HDFC",
+    "",
+    "",
+    "",
+    "",
+    240000,
+    "",
+    ""
+   ],
+   [
+    "Liquid",
+    "Savings Account",
+    "Savings",
+    "Priya",
+    "ICICI",
+    "",
+    "",
+    "",
+    "",
+    95000,
+    "",
+    ""
+   ],
+   [
+    "Liquid",
+    "FD",
+    "Emergency FD",
+    "Rahul",
+    "HDFC",
+    "",
+    "",
+    "",
+    "",
+    500000,
+    "",
+    ""
+   ],
+   [
+    "Gold",
+    "SGB",
+    "SGB 2028",
+    "Priya",
+    "",
+    30,
+    5100,
+    12900,
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "Gold",
+    "Gold ETF",
+    "Gold BeES",
+    "Rahul",
+    "Zerodha",
+    1500,
+    52.4,
+    120.2,
+    "",
+    "",
+    "NSE:GOLDBEES",
+    ""
+   ],
+   [
+    "REITs/InvITs",
+    "REIT",
+    "Embassy REIT",
+    "Rahul",
+    "Zerodha",
+    400,
+    360,
+    435.46,
+    "",
+    "",
+    "NSE:EMBASSY",
+    ""
+   ]
+  ],
+  "Liabilities": [
+   [
+    "Loan Type",
+    "Lender",
+    "Borrower",
+    "Outstanding (₹)",
+    "EMI (₹/month)",
+    "Interest Rate %",
+    "Ends On",
+    "Credit Limit (₹)",
+    "Notes"
+   ],
+   [
+    "Home Loan",
+    "SBI",
+    "Rahul",
+    4200000,
+    42000,
+    8.5,
+    "2039-06-05",
+    "",
+    ""
+   ],
+   [
+    "Car Loan",
+    "HDFC",
+    "Rahul",
+    380000,
+    14500,
+    9.1,
+    "2028-11-05",
+    "",
+    ""
+   ],
+   [
+    "Credit Card",
+    "HDFC",
+    "Rahul",
+    48000,
+    "",
+    "",
+    "",
+    300000,
+    ""
+   ]
+  ],
+  "Insurance": [
+   [
+    "Category",
+    "Policy Name",
+    "Insurer",
+    "Insured",
+    "Sum Assured (₹)",
+    "Premium (₹)",
+    "Frequency",
+    "Next Due Date",
+    "Premium Paying Till",
+    "Notes"
+   ],
+   [
+    "Term",
+    "Click 2 Protect",
+    "HDFC Life",
+    "Rahul",
+    15000000,
+    18500,
+    "Annual",
+    "2027-02-14",
+    "",
+    ""
+   ],
+   [
+    "Health",
+    "Family floater",
+    "Niva Bupa",
+    "Family",
+    1000000,
+    26800,
+    "Annual",
+    "2026-11-08",
+    "",
+    ""
+   ],
+   [
+    "Health",
+    "Super top-up",
+    "Care",
+    "Family",
+    5000000,
+    7200,
+    "Annual",
+    "2026-11-08",
+    "",
+    ""
+   ],
+   [
+    "Motor",
+    "Car insurance",
+    "ICICI Lombard",
+    "",
+    "",
+    14200,
+    "Annual",
+    "2027-04-22",
+    "",
+    ""
+   ]
+  ],
+  "CashFlow": [
+   [
+    "Type",
+    "Category",
+    "Item",
+    "Amount (₹)",
+    "Frequency",
+    "Months",
+    "Notes"
+   ],
+   [
+    "Income",
+    "Salary",
+    "Rahul salary",
+    185000,
+    "Monthly",
+    "",
+    ""
+   ],
+   [
+    "Income",
+    "Salary",
+    "Priya salary",
+    65000,
+    "Monthly",
+    "",
+    ""
+   ],
+   [
+    "Expense",
+    "Household",
+    "Household & groceries",
+    55000,
+    "Monthly",
+    "",
+    ""
+   ],
+   [
+    "Expense",
+    "Utilities",
+    "Bills & subscriptions",
+    9000,
+    "Monthly",
+    "",
+    ""
+   ],
+   [
+    "Expense",
+    "School Fees",
+    "School fees",
+    90000,
+    "Quarterly",
+    "Apr, Jul, Oct, Jan",
+    ""
+   ],
+   [
+    "Expense",
+    "Travel",
+    "Family holiday",
+    150000,
+    "Annual",
+    "Dec",
+    ""
+   ],
+   [
+    "Saving",
+    "SIP",
+    "Mutual fund SIPs",
+    45000,
+    "Monthly",
+    "",
+    ""
+   ],
+   [
+    "Saving",
+    "PPF",
+    "PPF",
+    150000,
+    "Annual",
+    "Apr",
+    ""
+   ],
+   [
+    "Saving",
+    "SSY",
+    "SSY",
+    50000,
+    "Annual",
+    "Apr",
+    ""
+   ]
+  ],
+  "Stocks": [
+   [
+    "Symbol",
+    "Company",
+    "Asset Class",
+    "Type",
+    "Holder",
+    "Platform",
+    "Quantity",
+    "Avg Buy Price",
+    "Current Price",
+    "Invested (₹)",
+    "Current Value (₹)",
+    "ISIN",
+    "Updated"
+   ],
+   [
+    "HDFCBANK",
+    "HDFC Bank",
+    "Equity",
+    "Stocks",
+    "",
+    "Zerodha",
+    220,
+    1520,
+    1745,
+    334400,
+    383900,
+    "",
+    "2026-10-01"
+   ],
+   [
+    "INFY",
+    "Infosys",
+    "Equity",
+    "Stocks",
+    "",
+    "Zerodha",
+    150,
+    1380,
+    1610,
+    207000,
+    241500,
+    "",
+    "2026-10-01"
+   ],
+   [
+    "RELIANCE",
+    "Reliance Industries",
+    "Equity",
+    "Stocks",
+    "",
+    "Zerodha",
+    120,
+    2350,
+    2930,
+    282000,
+    351600,
+    "",
+    "2026-10-01"
+   ],
+   [
+    "ITC",
+    "ITC",
+    "Equity",
+    "Stocks",
+    "",
+    "Zerodha",
+    600,
+    390,
+    455,
+    234000,
+    273000,
+    "",
+    "2026-10-01"
+   ],
+   [
+    "LT",
+    "Larsen & Toubro",
+    "Equity",
+    "Stocks",
+    "",
+    "Zerodha",
+    40,
+    3100,
+    3650,
+    124000,
+    146000,
+    "",
+    "2026-10-01"
+   ],
+   [
+    "TITAN",
+    "Titan Company",
+    "Equity",
+    "Stocks",
+    "",
+    "Zerodha",
+    35,
+    2900,
+    3380,
+    101500,
+    118300,
+    "",
+    "2026-10-01"
+   ],
+   [
+    "BAJFINANCE",
+    "Bajaj Finance",
+    "Equity",
+    "Stocks",
+    "",
+    "Zerodha",
+    20,
+    6600,
+    7150,
+    132000,
+    143000,
+    "",
+    "2026-10-01"
+   ],
+   [
+    "ASIANPAINT",
+    "Asian Paints",
+    "Equity",
+    "Stocks",
+    "",
+    "Zerodha",
+    30,
+    2900,
+    2480,
+    87000,
+    74400,
+    "",
+    "2026-10-01"
+   ]
+  ]
+ }
+}
