@@ -287,19 +287,41 @@
   .sort-bar .sort-hint { flex-basis:100%;font-size:11px;color:var(--text2);margin-top:2px; }
   .sort-chip { font:inherit;font-size:13px;font-weight:500;padding:7px 13px;border-radius:16px;border:1.5px solid var(--teal);background:var(--bg2);color:var(--text);cursor:pointer;white-space:nowrap; }
   .sort-chip:hover { background:var(--teal-dim); }
-  .ret-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:14px; }
-  .ret-card { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;position:relative;overflow:hidden; }
-  .ret-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--teal)); }
-  .ret-card .lbl { font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;display:flex;justify-content:space-between;align-items:center;gap:6px; }
-  .ret-card .big { font-family:var(--syne);font-size:30px;font-weight:800;line-height:1.1;margin:8px 0 2px; }
-  .ret-card .unit { font-size:12px;color:var(--text2);font-family:var(--dm);font-weight:500;margin-left:4px; }
-  .ret-card .sub { font-size:12px;color:var(--text2);line-height:1.5; }
-  .ret-card .note { font-size:11px;color:var(--text3);margin-top:8px;line-height:1.45; }
-  .basis { font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.3px;text-transform:none; }
+  .basis { font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;letter-spacing:.3px;white-space:nowrap; }
   .basis.exact { background:rgba(34,197,94,.15);color:var(--pos); }
   .basis.approx { background:rgba(251,191,36,.16);color:var(--warn); }
   .basis.partial { background:rgba(59,130,246,.15);color:var(--blue); }
-  .ret-explain { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:18px; }
+  .ret-periods { display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px; }
+  .ret-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:16px;align-items:start; }
+  .ret-tile { background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 16px 10px;position:relative;overflow:hidden;cursor:pointer;transition:border-color .15s; }
+  .ret-tile:hover { border-color:var(--teal); }
+  .ret-tile::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--teal)); }
+  .ret-head { display:flex;justify-content:space-between;align-items:center;gap:8px; }
+  .ret-lbl { font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;font-weight:600; }
+  .ret-big { font-family:var(--syne);font-size:34px;font-weight:800;line-height:1.1;margin:10px 0 4px; }
+  .ret-big .unit { font-size:12px;color:var(--text3);font-family:var(--dm);font-weight:600;margin-left:6px;letter-spacing:.5px; }
+  .ret-toggle { font:inherit;font-size:12px;font-weight:600;color:var(--teal);background:none;border:0;padding:6px 0;cursor:pointer;display:flex;align-items:center;gap:4px; }
+  .ret-toggle .chev { display:inline-block;transition:transform .15s; }
+  .ret-tile.open .ret-toggle .chev { transform:rotate(180deg); }
+  .ret-body { border-top:1px solid var(--border);margin:6px -16px -10px;padding:12px 16px 14px;background:var(--bg3);cursor:default; }
+  .ret-facts { font-size:12px;color:var(--text2);line-height:1.55; }
+  .ret-note { font-size:11px;color:var(--text3);line-height:1.5;margin-top:6px; }
+  .ret-sort { display:flex;gap:6px;margin:12px 0 8px; }
+  .ret-mini { font:inherit;font-size:11px;font-weight:600;padding:4px 10px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer; }
+  .ret-mini.on { background:var(--amber);border-color:var(--amber);color:#0b1120; }
+  :root[data-theme="light"] .ret-mini.on { color:#fff; }
+  .ret-list { background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden; }
+  .ret-row { display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--border); }
+  .ret-row:last-child { border-bottom:0; }
+  .ret-name { font-size:13px;color:var(--text);min-width:0; }
+  .ret-name small, .ret-val small { display:block;font-size:10px;color:var(--text3);font-family:var(--dm);margin-top:1px; }
+  .ret-val { font-family:var(--mono);font-size:13px;font-weight:600;text-align:right;white-space:nowrap; }
+  .ret-sub-h { font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin:14px 0 6px; }
+  .ret-checks { font-size:12px;color:var(--text2);line-height:1.5; }
+  .ret-checks > div { margin-bottom:5px; } .ret-checks b { color:var(--text); }
+  .ret-about { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:24px; }
+  .ret-about summary { cursor:pointer;font-weight:600;color:var(--teal); }
+  .ret-about div { margin-top:8px; }
   .sort-chip.on { background:var(--amber);color:#0b1120;border-color:var(--amber);font-weight:700; }
   :root[data-theme="light"] .sort-chip.on { color:#ffffff; }
   .tag.red { background:rgba(239,68,68,.15);color:var(--neg); }
@@ -1027,69 +1049,85 @@ function renderFunds(d) {
   setHTML('funds-body', html);
 }
 
-// ── Returns tab: XIRR from the Returns tab of the sheet (worked out every night)
+// ── Returns tab: one tile per group showing only its XIRR; tap a tile for the holdings and details
 let RET_PERIOD = (() => { try { return localStorage.getItem('r2r_ret_period') || ''; } catch (e) { return ''; } })();
+let RET_OPEN = (() => { try { return JSON.parse(localStorage.getItem('r2r_ret_open') || '{}') || {}; } catch (e) { return {}; } })();
+let RET_SORT = (() => { try { return localStorage.getItem('r2r_ret_sort') || 'xirr'; } catch (e) { return 'xirr'; } })();
 function setRetPeriod(p) { RET_PERIOD = p; try { localStorage.setItem('r2r_ret_period', p); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
-// Per-holding list and the "to make these exact" list (shown even before overall figures exist)
-function retDetail(R, P) {
-  let html = '';
-  const pctTxt = v => v === null ? '—' : (v > 0 ? '+' : '') + v.toFixed(1) + '%';
-  const cls = v => v === null ? '' : v >= 0 ? 'gain-pos' : 'gain-neg';
-  const hp = R.some(r => r.scope === 'Holding' && r.period === P) ? P : 'Since start';
-  const hold = R.filter(r => r.scope === 'Holding' && r.period === hp).map(r => ({ name: r.name, ticker: r.name, kind: '', value: r.value, pnl: r.gain, invested: r.invested,
-    xirr: r.xirr !== null ? r.xirr / 100 : (r.gainPct !== null ? r.gainPct / 100 : null), r }));
-  if (hold.length) {
-    const list = sortList(hold, 'returns');
-    html += `<div class="section-title">Each holding <span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${hp === P ? '' : 'since start · '}${hold.length} exact</span></div>` + sortBar('returns') +
-      `<div class="table-wrap"><table class="data-table"><thead><tr><th>Holding</th><th class="num">XIRR</th><th class="num">Gain</th><th class="num">Value now</th></tr></thead><tbody>${list.map(h => { const r = h.r, v = r.xirr !== null ? r.xirr : r.gainPct;
-        return `<tr><td><span style="color:var(--text)">${esc(r.name)}</span><div class="muted" style="font-size:10px">${esc(r.bucket === 'Mutual Funds' ? 'Mutual fund' : 'Share')} · since ${fmtDate(r.from)}${r.note ? ' · ' + esc(r.note) : ''}</div></td>
-        <td class="num"><span class="${cls(v)}">${pctTxt(v)}</span>${r.xirr === null ? '<br><small class="muted">not yearly</small>' : ''}</td>
-        <td class="num" style="white-space:nowrap"><span class="${cls(r.gain)}">${r.gain >= 0 ? '+' : '−'}${fmtINR(Math.abs(r.gain))}</span></td><td class="num" style="white-space:nowrap">${fmtINR(r.value)}</td></tr>`; }).join('')}</tbody></table></div>`;
-  }
-  const checks = R.filter(r => r.scope === 'Check');
-  if (checks.length) html += `<div class="section-title">To make these exact</div><div class="ret-explain" style="margin-bottom:24px">${checks.map(c => `<div style="margin-bottom:6px"><b style="color:var(--text)">${esc(c.name)}</b> <span class="muted">(${esc(c.bucket === 'Mutual Funds' ? 'fund' : 'share')})</span> — ${esc(c.note)}</div>`).join('')}<div class="muted" style="margin-top:6px">Send the missing part of your tradebook or fund statement to the Tracker bot. Bonus shares and splits don't appear in tradebooks — tell Manuel if that's the reason.</div></div>`;
-  return html;
+function toggleRet(k) { RET_OPEN[k] = !RET_OPEN[k]; try { localStorage.setItem('r2r_ret_open', JSON.stringify(RET_OPEN)); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
+function setRetSort(k) { RET_SORT = k; try { localStorage.setItem('r2r_ret_sort', k); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
+const retPct = v => v === null || v === undefined ? '—' : (v > 0 ? '+' : '') + v.toFixed(1) + '%';
+const retCls = v => v === null || v === undefined ? '' : v >= 0 ? 'gain-pos' : 'gain-neg';
+const retFig = r => r ? (r.xirr !== null ? r.xirr : r.gainPct) : null;
+
+// The holdings inside one tile, for the chosen period (falls back to "since start" for a holding without that much history)
+function retHoldings(R, bucket, P) {
+  const all = R.filter(r => r.scope === 'Holding' && r.bucket === bucket);
+  const keys = [...new Set(all.map(r => r.key || r.name))];
+  const list = keys.map(k => all.find(r => (r.key || r.name) === k && r.period === P) || all.find(r => (r.key || r.name) === k && r.period === 'Since start')).filter(Boolean);
+  const by = { xirr: (a, b) => (retFig(b) ?? -1e9) - (retFig(a) ?? -1e9), value: (a, b) => b.value - a.value, name: (a, b) => a.name.localeCompare(b.name) }[RET_SORT] || ((a, b) => 0);
+  return list.sort(by);
 }
+function retListHTML(list, P, unit) {
+  if (!list.length) return '';
+  const sorts = [['xirr', 'Return'], ['value', 'Value'], ['name', 'A–Z']];
+  return `<div class="ret-sort">${sorts.map(([k, l]) => `<button class="ret-mini${RET_SORT === k ? ' on' : ''}" onclick="event.stopPropagation();setRetSort('${k}')">${l}</button>`).join('')}</div>
+    <div class="ret-list">${list.map(r => { const v = retFig(r);
+      return `<div class="ret-row"><div class="ret-name">${esc(r.name)}<small>${r.value ? fmtINR(r.value) : esc(r.note || 'Sold')}${r.period !== P ? ' · since ' + fmtDate(r.from) : ''}</small></div>
+        <div class="ret-val ${retCls(v)}">${retPct(v)}${r.xirr === null ? '<small>not yearly</small>' : ''}</div></div>`; }).join('')}</div>`;
+}
+function retChecksHTML(R, bucket) {
+  const checks = R.filter(r => r.scope === 'Check' && r.bucket === bucket);
+  if (!checks.length) return '';
+  return `<div class="ret-sub-h">To make these exact</div><div class="ret-checks">${checks.map(c => `<div><b>${esc(c.name)}</b> — ${esc(c.note)}</div>`).join('')}
+    <div class="muted">Send the missing part of your ${bucket === 'Mutual Funds' ? 'fund transaction statement' : 'tradebook'} to the Tracker bot. Bonus shares and splits don't appear in tradebooks — tell Manuel if that's the reason.</div></div>`;
+}
+
 function renderReturns(d) {
   const R = d.returns || [];
   const main = R.filter(r => ['Combined', 'Stocks', 'Mutual Funds'].includes(r.scope));
   const ORDER = ['1Y', '3Y', '5Y', 'Since start'];
   const periods = ORDER.filter(p => main.some(r => r.period === p));
-  const extras = (R.some(r => r.scope === 'Holding') || R.some(r => r.scope === 'Check'));
-  if (!periods.length) {
+  const buckets = ['Stocks', 'Mutual Funds'].filter(b => main.some(r => r.scope === b) || R.some(r => r.bucket === b && (r.scope === 'Holding' || r.scope === 'Check')));
+  if (!periods.length && !buckets.length) {
     const first = d.snapshots.map(s => s.date).sort((a, b) => a - b)[0];
-    const hasTx = extras;
-    setHTML('returns-body', (hasTx ? empty(`<b>Overall returns aren't ready yet.</b> Some of your holdings don't match the transactions you sent (see the list below), so the overall figure needs month-end history${first ? ', which started on ' + fmtDate(first) + '. It appears after the next month-end' : ''}.<br><br>Send your older tradebook (from your <b>first</b> trade) to make it exact straight away. Holdings that already match are shown below.`) : empty(first
+    setHTML('returns-body', empty(first
       ? `Tracking started on ${fmtDate(first)}. Your first returns appear after the next month-end.<br><br>Want exact figures for your whole history straight away? Send the Tracker bot your <b>share tradebook</b> (Zerodha Console → Reports → Tradebook) and your <b>mutual fund transaction statement</b> (Excel/CSV from Kuvera, Groww, MF Central…).`
-      : `Returns aren't available yet. Your advisor will switch them on.<br><br>For exact figures, send the Tracker bot your <b>share tradebook</b> and your <b>mutual fund transaction statement</b> (Excel/CSV).`)) + (hasTx ? retDetail(R, 'Since start') : ''));
+      : `Returns aren't available yet. Your advisor will switch them on.<br><br>For exact figures, send the Tracker bot your <b>share tradebook</b> and your <b>mutual fund transaction statement</b> (Excel/CSV).`));
     return;
   }
-  if (!periods.includes(RET_PERIOD)) RET_PERIOD = periods.includes('1Y') ? '1Y' : periods[periods.length - 1];
-  const P = RET_PERIOD;
-  const pctTxt = v => v === null ? '—' : (v > 0 ? '+' : '') + v.toFixed(1) + '%';
-  const cls = v => v === null ? '' : v >= 0 ? 'gain-pos' : 'gain-neg';
-  const card = (scope, accent) => {
+  if (periods.length && !periods.includes(RET_PERIOD)) RET_PERIOD = periods.includes('1Y') ? '1Y' : periods[periods.length - 1];
+  const P = periods.length ? RET_PERIOD : 'Since start';
+  const label = p => p === 'Since start' ? 'Since start' : p.replace('Y', ' year' + (p === '1Y' ? '' : 's'));
+  let html = periods.length > 1 ? `<div class="ret-periods">${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriod('${p}')">${label(p)}</button>`).join('')}</div>` : '';
+  const BADGE = { Exact: ['exact', '✓ Exact'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
+  const tile = (scope, accent, icon) => {
     const r = main.find(x => x.scope === scope && x.period === P);
-    if (!r) {
-      const other = main.find(x => x.scope === scope);
-      return other ? `<div class="ret-card" style="--accent:${accent}"><div class="lbl">${esc(scope)}</div><div class="sub" style="margin-top:10px">Not enough history for ${esc(P)} yet.</div></div>` : '';
+    const holds = scope === 'Combined' ? [] : retHoldings(R, scope, P);
+    const checks = R.filter(x => x.scope === 'Check' && x.bucket === scope).length;
+    if (!r && !holds.length && !checks) return '';
+    const open = !!RET_OPEN[scope], v = retFig(r), b = r && BADGE[r.basis];
+    const what = scope === 'Combined' ? 'details' : (holds.length ? holds.length + ' ' + (scope === 'Stocks' ? 'stock' : 'fund') + (holds.length === 1 ? '' : 's') : 'details');
+    let body = '';
+    if (open) {
+      body = `<div class="ret-body" onclick="event.stopPropagation()">` +
+        (r ? `<div class="ret-facts">${r.gain >= 0 ? 'Gain' : 'Loss'} <b class="${retCls(r.gain)}">${fmtINR(Math.abs(r.gain))}</b> on ${fmtINR(r.invested)} put in · value now ${fmtINR(r.value)} · since ${fmtDate(r.from)}</div>` : '') +
+        (r && r.note ? `<div class="ret-note">${esc(r.note)}</div>` : '') +
+        (scope === 'Combined' ? '' : retListHTML(holds, P) + retChecksHTML(R, scope)) + `</div>`;
     }
-    const annual = r.xirr !== null, v = annual ? r.xirr : r.gainPct;
-    return `<div class="ret-card" style="--accent:${accent}">
-      <div class="lbl"><span>${esc(scope)}</span><span class="basis ${r.basis === 'Exact' ? 'exact' : r.basis === 'Partial' ? 'partial' : 'approx'}">${r.basis === 'Exact' ? '✓ Exact' : r.basis === 'Partial' ? 'Matched holdings' : '≈ Approximate'}</span></div>
-      <div class="big ${cls(v)}">${pctTxt(v)}<span class="unit">${annual ? 'XIRR a year' : 'gain (not yearly)'}</span></div>
-      <div class="sub">${r.gain >= 0 ? 'Gain' : 'Loss'} <b class="${cls(r.gain)}">${fmtINR(Math.abs(r.gain))}</b> on ${fmtINR(r.invested)} put in<br>Value now ${fmtINR(r.value)} · since ${fmtDate(r.from)}</div>
-      ${r.note ? `<div class="note">${esc(r.note)}</div>` : ''}</div>`;
+    return `<div class="ret-tile${open ? ' open' : ''}" style="--accent:${accent}" onclick="toggleRet('${scope}')">
+      <div class="ret-head"><span class="ret-lbl">${icon} ${esc(scope)}</span>${b ? `<span class="basis ${b[0]}">${b[1]}</span>` : ''}</div>
+      <div class="ret-big ${retCls(v)}">${r ? retPct(v) : '—'}<span class="unit">${r ? (r.xirr !== null ? 'XIRR' : 'gain') : 'not ready yet'}</span></div>
+      <button class="ret-toggle" aria-expanded="${open}">${open ? 'Hide' : 'Show'} ${what} <span class="chev">▾</span></button>${body}</div>`;
   };
-  let html = `<div class="sort-bar"><span class="sort-lbl">📅 Period</span>${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriod('${p}')">${p === 'Since start' ? 'Since start' : p.replace('Y', ' year' + (p === '1Y' ? '' : 's'))}</button>`).join('')}
-    <span class="sort-hint">${P === 'Since start' ? 'From your first transaction (or from when tracking began).' : 'From the month-end ' + esc(P.replace('Y', '')) + ' year' + (P === '1Y' ? '' : 's') + ' ago to today.'}</span></div>`;
-  html += `<div class="ret-grid">${card('Combined', '#f0a500')}${card('Stocks', '#3b82f6')}${card('Mutual Funds', '#a855f7')}</div>`;
-  const anyApprox = main.some(r => r.period === P && r.basis === 'Approximate');
-  const anyPartial = main.some(r => r.period === P && r.basis === 'Partial');
-  html += `<div class="ret-explain"><b>XIRR</b> is your yearly return, taking into account <i>when</i> each rupee went in or came out — the fair way to measure SIPs and staggered buying. Periods under a year show the plain gain instead.${anyApprox ? `<br><b>≈ Approximate</b> figures use your month-end values, so profits booked on sales and dividends may be missed. Send the Tracker bot your share tradebook and fund transaction statement for <b>✓ Exact</b> figures.` : ''}${anyPartial ? `<br><b>Matched holdings</b> figures cover only the holdings your transactions fully explain (the % is on the card). Send your tradebook from your <b>first</b> trade to include the rest.` : ''}</div>`;
-  html += retDetail(R, P);
+  html += `<div class="ret-grid">${tile('Combined', '#f0a500', '🧮')}${tile('Stocks', '#3b82f6', '📈')}${tile('Mutual Funds', '#a855f7', '🧺')}</div>`;
   const upd = R.map(r => r.updated).filter(Boolean).sort((a, b) => b - a)[0];
-  if (upd) html += `<div class="muted" style="font-size:11px;margin:-6px 0 24px">Worked out ${fmtDate(upd)} · updated every night.</div>`;
+  html += `<details class="ret-about"><summary>What do these mean?</summary><div>
+    <b>XIRR</b> is your yearly return, taking into account <i>when</i> each rupee went in or came out — the fair way to measure SIPs and staggered buying. Periods under a year show the plain gain instead.<br>
+    <b>✓ Exact</b> — worked out from your tradebook / fund transactions.<br>
+    <b>Matched holdings</b> — exact, but only for the holdings your transactions fully explain; send your tradebook from your first trade to include the rest.<br>
+    <b>≈ Approx.</b> — from your month-end values, so profits booked on sales and dividends may be missed.<br>
+    ${periods.length ? 'Periods run from the month-end that many years ago to today.' : ''}${upd ? ` Worked out ${fmtDate(upd)}, updated every night.` : ''}</div></details>`;
   setHTML('returns-body', html);
 }
 
