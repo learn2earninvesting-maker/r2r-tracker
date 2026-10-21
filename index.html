@@ -287,6 +287,18 @@
   .sort-bar .sort-hint { flex-basis:100%;font-size:11px;color:var(--text2);margin-top:2px; }
   .sort-chip { font:inherit;font-size:13px;font-weight:500;padding:7px 13px;border-radius:16px;border:1.5px solid var(--teal);background:var(--bg2);color:var(--text);cursor:pointer;white-space:nowrap; }
   .sort-chip:hover { background:var(--teal-dim); }
+  .ret-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:14px; }
+  .ret-card { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;position:relative;overflow:hidden; }
+  .ret-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--teal)); }
+  .ret-card .lbl { font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;display:flex;justify-content:space-between;align-items:center;gap:6px; }
+  .ret-card .big { font-family:var(--syne);font-size:30px;font-weight:800;line-height:1.1;margin:8px 0 2px; }
+  .ret-card .unit { font-size:12px;color:var(--text2);font-family:var(--dm);font-weight:500;margin-left:4px; }
+  .ret-card .sub { font-size:12px;color:var(--text2);line-height:1.5; }
+  .ret-card .note { font-size:11px;color:var(--text3);margin-top:8px;line-height:1.45; }
+  .basis { font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.3px;text-transform:none; }
+  .basis.exact { background:rgba(34,197,94,.15);color:var(--pos); }
+  .basis.approx { background:rgba(251,191,36,.16);color:var(--warn); }
+  .ret-explain { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:18px; }
   .sort-chip.on { background:var(--amber);color:#0b1120;border-color:var(--amber);font-weight:700; }
   :root[data-theme="light"] .sort-chip.on { color:#ffffff; }
   .tag.red { background:rgba(239,68,68,.15);color:var(--neg); }
@@ -410,6 +422,9 @@
   <!-- OTHER ASSETS (gold bonds, gold/silver ETFs, REITs, InvITs, debt ETFs from the broker file) -->
   <section class="panel" id="panel-other"><div id="other-body"></div></section>
 
+  <!-- RETURNS (XIRR, worked out every night by Returns.gs) -->
+  <section class="panel" id="panel-returns"><div id="returns-body"></div></section>
+
   <!-- INSURANCE -->
   <section class="panel" id="panel-insurance">
     <div class="ins-summary" id="ins-summary"></div>
@@ -477,7 +492,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8
 // ═══════════════════════════════════════════════════════
 const TABS = [
   ['overview','Overview','🏠','Overview'], ['allocation','Allocation','🥧','Alloc'],
-  ['holdings','Holdings','📊','Holdings'], ['stocks','Indian Stocks','📈','Stocks'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'],
+  ['holdings','Holdings','📊','Holdings'], ['stocks','Indian Stocks','📈','Stocks'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'], ['returns','Returns','📐','Returns'],
   ['insurance','Insurance','🛡️','Insure'],
   ['payments','Payments','📅','Payments'], ['parameters','🩺 Health Check','🩺','Health'],
   // FIRE Tracker and Cash Flow are switched off for now (they need income/spending data).
@@ -764,7 +779,11 @@ function model(api) {
   const fire = { g, r, inf, mult, years, corpus0, target0, saving0, retireMonthly, includesAll, rows: fireRows,
     explicitTarget: !blank(profile['FIRE Target Corpus (₹)']) };
 
-  return { client: api.client || profile['Client Name'] || '', updated: api.updated, profile, P, today,
+  const returns = rowsOf(t.Returns).map(r => ({ scope: String(r['Scope'] ?? ''), bucket: String(r['Bucket'] ?? ''), key: String(r['Key'] ?? ''), name: String(r['Name'] ?? ''),
+    period: String(r['Period'] ?? ''), from: parseDate(r['From']), xirr: blank(r['XIRR %']) ? null : num(r['XIRR %']), gainPct: blank(r['Gain %']) ? null : num(r['Gain %']),
+    gain: num(r['Gain (₹)']), invested: num(r['Invested (₹)']), value: num(r['Value (₹)']), basis: String(r['Basis'] ?? ''), note: String(r['Note'] ?? ''), updated: parseDate(r['Updated']) }));
+  const snapshots = rowsOf(t.Snapshots).map(r => ({ date: parseDate(r['Date']) })).filter(x => x.date);
+  return { client: api.client || profile['Client Name'] || '', updated: api.updated, profile, P, today, returns, snapshots,
     assets, byClass, classes, totalAssets, liabilities, loans, cards, totalLiab, netWorth: totalAssets - totalLiab,
     emiMonthly, homeEmi, insurance, cfItems, months, annual, monthlyIncome, monthlySpend, annualSpend, fire };
 }
@@ -781,11 +800,11 @@ function setSort(tab, key) {
   const cur = sortOf(tab);
   SORT_STATE[tab] = cur.key === key ? { key, dir: -cur.dir } : { key, dir: key === 'name' ? 1 : -1 };
   try { localStorage.setItem('r2r_sort', JSON.stringify(SORT_STATE)); } catch (e) {}
-  if (LAST_MODEL) ({ holdings: renderHoldings, stocks: renderStocks, other: renderOther, funds: renderFunds })[tab](LAST_MODEL);
+  if (LAST_MODEL) ({ holdings: renderHoldings, stocks: renderStocks, other: renderOther, funds: renderFunds, returns: renderReturns })[tab](LAST_MODEL);
 }
 function sortList(list, tab) {
   const { key, dir } = sortOf(tab);
-  const pct = a => a.pnl !== null && a.invested ? a.pnl / a.invested : null;
+  const pct = a => a.xirr !== undefined ? a.xirr : (a.pnl !== null && a.invested ? a.pnl / a.invested : null);
   const get = key === 'pnl' ? a => a.pnl : key === 'pct' ? pct : key === 'name' ? a => String(a.ticker && a.kind === 'stock' ? a.ticker : a.name).toLowerCase() : a => a.value;
   return list.slice().sort((a, b) => {
     const x = get(a), y = get(b);
@@ -808,7 +827,7 @@ function renderAll(d) {
   document.title = d.client ? `R2R · ${d.client}` : 'R2R Financial Tracker';
   const u = d.updated ? new Date(d.updated) : null;
   set('last-updated', (DEMO ? 'DEMO · ' : '') + (u && !isNaN(u) ? 'Sheet updated ' + u.toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Updated'));
-  renderOverview(d); renderAllocation(d); renderHoldings(d); renderStocks(d); renderOther(d); renderFunds(d); renderInsurance(d);
+  renderOverview(d); renderAllocation(d); renderHoldings(d); renderStocks(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
   renderPayments(d); renderParameters(d);   // renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
 }
@@ -1005,6 +1024,62 @@ function renderFunds(d) {
     html += `<div class="section-title">${MF_META[k][1]} <span class="tag amber" style="margin-left:4px">${fmtCr(by[k])}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(by[k], total).toFixed(1)}%${MF_META[k][2] ? ' · ' + MF_META[k][2] : ''}</span></div>` + fileTable(part, total, cols);
   });
   setHTML('funds-body', html);
+}
+
+// ── Returns tab: XIRR from the Returns tab of the sheet (worked out every night)
+let RET_PERIOD = (() => { try { return localStorage.getItem('r2r_ret_period') || ''; } catch (e) { return ''; } })();
+function setRetPeriod(p) { RET_PERIOD = p; try { localStorage.setItem('r2r_ret_period', p); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
+function renderReturns(d) {
+  const R = d.returns || [];
+  const main = R.filter(r => ['Combined', 'Stocks', 'Mutual Funds'].includes(r.scope));
+  const ORDER = ['1Y', '3Y', '5Y', 'Since start'];
+  const periods = ORDER.filter(p => main.some(r => r.period === p));
+  if (!periods.length) {
+    const first = d.snapshots.map(s => s.date).sort((a, b) => a - b)[0];
+    setHTML('returns-body', empty(first
+      ? `Tracking started on ${fmtDate(first)}. Your first returns appear after the next month-end.<br><br>Want exact figures for your whole history straight away? Send the Tracker bot your <b>share tradebook</b> (Zerodha Console → Reports → Tradebook) and your <b>mutual fund transaction statement</b> (Excel/CSV from Kuvera, Groww, MF Central…).`
+      : `Returns aren't available yet. Your advisor will switch them on.<br><br>For exact figures, send the Tracker bot your <b>share tradebook</b> and your <b>mutual fund transaction statement</b> (Excel/CSV).`));
+    return;
+  }
+  if (!periods.includes(RET_PERIOD)) RET_PERIOD = periods.includes('1Y') ? '1Y' : periods[periods.length - 1];
+  const P = RET_PERIOD;
+  const pctTxt = v => v === null ? '—' : (v > 0 ? '+' : '') + v.toFixed(1) + '%';
+  const cls = v => v === null ? '' : v >= 0 ? 'gain-pos' : 'gain-neg';
+  const card = (scope, accent) => {
+    const r = main.find(x => x.scope === scope && x.period === P);
+    if (!r) {
+      const other = main.find(x => x.scope === scope);
+      return other ? `<div class="ret-card" style="--accent:${accent}"><div class="lbl">${esc(scope)}</div><div class="sub" style="margin-top:10px">Not enough history for ${esc(P)} yet.</div></div>` : '';
+    }
+    const annual = r.xirr !== null, v = annual ? r.xirr : r.gainPct;
+    return `<div class="ret-card" style="--accent:${accent}">
+      <div class="lbl"><span>${esc(scope)}</span><span class="basis ${r.basis === 'Exact' ? 'exact' : 'approx'}">${r.basis === 'Exact' ? '✓ Exact' : '≈ Approximate'}</span></div>
+      <div class="big ${cls(v)}">${pctTxt(v)}<span class="unit">${annual ? 'XIRR a year' : 'gain (not yearly)'}</span></div>
+      <div class="sub">${r.gain >= 0 ? 'Gain' : 'Loss'} <b class="${cls(r.gain)}">${fmtINR(Math.abs(r.gain))}</b> on ${fmtINR(r.invested)} put in<br>Value now ${fmtINR(r.value)} · since ${fmtDate(r.from)}</div>
+      ${r.note ? `<div class="note">${esc(r.note)}</div>` : ''}</div>`;
+  };
+  let html = `<div class="sort-bar"><span class="sort-lbl">📅 Period</span>${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriod('${p}')">${p === 'Since start' ? 'Since start' : p.replace('Y', ' year' + (p === '1Y' ? '' : 's'))}</button>`).join('')}
+    <span class="sort-hint">${P === 'Since start' ? 'From your first transaction (or from when tracking began).' : 'From the month-end ' + esc(P.replace('Y', '')) + ' year' + (P === '1Y' ? '' : 's') + ' ago to today.'}</span></div>`;
+  html += `<div class="ret-grid">${card('Combined', '#f0a500')}${card('Stocks', '#3b82f6')}${card('Mutual Funds', '#a855f7')}</div>`;
+  const anyApprox = main.some(r => r.period === P && r.basis !== 'Exact');
+  html += `<div class="ret-explain"><b>XIRR</b> is your yearly return, taking into account <i>when</i> each rupee went in or came out — the fair way to measure SIPs and staggered buying. Periods under a year show the plain gain instead.${anyApprox ? `<br><b>≈ Approximate</b> figures use your month-end values, so profits booked on sales and dividends may be missed. Send the Tracker bot your share tradebook and fund transaction statement for <b>✓ Exact</b> figures.` : ''}</div>`;
+  // per holding
+  const hp = R.some(r => r.scope === 'Holding' && r.period === P) ? P : 'Since start';
+  const hold = R.filter(r => r.scope === 'Holding' && r.period === hp).map(r => ({ name: r.name, ticker: r.name, kind: '', value: r.value, pnl: r.gain, invested: r.invested,
+    xirr: r.xirr !== null ? r.xirr / 100 : (r.gainPct !== null ? r.gainPct / 100 : null), r }));
+  if (hold.length) {
+    const list = sortList(hold, 'returns');
+    html += `<div class="section-title">Each holding <span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${hp === P ? '' : 'since start · '}${hold.length} exact</span></div>` + sortBar('returns') +
+      `<div class="table-wrap"><table class="data-table"><thead><tr><th>Holding</th><th class="num">XIRR</th><th class="num">Gain</th><th class="num">Value now</th></tr></thead><tbody>${list.map(h => { const r = h.r, v = r.xirr !== null ? r.xirr : r.gainPct;
+        return `<tr><td><span style="color:var(--text)">${esc(r.name)}</span><div class="muted" style="font-size:10px">${esc(r.bucket === 'Mutual Funds' ? 'Mutual fund' : 'Share')} · since ${fmtDate(r.from)}${r.note ? ' · ' + esc(r.note) : ''}</div></td>
+        <td class="num"><span class="${cls(v)}">${pctTxt(v)}</span>${r.xirr === null ? '<br><small class="muted">not yearly</small>' : ''}</td>
+        <td class="num" style="white-space:nowrap"><span class="${cls(r.gain)}">${r.gain >= 0 ? '+' : '−'}${fmtINR(Math.abs(r.gain))}</span></td><td class="num" style="white-space:nowrap">${fmtINR(r.value)}</td></tr>`; }).join('')}</tbody></table></div>`;
+  }
+  const checks = R.filter(r => r.scope === 'Check');
+  if (checks.length) html += `<div class="section-title">To make these exact</div><div class="ret-explain" style="margin-bottom:24px">${checks.map(c => `<div style="margin-bottom:6px"><b style="color:var(--text)">${esc(c.name)}</b> <span class="muted">(${esc(c.bucket === 'Mutual Funds' ? 'fund' : 'share')})</span> — ${esc(c.note)}</div>`).join('')}<div class="muted" style="margin-top:6px">Send the missing part of your tradebook or fund statement to the Tracker bot. Bonus shares and splits don't appear in tradebooks — tell Manuel if that's the reason.</div></div>`;
+  const upd = R.map(r => r.updated).filter(Boolean).sort((a, b) => b - a)[0];
+  if (upd) html += `<div class="muted" style="font-size:11px;margin:-6px 0 24px">Worked out ${fmtDate(upd)} · updated every night.</div>`;
+  setHTML('returns-body', html);
 }
 
 function liquidBlock(list) {
