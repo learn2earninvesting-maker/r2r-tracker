@@ -282,6 +282,10 @@
   .muted { color:var(--text3); }
   .tag { display:inline-block;font-size:10px;padding:2px 8px;border-radius:12px;background:var(--bg3);color:var(--text2);white-space:nowrap; }
   .tag.amber { background:var(--amber-dim);color:var(--amber); }
+  .sort-bar { display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 16px; }
+  .sort-bar .sort-lbl { font-size:11px;color:var(--text2);margin-right:2px; }
+  .sort-chip { font:inherit;font-size:12px;padding:5px 11px;border-radius:14px;border:1px solid var(--bg3);background:transparent;color:var(--text2);cursor:pointer;white-space:nowrap; }
+  .sort-chip.on { background:var(--amber-dim);color:var(--amber);border-color:transparent;font-weight:600; }
   .tag.red { background:rgba(239,68,68,.15);color:var(--neg); }
   .tag.green { background:rgba(34,197,94,.15);color:var(--pos); }
   .table-wrap { overflow-x:auto;margin-bottom:24px; }
@@ -765,7 +769,38 @@ function model(api) {
 // ═══════════════════════════════════════════════════════
 //  RENDER
 // ═══════════════════════════════════════════════════════
+// ── Sorting for the holdings lists (Holdings, Indian Stocks, Other Assets, Mutual Funds). Choice is remembered per tab.
+let LAST_MODEL = null;
+const SORTS = [['value', 'Value'], ['pnl', 'Gain / loss ₹'], ['pct', 'Return %'], ['name', 'A–Z']];
+const SORT_STATE = (() => { try { return JSON.parse(localStorage.getItem('r2r_sort') || '{}') || {}; } catch (e) { return {}; } })();
+function sortOf(tab) { return SORT_STATE[tab] || { key: 'value', dir: -1 }; }
+function setSort(tab, key) {
+  const cur = sortOf(tab);
+  SORT_STATE[tab] = cur.key === key ? { key, dir: -cur.dir } : { key, dir: key === 'name' ? 1 : -1 };
+  try { localStorage.setItem('r2r_sort', JSON.stringify(SORT_STATE)); } catch (e) {}
+  if (LAST_MODEL) ({ holdings: renderHoldings, stocks: renderStocks, other: renderOther, funds: renderFunds })[tab](LAST_MODEL);
+}
+function sortList(list, tab) {
+  const { key, dir } = sortOf(tab);
+  const pct = a => a.pnl !== null && a.invested ? a.pnl / a.invested : null;
+  const get = key === 'pnl' ? a => a.pnl : key === 'pct' ? pct : key === 'name' ? a => String(a.ticker && a.kind === 'stock' ? a.ticker : a.name).toLowerCase() : a => a.value;
+  return list.slice().sort((a, b) => {
+    const x = get(a), y = get(b);
+    if (x === null || x === undefined) return (y === null || y === undefined) ? 0 : 1;   // no P&L → always at the bottom
+    if (y === null || y === undefined) return -1;
+    return (typeof x === 'string' ? x.localeCompare(y) : x - y) * dir || b.value - a.value;
+  });
+}
+function sortBar(tab) {
+  const { key, dir } = sortOf(tab);
+  const arrow = k => k !== key ? '' : k === 'name' ? (dir > 0 ? ' ↓' : ' ↑') : (dir < 0 ? ' ↓' : ' ↑');
+  const hint = key === 'value' ? (dir < 0 ? 'largest first' : 'smallest first') : key === 'name' ? (dir > 0 ? 'A to Z' : 'Z to A')
+    : (dir < 0 ? 'best first' : 'worst first');
+  return `<div class="sort-bar"><span class="sort-lbl">Sort by</span>${SORTS.map(([k, l]) => `<button class="sort-chip${k === key ? ' on' : ''}" onclick="setSort('${tab}','${k}')">${l}${arrow(k)}</button>`).join('')}<span class="sort-lbl" style="margin-left:4px">· ${hint} · tap again to reverse</span></div>`;
+}
+
 function renderAll(d) {
+  LAST_MODEL = d;
   set('client-name', d.client ? '· ' + d.client : '');
   document.title = d.client ? `R2R · ${d.client}` : 'R2R Financial Tracker';
   const u = d.updated ? new Date(d.updated) : null;
@@ -853,11 +888,11 @@ function renderHoldings(d) {
     });
   });
   const manual = d.assets.filter(a => !a.fromFile).concat(summary);
-  let html = '';
+  let html = sortBar('holdings');
   if (!manual.length && !d.liabilities.length) { setHTML('holdings-body', empty('No holdings yet. Add them in the Assets tab of the sheet, or send your broker holdings file to the Telegram bot.')); return; }
   const mClasses = d.classes.filter(c => manual.some(a => a.cls === c));
   mClasses.forEach(c => {
-    const list = manual.filter(a => a.cls === c).sort((a, b) => b.value - a.value);
+    const list = sortList(manual.filter(a => a.cls === c), 'holdings');
     const has = k => list.some(a => !blank(a[k]) && a[k] !== 0);
     const tot = sum(list), inv = list.reduce((s, a) => s + (a.invested ?? 0), 0), withInv = list.filter(a => a.invested !== null);
     const pnl = withInv.reduce((s, a) => s + a.pnl, 0);
@@ -914,17 +949,17 @@ function fileUpdated(list) {
   return ds.length ? `<div class="muted" style="font-size:11px;margin:-8px 0 18px">File last sent ${fmtDate(ds[0])} · prices update by themselves on weekdays. Send the latest file again at month-end.</div>` : '';
 }
 function renderStocks(d) {
-  renderBrokerTab(d, 'stocks-body', a => a.cls === 'Equity', 'No Indian stocks yet. Send your broker\'s holdings file (Zerodha Console → Portfolio → Holdings → XLSX, or the Excel/CSV from Groww, Upstox…) to the Tracker bot. Shares and equity ETFs from it show here; gold bonds, gold ETFs and REITs go to the Other Assets tab.');
+  renderBrokerTab(d, 'stocks', 'stocks-body', a => a.cls === 'Equity', 'No Indian stocks yet. Send your broker\'s holdings file (Zerodha Console → Portfolio → Holdings → XLSX, or the Excel/CSV from Groww, Upstox…) to the Tracker bot. Shares and equity ETFs from it show here; gold bonds, gold ETFs and REITs go to the Other Assets tab.');
 }
 function renderOther(d) {
-  renderBrokerTab(d, 'other-body', a => a.cls !== 'Equity', 'Nothing here yet. Gold bonds (SGB), gold and silver ETFs, REITs, InvITs and debt ETFs from your broker\'s holdings file show here. They are counted in your Gold, REITs / InvITs and Debt totals.');
+  renderBrokerTab(d, 'other', 'other-body', a => a.cls !== 'Equity', 'Nothing here yet. Gold bonds (SGB), gold and silver ETFs, REITs, InvITs and debt ETFs from your broker\'s holdings file show here. They are counted in your Gold, REITs / InvITs and Debt totals.');
 }
-function renderBrokerTab(d, bodyId, filter, emptyMsg) {
+function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
   const list = d.assets.filter(a => a.kind === 'stock' && filter(a)).sort((a, b) => b.value - a.value);
   if (!list.length) { setHTML(bodyId, empty(emptyMsg)); return; }
   const total = list.reduce((s, a) => s + a.value, 0);
   const plats = [...new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · ')).filter(Boolean))];
-  let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list);
+  let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list) + sortBar(tab);
   const multi = plats.length > 1;
   const cols = [['Name', a => `<span style="color:var(--text)">${esc(a.ticker || a.name)}</span>${a.company && a.company !== a.ticker ? `<div class="muted" style="font-size:10px">${esc(a.company)}</div>` : ''}`],
     multi && ['Platform', a => esc([a.platform, a.holder].filter(Boolean).join(' · '))],
@@ -933,7 +968,7 @@ function renderBrokerTab(d, bodyId, filter, emptyMsg) {
     ['CMP', a => a.cmp === null ? '' : a.cmp.toLocaleString('en-IN', { maximumFractionDigits: 2 }), 1]].filter(Boolean);
   const used = new Set();
   STOCK_GROUPS.forEach(([g, test]) => {
-    const part = list.filter(a => !used.has(a) && test(a)); if (!part.length) return; part.forEach(a => used.add(a));
+    const part = sortList(list.filter(a => !used.has(a) && test(a)), tab); if (!part.length) return; part.forEach(a => used.add(a));
     const v = part.reduce((s, a) => s + a.value, 0);
     const note = g === 'Stocks' || g === 'Equity ETFs' ? 'counted in Equity' : /gold/i.test(g) ? 'counted in Gold' : /reit/i.test(g) ? 'counted in REITs / InvITs' : g === 'Debt ETFs' ? 'counted in Debt' : '';
     html += `<div class="section-title">${esc(g)} <span class="tag amber" style="margin-left:4px">${fmtCr(v)}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(v, total).toFixed(1)}%${note ? ' · ' + note : ''}</span></div>` + fileTable(part, total, cols);
@@ -951,10 +986,11 @@ function renderFunds(d) {
   const order = ['Equity', 'Hybrid', 'Debt', 'Gold', 'Other'].filter(k => by[k]);
   const regular = list.filter(a => /regular/i.test(a.plan)).length;
   let html = fileKpis(list, `<div class="kpi" style="--accent:#a855f7;"><div class="kpi-label">Funds</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${regular ? regular + ' Regular plan' + (regular === 1 ? '' : 's') : 'all Direct plans'}</div></div>`) + fileUpdated(list);
+  const bar = sortBar('funds');
   html += `<div class="chart-card" style="margin-bottom:20px"><div class="chart-title">Fund mix</div>
     <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;margin:6px 0 10px">${order.map(k => `<div title="${k} ${pctOf(by[k], total).toFixed(1)}%" style="background:${MF_META[k][0]};width:${pctOf(by[k], total)}%"></div>`).join('')}</div>
     <div style="display:flex;flex-wrap:wrap;gap:14px">${order.map(k => `<div class="legend-item" style="margin:0"><div class="legend-dot" style="background:${MF_META[k][0]}"></div><span class="legend-name">${k} ${fmtCr(by[k])} · ${pctOf(by[k], total).toFixed(1)}%</span></div>`).join('')}</div>
-    ${by.Hybrid ? `<div class="muted" style="font-size:11px;margin-top:8px">Hybrid funds are counted in your Equity total.</div>` : ''}</div>`;
+    ${by.Hybrid ? `<div class="muted" style="font-size:11px;margin-top:8px">Hybrid funds are counted in your Equity total.</div>` : ''}</div>` + bar;
   const multi = new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · '))).size > 1;
   const cols = [['Scheme', a => `<span style="color:var(--text)">${esc(String(a.name).replace(/ – .*$/, ''))}</span><div class="muted" style="font-size:10px">${esc([a.category, a.plan].filter(Boolean).join(' · '))}</div>`],
     multi && ['Platform', a => esc([a.platform, a.holder].filter(Boolean).join(' · '))],
@@ -962,7 +998,7 @@ function renderFunds(d) {
     ['Avg NAV', a => a.avg === null ? '' : a.avg.toLocaleString('en-IN', { maximumFractionDigits: 2 }), 1],
     ['NAV', a => a.cmp === null ? '' : a.cmp.toLocaleString('en-IN', { maximumFractionDigits: 2 }), 1]].filter(Boolean);
   order.forEach(k => {
-    const part = list.filter(a => a.mfClass === k);
+    const part = sortList(list.filter(a => a.mfClass === k), 'funds');
     html += `<div class="section-title">${MF_META[k][1]} <span class="tag amber" style="margin-left:4px">${fmtCr(by[k])}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(by[k], total).toFixed(1)}%${MF_META[k][2] ? ' · ' + MF_META[k][2] : ''}</span></div>` + fileTable(part, total, cols);
   });
   setHTML('funds-body', html);
