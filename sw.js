@@ -1,7 +1,8 @@
 // Bump this string whenever you deploy a change you want pushed to installed apps.
-const CACHE = 'r2r-client-v8';
+const CACHE = 'r2r-client-v9';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-512-maskable.png', './apple-touch-icon.png',
-  './expenses.html', './expenses.webmanifest', './expenses-icon-192.png', './expenses-icon-512.png', './expenses-icon-512-maskable.png', './expenses-touch-icon.png'];
+  './expenses.html', './expenses.webmanifest', './expenses-icon-192.png', './expenses-icon-512.png', './expenses-icon-512-maskable.png', './expenses-touch-icon.png',
+  './monitor.html', './monitor.webmanifest', './monitor-icon-192.png', './monitor-icon-512.png', './monitor-icon-512-maskable.png', './monitor-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -36,6 +37,6 @@ self.addEventListener('fetch', (e) => {
       })
       // offline: the same page without its ?c=&k= part, else the right app's start page
       .catch(() => caches.match(req, { ignoreSearch: true })
-        .then((hit) => hit || caches.match(/expenses/.test(new URL(req.url).pathname) ? './expenses.html' : './index.html')))
+        .then((hit) => hit || caches.match(/expenses/.test(new URL(req.url).pathname) ? './expenses.html' : /monitor/.test(new URL(req.url).pathname) ? './monitor.html' : './index.html')))
   );
 });

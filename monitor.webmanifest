@@ -1,0 +1,17 @@
+{
+  "id": "/r2r-tracker/monitor",
+  "name": "R2R Monitor",
+  "short_name": "R2R Monitor",
+  "description": "Advisor view: every client's stock holdings in one place.",
+  "start_url": "./monitor.html",
+  "scope": "./monitor.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#04080f",
+  "theme_color": "#04080f",
+  "icons": [
+    { "src": "monitor-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "monitor-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "monitor-icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
