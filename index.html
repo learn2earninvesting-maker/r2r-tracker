@@ -298,6 +298,7 @@
   .basis { font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.3px;text-transform:none; }
   .basis.exact { background:rgba(34,197,94,.15);color:var(--pos); }
   .basis.approx { background:rgba(251,191,36,.16);color:var(--warn); }
+  .basis.partial { background:rgba(59,130,246,.15);color:var(--blue); }
   .ret-explain { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:18px; }
   .sort-chip.on { background:var(--amber);color:#0b1120;border-color:var(--amber);font-weight:700; }
   :root[data-theme="light"] .sort-chip.on { color:#ffffff; }
@@ -1075,7 +1076,7 @@ function renderReturns(d) {
     }
     const annual = r.xirr !== null, v = annual ? r.xirr : r.gainPct;
     return `<div class="ret-card" style="--accent:${accent}">
-      <div class="lbl"><span>${esc(scope)}</span><span class="basis ${r.basis === 'Exact' ? 'exact' : 'approx'}">${r.basis === 'Exact' ? '✓ Exact' : '≈ Approximate'}</span></div>
+      <div class="lbl"><span>${esc(scope)}</span><span class="basis ${r.basis === 'Exact' ? 'exact' : r.basis === 'Partial' ? 'partial' : 'approx'}">${r.basis === 'Exact' ? '✓ Exact' : r.basis === 'Partial' ? 'Matched holdings' : '≈ Approximate'}</span></div>
       <div class="big ${cls(v)}">${pctTxt(v)}<span class="unit">${annual ? 'XIRR a year' : 'gain (not yearly)'}</span></div>
       <div class="sub">${r.gain >= 0 ? 'Gain' : 'Loss'} <b class="${cls(r.gain)}">${fmtINR(Math.abs(r.gain))}</b> on ${fmtINR(r.invested)} put in<br>Value now ${fmtINR(r.value)} · since ${fmtDate(r.from)}</div>
       ${r.note ? `<div class="note">${esc(r.note)}</div>` : ''}</div>`;
@@ -1083,8 +1084,9 @@ function renderReturns(d) {
   let html = `<div class="sort-bar"><span class="sort-lbl">📅 Period</span>${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriod('${p}')">${p === 'Since start' ? 'Since start' : p.replace('Y', ' year' + (p === '1Y' ? '' : 's'))}</button>`).join('')}
     <span class="sort-hint">${P === 'Since start' ? 'From your first transaction (or from when tracking began).' : 'From the month-end ' + esc(P.replace('Y', '')) + ' year' + (P === '1Y' ? '' : 's') + ' ago to today.'}</span></div>`;
   html += `<div class="ret-grid">${card('Combined', '#f0a500')}${card('Stocks', '#3b82f6')}${card('Mutual Funds', '#a855f7')}</div>`;
-  const anyApprox = main.some(r => r.period === P && r.basis !== 'Exact');
-  html += `<div class="ret-explain"><b>XIRR</b> is your yearly return, taking into account <i>when</i> each rupee went in or came out — the fair way to measure SIPs and staggered buying. Periods under a year show the plain gain instead.${anyApprox ? `<br><b>≈ Approximate</b> figures use your month-end values, so profits booked on sales and dividends may be missed. Send the Tracker bot your share tradebook and fund transaction statement for <b>✓ Exact</b> figures.` : ''}</div>`;
+  const anyApprox = main.some(r => r.period === P && r.basis === 'Approximate');
+  const anyPartial = main.some(r => r.period === P && r.basis === 'Partial');
+  html += `<div class="ret-explain"><b>XIRR</b> is your yearly return, taking into account <i>when</i> each rupee went in or came out — the fair way to measure SIPs and staggered buying. Periods under a year show the plain gain instead.${anyApprox ? `<br><b>≈ Approximate</b> figures use your month-end values, so profits booked on sales and dividends may be missed. Send the Tracker bot your share tradebook and fund transaction statement for <b>✓ Exact</b> figures.` : ''}${anyPartial ? `<br><b>Matched holdings</b> figures cover only the holdings your transactions fully explain (the % is on the card). Send your tradebook from your <b>first</b> trade to include the rest.` : ''}</div>`;
   html += retDetail(R, P);
   const upd = R.map(r => r.updated).filter(Boolean).sort((a, b) => b - a)[0];
   if (upd) html += `<div class="muted" style="font-size:11px;margin:-6px 0 24px">Worked out ${fmtDate(upd)} · updated every night.</div>`;
