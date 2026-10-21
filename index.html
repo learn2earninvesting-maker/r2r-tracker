@@ -1029,16 +1029,38 @@ function renderFunds(d) {
 // ── Returns tab: XIRR from the Returns tab of the sheet (worked out every night)
 let RET_PERIOD = (() => { try { return localStorage.getItem('r2r_ret_period') || ''; } catch (e) { return ''; } })();
 function setRetPeriod(p) { RET_PERIOD = p; try { localStorage.setItem('r2r_ret_period', p); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
+// Per-holding list and the "to make these exact" list (shown even before overall figures exist)
+function retDetail(R, P) {
+  let html = '';
+  const pctTxt = v => v === null ? '—' : (v > 0 ? '+' : '') + v.toFixed(1) + '%';
+  const cls = v => v === null ? '' : v >= 0 ? 'gain-pos' : 'gain-neg';
+  const hp = R.some(r => r.scope === 'Holding' && r.period === P) ? P : 'Since start';
+  const hold = R.filter(r => r.scope === 'Holding' && r.period === hp).map(r => ({ name: r.name, ticker: r.name, kind: '', value: r.value, pnl: r.gain, invested: r.invested,
+    xirr: r.xirr !== null ? r.xirr / 100 : (r.gainPct !== null ? r.gainPct / 100 : null), r }));
+  if (hold.length) {
+    const list = sortList(hold, 'returns');
+    html += `<div class="section-title">Each holding <span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${hp === P ? '' : 'since start · '}${hold.length} exact</span></div>` + sortBar('returns') +
+      `<div class="table-wrap"><table class="data-table"><thead><tr><th>Holding</th><th class="num">XIRR</th><th class="num">Gain</th><th class="num">Value now</th></tr></thead><tbody>${list.map(h => { const r = h.r, v = r.xirr !== null ? r.xirr : r.gainPct;
+        return `<tr><td><span style="color:var(--text)">${esc(r.name)}</span><div class="muted" style="font-size:10px">${esc(r.bucket === 'Mutual Funds' ? 'Mutual fund' : 'Share')} · since ${fmtDate(r.from)}${r.note ? ' · ' + esc(r.note) : ''}</div></td>
+        <td class="num"><span class="${cls(v)}">${pctTxt(v)}</span>${r.xirr === null ? '<br><small class="muted">not yearly</small>' : ''}</td>
+        <td class="num" style="white-space:nowrap"><span class="${cls(r.gain)}">${r.gain >= 0 ? '+' : '−'}${fmtINR(Math.abs(r.gain))}</span></td><td class="num" style="white-space:nowrap">${fmtINR(r.value)}</td></tr>`; }).join('')}</tbody></table></div>`;
+  }
+  const checks = R.filter(r => r.scope === 'Check');
+  if (checks.length) html += `<div class="section-title">To make these exact</div><div class="ret-explain" style="margin-bottom:24px">${checks.map(c => `<div style="margin-bottom:6px"><b style="color:var(--text)">${esc(c.name)}</b> <span class="muted">(${esc(c.bucket === 'Mutual Funds' ? 'fund' : 'share')})</span> — ${esc(c.note)}</div>`).join('')}<div class="muted" style="margin-top:6px">Send the missing part of your tradebook or fund statement to the Tracker bot. Bonus shares and splits don't appear in tradebooks — tell Manuel if that's the reason.</div></div>`;
+  return html;
+}
 function renderReturns(d) {
   const R = d.returns || [];
   const main = R.filter(r => ['Combined', 'Stocks', 'Mutual Funds'].includes(r.scope));
   const ORDER = ['1Y', '3Y', '5Y', 'Since start'];
   const periods = ORDER.filter(p => main.some(r => r.period === p));
+  const extras = (R.some(r => r.scope === 'Holding') || R.some(r => r.scope === 'Check'));
   if (!periods.length) {
     const first = d.snapshots.map(s => s.date).sort((a, b) => a - b)[0];
-    setHTML('returns-body', empty(first
+    const hasTx = extras;
+    setHTML('returns-body', (hasTx ? empty(`<b>Overall returns aren't ready yet.</b> Some of your holdings don't match the transactions you sent (see the list below), so the overall figure needs month-end history${first ? ', which started on ' + fmtDate(first) + '. It appears after the next month-end' : ''}.<br><br>Send your older tradebook (from your <b>first</b> trade) to make it exact straight away. Holdings that already match are shown below.`) : empty(first
       ? `Tracking started on ${fmtDate(first)}. Your first returns appear after the next month-end.<br><br>Want exact figures for your whole history straight away? Send the Tracker bot your <b>share tradebook</b> (Zerodha Console → Reports → Tradebook) and your <b>mutual fund transaction statement</b> (Excel/CSV from Kuvera, Groww, MF Central…).`
-      : `Returns aren't available yet. Your advisor will switch them on.<br><br>For exact figures, send the Tracker bot your <b>share tradebook</b> and your <b>mutual fund transaction statement</b> (Excel/CSV).`));
+      : `Returns aren't available yet. Your advisor will switch them on.<br><br>For exact figures, send the Tracker bot your <b>share tradebook</b> and your <b>mutual fund transaction statement</b> (Excel/CSV).`)) + (hasTx ? retDetail(R, 'Since start') : ''));
     return;
   }
   if (!periods.includes(RET_PERIOD)) RET_PERIOD = periods.includes('1Y') ? '1Y' : periods[periods.length - 1];
@@ -1063,20 +1085,7 @@ function renderReturns(d) {
   html += `<div class="ret-grid">${card('Combined', '#f0a500')}${card('Stocks', '#3b82f6')}${card('Mutual Funds', '#a855f7')}</div>`;
   const anyApprox = main.some(r => r.period === P && r.basis !== 'Exact');
   html += `<div class="ret-explain"><b>XIRR</b> is your yearly return, taking into account <i>when</i> each rupee went in or came out — the fair way to measure SIPs and staggered buying. Periods under a year show the plain gain instead.${anyApprox ? `<br><b>≈ Approximate</b> figures use your month-end values, so profits booked on sales and dividends may be missed. Send the Tracker bot your share tradebook and fund transaction statement for <b>✓ Exact</b> figures.` : ''}</div>`;
-  // per holding
-  const hp = R.some(r => r.scope === 'Holding' && r.period === P) ? P : 'Since start';
-  const hold = R.filter(r => r.scope === 'Holding' && r.period === hp).map(r => ({ name: r.name, ticker: r.name, kind: '', value: r.value, pnl: r.gain, invested: r.invested,
-    xirr: r.xirr !== null ? r.xirr / 100 : (r.gainPct !== null ? r.gainPct / 100 : null), r }));
-  if (hold.length) {
-    const list = sortList(hold, 'returns');
-    html += `<div class="section-title">Each holding <span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${hp === P ? '' : 'since start · '}${hold.length} exact</span></div>` + sortBar('returns') +
-      `<div class="table-wrap"><table class="data-table"><thead><tr><th>Holding</th><th class="num">XIRR</th><th class="num">Gain</th><th class="num">Value now</th></tr></thead><tbody>${list.map(h => { const r = h.r, v = r.xirr !== null ? r.xirr : r.gainPct;
-        return `<tr><td><span style="color:var(--text)">${esc(r.name)}</span><div class="muted" style="font-size:10px">${esc(r.bucket === 'Mutual Funds' ? 'Mutual fund' : 'Share')} · since ${fmtDate(r.from)}${r.note ? ' · ' + esc(r.note) : ''}</div></td>
-        <td class="num"><span class="${cls(v)}">${pctTxt(v)}</span>${r.xirr === null ? '<br><small class="muted">not yearly</small>' : ''}</td>
-        <td class="num" style="white-space:nowrap"><span class="${cls(r.gain)}">${r.gain >= 0 ? '+' : '−'}${fmtINR(Math.abs(r.gain))}</span></td><td class="num" style="white-space:nowrap">${fmtINR(r.value)}</td></tr>`; }).join('')}</tbody></table></div>`;
-  }
-  const checks = R.filter(r => r.scope === 'Check');
-  if (checks.length) html += `<div class="section-title">To make these exact</div><div class="ret-explain" style="margin-bottom:24px">${checks.map(c => `<div style="margin-bottom:6px"><b style="color:var(--text)">${esc(c.name)}</b> <span class="muted">(${esc(c.bucket === 'Mutual Funds' ? 'fund' : 'share')})</span> — ${esc(c.note)}</div>`).join('')}<div class="muted" style="margin-top:6px">Send the missing part of your tradebook or fund statement to the Tracker bot. Bonus shares and splits don't appear in tradebooks — tell Manuel if that's the reason.</div></div>`;
+  html += retDetail(R, P);
   const upd = R.map(r => r.updated).filter(Boolean).sort((a, b) => b - a)[0];
   if (upd) html += `<div class="muted" style="font-size:11px;margin:-6px 0 24px">Worked out ${fmtDate(upd)} · updated every night.</div>`;
   setHTML('returns-body', html);
