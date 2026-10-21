@@ -300,6 +300,7 @@
   .ret-lbl { font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;font-weight:600; }
   .ret-big { font-family:var(--syne);font-size:34px;font-weight:800;line-height:1.1;margin:10px 0 4px; }
   .ret-big .unit { font-size:12px;color:var(--text3);font-family:var(--dm);font-weight:600;margin-left:6px;letter-spacing:.5px; }
+  .ret-why { font-size:12px;color:var(--text2);line-height:1.5;margin:10px 0 4px; }
   .ret-toggle { font:inherit;font-size:12px;font-weight:600;color:var(--teal);background:none;border:0;padding:6px 0;cursor:pointer;display:flex;align-items:center;gap:4px; }
   .ret-toggle .chev { display:inline-block;transition:transform .15s; }
   .ret-tile.open .ret-toggle .chev { transform:rotate(180deg); }
@@ -1117,7 +1118,8 @@ function renderReturns(d) {
     }
     return `<div class="ret-tile${open ? ' open' : ''}" style="--accent:${accent}" onclick="toggleRet('${scope}')">
       <div class="ret-head"><span class="ret-lbl">${icon} ${esc(scope)}</span>${b ? `<span class="basis ${b[0]}">${b[1]}</span>` : ''}</div>
-      <div class="ret-big ${retCls(v)}">${r ? retPct(v) : '—'}<span class="unit">${r ? (r.xirr !== null ? 'XIRR' : 'gain') : 'not ready yet'}</span></div>
+      ${r ? `<div class="ret-big ${retCls(v)}">${retPct(v)}<span class="unit">${r.xirr !== null ? 'XIRR' : 'gain'}</span></div>`
+        : `<div class="ret-why">No overall figure for ${esc(scope === 'Stocks' ? 'your stocks' : 'your funds')} yet${checks ? ' — some holdings aren\'t covered by your transactions' : ''}. It appears ${checks ? 'once you send the missing ' + (scope === 'Stocks' ? 'tradebook' : 'statement') + ', or ' : ''}after the next month-end.</div>`}
       <button class="ret-toggle" aria-expanded="${open}">${open ? 'Hide' : 'Show'} ${what} <span class="chev">▾</span></button>${body}</div>`;
   };
   html += `<div class="ret-grid">${tile('Combined', '#f0a500', '🧮')}${tile('Stocks', '#3b82f6', '📈')}${tile('Mutual Funds', '#a855f7', '🧺')}</div>`;
