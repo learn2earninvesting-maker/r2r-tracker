@@ -103,6 +103,7 @@
   .note { font-size:11px;color:var(--text3);line-height:1.5;margin-top:18px; }
   #gate { display:none;min-height:70vh;align-items:center;justify-content:center;text-align:center;padding:24px; }
   #gate .box { max-width:360px; }
+  .ios-hint { display:flex;gap:10px;align-items:center;background:var(--amber-dim);border:1px solid var(--border);color:var(--text);font-size:13px;line-height:1.5;padding:10px 12px;border-radius:10px;margin-bottom:14px; }
   #gate h2 { font-family:var(--syne);color:var(--amber);margin-bottom:10px; }
   #gate p { color:var(--text2);font-size:14px;line-height:1.6; }
   #loader { padding:60px 0;text-align:center;color:var(--text3);font-family:var(--mono);font-size:12px; }
@@ -115,10 +116,15 @@
   <div class="top-right">
     <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" aria-label="Day or night mode">🌙</button>
     <button class="icon-btn" id="refresh-btn" onclick="load(true)">↻ Refresh</button>
+    <button class="icon-btn" id="install-btn" style="display:none" onclick="doInstall()">⬇ Install</button>
   </div>
 </div>
 <main>
-  <div id="gate"><div class="box"><h2>Advisor link needed</h2><p id="gate-msg">Open your monitor link from the registry sheet (R2R Monitor → My stock monitor link) once on this phone. The app then remembers it.</p></div></div>
+  <div id="ios-hint" class="ios-hint" style="display:none"><div style="flex:1">To install on iPhone: tap <b>Share</b> <span aria-hidden="true">⎋</span> at the bottom of Safari, then <b>Add to Home Screen</b>.</div><button class="icon-btn" onclick="hideIosHint()" aria-label="Close">✕</button></div>
+  <div id="gate"><div class="box"><h2>Advisor link needed</h2><p id="gate-msg">Open your monitor link from the registry sheet (R2R Monitor → My stock monitor link) once on this phone. The app then remembers it.</p>
+    <p style="margin-top:14px">Opened from the home-screen icon? Paste the monitor link here once:</p>
+    <input id="gate-input" type="text" inputmode="url" autocomplete="off" placeholder="Paste monitor link" style="width:100%;margin-top:10px;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font:inherit;font-size:14px">
+    <button class="icon-btn" style="margin-top:10px;width:100%;justify-content:center" onclick="useGateLink()">Unlock</button></div></div>
   <div id="err"></div>
   <div id="loader">Reading every client's holdings…</div>
   <div id="app" style="display:none">
@@ -358,6 +364,22 @@ function toggleTheme() {
 }
 document.getElementById('theme-btn').textContent = document.documentElement.getAttribute('data-theme') === 'light' ? '☀️' : '🌙';
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+// ── install
+let deferredPrompt = null;
+const STANDALONE = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; document.getElementById('install-btn').style.display = 'inline-flex'; });
+window.addEventListener('appinstalled', () => { document.getElementById('install-btn').style.display = 'none'; });
+function doInstall() { if (!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.finally(() => { deferredPrompt = null; document.getElementById('install-btn').style.display = 'none'; }); }
+const IOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+if (IOS && !STANDALONE && !store.get('r2r_monitor_ioshint_off', false)) document.getElementById('ios-hint').style.display = 'flex';
+function hideIosHint() { document.getElementById('ios-hint').style.display = 'none'; store.set('r2r_monitor_ioshint_off', true); }
+function useGateLink() {
+  const v = document.getElementById('gate-input').value.trim(); let k = null;
+  try { k = new URL(v).searchParams.get('a'); } catch (e) { const m = v.match(/[?&]a=([^&#\s]+)/); k = m ? decodeURIComponent(m[1]) : (v && !/\s|\//.test(v) ? v : null); }
+  if (!k) { document.getElementById('gate-msg').textContent = "That doesn't look like the monitor link. Copy it again from the registry sheet."; return; }
+  KEY = k; store.set('r2r_monitor_key', KEY);
+  document.getElementById('gate').style.display = 'none'; document.getElementById('loader').style.display = 'block'; load(false);
+}
 load(false);
 </script>
 </body>
