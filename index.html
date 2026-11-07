@@ -389,6 +389,7 @@
       <div><div class="nw-item-label">Total Liabilities</div><div class="nw-item-val red" id="nw-liab">—</div><div class="nw-item-raw" id="nw-liab-raw">—</div></div>
       <div><div class="nw-item-label">Net Worth</div><div class="nw-item-val green" id="nw-net">—</div><div class="nw-item-raw" id="nw-net-raw">—</div></div>
     </div>
+    <div class="muted" id="prices-asof" style="font-size:11px;margin:-6px 0 14px;text-align:center"></div>
     <div class="kpi-grid" id="kpi-grid"></div>
 
     <div class="section-title">Coming Up</div>
@@ -807,7 +808,7 @@ function model(api) {
     period: String(r['Period'] ?? ''), from: parseDate(r['From']), xirr: blank(r['XIRR %']) ? null : num(r['XIRR %']), gainPct: blank(r['Gain %']) ? null : num(r['Gain %']),
     gain: num(r['Gain (₹)']), invested: num(r['Invested (₹)']), value: num(r['Value (₹)']), basis: String(r['Basis'] ?? ''), note: String(r['Note'] ?? ''), updated: parseDate(r['Updated']) }));
   const snapshots = rowsOf(t.Snapshots).map(r => ({ date: parseDate(r['Date']) })).filter(x => x.date);
-  return { client: api.client || profile['Client Name'] || '', updated: api.updated, profile, P, today, returns, snapshots,
+  return { client: api.client || profile['Client Name'] || '', updated: api.updated, pricesAsOf: api.pricesAsOf || '', navAsOf: api.navAsOf || '', profile, P, today, returns, snapshots,
     assets, byClass, classes, totalAssets, liabilities, loans, cards, totalLiab, netWorth: totalAssets - totalLiab,
     emiMonthly, homeEmi, insurance, cfItems, months, annual, monthlyIncome, monthlySpend, annualSpend, fire };
 }
@@ -851,6 +852,8 @@ function renderAll(d) {
   document.title = d.client ? `R2R · ${d.client}` : 'R2R Financial Tracker';
   const u = d.updated ? new Date(d.updated) : null;
   set('last-updated', (DEMO ? 'DEMO · ' : '') + (u && !isNaN(u) ? 'Sheet updated ' + u.toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Updated'));
+  const pl = pricesLine(d);
+  setHTML('prices-asof', pl ? '⏱ ' + pl + '<br><span style="font-size:10px">Updates every hour on weekdays · share prices run about 20 min behind the market</span>' : '');
   renderOverview(d); renderAllocation(d); renderHoldings(d); renderStocks(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
   renderPayments(d); renderParameters(d);   // renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
@@ -990,9 +993,26 @@ function fileKpis(list, extra) {
     <div class="kpi" style="--accent:${pnl >= 0 ? '#22c55e' : '#ef4444'};"><div class="kpi-label">Gain / loss</div><div class="kpi-val ${pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${pnl >= 0 ? '+' : ''}${fmtCr(pnl)}</div><div class="kpi-sub">${inv ? (pnl / inv * 100).toFixed(1) + '% on invested' : ''}</div></div>
     ${extra || ''}</div>`;
 }
-function fileUpdated(list) {
+// "Prices as of …" — written by the hourly price update (PriceFeed.gs). Share prices: weekdays 9 am–4 pm, about 20 min behind the market.
+function asOfText(iso, withTime) {
+  const t = iso ? new Date(iso) : null;
+  if (!t || isNaN(t)) return '';
+  const o = withTime ? { day:'numeric', month:'short', hour:'numeric', minute:'2-digit', hour12:true } : { day:'numeric', month:'short' };
+  return t.toLocaleString('en-IN', o).replace(/\b(am|pm)\b/i, m => m.toLowerCase());
+}
+function pricesLine(d, kind) {
+  const p = asOfText(d.pricesAsOf, true), n = asOfText(d.navAsOf, false);
+  const old = d.pricesAsOf && (Date.now() - new Date(d.pricesAsOf)) > 4 * 864e5;   // > 4 days: more than a weekend
+  const parts = [];
+  if (p && kind !== 'funds') parts.push(`Share prices as of <b>${p}</b>`);
+  if (n && kind !== 'stocks') parts.push(`Fund NAVs as of <b>${n}</b>`);
+  if (!parts.length) return '';
+  return parts.join(' · ') + (old ? ' <span style="color:var(--amber)">· prices have not updated for a few days</span>' : '');
+}
+function fileUpdated(list, d, kind) {
   const ds = list.map(a => parseDate(a.updated)).filter(Boolean).sort((a, b) => b - a);
-  return ds.length ? `<div class="muted" style="font-size:11px;margin:-8px 0 18px">File last sent ${fmtDate(ds[0])} · prices update by themselves on weekdays. Send the latest file again at month-end.</div>` : '';
+  const pl = d ? pricesLine(d, kind) : '';
+  return ds.length ? `<div class="muted" style="font-size:11px;margin:-8px 0 18px">${pl ? pl + '<br>' : ''}File last sent ${fmtDate(ds[0])} · prices update by themselves every hour on weekdays (shares 9 am–4 pm, fund NAVs in the evening). Send the latest file again at month-end.</div>` : '';
 }
 function renderStocks(d) {
   renderBrokerTab(d, 'stocks', 'stocks-body', a => a.cls === 'Equity', 'No Indian stocks yet. Send your broker\'s holdings file (Zerodha Console → Portfolio → Holdings → XLSX, or the Excel/CSV from Groww, Upstox…) to the Tracker bot. Shares and equity ETFs from it show here; gold bonds, gold ETFs and REITs go to the Other Assets tab.');
@@ -1005,7 +1025,7 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
   if (!list.length) { setHTML(bodyId, empty(emptyMsg)); return; }
   const total = list.reduce((s, a) => s + a.value, 0);
   const plats = [...new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · ')).filter(Boolean))];
-  let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list) + sortBar(tab);
+  let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list, d, 'stocks') + sortBar(tab);
   const multi = plats.length > 1;
   const cols = [['Name', a => `<span style="color:var(--text)">${esc(a.ticker || a.name)}</span>${a.company && a.company !== a.ticker ? `<div class="muted" style="font-size:10px">${esc(a.company)}</div>` : ''}`],
     multi && ['Platform', a => esc([a.platform, a.holder].filter(Boolean).join(' · '))],
@@ -1031,7 +1051,7 @@ function renderFunds(d) {
   const by = {}; list.forEach(a => by[a.mfClass] = (by[a.mfClass] || 0) + a.value);
   const order = ['Equity', 'Hybrid', 'Debt', 'Gold', 'Other'].filter(k => by[k]);
   const regular = list.filter(a => /regular/i.test(a.plan)).length;
-  let html = fileKpis(list, `<div class="kpi" style="--accent:#a855f7;"><div class="kpi-label">Funds</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${regular ? regular + ' Regular plan' + (regular === 1 ? '' : 's') : 'all Direct plans'}</div></div>`) + fileUpdated(list);
+  let html = fileKpis(list, `<div class="kpi" style="--accent:#a855f7;"><div class="kpi-label">Funds</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${regular ? regular + ' Regular plan' + (regular === 1 ? '' : 's') : 'all Direct plans'}</div></div>`) + fileUpdated(list, d, 'funds');
   const bar = sortBar('funds');
   html += `<div class="chart-card" style="margin-bottom:20px"><div class="chart-title">Fund mix</div>
     <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;margin:6px 0 10px">${order.map(k => `<div title="${k} ${pctOf(by[k], total).toFixed(1)}%" style="background:${MF_META[k][0]};width:${pctOf(by[k], total)}%"></div>`).join('')}</div>

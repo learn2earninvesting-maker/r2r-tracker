@@ -2,6 +2,8 @@
  "ok": true,
  "client": "Demo Family",
  "updated": "2026-10-19T09:00:00+05:30",
+  "pricesAsOf": "2026-10-19T15:00:00+05:30",
+  "navAsOf": "2026-10-17",
  "tabs": {
   "Profile": [
    [
