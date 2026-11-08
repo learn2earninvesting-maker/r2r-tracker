@@ -1026,7 +1026,8 @@ const ALLOC_BANDS = [['all', 'All', () => true, ''], ['6', '6% +', p => p >= 6, 
 let ALLOC_STATE = (() => { try { return localStorage.getItem('r2r_alloc') || 'all'; } catch (e) { return 'all'; } })();
 function setAlloc(k) {
   ALLOC_STATE = k;
-  try { localStorage.setItem('r2r_alloc', k); } catch (e) {}
+  SORT_STATE.stocks = { key: 'value', dir: -1 };   // allocation buttons always list highest allocation first
+  try { localStorage.setItem('r2r_alloc', k); localStorage.setItem('r2r_sort', JSON.stringify(SORT_STATE)); } catch (e) {}
   if (LAST_MODEL) renderStocks(LAST_MODEL);
 }
 function allocBar(list, total) {
@@ -1058,6 +1059,13 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
     ['Qty', a => a.units === null ? '' : a.units.toLocaleString('en-IN', { maximumFractionDigits: 3 }), 1],
     ['Avg price', a => a.avg === null ? '' : a.avg.toLocaleString('en-IN', { maximumFractionDigits: 2 }), 1],
     ['CMP', a => a.cmp === null ? '' : a.cmp.toLocaleString('en-IN', { maximumFractionDigits: 2 }), 1]].filter(Boolean);
+  if (tab === 'stocks') {   // one ranking, highest allocation first (equity ETFs tagged, not split into their own section)
+    const part = sortList(list, tab), v = part.reduce((s, a) => s + a.value, 0);
+    const etf = a => a.type === 'ETF' ? ' <span class="tag" style="font-size:9px;padding:1px 5px;margin-left:4px">ETF</span>' : '';
+    const rcols = [['#', a => list.indexOf(a) + 1, 1], [cols[0][0], a => cols[0][1](a).replace('</span>', '</span>' + etf(a))]].concat(cols.slice(1));
+    html += `<div class="section-title">${ALLOC_STATE === 'all' ? 'All holdings' : 'Holdings'} <span class="tag amber" style="margin-left:4px">${fmtCr(v)}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(v, total).toFixed(1)}% · # = rank by allocation · counted in Equity</span></div>` + fileTable(part, total, rcols);
+    setHTML(bodyId, html); return;
+  }
   const used = new Set();
   STOCK_GROUPS.forEach(([g, test]) => {
     const part = sortList(list.filter(a => !used.has(a) && test(a)), tab); if (!part.length) return; part.forEach(a => used.add(a));
