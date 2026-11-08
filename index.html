@@ -1020,12 +1020,38 @@ function renderStocks(d) {
 function renderOther(d) {
   renderBrokerTab(d, 'other', 'other-body', a => a.cls !== 'Equity', 'Nothing here yet. Gold bonds (SGB), gold and silver ETFs, REITs, InvITs and debt ETFs from your broker\'s holdings file show here. They are counted in your Gold, REITs / InvITs and Debt totals.');
 }
+// ── Allocation filter (Indian Stocks tab): show only holdings whose share of the tab's current value is in a band.
+const ALLOC_BANDS = [['all', 'All', () => true, ''], ['5', '5% +', p => p >= 5, '5% or more'], ['2-5', '2–5%', p => p >= 2 && p < 5, '2–5%'],
+  ['1-2', '1–2%', p => p >= 1 && p < 2, '1–2%'], ['lt1', 'Under 1%', p => p < 1, 'under 1%']];
+let ALLOC_STATE = (() => { try { return localStorage.getItem('r2r_alloc') || 'all'; } catch (e) { return 'all'; } })();
+function setAlloc(k) {
+  ALLOC_STATE = k;
+  try { localStorage.setItem('r2r_alloc', k); } catch (e) {}
+  if (LAST_MODEL) renderStocks(LAST_MODEL);
+}
+function allocBar(list, total) {
+  const cnt = k => list.filter(a => ALLOC_BANDS.find(b => b[0] === k)[2](pctOf(a.value, total))).length;
+  return `<div class="sort-bar"><span class="sort-lbl">% Allocation</span>${ALLOC_BANDS.map(([k, l]) => `<button class="sort-chip${k === ALLOC_STATE ? ' on' : ''}" onclick="setAlloc('${k}')">${l} <small>(${cnt(k)})</small></button>`).join('')}<span class="sort-hint">Each stock's share of your Indian stocks, by current value.</span></div>`;
+}
 function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
-  const list = d.assets.filter(a => a.kind === 'stock' && filter(a)).sort((a, b) => b.value - a.value);
+  let list = d.assets.filter(a => a.kind === 'stock' && filter(a)).sort((a, b) => b.value - a.value);
   if (!list.length) { setHTML(bodyId, empty(emptyMsg)); return; }
   const total = list.reduce((s, a) => s + a.value, 0);
   const plats = [...new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · ')).filter(Boolean))];
-  let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list, d, 'stocks') + sortBar(tab);
+  let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list, d, 'stocks');
+  if (tab === 'stocks') {
+    if (!ALLOC_BANDS.some(b => b[0] === ALLOC_STATE)) ALLOC_STATE = 'all';
+    html += allocBar(list, total);
+    if (ALLOC_STATE !== 'all') {
+      const band = ALLOC_BANDS.find(b => b[0] === ALLOC_STATE);
+      const shown = list.filter(a => band[2](pctOf(a.value, total)));
+      const v = shown.reduce((s, a) => s + a.value, 0);
+      html += `<div class="muted" style="font-size:12px;margin:-8px 0 14px">Showing <b style="color:var(--text)">${shown.length}</b> of ${list.length} holdings with ${esc(band[3])} each · together ${fmtCr(v)} · ${pctOf(v, total).toFixed(1)}% of your Indian stocks</div>`;
+      if (!shown.length) { setHTML(bodyId, html + empty('No holdings in this band. Tap “All” to see everything.')); return; }
+      list = shown;
+    }
+  }
+  html += sortBar(tab);
   const multi = plats.length > 1;
   const cols = [['Name', a => `<span style="color:var(--text)">${esc(a.ticker || a.name)}</span>${a.company && a.company !== a.ticker ? `<div class="muted" style="font-size:10px">${esc(a.company)}</div>` : ''}`],
     multi && ['Platform', a => esc([a.platform, a.holder].filter(Boolean).join(' · '))],
