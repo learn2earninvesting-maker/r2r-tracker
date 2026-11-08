@@ -1021,8 +1021,8 @@ function renderOther(d) {
   renderBrokerTab(d, 'other', 'other-body', a => a.cls !== 'Equity', 'Nothing here yet. Gold bonds (SGB), gold and silver ETFs, REITs, InvITs and debt ETFs from your broker\'s holdings file show here. They are counted in your Gold, REITs / InvITs and Debt totals.');
 }
 // ── Allocation filter (Indian Stocks tab): show only holdings whose share of the tab's current value is in a band.
-const ALLOC_BANDS = [['all', 'All', () => true, ''], ['5', '5% +', p => p >= 5, '5% or more'], ['2-5', '2–5%', p => p >= 2 && p < 5, '2–5%'],
-  ['1-2', '1–2%', p => p >= 1 && p < 2, '1–2%'], ['lt1', 'Under 1%', p => p < 1, 'under 1%']];
+const ALLOC_BANDS = [['all', 'All', () => true, ''], ['6', '6% +', p => p >= 6, '6% or more'], ['4-6', '4–6%', p => p >= 4 && p < 6, '4–6%'],
+  ['2-4', '2–4%', p => p >= 2 && p < 4, '2–4%'], ['lt2', 'Under 2%', p => p < 2, 'under 2%']];
 let ALLOC_STATE = (() => { try { return localStorage.getItem('r2r_alloc') || 'all'; } catch (e) { return 'all'; } })();
 function setAlloc(k) {
   ALLOC_STATE = k;
