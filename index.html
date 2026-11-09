@@ -340,7 +340,63 @@
   .ret-sub-h { font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin:14px 0 6px; }
   .ret-checks { font-size:12px;color:var(--text2);line-height:1.5; }
   .ret-checks > div { margin-bottom:5px; } .ret-checks b { color:var(--text); }
-  .ret-about { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:24px; }
+  .tr-h { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin:6px 0 8px; }
+  .tr-h small { display:block;font-family:var(--dm);font-size:11px;color:var(--text3);text-transform:none;letter-spacing:0;font-weight:500;margin-top:2px; }
+  .tr-ranges { display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;scrollbar-width:none; }
+  .tr-ranges .sort-chip { flex:0 0 auto; }
+  .tr-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:12px;margin-bottom:16px;align-items:start; }
+  .tr-card { background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative;overflow:hidden;min-width:0;
+    --s-you:#3987e5; --s-NIFTY50:#d95926; --s-NIFTY500:#199e70; --s-MIDCAP150:#c98500; --s-SMALLCAP250:#d55181; --s-put:var(--text3); }
+  :root[data-theme="light"] .tr-card { --s-you:#2a78d6; --s-NIFTY50:#eb6834; --s-NIFTY500:#1baf7a; --s-MIDCAP150:#eda100; --s-SMALLCAP250:#e87ba4; }
+  .tr-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent); }
+  .tr-top { display:flex;justify-content:space-between;align-items:center;gap:8px; }
+  .tr-sub { font-size:11px;color:var(--text3);margin:4px 0 8px; }
+  .tr-plot { position:relative;width:100%;min-height:210px;touch-action:pan-y; }
+  .tr-plot svg { display:block;max-width:100%;height:auto;overflow:visible; }
+  .tr-grid-l { stroke:var(--border);stroke-width:1; }
+  .tr-ax { fill:var(--text3);font-size:10px;font-family:var(--mono); }
+  .tr-line { fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round; }
+  .tr-line.k-you { stroke-width:2.75; }
+  .tr-line.k-put { stroke-width:1.5;stroke-dasharray:4 4; }
+  .tr-cross { stroke:var(--text3);stroke-width:1; }
+  .tr-dot { stroke:var(--card);stroke-width:2; }
+  .k-you { stroke:var(--s-you);--c:var(--s-you); } .k-NIFTY50 { stroke:var(--s-NIFTY50);--c:var(--s-NIFTY50); } .k-NIFTY500 { stroke:var(--s-NIFTY500);--c:var(--s-NIFTY500); }
+  .k-MIDCAP150 { stroke:var(--s-MIDCAP150);--c:var(--s-MIDCAP150); } .k-SMALLCAP250 { stroke:var(--s-SMALLCAP250);--c:var(--s-SMALLCAP250); } .k-put { stroke:var(--s-put);--c:var(--s-put); }
+  .tr-dot { fill:var(--c); }
+  .tr-tip { position:absolute;top:6px;z-index:3;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:11px;color:var(--text2);box-shadow:0 6px 20px rgba(0,0,0,.25);pointer-events:none;min-width:180px; }
+  .tr-tip b { color:var(--text);display:block;margin-bottom:4px; }
+  .tr-tip div { display:flex;align-items:center;gap:6px;line-height:1.7; }
+  .tr-tip .v { margin-left:auto;font-family:var(--mono);color:var(--text);padding-left:10px; }
+  .sw { display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--c);flex:0 0 auto; }
+  .k-put.sw, .tr-key.k-put .sw { background:none;border-radius:0;height:0;width:14px;border-top:2px dashed var(--c); }
+  .tr-legend { display:grid;grid-template-columns:1fr;gap:2px;margin-top:8px; }
+  .tr-key { font:inherit;display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:0;border-radius:8px;padding:6px 6px;cursor:pointer;color:var(--text2);font-size:12px; }
+  .tr-key:hover { background:var(--bg3); }
+  .tr-key .nm { flex:1;min-width:0; }
+  .tr-key.k-you .nm { color:var(--text);font-weight:700; }
+  .tr-key .fig { font-family:var(--mono);font-size:11px;color:var(--text2);white-space:nowrap; }
+  .tr-key .fig b { color:var(--text); }
+  .tr-key.hid { opacity:.45; } .tr-key.hid .nm { text-decoration:line-through; }
+  .tr-key.off { cursor:default;opacity:.6; } .tr-key.off .fig { font-family:var(--dm);font-size:10px; }
+  .tr-mode { display:inline-flex;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:3px;gap:2px;margin:0 0 10px; }
+  .tr-mode button { font:inherit;font-size:12px;font-weight:600;border:0;background:none;color:var(--text2);padding:6px 14px;border-radius:8px;cursor:pointer; }
+  .tr-mode button.on { background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.2); }
+  .bm-verdict { display:inline-block;font-size:11px;font-weight:600;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:3px 9px;margin:0 0 10px; }
+  .bm-row { display:grid;grid-template-columns:minmax(96px,34%) 1fr 58px;align-items:center;gap:10px;padding:6px 4px;border-radius:8px;outline:none; }
+  .bm-row:hover, .bm-row:focus { background:var(--bg3); }
+  .bm-name { font-size:12px;color:var(--text2);line-height:1.25;min-width:0; }
+  .bm-row.you .bm-name { color:var(--text);font-weight:700; }
+  .bm-name small { display:block;font-size:10px;color:var(--text3);font-family:var(--mono);margin-top:1px; }
+  .bm-track { position:relative;height:14px; }
+  .bm-zero { position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--border); }
+  .bm-bar { position:absolute;top:2px;height:10px;border-radius:4px;background:var(--c); }
+  .bm-val { font-family:var(--mono);font-size:12px;font-weight:600;text-align:right;color:var(--text2); }
+  .bm-row.you .bm-val { color:var(--text); }
+  .bm-na { grid-column:2 / span 2;font-size:11px;color:var(--text3); }
+  .bm-foot { font-size:11px;color:var(--text3);line-height:1.5;margin-top:10px;border-top:1px solid var(--border);padding-top:8px; }
+  .tr-note { font-size:11px;color:var(--text3);line-height:1.5;margin-top:8px;border-top:1px solid var(--border);padding-top:8px; }
+  .tr-none { font-size:12px;color:var(--text3);padding:80px 0;text-align:center; }
+  .ret-about {background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:24px; }
   .ret-about summary { cursor:pointer;font-weight:600;color:var(--teal); }
   .ret-about div { margin-top:8px; }
   .sort-chip.on { background:var(--amber);color:#0b1120;border-color:var(--amber);font-weight:700; }
@@ -581,6 +637,7 @@ function switchTab(id) {
   document.querySelectorAll('.tab-btn,.mob-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
   window.scrollTo({ top: 0, behavior: 'smooth' });
   try { sessionStorage.setItem('r2r_tab', id); } catch (e) {}
+  if (id === 'returns' && typeof drawTrends === 'function') drawTrends();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -852,7 +909,8 @@ function model(api) {
     period: String(r['Period'] ?? ''), from: parseDate(r['From']), xirr: blank(r['XIRR %']) ? null : num(r['XIRR %']), gainPct: blank(r['Gain %']) ? null : num(r['Gain %']),
     gain: num(r['Gain (₹)']), invested: num(r['Invested (₹)']), value: num(r['Value (₹)']), basis: String(r['Basis'] ?? ''), note: String(r['Note'] ?? ''), updated: parseDate(r['Updated']) }));
   const snapshots = rowsOf(t.Snapshots).map(r => ({ date: parseDate(r['Date']) })).filter(x => x.date);
-  return { client: api.client || profile['Client Name'] || '', updated: api.updated, pricesAsOf: api.pricesAsOf || '', navAsOf: api.navAsOf || '', profile, P, today, returns, snapshots,
+  const trend = trendModel(t.Trend);
+  return { client: api.client || profile['Client Name'] || '', updated: api.updated, pricesAsOf: api.pricesAsOf || '', navAsOf: api.navAsOf || '', profile, P, today, returns, snapshots, trend,
     assets, byClass, classes, totalAssets, liabilities, loans, cards, totalLiab, netWorth: totalAssets - totalLiab,
     emiMonthly, homeEmi, insurance, cfItems, months, annual, monthlyIncome, monthlySpend, annualSpend, fire };
 }
@@ -1323,6 +1381,203 @@ function retChecksHTML(R, bucket) {
     <div class="muted">Send the missing part of your ${bucket === 'Mutual Funds' ? 'fund transaction statement' : 'tradebook'} to the Tracker bot. Bonus shares and splits don't appear in tradebooks — if that's the reason, tell the Tracker bot, e.g. <i>ITC bonus 1:1 on 15 Jun 2023</i> or <i>IRCTC split 1:5 on 28 Oct 2021</i>.</div></div>`;
 }
 
+// ── Trend charts: portfolio value week by week vs the same money in Nifty indices (Trend tab, from Benchmarks.gs)
+const TR_IX = [['NIFTY50', 'Nifty 50'], ['NIFTY500', 'Nifty 500'], ['MIDCAP150', 'Nifty Midcap 150'], ['SMALLCAP250', 'Nifty Smallcap 250']];
+const TR_RANGES = [['6M', 0.5], ['1Y', 1], ['2Y', 2], ['3Y', 3], ['5Y', 5], ['8Y', 8], ['10Y', 10], ['15Y', 15], ['20Y', 20], ['Max', 0]];
+let TR_RANGE = (() => { try { return localStorage.getItem('r2r_tr_range') || '1Y'; } catch (e) { return '1Y'; } })();
+let TR_HIDE = (() => { try { return JSON.parse(localStorage.getItem('r2r_tr_hide') || '{}') || {}; } catch (e) { return {}; } })();
+const TR_VIEW = {};                                   // bucket → what is drawn (for hover)
+const trMs = d => Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10));
+const trIso = ms => new Date(ms).toISOString().slice(0, 10);
+const trFmt = d => { const x = new Date(trMs(d)); return x.getUTCDate() + ' ' + MONTHS[x.getUTCMonth()] + ' ' + x.getUTCFullYear(); };
+function setTrRange(k) { TR_RANGE = k; try { localStorage.setItem('r2r_tr_range', k); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
+function toggleTr(k) { TR_HIDE[k] = !TR_HIDE[k]; try { localStorage.setItem('r2r_tr_hide', JSON.stringify(TR_HIDE)); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
+let TR_MODE = (() => { try { return localStorage.getItem('r2r_tr_mode') === 'bars' ? 'bars' : 'trend'; } catch (e) { return 'trend'; } })();
+function setTrMode(m) { TR_MODE = m; try { localStorage.setItem('r2r_tr_mode', m); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
+
+// Returns view: one bar per line for the chosen range — your return next to the same money in each index
+function trBarsHTML(win, b) {
+  const list = win.series.filter(s => s.key !== 'put');
+  const me = list[0], mine = me.ret ? me.ret.v : null;
+  const vals = list.filter(s => s.vals && s.ret && s.ret.v !== null).map(s => s.ret.v);
+  const lo = Math.min(0, ...vals), hi = Math.max(0, ...vals), span = (hi - lo) || 1, zero = (-lo / span) * 100;
+  const shown = list.slice(1).filter(s => s.vals && s.ret && s.ret.v !== null);
+  const beat = shown.filter(s => mine !== null && mine > s.ret.v).length;
+  const verdict = mine === null || !shown.length ? ''
+    : shown.length === 1 ? (beat ? 'Ahead of ' : 'Behind ') + shown[0].name
+    : beat === shown.length ? `Ahead of all ${shown.length} indices` : beat === 0 ? `Behind all ${shown.length} indices` : `Ahead of ${beat} of ${shown.length} indices`;
+  const rows = list.map(s => {
+    const v = s.vals && s.ret ? s.ret.v : null;
+    if (v === null || v === undefined) return `<div class="bm-row k-${s.key}"><div class="bm-name">${esc(s.name)}</div><div class="bm-na">${s.vals ? 'No figure for this range' : 'Not enough index history for this range'}</div></div>`;
+    const w = Math.abs(v) / span * 100, left = v >= 0 ? zero : zero - w, last = s.vals[s.vals.length - 1];
+    const diff = s.key === 'you' || mine === null ? '' : ' · you ' + (mine - v >= 0 ? '+' : '') + (mine - v).toFixed(1) + ' pts';
+    return `<div class="bm-row k-${s.key}${s.key === 'you' ? ' you' : ''}" title="${esc(s.name + ': ' + retPct(v) + ' · ₹ now ' + fmtINR(last) + diff)}" tabindex="0">
+      <div class="bm-name">${esc(s.name)}<small>${s.key === 'you' ? 'value now ' : 'would be '}${fmtINR(last)}</small></div>
+      <div class="bm-track"><span class="bm-zero" style="left:${zero}%"></span><span class="bm-bar" style="left:${left}%;width:${Math.max(w, 0.6)}%"></span></div>
+      <div class="bm-val">${retPct(v)}</div></div>`;
+  }).join('');
+  const put = win.series.find(s => s.key === 'put');
+  return `${verdict ? `<div class="bm-verdict">${verdict}</div>` : ''}<div class="bm-chart" role="img" aria-label="${esc(b)} return compared with Nifty indices">${rows}</div>
+    <div class="bm-foot">${fmtINR(put.vals[put.vals.length - 1])} put in (start value + money added − taken out). "Would be" = the same money, on the same dates, in that index. Worked out from weekly values, so it can differ slightly from the tile above.</div>`;
+}
+
+function trendModel(tab) {
+  const nv = v => blank(v) ? null : num(v);
+  const all = rowsOf(tab).map(r => ({ d: String(r['Date'] ?? '').slice(0, 10), s: nv(r['Stocks Value (₹)']), sf: num(r['Stocks Flow (₹)']),
+    m: nv(r['MF Value (₹)']), mf: num(r['MF Flow (₹)']), ix: Object.fromEntries(TR_IX.map(([k, n]) => [k, nv(r[n])])), info: r['Info'] }))
+    .filter(r => /^\d{4}-\d\d-\d\d$/.test(r.d)).sort((a, b) => a.d < b.d ? -1 : 1);
+  let info = {};
+  const hit = all.find(r => !blank(r.info));
+  try { info = hit ? JSON.parse(hit.info) : {}; } catch (e) { info = {}; }
+  return { rows: all.filter(r => r.s !== null || r.m !== null), info };
+}
+
+// XIRR (same method as the nightly returns); under a year → plain gain %
+function trReturn(flows, start, end) {
+  const out = flows.filter(f => f.a < 0).reduce((s, f) => s - f.a, 0), gain = flows.reduce((s, f) => s + f.a, 0);
+  if ((trMs(end) - trMs(start)) / 864e5 < 365) return { v: out ? gain / out * 100 : null, yearly: false };
+  const t0 = trMs(start), fs = flows.map(f => ({ y: (trMs(f.t) - t0) / (365 * 864e5), a: f.a }));
+  const npv = r => fs.reduce((s, f) => s + f.a / Math.pow(1 + r, f.y), 0);
+  if (!fs.some(f => f.a < 0) || !fs.some(f => f.a > 0)) return { v: null, yearly: true };
+  let lo = -0.9999, hi = 1, flo = npv(lo), fhi = npv(hi);
+  for (let i = 0; i < 60 && flo * fhi > 0; i++) { hi = hi * 2 + 1; fhi = npv(hi); if (hi > 1e6) return { v: null, yearly: true }; }
+  if (flo * fhi > 0) return { v: null, yearly: true };
+  for (let i = 0; i < 200; i++) { const mid = (lo + hi) / 2, fm = npv(mid); if (Math.abs(fm) < 1e-7 || hi - lo < 1e-10) { lo = hi = mid; break; } if (flo * fm < 0) { hi = mid; fhi = fm; } else { lo = mid; flo = fm; } }
+  return { v: (lo + hi) / 2 * 100, yearly: true };
+}
+
+// One bucket over one range: your line, the money-put-in line, and one line per index fed the same money
+function trWindow(tr, bucket, years) {
+  const vk = bucket === 'Stocks' ? 's' : 'm', fk = vk + 'f';
+  const pts = tr.rows.filter(r => r[vk] !== null);
+  if (pts.length < 2) return null;
+  const end = pts[pts.length - 1].d;
+  let i0 = 0, short = false;
+  if (years) {
+    const S = trIso(trMs(end) - years * 365.25 * 864e5);
+    let k = -1; pts.forEach((p, i) => { if (p.d <= S) k = i; });
+    if (k < 0) short = true; else i0 = k;
+  }
+  const w = pts.slice(i0);
+  if (w.length < 2) return null;
+  const v0 = w[0][vk];
+  const flowsWith = endVal => [{ t: w[0].d, a: -v0 }].concat(w.slice(1).map(p => ({ t: p.d, a: -p[fk] }))).concat([{ t: end, a: endVal }]).filter(f => f.a);
+  const series = [];
+  const you = w.map(p => p[vk]);
+  series.push({ key: 'you', name: bucket === 'Stocks' ? 'Your stocks' : 'Your funds', vals: you, ret: trReturn(flowsWith(you[you.length - 1]), w[0].d, end) });
+  TR_IX.forEach(([k, n]) => {
+    const L0 = w[0].ix[k];
+    if (!L0) { series.push({ key: k, name: n, vals: null }); return; }
+    let u = v0 / L0, last = L0;
+    const vals = w.map((p, j) => { const L = p.ix[k] || last; last = L; if (j) u += p[fk] / L; return u * L; });
+    series.push({ key: k, name: n, vals, ret: trReturn(flowsWith(vals[vals.length - 1]), w[0].d, end) });
+  });
+  let cum = v0;
+  series.push({ key: 'put', name: 'Money put in', vals: w.map((p, j) => j ? (cum += p[fk]) : cum), ret: null });
+  return { dates: w.map(p => p.d), series, short, start: w[0].d, end, firstEver: pts[0].d };
+}
+
+function trendSection(d) {
+  const tr = d.trend;
+  if (!tr || !tr.rows.length) return '';
+  const buckets = ['Stocks', 'Mutual Funds'].filter(b => tr.rows.filter(r => (b === 'Stocks' ? r.s : r.m) !== null).length >= 2);
+  if (!buckets.length) return '';
+  const span = Math.max(...buckets.map(b => { const p = tr.rows.filter(r => (b === 'Stocks' ? r.s : r.m) !== null); return (trMs(p[p.length - 1].d) - trMs(p[0].d)) / (365.25 * 864e5); }));
+  const ranges = TR_RANGES.filter(([k, y]) => !y || y <= span + 0.05);
+  if (!ranges.some(([k]) => k === TR_RANGE)) TR_RANGE = ranges.some(([k]) => k === '1Y') ? '1Y' : 'Max';
+  const years = (TR_RANGES.find(([k]) => k === TR_RANGE) || [, 0])[1];
+  const BADGE = { Exact: ['exact', '✓ Exact'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
+  const cards = buckets.map(b => {
+    const win = trWindow(tr, b, years);
+    TR_VIEW[b] = win;
+    if (!win) return '';
+    const bi = (tr.info.buckets || {})[b] || {}, badge = BADGE[bi.basis];
+    const notes = [];
+    if (win.short) notes.push(`Your ${b === 'Stocks' ? 'share' : 'fund'} history here starts ${trFmt(win.firstEver)}, so this shows all of it.`);
+    if (bi.basis === 'Partial') notes.push(`Only the holdings your transactions fully explain (${bi.cover || 0}% of today's value). Send your older ${b === 'Stocks' ? 'tradebook' : 'fund statement'} to include the rest.`);
+    if (bi.basis === 'Approximate') notes.push('From month-end values. Send your tradebook / fund statement to the Tracker bot for a week-by-week line.');
+    if (bi.excluded && bi.excluded.length) notes.push('Left out (no price history): ' + bi.excluded.join(', ') + '.');
+    const sp = TR_IX.filter(([k]) => { const x = (tr.info.index || {})[k]; return x && x.spliceFrom && x.fundFrom && win.start < x.fundFrom; });
+    if (sp.length) notes.push(sp.map(([k, n]) => `${n} before ${trFmt(tr.info.index[k].fundFrom)}`).join(', ') + ': index price without dividends (no index fund yet).');
+    const legend = win.series.map(s => {
+      const off = !s.vals, hid = !off && TR_HIDE[s.key];
+      const last = off ? null : s.vals[s.vals.length - 1];
+      const r = s.ret && s.ret.v !== null && s.ret.v !== undefined ? s.ret.v : null;
+      return `<button class="tr-key k-${s.key}${hid ? ' hid' : ''}${off ? ' off' : ''}" ${off ? 'disabled' : `onclick="toggleTr('${s.key}')"`} aria-pressed="${!hid && !off}">
+        <span class="sw"></span><span class="nm">${esc(s.name)}</span>
+        <span class="fig">${off ? 'not enough index history' : fmtCr(last) + (s.key === 'put' ? '' : ` · <b>${r === null ? '—' : (r > 0 ? '+' : '') + r.toFixed(1) + '%'}</b>`)}</span></button>`;
+    }).join('');
+    const yr = win.series[0].ret && win.series[0].ret.yearly;
+    return `<div class="tr-card" style="--accent:${b === 'Stocks' ? 'var(--blue)' : 'var(--purple)'}">
+      <div class="tr-top"><span class="ret-lbl">${b === 'Stocks' ? '📈' : '🧺'} ${esc(b)}</span>${badge ? `<span class="basis ${badge[0]}">${badge[1]}</span>` : ''}</div>
+      <div class="tr-sub">${trFmt(win.start)} → ${trFmt(win.end)} · ${yr ? 'XIRR % a year' : 'gain % (under a year)'}</div>
+      ${TR_MODE === 'bars' ? trBarsHTML(win, b) : `<div class="tr-plot" id="trp-${b === 'Stocks' ? 's' : 'm'}" data-b="${esc(b)}"></div>
+      <div class="tr-legend">${legend}</div>`}
+      ${notes.length ? `<div class="tr-note">${notes.map(esc).join('<br>')}</div>` : ''}</div>`;
+  }).filter(Boolean);
+  if (!cards.length) return '';
+  return `<div class="tr-h">Your portfolio vs the market <small>Same money, same dates, in each index${TR_MODE === 'bars' ? '' : ' · tap a name to hide or show its line'}</small></div>
+    <div class="tr-mode" role="tablist" aria-label="Chart type">${[['trend', '📈 Trend'], ['bars', '📊 Returns']].map(([k, l]) => `<button role="tab" aria-selected="${TR_MODE === k}" class="${TR_MODE === k ? 'on' : ''}" onclick="setTrMode('${k}')">${l}</button>`).join('')}</div>
+    <div class="tr-ranges">${ranges.map(([k]) => `<button class="sort-chip${k === TR_RANGE ? ' on' : ''}" onclick="setTrRange('${k}')">${k}</button>`).join('')}</div>
+    <div class="tr-grid">${cards.join('')}</div>`;
+}
+
+// Draws the SVG into each .tr-plot (needs the real width, so it runs after the HTML is in place)
+function drawTrends() {
+  document.querySelectorAll('.tr-plot').forEach(el => {
+    const win = TR_VIEW[el.dataset.b];
+    if (!win) return;
+    const W = Math.max(el.clientWidth || el.parentElement.clientWidth || 560, 260), H = W < 480 ? 210 : 250;
+    const P = { l: 54, r: 10, t: 10, b: 24 };
+    const shown = win.series.filter(s => s.vals && !TR_HIDE[s.key]);
+    const all = shown.flatMap(s => s.vals).filter(v => isFinite(v));
+    if (!all.length) { el.innerHTML = '<div class="tr-none">All lines are hidden — tap a name below to show it.</div>'; return; }
+    let lo = Math.min(...all), hi = Math.max(...all);
+    if (hi === lo) { hi += 1; lo -= 1; }
+    const raw = (hi - lo) / 4, mag = Math.pow(10, Math.floor(Math.log10(raw))), step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= raw);
+    lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
+    const t0 = trMs(win.dates[0]), t1 = trMs(win.dates[win.dates.length - 1]) || t0 + 1;
+    const X = d => P.l + (trMs(d) - t0) / ((t1 - t0) || 1) * (W - P.l - P.r);
+    const Y = v => P.t + (hi - v) / (hi - lo) * (H - P.t - P.b);
+    let g = '';
+    for (let v = lo; v <= hi + step / 2; v += step) g += `<line class="tr-grid-l" x1="${P.l}" x2="${W - P.r}" y1="${Y(v)}" y2="${Y(v)}"/><text class="tr-ax" x="${P.l - 6}" y="${Y(v) + 3}" text-anchor="end">${fmtCr(v)}</text>`;
+    // x labels: months for short ranges, years for long ones
+    const yrs = (t1 - t0) / (365.25 * 864e5), ticks = [];
+    const a = new Date(t0), stepM = yrs <= 1.2 ? (W < 480 ? 2 : 1) : yrs <= 3 ? 6 : yrs <= 6 ? 12 : yrs <= 12 ? 24 : 60;
+    let m = new Date(Date.UTC(a.getUTCFullYear(), a.getUTCMonth() + 1, 1));
+    if (stepM >= 12) m = new Date(Date.UTC(a.getUTCFullYear() + 1, 0, 1));
+    for (; m.getTime() <= t1; m = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + stepM, 1))) ticks.push(m.getTime());
+    ticks.forEach(t => { const x = P.l + (t - t0) / (t1 - t0) * (W - P.l - P.r); const dd = new Date(t);
+      g += `<text class="tr-ax" x="${x}" y="${H - 6}" text-anchor="middle">${stepM >= 12 ? dd.getUTCFullYear() : MONTHS[dd.getUTCMonth()] + (dd.getUTCMonth() === 0 || ticks.length < 5 ? " '" + String(dd.getUTCFullYear()).slice(2) : '')}</text>`; });
+    const order = ['put', 'SMALLCAP250', 'MIDCAP150', 'NIFTY500', 'NIFTY50', 'you'];   // your line drawn last (on top)
+    const lines = shown.slice().sort((p, q) => order.indexOf(p.key) - order.indexOf(q.key)).map(s =>
+      `<path class="tr-line k-${s.key}" d="${s.vals.map((v, i) => (i ? 'L' : 'M') + X(win.dates[i]).toFixed(1) + ',' + Y(v).toFixed(1)).join('')}"/>`).join('');
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(el.dataset.b)}: portfolio value compared with Nifty indices">${g}${lines}
+      <line class="tr-cross" x1="0" x2="0" y1="${P.t}" y2="${H - P.b}" style="display:none"/><g class="tr-dots"></g>
+      <rect x="${P.l}" y="0" width="${W - P.l - P.r}" height="${H}" fill="transparent" onpointermove="trHover(event,this)" onpointerdown="trHover(event,this)" onpointerleave="trHover(null,this)"/></svg><div class="tr-tip" style="display:none"></div>`;
+    el._tr = { win, X, Y, W, shown };
+  });
+}
+
+function trHover(e, rect) {
+  const el = rect.closest('.tr-plot'), st = el && el._tr;
+  if (!st) return;
+  const svg = el.querySelector('svg'), cross = svg.querySelector('.tr-cross'), dots = svg.querySelector('.tr-dots'), tip = el.querySelector('.tr-tip');
+  if (!e) { cross.style.display = 'none'; dots.innerHTML = ''; tip.style.display = 'none'; return; }
+  const box = svg.getBoundingClientRect(), x = (e.clientX - box.left) * (st.W / box.width);
+  let i = 0, best = Infinity;
+  st.win.dates.forEach((d, k) => { const dx = Math.abs(st.X(d) - x); if (dx < best) { best = dx; i = k; } });
+  const d = st.win.dates[i], cx = st.X(d);
+  cross.setAttribute('x1', cx); cross.setAttribute('x2', cx); cross.style.display = '';
+  dots.innerHTML = st.shown.map(s => `<circle class="tr-dot k-${s.key}" cx="${cx}" cy="${st.Y(s.vals[i])}" r="4"/>`).join('');
+  tip.innerHTML = `<b>${trFmt(d)}</b>` + st.shown.slice().sort((a, b) => b.vals[i] - a.vals[i]).map(s => `<div><span class="sw k-${s.key}"></span>${esc(s.name)}<span class="v">${fmtINR(s.vals[i])}</span></div>`).join('');
+  tip.style.display = '';
+  const left = cx / st.W * box.width;
+  tip.style.left = (left > box.width / 2 ? left - tip.offsetWidth - 12 : left + 12) + 'px';
+}
+let TR_RZ = 0;
+window.addEventListener('resize', () => { clearTimeout(TR_RZ); TR_RZ = setTimeout(drawTrends, 150); });
+
 function renderReturns(d) {
   const R = d.returns || [];
   const main = R.filter(r => ['Combined', 'Stocks', 'Mutual Funds'].includes(r.scope));
@@ -1362,14 +1617,17 @@ function renderReturns(d) {
       <button class="ret-toggle" aria-expanded="${open}">${open ? 'Hide' : 'Show'} ${what} <span class="chev">▾</span></button>${body}</div>`;
   };
   html += `<div class="ret-grid">${tile('Combined', '#f0a500', '🧮')}${tile('Stocks', '#3b82f6', '📈')}${tile('Mutual Funds', '#a855f7', '🧺')}</div>`;
+  html += trendSection(d);
   const upd = R.map(r => r.updated).filter(Boolean).sort((a, b) => b - a)[0];
   html += `<details class="ret-about"><summary>What do these mean?</summary><div>
     <b>XIRR</b> is your yearly return, taking into account <i>when</i> each rupee went in or came out — the fair way to measure SIPs and staggered buying. Periods under a year show the plain gain instead.<br>
     <b>✓ Exact</b> — worked out from your tradebook / fund transactions.<br>
     <b>Matched holdings</b> — exact, but only for the holdings your transactions fully explain; send your tradebook from your first trade to include the rest.<br>
     <b>≈ Approx.</b> — from your month-end values, so profits booked on sales and dividends may be missed.<br>
+    ${d.trend && d.trend.rows.length ? '<b>Trend charts</b> — your portfolio\'s value week by week, next to the same money in each index: the index line starts with your portfolio\'s value at the start of the range, and every rupee you put in or took out after that buys or sells index units in the same week. So SIPs and staggered buying are compared fairly. Index lines use low-cost index funds (dividends included). Returns shown under the chart are XIRR for the range (plain gain under a year).<br>' : ''}
     ${periods.length ? 'Periods run from the month-end that many years ago to today.' : ''}${upd ? ` Worked out ${fmtDate(upd)}, updated every night.` : ''}</div></details>`;
   setHTML('returns-body', html);
+  drawTrends();
 }
 
 function liquidBlock(list) {
