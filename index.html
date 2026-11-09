@@ -368,6 +368,22 @@
   .cf-two { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px; }
   @media(max-width:640px){ .cf-two { grid-template-columns:1fr; } .cf-mini-grid2 { grid-template-columns:1fr !important; } }
   @media(max-width:480px){ .updated { display:none; } .brand span, .brand .client { display:none; } }
+  /* Reset buttons (Indian Stocks + Mutual Funds tabs) and the warning pop-up */
+  .reset-zone { margin:28px 0 8px;padding:14px 16px;border:1px dashed var(--border);border-radius:12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px; }
+  .reset-zone .muted { font-size:11px;flex:1;min-width:200px; }
+  .reset-btn { background:transparent;border:1px solid var(--red);color:var(--red);border-radius:8px;padding:8px 14px;font:600 12px var(--dm);cursor:pointer; }
+  .reset-btn:hover { background:rgba(239,68,68,0.08); }
+  .r2r-modal { position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:20px; }
+  .r2r-modal-card { max-width:440px;width:100%;background:var(--card);border:1px solid var(--red);border-radius:16px;padding:22px; }
+  .r2r-modal-card h3 { font-family:var(--syne);font-size:17px;color:var(--red);margin:0 0 12px; }
+  .r2r-modal-card p { font-size:13px;color:var(--text2);line-height:1.55;margin:0 0 10px; }
+  .r2r-modal-card p b { color:var(--text); }
+  .r2r-modal-card .ok-msg { color:var(--text);border-left:3px solid var(--green);padding-left:10px; }
+  .r2r-modal-card .err-msg { color:var(--red);border-left:3px solid var(--red);padding-left:10px; }
+  .r2r-modal-btns { display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap; }
+  .r2r-modal-btns button { border-radius:8px;padding:9px 16px;font:600 13px var(--dm);cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text); }
+  .r2r-modal-btns button.danger { background:var(--red);border-color:var(--red);color:#fff; }
+  .r2r-modal-btns button:disabled { opacity:.6;cursor:default; }
 </style>
 </head>
 <body>
@@ -1140,7 +1156,7 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
     const etf = a => a.type === 'ETF' ? ' <span class="tag" style="font-size:9px;padding:1px 5px;margin-left:4px">ETF</span>' : '';
     const rcols = [['#', a => fullRank.indexOf(a) + 1, 1], [cols[0][0], a => cols[0][1](a).replace('</span>', '</span>' + etf(a))]].concat(cols.slice(1));
     html += `<div class="section-title">${ALLOC_STATE === 'all' ? 'All holdings' : 'Holdings'} <span class="tag amber" style="margin-left:4px">${fmtCr(v)}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(v, total).toFixed(1)}% · # = rank by allocation · counted in Equity</span></div>` + fileTable(part, total, rcols);
-    setHTML(bodyId, html); return;
+    setHTML(bodyId, html + resetBlock('stocks')); return;
   }
   const used = new Set();
   STOCK_GROUPS.forEach(([g, test]) => {
@@ -1151,6 +1167,59 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
   });
   setHTML(bodyId, html);
 }
+// ── Reset buttons: delete the whole stock list or fund list, then start again from a fresh holdings file.
+// The pop-up only asks; the deleting happens after the client taps ✅ on their own Telegram (Reset.gs).
+const RESET_TEXT = {
+  stocks: { btn: 'Reset stock entries', head: '⚠️ All stock entries will be deleted',
+    what: 'every line on your stock list', also: 'This includes gold bonds, gold ETFs, REITs/InvITs and debt ETFs shown on the Other Assets tab — they come from the same broker holdings file.',
+    again: 'your broker\'s holdings file' },
+  funds: { btn: 'Reset mutual fund entries', head: '⚠️ All mutual fund entries will be deleted',
+    what: 'every fund on your mutual fund list', also: '', again: 'your mutual fund holdings statement' } };
+function resetBlock(what) {
+  const T = RESET_TEXT[what];
+  return `<div class="reset-zone"><button class="reset-btn" onclick="askReset('${what}')">🗑 ${T.btn}</button><div class="muted">Made a mistake? This deletes the whole list so you can start again from ${T.again}. You'll confirm on Telegram, and /undo brings it back.</div></div>`;
+}
+function closeModal() { const m = document.getElementById('r2r-modal'); if (m) m.remove(); }
+function showModal(html) {
+  closeModal();
+  const m = document.createElement('div');
+  m.className = 'r2r-modal'; m.id = 'r2r-modal';
+  m.innerHTML = `<div class="r2r-modal-card" role="dialog" aria-modal="true">${html}</div>`;
+  m.addEventListener('click', e => { if (e.target === m) closeModal(); });
+  document.body.appendChild(m);
+}
+function askReset(what) {
+  const T = RESET_TEXT[what];
+  const list = LAST_MODEL ? LAST_MODEL.assets.filter(a => a.kind === (what === 'stocks' ? 'stock' : 'mf')) : [];
+  const v = list.reduce((s, a) => s + (a.value || 0), 0);
+  showModal(`<h3>${T.head}</h3>
+    <p>This deletes <b>${esc(T.what)}</b> — ${list.length} line${list.length === 1 ? '' : 's'}, worth <b>${fmtINR(v)}</b>.</p>
+    ${T.also ? `<p>${esc(T.also)}</p>` : ''}
+    <p>Your past transactions and returns history are <b>kept</b>.</p>
+    <p>To finish, you'll get a message on the <b>R2R Tracker bot</b> on Telegram — tap ✅ there. Then send ${esc(T.again)} again.</p>
+    <div id="reset-result"></div>
+    <div class="r2r-modal-btns" id="reset-btns"><button onclick="closeModal()">Cancel</button><button class="danger" id="reset-go" onclick="doReset('${what}')">Yes, delete</button></div>`);
+}
+async function doReset(what) {
+  const go = document.getElementById('reset-go'), out = document.getElementById('reset-result');
+  const done = (cls, msg) => {
+    out.innerHTML = `<p class="${cls}">${esc(msg)}</p>`;
+    document.getElementById('reset-btns').innerHTML = '<button onclick="closeModal()">Close</button>';
+  };
+  if (DEMO || !AUTH) return done('err-msg', 'This is the demo — nothing can be deleted here.');
+  go.disabled = true; go.textContent = 'Sending…';
+  try {
+    const url = `${API_URL}?act=reset&what=${encodeURIComponent(what)}&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&t=${Date.now()}`;
+    const r = await fetch(url, { redirect: 'follow' });
+    const j = await r.json();
+    if (j.ok && !j.message) return done('err-msg', 'Reset isn\'t switched on yet — please ask Manuel. Nothing was deleted.');   // older backend without Reset.gs
+    done(j.ok ? 'ok-msg' : 'err-msg', j.ok ? j.message : (j.error || 'Something went wrong. Please try again.'));
+  } catch (e) {
+    done('err-msg', 'Could not reach the server — check your internet connection and try again.');
+  }
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
 // ── Mutual Funds tab: everything from the MF holdings statement(s)
 const MF_META = { Equity: ['#3b82f6', 'Equity funds', 'counted in Equity'], Hybrid: ['#06b6d4', 'Hybrid funds', 'counted in Equity'],
   Debt: ['#a855f7', 'Debt funds', 'counted in Debt'], Gold: ['#f0a500', 'Gold funds', 'counted in Gold'], Other: ['#64748b', 'Other funds', ''] };
@@ -1177,7 +1246,7 @@ function renderFunds(d) {
     const part = sortList(list.filter(a => a.mfClass === k), 'funds');
     html += `<div class="section-title">${MF_META[k][1]} <span class="tag amber" style="margin-left:4px">${fmtCr(by[k])}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(by[k], total).toFixed(1)}%${MF_META[k][2] ? ' · ' + MF_META[k][2] : ''}</span></div>` + fileTable(part, total, cols);
   });
-  setHTML('funds-body', html);
+  setHTML('funds-body', html + resetBlock('funds'));
 }
 
 // ── Returns tab: one tile per group showing only its XIRR; tap a tile for the holdings and details
@@ -1211,7 +1280,7 @@ function retChecksHTML(R, bucket) {
   const checks = R.filter(r => r.scope === 'Check' && r.bucket === bucket);
   if (!checks.length) return '';
   return `<div class="ret-sub-h">To make these exact</div><div class="ret-checks">${checks.map(c => `<div><b>${esc(c.name)}</b> — ${esc(c.note)}</div>`).join('')}
-    <div class="muted">Send the missing part of your ${bucket === 'Mutual Funds' ? 'fund transaction statement' : 'tradebook'} to the Tracker bot. Bonus shares and splits don't appear in tradebooks — tell Manuel if that's the reason.</div></div>`;
+    <div class="muted">Send the missing part of your ${bucket === 'Mutual Funds' ? 'fund transaction statement' : 'tradebook'} to the Tracker bot. Bonus shares and splits don't appear in tradebooks — if that's the reason, tell the Tracker bot, e.g. <i>ITC bonus 1:1 on 15 Jun 2023</i> or <i>IRCTC split 1:5 on 28 Oct 2021</i>.</div></div>`;
 }
 
 function renderReturns(d) {
