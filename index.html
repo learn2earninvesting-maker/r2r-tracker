@@ -105,6 +105,26 @@
   .legend-pct { font-family:var(--mono);color:var(--amber);font-size:11px; }
 
   .bar-list { display:flex;flex-direction:column;gap:10px; }
+
+  /* Sector pie (Indian Stocks tab) */
+  .sector-card { --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--s-other:#64748b;--s-none:#334155; }
+  :root[data-theme="light"] .sector-card { --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#6250d6;--s8:#e34948;--s-other:#94a3b8;--s-none:#cbd5e1; }
+  .sector-wrap { display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap; }
+  .sector-pie { flex:0 0 auto;width:200px;height:200px; }
+  .sector-pie path { stroke:var(--card);stroke-width:2;cursor:pointer;transition:opacity .15s; }
+  .sector-pie.has-pick path:not(.on) { opacity:.25; }
+  .sector-legend { flex:1;min-width:220px;display:flex;flex-direction:column;gap:2px; }
+  .sector-row { display:grid;grid-template-columns:12px 1fr auto auto;align-items:center;gap:10px;padding:6px 8px;border-radius:8px;font-size:12px;cursor:pointer;border:1px solid transparent;background:none;font-family:inherit;text-align:left;color:inherit;width:100%; }
+  .sector-row:hover { background:var(--bg3); }
+  .sector-row.on { border-color:var(--teal);background:var(--bg3); }
+  .sector-row .sw { width:12px;height:12px;border-radius:3px; }
+  .sector-row .nm { color:var(--text); }
+  .sector-row .nm small { color:var(--text3);margin-left:6px; }
+  .sector-row .pc { font-family:var(--mono);color:var(--text);font-weight:600; }
+  .sector-row .vl { font-family:var(--mono);color:var(--text2);font-size:11px;min-width:64px;text-align:right; }
+  .sector-tip { position:fixed;pointer-events:none;z-index:50;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--text);box-shadow:0 6px 20px rgba(0,0,0,.3);display:none;max-width:240px; }
+  .sector-tip b { display:block;margin-bottom:2px; }
+  .sector-tip span { color:var(--text2); }
   .bar-meta { display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px; }
   .bar-name { color:var(--text2); }
   .bar-val { font-family:var(--mono);color:var(--amber); }
@@ -691,7 +711,8 @@ function model(api) {
       name: String(r['Company'] ?? '').trim() || sym || 'Share', holder: r['Holder'] ?? '', platform: r['Platform'] ?? '',
       units: blank(r['Quantity']) ? null : units, avg: blank(r['Avg Buy Price']) ? null : avg, cmp: blank(r['Current Price']) ? null : cmp,
       invested, value, pnl: invested !== null ? value - invested : null, ticker: sym, notes: '', fromFile: true, kind: 'stock',
-      isin: String(r['ISIN'] ?? '').trim(), company: String(r['Company'] ?? '').trim(), updated: r['Updated'] ?? '' };
+      isin: String(r['ISIN'] ?? '').trim(), company: String(r['Company'] ?? '').trim(), updated: r['Updated'] ?? '',
+      sector: String(r['Sector'] ?? '').trim() };
   }).filter(a => a.units || a.value);
   if (stocks.length) {
     const tick = x => String(x || '').toUpperCase().replace(/^(NSE|BOM|BSE):/, '').trim();
@@ -1034,14 +1055,69 @@ function allocBar(list, total) {
   const cnt = k => list.filter(a => ALLOC_BANDS.find(b => b[0] === k)[2](pctOf(a.value, total))).length;
   return `<div class="sort-bar"><span class="sort-lbl">% Allocation</span>${ALLOC_BANDS.map(([k, l]) => `<button class="sort-chip${k === ALLOC_STATE ? ' on' : ''}" onclick="setAlloc('${k}')">${l} <small>(${cnt(k)})</small></button>`).join('')}<span class="sort-hint">Each stock's share of your Indian stocks, by current value.</span></div>`;
 }
+// ── Sector pie (Indian Stocks tab). Sector comes from the Stocks sheet's "Sector" column (Holdings.gs fills it).
+// Top 8 sectors get their own colour (fixed order, by size); the rest fold into "Other sectors".
+const SECTOR_NONE = 'Not classified yet';
+let SECTOR_STATE = '';
+const sectorOf = a => a.sector || (a.type === 'ETF' ? 'ETFs / Index' : SECTOR_NONE);
+function setSector(s) { SECTOR_STATE = SECTOR_STATE === s ? '' : s; if (LAST_MODEL) renderStocks(LAST_MODEL); }
+function sectorPie(list, total) {
+  if (!total) return '';
+  const g = {};
+  list.forEach(a => { const k = sectorOf(a); (g[k] = g[k] || { v: 0, n: 0 }); g[k].v += a.value; g[k].n++; });
+  const all = Object.entries(g).map(([k, o]) => ({ k, v: o.v, n: o.n })).sort((a, b) => (a.k === SECTOR_NONE) - (b.k === SECTOR_NONE) || b.v - a.v);
+  const named = all.filter(x => x.k !== SECTOR_NONE), none = all.find(x => x.k === SECTOR_NONE);
+  if (!named.length) return '';   // no sectors in the sheet yet → no card
+  const top = named.slice(0, 8);   // 8 colours; a 9th+ sector folds into "Other sectors"
+  const rest = named.slice(top.length);
+  top.forEach((x, i) => x.c = `var(--s${i + 1})`);
+  const slices = top.slice();
+  if (rest.length) slices.push({ k: 'Other sectors', v: rest.reduce((s, x) => s + x.v, 0), n: rest.reduce((s, x) => s + x.n, 0), c: 'var(--s-other)', group: rest });
+  rest.forEach(x => x.c = 'var(--s-other)');
+  if (none) { none.c = 'var(--s-none)'; slices.push(none); }
+  // pie paths
+  const R = 96, C = 100; let a0 = -Math.PI / 2;
+  const pt = a => `${(C + R * Math.cos(a)).toFixed(2)} ${(C + R * Math.sin(a)).toFixed(2)}`;
+  const picked = SECTOR_STATE, isOn = x => picked && (x.k === picked || (x.group && x.group.some(y => y.k === picked)));
+  const paths = slices.map(x => {
+    const f = x.v / total, a1 = a0 + f * 2 * Math.PI;
+    const tip = `${x.k}|${pctOf(x.v, total).toFixed(1)}% · ${fmtCr(x.v)}|${x.n} holding${x.n === 1 ? '' : 's'}${x.group ? ' · ' + x.group.map(y => y.k).join(', ') : ''}`;
+    const d = f >= 0.9999 ? `M ${C} ${C - R} A ${R} ${R} 0 1 1 ${C - 0.01} ${C - R} Z` : `M ${C} ${C} L ${pt(a0)} A ${R} ${R} 0 ${f > 0.5 ? 1 : 0} 1 ${pt(a1)} Z`;
+    a0 = a1;
+    return `<path d="${d}" fill="${x.c}" class="${isOn(x) ? 'on' : ''}" data-tip="${esc(tip)}" ${x.group ? '' : `onclick='setSector(${esc(JSON.stringify(x.k))})'`}></path>`;
+  }).join('');
+  const row = x => `<button class="sector-row${picked === x.k ? ' on' : ''}" onclick='setSector(${esc(JSON.stringify(x.k))})'><span class="sw" style="background:${x.c}"></span><span class="nm">${esc(x.k)}<small>${x.n}</small></span><span class="pc">${pctOf(x.v, total).toFixed(1)}%</span><span class="vl">${fmtCr(x.v)}</span></button>`;
+  const rows = top.concat(rest, none ? [none] : []);
+  return `<div class="chart-card sector-card" style="margin-bottom:20px"><div class="chart-title">Sector allocation</div>
+    <div class="sector-wrap"><svg class="sector-pie${picked ? ' has-pick' : ''}" viewBox="0 0 200 200" role="img" aria-label="Sector allocation pie chart" onmousemove="sectorTip(event)" onmouseleave="sectorTip()">${paths}</svg>
+    <div class="sector-legend">${rows.map(row).join('')}</div></div>
+    <div class="muted" style="font-size:11px;margin-top:12px">${named.length} sector${named.length === 1 ? '' : 's'} · by current value · small number = holdings · tap a sector to list only its stocks${none ? ` · ${none.n} not classified yet` : ''}.</div></div>`;
+}
+function sectorTip(e) {
+  let t = document.getElementById('sector-tip');
+  if (!t) { t = document.createElement('div'); t.id = 'sector-tip'; t.className = 'sector-tip'; document.body.appendChild(t); }
+  const tip = e && e.target && e.target.getAttribute && e.target.getAttribute('data-tip');
+  if (!tip) { t.style.display = 'none'; return; }
+  const [k, v, n] = tip.split('|');
+  t.innerHTML = `<b>${esc(k)}</b>${esc(v)}<br><span>${esc(n)}</span>`;
+  t.style.display = 'block';
+  t.style.left = Math.min(e.clientX + 14, innerWidth - 250) + 'px'; t.style.top = (e.clientY + 14) + 'px';
+}
 function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
   let list = d.assets.filter(a => a.kind === 'stock' && filter(a)).sort((a, b) => b.value - a.value);
   if (!list.length) { setHTML(bodyId, empty(emptyMsg)); return; }
-  const total = list.reduce((s, a) => s + a.value, 0);
+  const total = list.reduce((s, a) => s + a.value, 0), fullRank = list.slice();
   const plats = [...new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · ')).filter(Boolean))];
   let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list, d, 'stocks');
   if (tab === 'stocks') {
     if (!ALLOC_BANDS.some(b => b[0] === ALLOC_STATE)) ALLOC_STATE = 'all';
+    html += sectorPie(list, total);
+    if (SECTOR_STATE && !list.some(a => sectorOf(a) === SECTOR_STATE)) SECTOR_STATE = '';
+    if (SECTOR_STATE) {
+      const shown = list.filter(a => sectorOf(a) === SECTOR_STATE), v = shown.reduce((s, a) => s + a.value, 0);
+      html += `<div class="muted" style="font-size:12px;margin:-8px 0 14px">Showing <b style="color:var(--text)">${shown.length}</b> ${esc(SECTOR_STATE)} holding${shown.length === 1 ? '' : 's'} · ${fmtCr(v)} · ${pctOf(v, total).toFixed(1)}% of your Indian stocks · <a href="#" onclick="setSector('');return false" style="color:var(--teal)">show all sectors</a></div>`;
+      list = shown;
+    }
     html += allocBar(list, total);
     if (ALLOC_STATE !== 'all') {
       const band = ALLOC_BANDS.find(b => b[0] === ALLOC_STATE);
@@ -1062,7 +1138,7 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
   if (tab === 'stocks') {   // one ranking, highest allocation first (equity ETFs tagged, not split into their own section)
     const part = sortList(list, tab), v = part.reduce((s, a) => s + a.value, 0);
     const etf = a => a.type === 'ETF' ? ' <span class="tag" style="font-size:9px;padding:1px 5px;margin-left:4px">ETF</span>' : '';
-    const rcols = [['#', a => list.indexOf(a) + 1, 1], [cols[0][0], a => cols[0][1](a).replace('</span>', '</span>' + etf(a))]].concat(cols.slice(1));
+    const rcols = [['#', a => fullRank.indexOf(a) + 1, 1], [cols[0][0], a => cols[0][1](a).replace('</span>', '</span>' + etf(a))]].concat(cols.slice(1));
     html += `<div class="section-title">${ALLOC_STATE === 'all' ? 'All holdings' : 'Holdings'} <span class="tag amber" style="margin-left:4px">${fmtCr(v)}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(v, total).toFixed(1)}% · # = rank by allocation · counted in Equity</span></div>` + fileTable(part, total, rcols);
     setHTML(bodyId, html); return;
   }
