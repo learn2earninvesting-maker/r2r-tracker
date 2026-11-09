@@ -373,6 +373,13 @@
   .reset-zone .muted { font-size:11px;flex:1;min-width:200px; }
   .reset-btn { background:transparent;border:1px solid var(--red);color:var(--red);border-radius:8px;padding:8px 14px;font:600 12px var(--dm);cursor:pointer; }
   .reset-btn:hover { background:rgba(239,68,68,0.08); }
+  /* Bonus & splits from exchange filings (Indian Stocks tab) */
+  .corp-zone { border-color:rgba(240,165,0,0.45); }
+  .corp-btn { background:transparent;border:1px solid var(--amber,#f0a500);color:var(--amber,#f0a500);border-radius:8px;padding:8px 14px;font:600 12px var(--dm);cursor:pointer; }
+  .corp-btn:hover { background:rgba(240,165,0,0.08); }
+  .r2r-modal-card.calm { border-color:var(--amber,#f0a500); }
+  .r2r-modal-card.calm h3 { color:var(--amber,#f0a500); }
+  .r2r-modal-btns button.go { background:var(--amber,#f0a500);color:#0b1120;border-color:var(--amber,#f0a500); }
   .r2r-modal { position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:20px; }
   .r2r-modal-card { max-width:440px;width:100%;background:var(--card);border:1px solid var(--red);border-radius:16px;padding:22px; }
   .r2r-modal-card h3 { font-family:var(--syne);font-size:17px;color:var(--red);margin:0 0 12px; }
@@ -1156,7 +1163,7 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
     const etf = a => a.type === 'ETF' ? ' <span class="tag" style="font-size:9px;padding:1px 5px;margin-left:4px">ETF</span>' : '';
     const rcols = [['#', a => fullRank.indexOf(a) + 1, 1], [cols[0][0], a => cols[0][1](a).replace('</span>', '</span>' + etf(a))]].concat(cols.slice(1));
     html += `<div class="section-title">${ALLOC_STATE === 'all' ? 'All holdings' : 'Holdings'} <span class="tag amber" style="margin-left:4px">${fmtCr(v)}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(v, total).toFixed(1)}% · # = rank by allocation · counted in Equity</span></div>` + fileTable(part, total, rcols);
-    setHTML(bodyId, html + resetBlock('stocks')); return;
+    setHTML(bodyId, html + corpBlock() + resetBlock('stocks')); return;
   }
   const used = new Set();
   STOCK_GROUPS.forEach(([g, test]) => {
@@ -1213,6 +1220,39 @@ async function doReset(what) {
     const r = await fetch(url, { redirect: 'follow' });
     const j = await r.json();
     if (j.ok && !j.message) return done('err-msg', 'Reset isn\'t switched on yet — please ask Manuel. Nothing was deleted.');   // older backend without Reset.gs
+    done(j.ok ? 'ok-msg' : 'err-msg', j.ok ? j.message : (j.error || 'Something went wrong. Please try again.'));
+  } catch (e) {
+    done('err-msg', 'Could not reach the server — check your internet connection and try again.');
+  }
+}
+// ── Bonus & splits from exchange filings: the backend (CorpActions.gs) checks the filings against this client's
+// shares and sends the preview to their own Telegram, where they tap ✅. Nothing changes from here.
+function corpBlock() {
+  return `<div class="reset-zone corp-zone"><button class="corp-btn" onclick="askCorp()">🎁 Apply bonus & splits</button><div class="muted">Had a bonus issue or a stock split? This checks the NSE/BSE filings against your shares and fixes the share count and your trade history. You'll see the changes on Telegram first.</div></div>`;
+}
+function askCorp() {
+  showModal(`<h3>🎁 Apply bonus & splits</h3>
+    <p>I'll check the exchange filings for every share you hold or have traded, and work out what a bonus issue or split changed:</p>
+    <p>• your <b>share count</b>, if your last holdings file is older than the bonus/split<br>• your <b>trade history</b>, so your returns stay exact</p>
+    <p>The list of changes comes to the <b>R2R Tracker bot</b> on Telegram. Nothing changes until you tap ✅ there, and /undo reverses it.</p>
+    <div id="corp-result"></div>
+    <div class="r2r-modal-btns" id="corp-btns"><button onclick="closeModal()">Cancel</button><button class="go" id="corp-go" onclick="doCorp()">Check filings</button></div>`);
+  const card = document.querySelector('#r2r-modal .r2r-modal-card'); if (card) card.classList.add('calm');
+}
+async function doCorp() {
+  const go = document.getElementById('corp-go'), out = document.getElementById('corp-result');
+  const done = (cls, msg) => {
+    out.innerHTML = `<p class="${cls}">${esc(msg)}</p>`;
+    document.getElementById('corp-btns').innerHTML = '<button onclick="closeModal()">Close</button>';
+  };
+  if (DEMO || !AUTH) return done('err-msg', 'This is the demo — nothing can be changed here.');
+  go.disabled = true; go.textContent = 'Checking filings… (up to a minute)';
+  try {
+    const url = `${API_URL}?act=corpact&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&t=${Date.now()}`;
+    const r = await fetch(url, { redirect: 'follow' });
+    const j = await r.json();
+    if (j.ok && !j.message) return done('err-msg', 'This isn\'t switched on yet — please ask Manuel. Nothing was changed.');   // older backend
+    if (!j.ok && /unknown action/i.test(j.error || '')) return done('err-msg', 'This isn\'t switched on yet — please ask Manuel. Nothing was changed.');
     done(j.ok ? 'ok-msg' : 'err-msg', j.ok ? j.message : (j.error || 'Something went wrong. Please try again.'));
   } catch (e) {
     done('err-msg', 'Could not reach the server — check your internet connection and try again.');
