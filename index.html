@@ -1769,7 +1769,7 @@ function trendSection(d, sel) {
   const buckets = ['Stocks', 'Mutual Funds'].filter(b => pfOn(b) && tr.rows.filter(r => (b === 'Stocks' ? r.s : r.m) !== null).length >= 2);
   if (!buckets.length) return '';
   const span = Math.max(...buckets.map(b => { const p = tr.rows.filter(r => (b === 'Stocks' ? r.s : r.m) !== null); return (trMs(p[p.length - 1].d) - trMs(p[0].d)) / (365.25 * 864e5); }));
-  const BADGE = { Exact: ['exact', '✓ Exact'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
+  const BADGE = { Exact: ['exact', '✓ Exact'], 'All trades': ['exact', '✓ All trades'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
   const cards = buckets.map(b => {
     const win = sel.from !== undefined ? trWindowRange(tr, b, sel.from, sel.to) : trWindow(tr, b, sel.years || 0);
     TR_VIEW[b] = win;
@@ -1777,6 +1777,7 @@ function trendSection(d, sel) {
     const bi = (tr.info.buckets || {})[b] || {}, badge = BADGE[bi.basis];
     const notes = [];
     if (win.short) notes.push(`Your ${b === 'Stocks' ? 'share' : 'fund'} history here starts ${trFmt(win.firstEver)}, so this shows all of it.`);
+    if (bi.basis === 'All trades') notes.push(`Every share trade in your tradebook, including shares you've sold — the same trades as your XIRR at the top (${bi.cover || 0}% of today's value).` + (bi.dropped && bi.dropped.length ? ' Left out (more sold than bought — older buys missing): ' + bi.dropped.join(', ') + '.' : ''));
     if (bi.basis === 'Partial') notes.push(`Only the holdings your transactions fully explain (${bi.cover || 0}% of today's value). Send your older ${b === 'Stocks' ? 'tradebook' : 'fund statement'} to include the rest.`);
     if (bi.basis === 'Approximate') notes.push('From month-end values. Send your tradebook / fund statement to the Tracker bot for a week-by-week line.');
     if (bi.excluded && bi.excluded.length) notes.push('Left out (no price history): ' + bi.excluded.join(', ') + '.');
@@ -2039,6 +2040,7 @@ function doneAssetClasses() {
   try { localStorage.setItem('r2r_pf_ac', JSON.stringify(PF_AC)); } catch (e) {}
   closeModal(); if (LAST_MODEL) renderReturns(LAST_MODEL);
 }
+const pfIso = dt => dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
 function pfPick(main, P) {
   for (const sc of pfScopes()) { const r = main.find(x => x.scope === sc && x.period === P); if (r) return { r, scope: sc }; }
   return { r: null, scope: '' };
@@ -2078,7 +2080,8 @@ function pfVsHTML(d, main, P, years, plabel) {
   const yearly = r.xirr !== null;
   const sub = [['stk', 'Shares', 'Stocks'], ['mf', 'Mutual funds', 'Mutual Funds']].map(([k, n, sc]) => { const x = main.find(y => y.scope === sc && y.period === P); return x && retFig(x) !== null ? { key: k, name: n, v: retFig(x), note: x.xirr === null ? 'gain' : '' } : null; }).filter(Boolean);
   const rows = [{ key: 'you', name: scope === 'Combined' ? 'My portfolio' : scope === 'Stocks' ? 'My shares' : 'My funds', v: retFig(r) }].concat(scope === 'Combined' && sub.length === 2 ? sub : []);
-  const win = r.win || (d.trend && d.trend.rows.length >= 2 ? trWindow(d.trend, scope, years) : null);
+  const fromIso = years && r.from ? pfIso(r.from) : null;   // same month-end start as the nightly figure
+  const win = r.win || (d.trend && d.trend.rows.length >= 2 ? (fromIso ? trWindowRange(d.trend, scope, fromIso, null) : trWindow(d.trend, scope, years)) : null);
   const ser = win ? win.series : [];
   const ok = k => { const s = ser.find(x => x.key === k); return s && s.vals && s.ret && s.ret.v !== null && s.ret.v !== undefined ? s : null; };
   const chips = win ? TR_IX.map(([k, n]) => { const s = ok(k), on = !!PF_IX[k] && !!s;
@@ -2165,7 +2168,8 @@ function renderReturns(d) {
   html += snap + pfVsHTML(d, main, P, years, label(P));
   html += `<div class="pf-sec">${pfBoth() ? 'Shares and funds' : PF_AC.stk ? 'Shares & ETFs' : 'Mutual funds'} — tap for each holding</div>`;
   html += `<div class="ret-grid">${pfOn('Combined') ? tile('Combined', '#f0a500', '🧮') : ''}${pfOn('Stocks') ? tile('Stocks', '#3b82f6', '📈') : ''}${pfOn('Mutual Funds') ? tile('Mutual Funds', '#a855f7', '🧺') : ''}</div>`;
-  html += trendSection(d, CU ? { from: CU.from, to: CU.to, label: CU.label } : { years, label: label(P) });
+  const pr = !CU && years ? pfPick(main, P).r : null;
+  html += trendSection(d, CU ? { from: CU.from, to: CU.to, label: CU.label } : pr && pr.from ? { from: pfIso(pr.from), to: null, label: label(P) } : { years, label: label(P) });
   const upd = R.map(r => r.updated).filter(Boolean).sort((a, b) => b - a)[0];
   html += `<details class="ret-about"><summary>What do these mean?</summary><div>
     <b>XIRR</b> is your yearly return, taking into account <i>when</i> each rupee went in or came out — the fair way to measure SIPs and staggered buying. Periods under a year show the plain gain instead.<br>
