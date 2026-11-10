@@ -1493,13 +1493,14 @@ function trBarsHTML(win, b) {
     if (v === null || v === undefined) return `<div class="bm-row k-${s.key}"><div class="bm-name">${esc(s.name)}</div><div class="bm-na">${s.vals ? 'No figure for this range' : 'Not enough index history for this range'}</div></div>`;
     const w = Math.abs(v) / span * 100, left = v >= 0 ? zero : zero - w, last = s.vals[s.vals.length - 1];
     const diff = s.key === 'you' || mine === null ? '' : ' · you ' + (mine - v >= 0 ? '+' : '') + (mine - v).toFixed(1) + ' pts';
-    return `<div class="bm-row k-${s.key}${s.key === 'you' ? ' you' : ''}" title="${esc(s.name + ': XIRR ' + retPct(v) + ' a year · ₹ now ' + fmtINR(last) + diff)}" tabindex="0">
-      <div class="bm-name">${esc(s.name)}<small>${s.key === 'you' ? 'value now ' : 'would be '}${fmtINR(last)}${s.ret.abs !== null ? ' · gain ' + (s.ret.abs > 0 ? '+' : '') + s.ret.abs.toFixed(1) + '%' : ''}</small></div>
+    return `<div class="bm-row k-${s.key}${s.key === 'you' ? ' you' : ''}" title="${esc(s.name + (s.ret.short ? ': gain ' + retPct(v) : ': XIRR ' + retPct(v) + ' a year') + ' · ₹ now ' + fmtINR(last) + diff)}" tabindex="0">
+      <div class="bm-name">${esc(s.name)}<small>${s.key === 'you' ? 'value now ' : 'would be '}${fmtINR(last)}${s.ret.abs !== null && !s.ret.short ? ' · gain ' + (s.ret.abs > 0 ? '+' : '') + s.ret.abs.toFixed(1) + '%' : ''}</small></div>
       <div class="bm-track"><span class="bm-zero" style="left:${zero}%"></span><span class="bm-bar" style="left:${left}%;width:${Math.max(w, 0.6)}%"></span></div>
       <div class="bm-val">${retPct(v)}</div></div>`;
   }).join('');
   const put = win.series.find(s => s.key === 'put');
-  return `${verdict ? `<div class="bm-verdict">${verdict}</div>` : ''}<div class="bm-unit">Bars = XIRR, % a year · small figure = total gain over the period</div><div class="bm-chart" role="img" aria-label="${esc(b)} return compared with Nifty indices">${rows}</div>
+  const unit = me.ret && me.ret.short ? 'Bars = total gain over the period (under a year, so not annualised)' : 'Bars = XIRR, % a year · small figure = total gain over the period';
+  return `${verdict ? `<div class="bm-verdict">${verdict}</div>` : ''}<div class="bm-unit">${unit}</div><div class="bm-chart" role="img" aria-label="${esc(b)} return compared with Nifty indices">${rows}</div>
     <div class="bm-foot">${fmtINR(put.vals[put.vals.length - 1])} put in (start value + money added − taken out). "Would be" = the same money, on the same dates, in that index. Worked out from weekly values, so it can differ slightly from the tile above.</div>`;
 }
 
@@ -1514,13 +1515,14 @@ function trendModel(tab) {
   return { rows: all.filter(r => r.s !== null || r.m !== null), info };
 }
 
-// XIRR for every range (annualised, same method as the nightly returns) + plain gain % alongside
+// XIRR for ranges of a year or more (same method as the nightly returns); under a year, plain gain % only
 function trReturn(flows, start, end) {
   const out = flows.filter(f => f.a < 0).reduce((s, f) => s - f.a, 0), gain = flows.reduce((s, f) => s + f.a, 0);
   const abs = out ? gain / out * 100 : null, short = (trMs(end) - trMs(start)) / 864e5 < 365;
   const t0 = trMs(start), fs = flows.map(f => ({ y: (trMs(f.t) - t0) / (365 * 864e5), a: f.a }));
   const npv = r => fs.reduce((s, f) => s + f.a / Math.pow(1 + r, f.y), 0);
   const res = v => ({ v, abs, short, yearly: v !== null });
+  if (short) return { v: abs, abs, short, yearly: false };          // under a year: plain gain %, never annualised (AMFI/SEBI practice)
   if (!fs.some(f => f.a < 0) || !fs.some(f => f.a > 0)) return res(null);
   let lo = -0.9999, hi = 1, flo = npv(lo), fhi = npv(hi);
   for (let i = 0; i < 60 && flo * fhi > 0; i++) { hi = hi * 2 + 1; fhi = npv(hi); if (hi > 1e6) return res(null); }
@@ -1588,12 +1590,12 @@ function trendSection(d) {
       const r = s.ret && s.ret.v !== null && s.ret.v !== undefined ? s.ret.v : null;
       return `<button class="tr-key k-${s.key}${hid ? ' hid' : ''}${off ? ' off' : ''}" ${off ? 'disabled' : `onclick="toggleTr('${s.key}')"`} aria-pressed="${!hid && !off}">
         <span class="sw"></span><span class="nm">${esc(s.name)}</span>
-        <span class="fig">${off ? 'not enough index history' : fmtCr(last) + (s.key === 'put' ? '' : ` · <b>${r === null ? '—' : (r > 0 ? '+' : '') + r.toFixed(1) + '%'}</b>${s.ret && s.ret.abs !== null ? `<small class="tr-abs">gain ${(s.ret.abs > 0 ? '+' : '') + s.ret.abs.toFixed(1)}%</small>` : ''}`)}</span></button>`;
+        <span class="fig">${off ? 'not enough index history' : fmtCr(last) + (s.key === 'put' ? '' : ` · <b>${r === null ? '—' : (r > 0 ? '+' : '') + r.toFixed(1) + '%'}</b>${s.ret && s.ret.abs !== null && !s.ret.short ? `<small class="tr-abs">gain ${(s.ret.abs > 0 ? '+' : '') + s.ret.abs.toFixed(1)}%</small>` : ''}`)}</span></button>`;
     }).join('');
     const yr = win.series[0].ret && win.series[0].ret.yearly;
     return `<div class="tr-card" style="--accent:${b === 'Stocks' ? 'var(--blue)' : 'var(--purple)'}">
       <div class="tr-top"><span class="ret-lbl">${b === 'Stocks' ? '📈' : '🧺'} ${esc(b)}</span>${badge ? `<span class="basis ${badge[0]}">${badge[1]}</span>` : ''}</div>
-      <div class="tr-sub">${trFmt(win.start)} → ${trFmt(win.end)} · XIRR % a year${win.series[0].ret && win.series[0].ret.short ? ' (annualised — under a year)' : ''}</div>
+      <div class="tr-sub">${trFmt(win.start)} → ${trFmt(win.end)} · ${win.series[0].ret && win.series[0].ret.short ? 'Gain % over the period (under a year — not annualised)' : 'XIRR % a year'}</div>
       ${TR_MODE === 'bars' ? trBarsHTML(win, b) : `<div class="tr-plot" id="trp-${b === 'Stocks' ? 's' : 'm'}" data-b="${esc(b)}"></div>
       <div class="tr-legend">${legend}</div>`}
       ${notes.length ? `<div class="tr-note">${notes.map(esc).join('<br>')}</div>` : ''}</div>`;
@@ -1707,7 +1709,7 @@ function renderReturns(d) {
     <b>✓ Exact</b> — worked out from your tradebook / fund transactions.<br>
     <b>Matched holdings</b> — exact, but only for the holdings your transactions fully explain; send your tradebook from your first trade to include the rest.<br>
     <b>≈ Approx.</b> — from your month-end values, so profits booked on sales and dividends may be missed.<br>
-    ${d.trend && d.trend.rows.length ? '<b>Trend charts</b> — your portfolio\'s value week by week, next to the same money in each index: the index line starts with your portfolio\'s value at the start of the range, and every rupee you put in or took out after that buys or sells index units in the same week. So SIPs and staggered buying are compared fairly. Index lines use low-cost index funds (dividends included). Returns are XIRR (% a year) for the chosen range, for you and for each index, so they can be compared directly; under a year the XIRR is annualised, so short-term swings look bigger. The smaller \"gain\" figure is the total gain over the period.<br>' : ''}
+    ${d.trend && d.trend.rows.length ? '<b>Trend charts</b> — your portfolio\'s value week by week, next to the same money in each index: the index line starts with your portfolio\'s value at the start of the range, and every rupee you put in or took out after that buys or sells index units in the same week. So SIPs and staggered buying are compared fairly. Index lines use low-cost index funds (dividends included). Returns are XIRR (% a year) for ranges of a year or more, for you and for each index, so they can be compared directly; the smaller \"gain\" figure is the total gain over the period. Under a year, only the plain gain % is shown — annualising a few weeks of movement would make it look many times bigger than it is.<br>' : ''}
     ${periods.length ? 'Periods run from the month-end that many years ago to today.' : ''}${upd ? ` Worked out ${fmtDate(upd)}, updated every night.` : ''}</div></details>`;
   setHTML('returns-body', html + uploadBlock('tradebook'));
   drawTrends();
