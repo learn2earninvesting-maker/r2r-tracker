@@ -593,7 +593,7 @@
 <main class="main">
   <div class="fam-bar" id="fam-bar" style="display:none" role="group" aria-label="Family member"></div>
 
-  <!-- OVERVIEW -->
+  <!-- ASSETS OVERVIEW AND ALLOCATION (Overview + Allocation merged into one tab) -->
   <section class="panel active" id="panel-overview">
     <div class="nw-display">
       <div><div class="nw-item-label">Total Assets</div><div class="nw-item-val amber" id="nw-assets">—</div><div class="nw-item-raw" id="nw-assets-raw">—</div></div>
@@ -603,20 +603,7 @@
     <div class="muted" id="prices-asof" style="font-size:11px;margin:-6px 0 14px;text-align:center"></div>
     <div class="kpi-grid" id="kpi-grid"></div>
 
-    <div class="section-title">Coming Up</div>
-    <div id="ov-upcoming"></div>
-
-    <div class="section-title">Asset Inventory</div>
-    <div class="inv-grid" id="asset-inventory"></div>
-    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
-      <span style="font-family:var(--syne);font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">Total Portfolio</span>
-      <span style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--amber);" id="tbl-assets-total">—</span>
-    </div>
-
-  </section>
-
-  <!-- ALLOCATION -->
-  <section class="panel" id="panel-allocation">
+    <div class="section-title">Allocation</div>
     <div class="alloc-grid" style="margin-bottom:20px;">
       <div class="chart-card">
         <div class="chart-title">By Asset Class</div>
@@ -625,25 +612,25 @@
           <div class="donut-legend" id="donut-legend"></div>
         </div>
       </div>
-      <div class="chart-card"><div class="chart-title">Value by Class (₹)</div><div class="bar-list" id="bar-list"></div></div>
-    </div>
-    <div class="chart-card" style="margin-bottom:20px;">
-      <div class="chart-title">Portfolio Composition</div>
-      <div id="stacked-bar" style="display:flex;height:28px;border-radius:8px;overflow:hidden;gap:2px;margin-bottom:10px;"></div>
-      <div id="stacked-bar-legend" style="display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:10px;"></div>
-    </div>
-    <div id="class-breakdowns" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:20px;"></div>
-    <div class="chart-card">
-      <div class="chart-title">Assets vs Liabilities</div>
-      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
-        <div style="flex:1;min-width:200px;" id="gauges"></div>
-        <div style="text-align:center;min-width:120px;">
-          <div style="font-size:11px;color:var(--text3);margin-bottom:6px;">Leverage Ratio</div>
-          <div style="font-family:var(--syne);font-size:32px;font-weight:800;color:var(--amber);" id="gauge-ratio">—</div>
-          <div style="font-size:10px;color:var(--text3);">Debt / Assets</div>
+      <div class="chart-card">
+        <div class="chart-title">Assets vs Liabilities</div>
+        <div id="gauges"></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:4px;padding-top:10px;border-top:1px solid var(--border);">
+          <div><div style="font-size:11px;color:var(--text3);">Leverage Ratio</div><div style="font-size:10px;color:var(--text3);">Debt / Assets</div></div>
+          <div style="font-family:var(--syne);font-size:28px;font-weight:800;color:var(--amber);" id="gauge-ratio">—</div>
         </div>
       </div>
     </div>
+
+    <div class="section-title">Asset Inventory</div>
+    <div class="inv-grid" id="asset-inventory"></div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:4px;margin-bottom:24px;">
+      <span style="font-family:var(--syne);font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">Total Portfolio</span>
+      <span style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--amber);" id="tbl-assets-total">—</span>
+    </div>
+
+    <div class="section-title">Coming Up</div>
+    <div id="ov-upcoming"></div>
   </section>
 
   <!-- HOLDINGS -->
@@ -727,7 +714,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8
 //  TABS
 // ═══════════════════════════════════════════════════════
 const TABS = [
-  ['overview','Overview','🏠','Overview'], ['allocation','Allocation','🥧','Alloc'],
+  ['overview','Assets Overview and Allocation','🏠','Overview'],
   ['holdings','Holdings','📊','Holdings'], ['stocks','Indian Stocks','📈','Stocks'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'], ['returns','Performance','📐','Performance'],
   ['insurance','Insurance','🛡️','Insure'],
   ['payments','Payments','📅','Payments'], ['parameters','🩺 Health Check','🩺','Health'],
@@ -1163,21 +1150,12 @@ function renderOverview(d) {
 
 }
 
-function renderAllocation(d) {
+function renderAllocation(d) {   // donut + assets-vs-liabilities, shown on the Assets Overview and Allocation tab
   const C = 2 * Math.PI * 50; let off = 0;
   const segs = d.classes.map(c => { const v = d.byClass[c], len = d.totalAssets ? v / d.totalAssets * C : 0;
     const s = `<circle cx="70" cy="70" r="50" fill="none" stroke="${(CLASS_META[c]||CLASS_META.Other).color}" stroke-width="22" stroke-dasharray="${len.toFixed(2)} ${(C-len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 70 70)"><title>${esc(c)} ${fmtCr(v)}</title></circle>`; off += len; return s; });
   setHTML('donut-svg', `<circle cx="70" cy="70" r="50" fill="none" stroke="var(--bg3)" stroke-width="22"/>${segs.join('')}<text x="70" y="68" text-anchor="middle" fill="var(--text)" font-family="Syne,sans-serif" font-size="14" font-weight="700">${fmtCr(d.totalAssets)}</text><text x="70" y="84" text-anchor="middle" fill="var(--text3)" font-family="DM Sans,sans-serif" font-size="10">Total Assets</text>`);
   setHTML('donut-legend', d.classes.map(c => `<div class="legend-item"><div class="legend-dot" style="background:${(CLASS_META[c]||CLASS_META.Other).color};"></div><div class="legend-name">${esc(c)}</div><div class="legend-pct">${pctOf(d.byClass[c], d.totalAssets).toFixed(1)}%</div></div>`).join(''));
-  const maxC = Math.max(...d.classes.map(c => d.byClass[c]), 1);
-  setHTML('bar-list', d.classes.map(c => `<div><div class="bar-meta"><span class="bar-name">${esc(c)}</span><span class="bar-val">${fmtCr(d.byClass[c])}</span></div><div class="bar-track"><div class="bar-fill" style="background:${(CLASS_META[c]||CLASS_META.Other).color};" data-w="${pctOf(d.byClass[c], maxC)}%"></div></div></div>`).join(''));
-  setHTML('stacked-bar', d.classes.map(c => `<div title="${esc(c)} ${pctOf(d.byClass[c], d.totalAssets).toFixed(1)}%" style="background:${(CLASS_META[c]||CLASS_META.Other).color};width:${pctOf(d.byClass[c], d.totalAssets)}%;"></div>`).join(''));
-  setHTML('stacked-bar-legend', d.classes.map(c => `<div class="legend-item" style="margin:0"><div class="legend-dot" style="background:${(CLASS_META[c]||CLASS_META.Other).color};"></div><span class="legend-name">${esc(c)} ${pctOf(d.byClass[c], d.totalAssets).toFixed(1)}%</span></div>`).join(''));
-  setHTML('class-breakdowns', d.classes.map(c => {
-    const color = (CLASS_META[c]||CLASS_META.Other).color, g = {};
-    d.assets.filter(a => a.cls === c).forEach(a => g[a.type] = (g[a.type] || 0) + a.value);
-    const tot = d.byClass[c];
-    return `<div class="chart-card"><div class="chart-title">${esc(c)} Breakdown</div><div class="bar-list">${Object.entries(g).sort((a, b) => b[1] - a[1]).map(([n, v]) => `<div><div class="bar-meta"><span class="bar-name">${esc(n)}</span><span class="bar-val">${fmtCr(v)} · ${pctOf(v, tot).toFixed(0)}%</span></div><div class="bar-track"><div class="bar-fill" style="background:${color};" data-w="${pctOf(v, tot)}%"></div></div></div>`).join('')}</div></div>`; }).join(''));
   const mx = Math.max(d.totalAssets, 1);
   setHTML('gauges', [['Total Assets', d.totalAssets, 'var(--green)'], ['Total Liabilities', d.totalLiab, 'var(--red)'], ['Net Worth', d.netWorth, 'var(--amber)']].map(([l, v, c]) =>
     `<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px;"><span style="color:var(--text3);">${l}</span><span style="font-family:var(--mono);color:${c};">${fmtCr(v)}</span></div><div style="height:10px;background:var(--bg3);border-radius:6px;overflow:hidden;margin-bottom:10px;"><div style="height:100%;background:${c};border-radius:6px;width:0;transition:width 1s ease;" data-w="${Math.max(0, pctOf(v, mx))}%"></div></div>`).join(''));
