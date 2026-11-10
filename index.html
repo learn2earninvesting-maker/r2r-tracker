@@ -423,6 +423,7 @@
   .pf-tools .ret-periods { margin:0; }
   .ac-btn { font:inherit;font-size:13px;font-weight:600;min-height:38px;padding:0 14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;display:inline-flex;align-items:center;gap:8px; }
   .ac-btn:hover { border-color:var(--teal); }
+  .ac-btn.on { border-color:var(--amber);background:var(--amber-dim); }
   .ac-btn .ic { color:var(--teal); }
   .ac-btn small { font-size:11px;font-weight:500;color:var(--text3); }
   .r2r-modal-card.ac { border-color:var(--teal); }
@@ -435,6 +436,37 @@
   .ac-foot { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap; }
   .ac-foot .n { font-size:12px;color:var(--text2); }
   .ac-foot .r2r-modal-btns { margin:0; }
+  .r2r-modal-card.pd { max-width:760px;border-color:var(--teal);padding:0;overflow:hidden;display:flex;flex-direction:column;max-height:92vh; }
+  .pd-main { display:grid;grid-template-columns:230px 1fr;min-height:0;flex:1;overflow:hidden; }
+  .pd-left { border-right:1px solid var(--border);padding:18px 14px;overflow:auto; }
+  .pd-left h4 { font:600 13px var(--dm);color:var(--text2);margin:0 0 10px 4px; }
+  .pd-kind { display:block;width:100%;text-align:left;font:inherit;font-size:14px;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer; }
+  .pd-kind:hover { border-color:var(--teal); }
+  .pd-kind.on { background:var(--text);color:var(--bg);border-color:var(--text);font-weight:600; }
+  .pd-right { padding:18px 18px 10px;overflow:auto; }
+  .r2r-modal-card.pd .pd-right h3 { font-family:var(--syne);font-size:17px;color:var(--text);margin:0 0 12px; }
+  .pd-x { float:right;background:none;border:0;color:var(--text2);font-size:22px;line-height:1;cursor:pointer;padding:0 2px; }
+  .pd-opt { display:block;width:100%;text-align:left;font:inherit;font-size:14px;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer; }
+  .pd-opt small { display:block;font-size:12px;color:var(--text3);margin-top:3px; }
+  .pd-opt:hover:not(:disabled) { border-color:var(--teal); }
+  .pd-opt.on { background:var(--teal-dim);border-color:var(--teal); }
+  .pd-opt:disabled, .pd-cell:disabled { opacity:.38;cursor:default; }
+  .pd-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:8px; }
+  .pd-cell { font:inherit;font-size:14px;color:var(--text);background:var(--bg3);border:1px solid transparent;border-radius:8px;padding:14px 0;cursor:pointer; }
+  .pd-cell:hover:not(:disabled) { border-color:var(--teal); }
+  .pd-cell.on { background:var(--teal);color:#0b1120;font-weight:700; }
+  .pd-yr { display:flex;align-items:center;justify-content:space-between;margin:0 0 12px;padding-bottom:10px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text2); }
+  .pd-yr button { width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:15px; }
+  .pd-yr button:disabled { opacity:.35;cursor:default; }
+  .pd-dates { display:grid;gap:12px; }
+  .pd-dates label { font-size:12px;color:var(--text2);display:block; }
+  .pd-dates input { display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font:14px var(--dm);color-scheme:light dark; }
+  .pd-hint { font-size:11px;color:var(--text3);line-height:1.5;margin-top:10px; }
+  .pd-foot { display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--border);padding:12px 18px;flex-wrap:wrap; }
+  .pd-foot .n { font-size:13px;color:var(--text);font-weight:600; }
+  .pd-foot .n.bad { color:var(--warn);font-weight:500; }
+  .pd-foot .r2r-modal-btns { margin:0; }
+  @media (max-width:640px) { .pd-main { grid-template-columns:1fr;overflow:auto; } .pd-left { border-right:0;border-bottom:1px solid var(--border);display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:12px 14px;position:sticky;top:0;z-index:1;background:var(--card); } .pd-kind { flex:0 0 auto; } .pd-left h4 { display:none; } .pd-kind { width:auto;margin:0;padding:8px 12px;font-size:13px; } .pd-right { overflow:visible; } }
   .pf-empty { background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:18px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:16px; }
   .pf-sec { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin:8px 0 8px; }
   .fam-bar { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px; }
@@ -1663,7 +1695,7 @@ function trendModel(tab) {
 // XIRR for ranges of a year or more (same method as the nightly returns); under a year, plain gain % only
 function trReturn(flows, start, end) {
   const out = flows.filter(f => f.a < 0).reduce((s, f) => s - f.a, 0), gain = flows.reduce((s, f) => s + f.a, 0);
-  const abs = out ? gain / out * 100 : null, short = (trMs(end) - trMs(start)) / 864e5 < 365;
+  const abs = out ? gain / out * 100 : null, short = (trMs(end) - trMs(start)) / 864e5 < 357;   // a year rounded to weekly values can be a few days short
   const t0 = trMs(start), fs = flows.map(f => ({ y: (trMs(f.t) - t0) / (365 * 864e5), a: f.a }));
   const npv = r => fs.reduce((s, f) => s + f.a / Math.pow(1 + r, f.y), 0);
   const res = v => ({ v, abs, short, yearly: v !== null });
@@ -1678,18 +1710,28 @@ function trReturn(flows, start, end) {
 
 // One bucket over one range: your line, the money-put-in line, and one line per index fed the same money
 function trWindow(tr, bucket, years) {
-  const vk = bucket === 'Stocks' ? 's' : bucket === 'Combined' ? 'c' : 'm', fk = vk + 'f';
+  const vk = bucket === 'Stocks' ? 's' : bucket === 'Combined' ? 'c' : 'm';
   const pts = tr.rows.filter(r => r[vk] !== null);
   if (pts.length < 2) return null;
   const end = pts[pts.length - 1].d;
+  return trWindowRange(tr, bucket, years ? trIso(trMs(end) - years * 365.25 * 864e5) : null, null);
+}
+// Same, for any dates (Performance tab's custom periods): starts at the last weekly value on or before `from`
+// (or the first one, if the history starts later) and ends at the last weekly value on or before `to`.
+function trWindowRange(tr, bucket, from, to) {
+  const vk = bucket === 'Stocks' ? 's' : bucket === 'Combined' ? 'c' : 'm', fk = vk + 'f';
+  const pts = tr.rows.filter(r => r[vk] !== null);
+  if (pts.length < 2) return null;
+  let i1 = pts.length - 1;
+  if (to) { i1 = -1; pts.forEach((p, i) => { if (p.d <= to) i1 = i; }); if (i1 < 1) return null; }
   let i0 = 0, short = false;
-  if (years) {
-    const S = trIso(trMs(end) - years * 365.25 * 864e5);
-    let k = -1; pts.forEach((p, i) => { if (p.d <= S) k = i; });
+  if (from) {
+    let k = -1; pts.forEach((p, i) => { if (p.d <= from) k = i; });
     if (k < 0) short = true; else i0 = k;
   }
-  const w = pts.slice(i0);
+  const w = pts.slice(i0, i1 + 1);
   if (w.length < 2) return null;
+  const end = w[w.length - 1].d;
   const v0 = w[0][vk];
   const flowsWith = endVal => [{ t: w[0].d, a: -v0 }].concat(w.slice(1).map(p => ({ t: p.d, a: -p[fk] }))).concat([{ t: end, a: endVal }]).filter(f => f.a);
   const series = [];
@@ -1814,6 +1856,142 @@ const PF_PERIODS = [['Since start', 'All to date', 0], ['1Y', '1 year', 1], ['2Y
 let PF_IX = (() => { try { return JSON.parse(localStorage.getItem('r2r_pf_ix') || 'null') || { NIFTY50: true, NIFTY500: true }; } catch (e) { return { NIFTY50: true, NIFTY500: true }; } })();
 function togglePfIx(k) { PF_IX[k] = !PF_IX[k]; try { localStorage.setItem('r2r_pf_ix', JSON.stringify(PF_IX)); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
 // The headline figure for a period: whole portfolio when it reaches back that far, else shares or funds on their own
+// ── Custom periods (like MProfit's "Select a time period"): financial year, calendar year, month, trailing, own dates.
+// Presets (All to date, 1/2/3/5 years) use the exact nightly figures; anything else is worked out here from the weekly Trend values.
+const PD_KINDS = [['all', 'All to date'], ['upto', 'All to custom date'], ['fy', 'Financial year'], ['year', 'Year'], ['month', 'Month'], ['trail', 'Trailing'], ['custom', 'Custom']];
+const MONTHS_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+let PF_CUSTOM = (() => { try { const v = JSON.parse(localStorage.getItem('r2r_pf_custom') || 'null'); return v && v.from !== undefined && v.label ? v : null; } catch (e) { return null; } })();
+let PD = null;   // the picker while it is open
+const pdIso = (y, m, d) => y + '-' + String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+const pdLast = (y, m) => new Date(Date.UTC(y, m, 0)).getUTCDate();          // m = 1..12
+const pdMonthEndBefore = iso => { const y = +iso.slice(0, 4), m = +iso.slice(5, 7); return m === 1 ? pdIso(y - 1, 12, 31) : pdIso(y, m - 1, pdLast(y, m - 1)); };
+const pdDayBefore = iso => trIso(trMs(iso) - 864e5);
+const pdShort = iso => { const x = new Date(trMs(iso)); return x.getUTCDate() + ' ' + MONTHS[x.getUTCMonth()] + ' ' + x.getUTCFullYear(); };
+function pdBounds(d) {
+  const rows = d && d.trend && d.trend.rows || [];
+  if (rows.length < 2) return null;
+  return { first: rows[0].d, last: rows[rows.length - 1].d, today: trIso(Date.now() + 5.5 * 36e5) };
+}
+// Keep the period picker in step with the quick period buttons
+function setRetPeriodPreset(p) { PF_CUSTOM = null; try { localStorage.removeItem('r2r_pf_custom'); } catch (e) {} setRetPeriod(p); }
+function openPeriodPicker() {
+  const b = pdBounds(LAST_MODEL); if (!b) return;
+  const ty = +b.today.slice(0, 4);
+  const c = PF_CUSTOM;
+  PD = { b, kind: c ? c.kind : (RET_PERIOD && RET_PERIOD !== 'Since start' ? 'trail' : 'all'), sel: c ? Object.assign({}, c) : null, my: c && c.kind === 'month' ? +c.from.slice(0, 4) : ty };
+  if (!PD.sel) PD.sel = PD.kind === 'trail' ? pdTrail(+String(RET_PERIOD).replace(/\D/g, '') || 1) : { kind: 'all', from: null, to: null, label: 'All to date' };
+  showModal(`<div class="pd-main"><div class="pd-left" id="pd-left"></div><div class="pd-right" id="pd-right"></div></div>
+    <div class="pd-foot"><span class="n" id="pd-n"></span><div class="r2r-modal-btns"><button onclick="closeModal()">Cancel</button><button class="up-go" id="pd-go" onclick="pdDone()">Done</button></div></div>`);
+  const card = document.querySelector('#r2r-modal .r2r-modal-card'); if (card) card.classList.add('pd');
+  pdDraw();
+}
+function pdKind(k) {
+  PD.kind = k;
+  const b = PD.b, ty = +b.today.slice(0, 4), tm = +b.today.slice(5, 7);
+  if (k === 'all') PD.sel = { kind: 'all', from: null, to: null, label: 'All to date' };
+  else if (k === 'trail') PD.sel = pdTrail(1);
+  else if (k === 'fy') { const fy = tm >= 4 ? ty : ty - 1; PD.sel = pdFy(fy); }
+  else if (k === 'year') PD.sel = pdYear(ty);
+  else if (k === 'month') { const ly = +b.last.slice(0, 4), lm = +b.last.slice(5, 7); PD.my = ly; PD.sel = pdMonth(ly, lm); }   // latest month with values
+  else if (k === 'upto') PD.sel = PD.sel && PD.sel.kind === 'upto' ? PD.sel : { kind: 'upto', from: null, to: '', label: '' };
+  else PD.sel = PD.sel && PD.sel.kind === 'custom' ? PD.sel : { kind: 'custom', from: '', to: '', label: '' };
+  pdDraw();
+}
+function pdTrail(n) { return { kind: 'trail', n, from: pdMonthEndBefore(pdIso(+PD.b.today.slice(0, 4) - n, +PD.b.today.slice(5, 7), 1)), to: null, label: 'Trailing ' + n + ' year' + (n === 1 ? '' : 's') }; }
+function pdFy(y) { const cur = (+PD.b.today.slice(5, 7) >= 4 ? +PD.b.today.slice(0, 4) : +PD.b.today.slice(0, 4) - 1) === y;
+  return { kind: 'fy', y, from: pdIso(y, 3, 31), to: pdIso(y + 1, 3, 31), label: (cur ? 'Current FY · ' : '') + 'FY ' + String(y).slice(2) + '-' + String(y + 1).slice(2) }; }
+function pdYear(y) { return { kind: 'year', y, from: pdIso(y - 1, 12, 31), to: pdIso(y, 12, 31), label: String(y) }; }
+function pdMonth(y, m) { return { kind: 'month', y, m, from: pdMonthEndBefore(pdIso(y, m, 1)), to: pdIso(y, m, pdLast(y, m)), label: MONTHS_FULL[m - 1] + ' ' + y }; }
+function pdPick(kind, a, b2) {
+  if (kind === 'trail') PD.sel = pdTrail(a); else if (kind === 'fy') PD.sel = pdFy(a); else if (kind === 'year') PD.sel = pdYear(a); else if (kind === 'month') PD.sel = pdMonth(a, b2);
+  pdDraw();
+}
+function pdMonthYear(step) { PD.my += step; pdDraw(); }
+function pdDate(which, v) {
+  const s = PD.sel;
+  if (which === 'to') s.to = v; else s.from = v;
+  s.label = s.kind === 'upto' ? (s.to ? 'All to ' + pdShort(s.to) : '') : (s.from && s.to ? pdShort(s.from) + ' → ' + pdShort(s.to) : '');
+  pdFoot();
+}
+// Is the chosen period usable? → '' or a reason
+function pdProblem(s) {
+  const b = PD.b;
+  if (!s) return 'Pick a period';
+  if (s.kind === 'custom') {
+    if (!s.from || !s.to) return 'Pick both dates';
+    if (s.from >= s.to) return 'The end date must be after the start date';
+  }
+  if (s.kind === 'upto' && !s.to) return 'Pick a date';
+  const to = s.to || b.today, from = s.kind === 'custom' ? pdDayBefore(s.from) : s.from;
+  if (to < b.first) return 'Your history starts ' + pdShort(b.first);
+  if (from && from >= b.last) return 'Not in your history yet (weekly values up to ' + pdShort(b.last) + ')';
+  return '';
+}
+function pdFoot() {
+  const bad = pdProblem(PD.sel), n = document.getElementById('pd-n'), go = document.getElementById('pd-go');
+  if (n) { n.textContent = bad || PD.sel.label; n.className = 'n' + (bad ? ' bad' : ''); }
+  if (go) go.disabled = !!bad;
+}
+function pdDraw() {
+  const b = PD.b, s = PD.sel, k = PD.kind, ty = +b.today.slice(0, 4), tm = +b.today.slice(5, 7), fy0 = +b.first.slice(0, 4), fm0 = +b.first.slice(5, 7);
+  setHTML('pd-left', '<h4>Select a time period</h4>' + PD_KINDS.map(([id, n]) => `<button class="pd-kind${id === k ? ' on' : ''}" onclick="pdKind('${id}')">${n}</button>`).join(''));
+  const X = '<button class="pd-x" onclick="closeModal()" aria-label="Close">×</button>';
+  let h = '';
+  if (k === 'all') h = `${X}<h3>All to date</h3><button class="pd-opt on">All to date<small>From your first transaction (or first month-end) to today</small></button>`;
+  else if (k === 'trail') h = `${X}<h3>Select period</h3>` + [1, 2, 3, 4, 5].map(n => `<button class="pd-opt${s.n === n ? ' on' : ''}" onclick="pdPick('trail',${n})">Trailing ${n} year${n === 1 ? '' : 's'}</button>`).join('');
+  else if (k === 'fy') {
+    const cur = tm >= 4 ? ty : ty - 1, first = fm0 >= 4 ? fy0 : fy0 - 1, list = [];
+    for (let y = cur; y >= first; y--) list.push(y);
+    h = `${X}<h3>Select financial year</h3>` + list.map(y => `<button class="pd-opt${s.y === y ? ' on' : ''}" onclick="pdPick('fy',${y})">${y === cur ? 'Current FY · ' : y === cur - 1 ? 'Last FY · ' : ''}FY ${String(y).slice(2)}-${String(y + 1).slice(2)}<small>1 Apr ${y} to 31 Mar ${y + 1}</small></button>`).join('');
+  } else if (k === 'year') {
+    const list = []; for (let y = ty; y >= fy0; y--) list.push(y);
+    h = `${X}<h3>Select year</h3><div class="pd-grid">` + list.map(y => `<button class="pd-cell${s.y === y ? ' on' : ''}" onclick="pdPick('year',${y})">${y}</button>`).join('') + '</div>';
+  } else if (k === 'month') {
+    const y = PD.my;
+    h = `${X}<h3>Select month</h3><div class="pd-yr"><span>${y}</span><span><button onclick="pdMonthYear(-1)" ${y <= fy0 ? 'disabled' : ''} aria-label="Previous year">‹</button> <button onclick="pdMonthYear(1)" ${y >= ty ? 'disabled' : ''} aria-label="Next year">›</button></span></div><div class="pd-grid">` +
+      MONTHS.map((n, i) => { const m = i + 1, off = (y > ty || (y === ty && m > tm)) || (y < fy0 || (y === fy0 && m < fm0));
+        return `<button class="pd-cell${s.y === y && s.m === m ? ' on' : ''}" ${off ? 'disabled' : `onclick="pdPick('month',${y},${m})"`}>${n}</button>`; }).join('') + '</div>';
+  } else if (k === 'upto') {
+    h = `${X}<h3>All to custom date</h3><div class="pd-dates"><label>From your first transaction up to
+      <input type="date" min="${b.first}" max="${b.today}" value="${s.to || ''}" onchange="pdDate('to',this.value)" oninput="pdDate('to',this.value)"></label></div>
+      <div class="pd-hint">Shows your XIRR as it stood on that date.</div>`;
+  } else {
+    h = `${X}<h3>Select dates</h3><div class="pd-dates">
+      <label>From<input type="date" min="${b.first}" max="${b.today}" value="${s.from || ''}" onchange="pdDate('from',this.value)" oninput="pdDate('from',this.value)"></label>
+      <label>To<input type="date" min="${b.first}" max="${b.today}" value="${s.to || ''}" onchange="pdDate('to',this.value)" oninput="pdDate('to',this.value)"></label></div>`;
+  }
+  if (k !== 'all') h += `<div class="pd-hint">Worked out from your weekly values (${pdShort(b.first)} → ${pdShort(b.last)}), so dates are rounded to the nearest week before. A period that starts before your history runs from your first value.</div>`;
+  setHTML('pd-right', h);
+  pdFoot();
+}
+function pdDone() {
+  const s = PD.sel; if (pdProblem(s)) return;
+  closeModal();
+  const preset = s.kind === 'all' ? 'Since start' : s.kind === 'trail' && [1, 2, 3, 5].includes(s.n) ? s.n + 'Y' : null;
+  const avail = LAST_MODEL && (LAST_MODEL.returns || []).some(r => r.period === preset && pfScopes().includes(r.scope));
+  if (preset && avail) { PD = null; return setRetPeriodPreset(preset); }   // exact nightly figures
+  PF_CUSTOM = { kind: s.kind, n: s.n, y: s.y, m: s.m, from: s.kind === 'custom' ? pdDayBefore(s.from) : s.from, to: s.to || null, label: s.label, picked: s.kind === 'custom' ? s.from : null };
+  try { localStorage.setItem('r2r_pf_custom', JSON.stringify(PF_CUSTOM)); } catch (e) {}
+  PD = null; if (LAST_MODEL) renderReturns(LAST_MODEL);
+}
+// Rows in the same shape as the nightly Returns rows, for the custom period, from the weekly Trend values
+function pfCustomRows(d, C) {
+  if (!d.trend || d.trend.rows.length < 2) return [];
+  const toD = iso => new Date(trMs(iso) + 6 * 36e5);
+  return ['Combined', 'Stocks', 'Mutual Funds'].map(scope => {
+    const w = trWindowRange(d.trend, scope, C.from, C.to);
+    if (!w) return null;
+    const me = w.series[0], put = w.series.find(x => x.key === 'put'), r = me.ret || {};
+    const v0 = me.vals[0], end = me.vals[me.vals.length - 1];
+    const vk = scope === 'Stocks' ? 'sf' : scope === 'Combined' ? 'cf' : 'mf';
+    const rows = d.trend.rows.filter(x => x.d > w.start && x.d <= w.end);
+    const inflow = rows.reduce((a, x) => a + Math.max(0, x[vk] || 0), 0), outflow = rows.reduce((a, x) => a + Math.max(0, -(x[vk] || 0)), 0);
+    const gain = end + outflow - v0 - inflow;
+    return { scope, period: 'Custom', xirr: r.yearly ? r.v : null, gainPct: r.abs, gain, invested: v0 + inflow, value: end, from: toD(w.start), to: toD(w.end),
+      basis: 'Weekly', clipped: w.short ? w.firstEver : null, win: w, note: 'Worked out from weekly values (' + pdShort(w.start) + ' → ' + pdShort(w.end) + '), so it can differ slightly from the nightly figures. Per-holding figures are only for the preset periods.' };
+  }).filter(Boolean);
+}
+
 // Asset classes for the XIRR (like MProfit's "Select Asset Classes"): shares & ETFs, mutual funds, or both. Remembered on this device.
 const PF_AC_LIST = [['stk', 'Stocks & ETFs', 'Stocks', 'Shares and ETFs in your Indian Stocks tab (Sovereign Gold Bonds left out)'], ['mf', 'Mutual Funds', 'Mutual Funds', 'Every fund in your Mutual Funds tab']];
 let PF_AC = (() => { try { const v = JSON.parse(localStorage.getItem('r2r_pf_ac') || 'null'); return v && (v.stk || v.mf) ? v : { stk: true, mf: true }; } catch (e) { return { stk: true, mf: true }; } })();
@@ -1862,25 +2040,25 @@ function pfSnapshotHTML(main, P, plabel) {
   const { r, scope } = pfPick(main, P);
   if (!r) return '';
   const firsts = main.filter(x => x.period === 'Since start' && x.from).map(x => x.from).sort((a, b) => a - b);
-  const BADGE = { Exact: ['exact', '✓ Exact'], 'All trades': ['exact', '✓ All trades'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
-  const b = BADGE[r.basis], v = retFig(r), yearly = r.xirr !== null, sinceAll = P === 'Since start';
+  const BADGE = { Exact: ['exact', '✓ Exact'], 'All trades': ['exact', '✓ All trades'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'], Weekly: ['approx', '≈ Weekly values'] };
+  const b = BADGE[r.basis], v = retFig(r), yearly = r.xirr !== null, sinceAll = P === 'Since start', cu = r.basis === 'Weekly';
   const g = v === null ? null : Math.max(-15, Math.min(30, v));
   const gauge = g === null ? '' : `<div class="pf-gauge" aria-hidden="true"><div class="pf-track"><span class="z"></span><span class="b" style="left:${g >= 0 ? 33.333 : (g + 15) / 45 * 100}%;width:${Math.max(Math.abs(g) / 45 * 100, 0.8)}%;background:${v >= 0 ? 'var(--pos)' : 'var(--neg)'}"></span></div><div class="pf-ticks"><span>−15%</span><span>0%</span><span>15%</span><span>30%</span></div></div>`;
   const first = firsts[0] || r.from;
   const why = scope === 'Combined' || !pfBoth() ? '' : `<div class="ret-why">${scope === 'Stocks' ? 'Your fund' : 'Your share'} history doesn't reach back ${esc(plabel.toLowerCase())}, so this is ${scope === 'Stocks' ? 'your shares' : 'your funds'} on their own.</div>`;
-  const invSub = r.basis === 'Approximate'
+  const invSub = cu ? 'Value at the start + money added in the period' : r.basis === 'Approximate'
     ? (sinceAll ? 'Value at the first month-end + money added since' : 'Value at the start + money added since')
     : (sinceAll ? 'Every buy and SIP, ever' + (r.basis === 'All trades' ? ' (sale money reinvested counts again)' : '') : 'Value at the start + buys since');
   return `<div class="pf-snap">
     <div class="pf-xirr"><span class="ret-lbl">${yearly ? 'XIRR' : 'Gain'} · ${esc(plabel)}</span>
       <div class="ret-big ${retCls(v)}">${retPct(v)}${yearly ? '<span class="unit">a year</span>' : ''}</div>
       ${b ? `<span class="basis ${b[0]}">${b[1]}</span>` : ''}
-      ${yearly ? '' : '<div class="ret-why">Less than a year of history, so this is the plain gain — not annualised.</div>'}${why}${gauge}</div>
+      ${yearly ? '' : `<div class="ret-why">${cu ? 'A period under a year' : 'Less than a year of history'}, so this is the plain gain — not annualised.</div>`}${why}${cu && r.clipped ? `<div class="ret-why">Your history starts ${esc(pdShort(r.clipped))}, so this runs from then.</div>` : ''}${gauge}</div>
     <div class="pf-facts">
-      <div class="pf-fact"><div class="k">First transaction</div><div class="v">${first ? fmtDate(first) : '—'}</div>${r.from && fmtDate(r.from) !== fmtDate(first) ? `<div class="s">${sinceAll ? 'XIRR measured from' : 'This period:'} ${fmtDate(r.from)} → today</div>` : ''}</div>
-      <div class="pf-fact"><div class="k">Current valuation</div><div class="v">${fmtCr(r.value)}</div><div class="s">${PF_SCOPE[scope]}</div></div>
+      <div class="pf-fact"><div class="k">First transaction</div><div class="v">${first ? fmtDate(first) : '—'}</div>${cu ? `<div class="s">This period: ${fmtDate(r.from)} → ${fmtDate(r.to)}</div>` : r.from && fmtDate(r.from) !== fmtDate(first) ? `<div class="s">${sinceAll ? 'XIRR measured from' : 'This period:'} ${fmtDate(r.from)} → today</div>` : ''}</div>
+      <div class="pf-fact"><div class="k">${cu ? 'Value on ' + fmtDate(r.to) : 'Current valuation'}</div><div class="v">${fmtCr(r.value)}</div><div class="s">${PF_SCOPE[scope]}</div></div>
       <div class="pf-fact"><div class="k">${sinceAll ? 'Total investment' : 'Invested in period'}</div><div class="v">${fmtCr(r.invested)}</div><div class="s">${invSub}</div></div>
-      <div class="pf-fact"><div class="k">Total gain</div><div class="v ${retCls(r.gain)}">${r.gain < 0 ? '−' : '+'}${fmtCr(Math.abs(r.gain))}</div><div class="s">${r.gainPct !== null ? retPct(r.gainPct) + ' · ' : ''}${r.basis === 'Approximate' ? 'from month-end values' : 'booked profits + on paper'}</div></div>
+      <div class="pf-fact"><div class="k">Total gain</div><div class="v ${retCls(r.gain)}">${r.gain < 0 ? '−' : '+'}${fmtCr(Math.abs(r.gain))}</div><div class="s">${r.gainPct !== null ? retPct(r.gainPct) + ' · ' : ''}${cu ? 'value at the end + taken out − put in' : r.basis === 'Approximate' ? 'from month-end values' : 'booked profits + on paper'}</div></div>
     </div></div>`;
 }
 
@@ -1891,7 +2069,7 @@ function pfVsHTML(d, main, P, years, plabel) {
   const yearly = r.xirr !== null;
   const sub = [['stk', 'Shares', 'Stocks'], ['mf', 'Mutual funds', 'Mutual Funds']].map(([k, n, sc]) => { const x = main.find(y => y.scope === sc && y.period === P); return x && retFig(x) !== null ? { key: k, name: n, v: retFig(x), note: x.xirr === null ? 'gain' : '' } : null; }).filter(Boolean);
   const rows = [{ key: 'you', name: scope === 'Combined' ? 'My portfolio' : scope === 'Stocks' ? 'My shares' : 'My funds', v: retFig(r) }].concat(scope === 'Combined' && sub.length === 2 ? sub : []);
-  const win = d.trend && d.trend.rows.length >= 2 ? trWindow(d.trend, scope, years) : null;
+  const win = r.win || (d.trend && d.trend.rows.length >= 2 ? trWindow(d.trend, scope, years) : null);
   const ser = win ? win.series : [];
   const ok = k => { const s = ser.find(x => x.key === k); return s && s.vals && s.ret && s.ret.v !== null && s.ret.v !== undefined ? s : null; };
   const chips = win ? TR_IX.map(([k, n]) => { const s = ok(k), on = !!PF_IX[k] && !!s;
@@ -1910,6 +2088,7 @@ function pfVsHTML(d, main, P, years, plabel) {
       <div class="bm-val">${retPct(x.v)}</div></div>`; }).join('');
   const notes = [];
   if (win && win.short) notes.push(`Your weekly history starts ${trFmt(win.firstEver)}, so the index figures cover all of it.`);
+  if (r.win) notes.push(`Period: ${trFmt(win.start)} → ${trFmt(win.end)}.`);
   if (!win) notes.push('Index comparison appears after the next nightly update.');
   return `<div class="pf-vs"><div class="pf-h">My ${yearly ? 'XIRR' : 'gain'} vs the market <small>${esc(plabel)}</small></div>
     ${chips ? `<div class="pf-ix" role="group" aria-label="Indices to compare">${chips}</div>` : ''}
@@ -1920,11 +2099,14 @@ function pfVsHTML(d, main, P, years, plabel) {
 }
 
 function renderReturns(d) {
-  const R = d.returns || [];
+  const R0 = d.returns || [];
+  const CU = PF_CUSTOM && pdBounds(d) ? PF_CUSTOM : null;
+  const R = CU ? R0.concat(pfCustomRows(d, CU)) : R0;
   const main = R.filter(r => ['Combined', 'Stocks', 'Mutual Funds'].includes(r.scope));
   const ORDER = PF_PERIODS.map(p => p[0]);
   const mainSel = main.filter(r => pfScopes().includes(r.scope));
   const periods = ORDER.filter(p => (mainSel.length ? mainSel : main).some(r => r.period === p));
+  const pdOk = !!pdBounds(d);
   const buckets = ['Stocks', 'Mutual Funds'].filter(b => main.some(r => r.scope === b) || R.some(r => r.bucket === b && (r.scope === 'Holding' || r.scope === 'Check')));
   if (!periods.length && !buckets.length) {
     const first = d.snapshots.map(s => s.date).sort((a, b) => a - b)[0];
@@ -1934,11 +2116,12 @@ function renderReturns(d) {
     return;
   }
   if (periods.length && !periods.includes(RET_PERIOD)) RET_PERIOD = periods.includes('Since start') ? 'Since start' : periods[0];
-  const P = periods.length ? RET_PERIOD : 'Since start';
-  const label = p => (PF_PERIODS.find(x => x[0] === p) || [p, p])[1];
+  const P = CU ? 'Custom' : periods.length ? RET_PERIOD : 'Since start';
+  const label = p => p === 'Custom' ? CU.label : (PF_PERIODS.find(x => x[0] === p) || [p, p])[1];
   const years = (PF_PERIODS.find(x => x[0] === P) || [0, 0, 0])[2];
   const acBtn = `<button class="ac-btn" onclick="openAssetClasses()" aria-haspopup="dialog"><span class="ic">⏷</span>${esc(pfAcLabel())}<small>▾</small></button>`;
-  let html = `<div class="pf-tools">${acBtn}${periods.length ? `<div class="ret-periods" role="group" aria-label="Period">${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriod('${p}')">${label(p)}</button>`).join('')}</div>` : ''}</div>`;
+  const pdBtn = pdOk ? `<button class="ac-btn${CU ? ' on' : ''}" onclick="openPeriodPicker()" aria-haspopup="dialog"><span class="ic">📅</span>${CU ? esc(CU.label) : 'Custom period'}<small>▾</small></button>` : '';
+  let html = `<div class="pf-tools">${acBtn}${periods.length ? `<div class="ret-periods" role="group" aria-label="Period">${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriodPreset('${p}')">${label(p)}</button>`).join('')}</div>` : ''}${pdBtn}</div>`;
   const BADGE = { Exact: ['exact', '✓ Exact'], 'All trades': ['exact', '✓ All trades'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
   const tile = (scope, accent, icon) => {
     const r = main.find(x => x.scope === scope && x.period === P);
@@ -1964,8 +2147,9 @@ function renderReturns(d) {
   const snap = pfSnapshotHTML(main, P, label(P));
   if (!snap && !pfBoth()) {
     const nm = PF_AC.stk ? 'shares & ETFs' : 'mutual funds';
-    html += `<div class="pf-empty">No XIRR for your <b>${nm}</b> ${P === 'Since start' ? 'yet' : 'over ' + esc(label(P).toLowerCase()) + ' — the history doesn\'t reach back that far'}. ${PF_AC.stk ? 'Send your share tradebook' : 'Send your mutual fund transaction statement'} to the Tracker bot (or upload it below) for exact figures, or pick another period or asset class.</div>`;
+    html += CU ? `<div class="pf-empty">No figure for your <b>${nm}</b> in <b>${esc(CU.label)}</b> — your weekly history doesn't cover it. Pick another period or asset class.</div>` : `<div class="pf-empty">No XIRR for your <b>${nm}</b> ${P === 'Since start' ? 'yet' : 'over ' + esc(label(P).toLowerCase()) + ' — the history doesn\'t reach back that far'}. ${PF_AC.stk ? 'Send your share tradebook' : 'Send your mutual fund transaction statement'} to the Tracker bot (or upload it below) for exact figures, or pick another period or asset class.</div>`;
   }
+  if (!snap && pfBoth() && CU) html += `<div class="pf-empty">No figure for <b>${esc(CU.label)}</b> — your weekly history doesn't cover it. Pick another period.</div>`;
   html += snap + pfVsHTML(d, main, P, years, label(P));
   html += `<div class="pf-sec">${pfBoth() ? 'Shares and funds' : PF_AC.stk ? 'Shares & ETFs' : 'Mutual funds'} — tap for each holding</div>`;
   html += `<div class="ret-grid">${pfOn('Combined') ? tile('Combined', '#f0a500', '🧮') : ''}${pfOn('Stocks') ? tile('Stocks', '#3b82f6', '📈') : ''}${pfOn('Mutual Funds') ? tile('Mutual Funds', '#a855f7', '🧺') : ''}</div>`;
@@ -1978,7 +2162,7 @@ function renderReturns(d) {
     <b>Matched holdings</b> — exact, but only for the holdings your transactions fully explain; send your tradebook from your first trade to include the rest.<br>
     <b>≈ Approx.</b> — from your month-end values, so profits booked on sales and dividends may be missed.<br>
     ${d.trend && d.trend.rows.length ? '<b>Trend charts</b> — your portfolio\'s value week by week, next to the same money in each index: the index line starts with your portfolio\'s value at the start of the range, and every rupee you put in or took out after that buys or sells index units in the same week. So SIPs and staggered buying are compared fairly. Index lines use low-cost index funds (dividends included). Returns are XIRR (% a year) for ranges of a year or more, for you and for each index, so they can be compared directly; the smaller \"gain\" figure is the total gain over the period. Under a year, only the plain gain % is shown — annualising a few weeks of movement would make it look many times bigger than it is.<br>' : ''}
-    <b>Periods</b> — <i>All to date</i> runs from your first transaction (or first month-end); 1, 2, 3 and 5 years are trailing: from the month-end that many years ago to today.<br>
+    <b>Periods</b> — <i>All to date</i> runs from your first transaction (or first month-end); 1, 2, 3 and 5 years are trailing: from the month-end that many years ago to today. <b>📅 Custom period</b> — a financial year, a calendar year, a month, trailing 1–5 years or your own dates. These are worked out from your weekly values (start and end rounded to the week), so they can differ slightly from the nightly figures, and per-holding figures aren't shown for them.<br>
     <b>Total investment</b> — every rupee you put in (all buys and SIPs). <b>Total gain</b> — today's value plus everything you took out, minus everything you put in, so profits already booked count too.<br>
     <b>My XIRR vs the market</b> — your XIRR next to what the same money, on the same dates, would have earned in each index.<br>
     Shares and mutual funds only — EPF, PPF, NPS, FDs and other assets are not in these figures.${upd ? ` Worked out ${fmtDate(upd)}, updated every night.` : ''}</div></details>`;
