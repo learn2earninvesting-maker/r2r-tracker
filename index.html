@@ -1681,7 +1681,7 @@ function renderReturns(d) {
   const P = periods.length ? RET_PERIOD : 'Since start';
   const label = p => p === 'Since start' ? 'Since start' : p.replace('Y', ' year' + (p === '1Y' ? '' : 's'));
   let html = periods.length > 1 ? `<div class="ret-periods">${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriod('${p}')">${label(p)}</button>`).join('')}</div>` : '';
-  const BADGE = { Exact: ['exact', '✓ Exact'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
+  const BADGE = { Exact: ['exact', '✓ Exact'], 'All trades': ['exact', '✓ All trades'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
   const tile = (scope, accent, icon) => {
     const r = main.find(x => x.scope === scope && x.period === P);
     const holds = scope === 'Combined' ? [] : retHoldings(R, scope, P);
@@ -1692,7 +1692,7 @@ function renderReturns(d) {
     let body = '';
     if (open) {
       body = `<div class="ret-body" onclick="event.stopPropagation()">` +
-        (r ? `<div class="ret-facts">${r.gain >= 0 ? 'Gain' : 'Loss'} <b class="${retCls(r.gain)}">${fmtINR(Math.abs(r.gain))}</b> on ${fmtINR(r.invested)} put in · value now ${fmtINR(r.value)} · since ${fmtDate(r.from)}</div>` : '') +
+        (r ? `<div class="ret-facts">${r.gain >= 0 ? 'Gain' : 'Loss'} <b class="${retCls(r.gain)}">${fmtINR(Math.abs(r.gain))}</b> on ${fmtINR(r.invested)} ${r.basis === 'All trades' || r.basis === 'Partial' ? 'bought in total (sale money reinvested counts again)' : 'put in'} · value now ${fmtINR(r.value)} · since ${fmtDate(r.from)}</div>` : '') +
         (r && r.note ? `<div class="ret-note">${esc(r.note)}</div>` : '') +
         (scope === 'Combined' ? '' : retListHTML(holds, P) + retChecksHTML(R, scope)) + `</div>`;
     }
@@ -1708,6 +1708,7 @@ function renderReturns(d) {
   html += `<details class="ret-about"><summary>What do these mean?</summary><div>
     <b>XIRR</b> is your yearly return, taking into account <i>when</i> each rupee went in or came out — the fair way to measure SIPs and staggered buying. Periods under a year show the plain gain instead.<br>
     <b>✓ Exact</b> — worked out from your tradebook / fund transactions.<br>
+    <b>✓ All trades</b> — every share you bought and sold in your tradebook, including shares you've since sold, plus today's value (the way MProfit works it out). Profits and losses already booked count, so it's the fairest overall picture.<br>
     <b>Matched holdings</b> — exact, but only for the holdings your transactions fully explain; send your tradebook from your first trade to include the rest.<br>
     <b>≈ Approx.</b> — from your month-end values, so profits booked on sales and dividends may be missed.<br>
     ${d.trend && d.trend.rows.length ? '<b>Trend charts</b> — your portfolio\'s value week by week, next to the same money in each index: the index line starts with your portfolio\'s value at the start of the range, and every rupee you put in or took out after that buys or sells index units in the same week. So SIPs and staggered buying are compared fairly. Index lines use low-cost index funds (dividends included). Returns are XIRR (% a year) for ranges of a year or more, for you and for each index, so they can be compared directly; the smaller \"gain\" figure is the total gain over the period. Under a year, only the plain gain % is shown — annualising a few weeks of movement would make it look many times bigger than it is.<br>' : ''}
