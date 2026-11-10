@@ -1651,7 +1651,7 @@ const trIso = ms => new Date(ms).toISOString().slice(0, 10);
 const trFmt = d => { const x = new Date(trMs(d)); return x.getUTCDate() + ' ' + MONTHS[x.getUTCMonth()] + ' ' + x.getUTCFullYear(); };
 function setTrRange(k) { TR_RANGE = k; try { localStorage.setItem('r2r_tr_range', k); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
 function toggleTr(k) { TR_HIDE[k] = !TR_HIDE[k]; try { localStorage.setItem('r2r_tr_hide', JSON.stringify(TR_HIDE)); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
-let TR_MODE = (() => { try { return localStorage.getItem('r2r_tr_mode') === 'bars' ? 'bars' : 'trend'; } catch (e) { return 'trend'; } })();
+let TR_MODE = 'trend';   // the Returns (bars) view was removed 10 Nov 2026: "My XIRR vs the market" at the top covers it
 function setTrMode(m) { TR_MODE = m; try { localStorage.setItem('r2r_tr_mode', m); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
 
 // Returns view: one bar per line for the chosen range — your return next to the same money in each index
@@ -1798,7 +1798,6 @@ function trendSection(d, sel) {
   }).filter(Boolean);
   if (!cards.length) return `<div class="tr-h">Your portfolio vs the market</div><div class="pf-empty">No weekly values for ${esc(sel.label || 'this period')}. Pick another period with the 📅 Period button at the top.</div>`;
   return `<div class="tr-h">Your portfolio vs the market <small>${esc(sel.label || 'All to date')} · same money, same dates, in each index${TR_MODE === 'bars' ? '' : ' · tap a name to hide or show its line'}</small></div>
-    <div class="tr-mode" role="tablist" aria-label="Chart type">${[['trend', '📈 Trend'], ['bars', '📊 Returns']].map(([k, l]) => `<button role="tab" aria-selected="${TR_MODE === k}" class="${TR_MODE === k ? 'on' : ''}" onclick="setTrMode('${k}')">${l}</button>`).join('')}</div>
     <div class="tr-grid">${cards.join('')}</div>`;
 }
 
