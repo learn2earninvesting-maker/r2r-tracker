@@ -517,6 +517,11 @@
   .tg-in::placeholder { color:var(--text3);font-family:var(--dm);font-size:11px; }
   .tg-table tr.tg-set .tg-in { border-color:rgba(var(--teal-rgb),.6); }
   .tg-table td { white-space:nowrap; }
+  .tg-stars { font-size:10px;letter-spacing:-1px;margin-top:2px; }
+  .tg-sug { font:600 12px var(--mono);color:var(--teal);background:rgba(var(--teal-rgb),.1);border:1px dashed rgba(var(--teal-rgb),.55);border-radius:6px;padding:3px 8px;cursor:pointer; }
+  .tg-sug:hover { background:rgba(var(--teal-rgb),.2); }
+  .tg-scale { margin-left:6px;padding:3px 10px !important;font-size:11px !important; }
+  .tg-star-btn { border-color:var(--amber) !important;color:var(--amber) !important; }
   .tg-act { display:inline-block;padding:3px 9px;border-radius:6px;font:600 12px var(--mono); }
   .tg-act.buy { background:rgba(34,197,94,.14);color:var(--green); }
   .tg-act.sell { background:rgba(239,68,68,.14);color:var(--red); }
@@ -1423,6 +1428,19 @@ const tgView = () => FAM_SEL || '*';
 const tgMine = () => (TG[tgView()] = TG[tgView()] || {});
 const tgSym = a => String(a.ticker || a.name || '').toUpperCase().replace(/^(NSE|BOM|BSE):/, '').trim();
 (function tgInit() { try { TG = JSON.parse(localStorage.getItem(TG_LS()) || '{}') || {}; } catch (e) { TG = {}; } })();
+// ⭐ star ratings from the R2R watchlist (Targets.gs reads the watchlist sheet) and the suggested % for each rating.
+// TG_RULES comes from TG_STAR_RULES in Targets.gs, so the advisor can change the bands there; this is only the fallback.
+let TG_STARS = { codes: {}, names: {} }, TG_RULES = { 4: [6, 8], 3: [4, 4], 2: [2, 2] };
+const tgNameKey = s => String(s || '').toLowerCase().replace(/\b(ltd|limited|the|india|co|company|corp|corporation)\b/g, '').replace(/[^a-z0-9]/g, '');
+(function tgStarInit() {
+  try { const o = JSON.parse(localStorage.getItem('r2r_stars') || 'null'); if (o && o.codes) { TG_STARS = { codes: o.codes, names: o.names || {} }; if (o.rules) TG_RULES = o.rules; } } catch (e) {}
+  if (DEMO) TG_STARS = { codes: { HDFCBANK: 4, RELIANCE: 3, ITC: 3, INFY: 4, LT: 4, BAJFINANCE: 2, TITAN: 3 }, names: {} };   // demo only
+})();
+const tgStarOf = r => TG_STARS.codes[r.sym] || TG_STARS.names[tgNameKey(r.name)] || 0;
+const tgRule = n => TG_RULES[n] || TG_RULES[String(n)] || null;
+const tgSuggest = n => { const b = tgRule(n); return b ? Math.round((Number(b[0]) + Number(b[1])) / 2 * 100) / 100 : null; };   // middle of the band
+const tgBand = n => { const b = tgRule(n); return !b ? '' : Number(b[0]) === Number(b[1]) ? b[0] + '%' : b[0] + '–' + b[1] + '%'; };
+const tgStarsTxt = n => n ? '⭐'.repeat(Math.min(5, n)) : '';
 function tgKeepLocal(dirty) {
   try { localStorage.setItem(TG_LS(), JSON.stringify(TG)); if (dirty !== undefined) localStorage.setItem(TG_LS() + '_dirty', dirty ? '1' : ''); } catch (e) {}
 }
@@ -1433,8 +1451,13 @@ async function tgLoadServer() {
     const j = await r.json();
     if (!j.ok) { TG_SERVER = 'off'; tgStatus(); return; }
     TG_SERVER = 'on';
+    if (j.stars) {
+      TG_STARS = { codes: j.stars.codes || {}, names: j.stars.names || {} };
+      if (j.rules && Object.keys(j.rules).length) TG_RULES = j.rules;
+      try { localStorage.setItem('r2r_stars', JSON.stringify({ codes: TG_STARS.codes, names: TG_STARS.names, rules: TG_RULES })); } catch (e) {}
+    }
     let dirty = false; try { dirty = localStorage.getItem(TG_LS() + '_dirty') === '1'; } catch (e) {}
-    if (dirty) { Object.keys(TG).forEach(m => tgPush(m)); return; }   // changes made offline → send them up
+    if (dirty) { Object.keys(TG).forEach(m => tgPush(m)); if (LAST_MODEL) renderRebalance(LAST_MODEL); return; }   // changes made offline → send them up
     TG = j.targets || {}; tgKeepLocal(false);
     if (LAST_MODEL) renderRebalance(LAST_MODEL);
   } catch (e) { /* offline — device copy is used */ }
@@ -1506,34 +1529,41 @@ function renderRebalance(d) {
       <label class="tg-fresh">New money to invest (₹)<small>Use a minus sign to plan taking money out</small>
         <input type="number" inputmode="decimal" step="any" id="tg-fresh" value="${TG_FRESH || ''}" placeholder="0" oninput="tgFresh(this.value)"></label>
       <div class="tg-quick"><span class="tg-ql">Quick fill</span>
+        <button class="sort-chip tg-star-btn" onclick="tgFill('stars')">⭐ Use star suggestions</button>
         <button class="sort-chip" onclick="tgFill('current')">Copy current %</button>
         <button class="sort-chip" onclick="tgFill('equal')">Equal for all</button>
         <button class="sort-chip" onclick="tgFill('clear')">Clear all</button></div>
     </div>
     <div class="tg-meter-wrap"><div class="tg-meter"><div class="tg-meter-fill" id="tg-meter-fill"></div></div><div id="tg-meter-txt" class="tg-meter-txt"></div></div>
     <div class="kpi-grid" id="tg-kpis"></div>`;
-  const cols = ['#', 'Stock', 'CMP', 'Current value', 'Current %', 'Target %', 'Gap', 'Add / remove (₹)', 'Buy / sell at CMP', 'Value after', '% after'];
+  const cols = ['#', 'Stock', 'CMP', 'Current value', 'Current %', 'Suggested', 'Target %', 'Gap', 'Add / remove (₹)', 'Buy / sell at CMP', 'Value after', '% after'];
+  const sugCell = (r, i) => { const n = tgStarOf(r), v = n ? tgSuggest(n) : null;
+    if (!n) return '<span class="muted" style="font-size:10px">not on watchlist</span>';
+    if (v === null) return `<span class="muted" style="font-size:10px">no band for ${n}★</span>`;
+    return `<button class="tg-sug" onclick="tgUse(${i})" title="Use ${v}% as the target">${v}%</button><div class="muted" style="font-size:10px">${n}★ band ${tgBand(n)}</div>`; };
   const body = TG_ROWS.map((r, i) => `<tr id="tg-r${i}">
       <td class="num tg-hm">${i + 1}</td>
-      <td class="tg-stk"><span style="color:var(--text)">${esc(r.sym)}</span>${r.etf ? ' <span class="tag" style="font-size:9px;padding:1px 5px;margin-left:4px">ETF</span>' : ''}${r.name && r.name.toUpperCase() !== r.sym ? `<div class="muted" style="font-size:10px">${esc(r.name)}</div>` : ''}</td>
+      <td class="tg-stk"><span style="color:var(--text)">${esc(r.sym)}</span>${r.etf ? ' <span class="tag" style="font-size:9px;padding:1px 5px;margin-left:4px">ETF</span>' : ''}${r.name && r.name.toUpperCase() !== r.sym ? `<div class="muted" style="font-size:10px">${esc(r.name)}</div>` : ''}${tgStarOf(r) ? `<div class="tg-stars" title="${tgStarOf(r)}-star on the R2R watchlist">${tgStarsTxt(tgStarOf(r))}</div>` : ''}</td>
       <td class="num">${r.cmp ? r.cmp.toLocaleString('en-IN', { maximumFractionDigits: 2 }) : '<span class="muted">no price</span>'}</td>
       <td class="num tg-hm">${fmtINR(Math.round(r.value))}<div class="muted" style="font-size:10px">${r.units.toLocaleString('en-IN', { maximumFractionDigits: 3 })} sh</div></td>
       <td class="num" id="tg-cur${i}"></td>
-      <td class="num"><input class="tg-in" type="number" inputmode="decimal" min="0" max="100" step="any" value="${t[r.sym] ?? ''}" placeholder="keep" aria-label="Target % for ${esc(r.sym)}" oninput="tgSet(${i}, this.value)"></td>
+      <td class="num tg-sugc">${sugCell(r, i)}</td>
+      <td class="num"><input class="tg-in" type="number" inputmode="decimal" min="0" max="100" step="any" id="tg-in${i}" value="${t[r.sym] ?? ''}" placeholder="keep" aria-label="Target % for ${esc(r.sym)}" oninput="tgSet(${i}, this.value)"></td>
       <td class="num tg-hm" id="tg-gap${i}"></td>
       <td class="num" id="tg-amt${i}"></td>
       <td id="tg-act${i}"></td>
       <td class="num tg-hm" id="tg-aft${i}"></td>
       <td class="num" id="tg-ap${i}"></td></tr>`).join('');
-  const foot = `<tr><td class="tg-hm"></td><td class="tg-stk">Total</td><td></td><td class="num tg-hm" id="tg-f-val"></td><td class="num">100%</td><td class="num" id="tg-f-tgt"></td><td class="tg-hm"></td><td class="num" id="tg-f-amt"></td><td id="tg-f-act"></td><td class="num tg-hm" id="tg-f-aft"></td><td></td></tr>`;
+  const foot = `<tr><td class="tg-hm"></td><td class="tg-stk">Total</td><td></td><td class="num tg-hm" id="tg-f-val"></td><td class="num">100%</td><td class="num" id="tg-f-sug"></td><td class="num" id="tg-f-tgt"></td><td class="tg-hm"></td><td class="num" id="tg-f-amt"></td><td id="tg-f-act"></td><td class="num tg-hm" id="tg-f-aft"></td><td></td></tr>`;
   const notes = `<div class="muted tg-notes">
       <div id="tg-status"></div>
       <div>• Share counts are whole shares, rounded down, so each trade stays slightly inside the amount. “Add / remove” is the money at those whole shares.</div>
       <div>• Covers your Indian stocks and equity ETFs (as on the Indian Stocks tab). Gold bonds, gold ETFs and REITs are on the Other Assets tab and are not included.</div>
       <div>• Prices are today's CMP from your tracker; the price you actually get will differ a little. Brokerage, charges and taxes are not included — selling can create capital-gains tax, so check that before you sell.</div>
       ${noPrice ? `<div>• ${noPrice} stock${noPrice === 1 ? ' has' : 's have'} no price yet, so no share count is shown for ${noPrice === 1 ? 'it' : 'them'}.</div>` : ''}
+      <div>• ⭐ Stars come from the R2R watchlist. Suggested % by rating: ${Object.keys(TG_RULES).sort((a, b) => b - a).map(n => `${n}★ ${tgBand(n)}`).join(' · ')} (the middle of each band is used). A stock not on the watchlist gets no suggestion — set its target yourself or leave it blank to keep it.</div>
       <div>• This is a calculator for your own planning, not a buy or sell recommendation.</div></div>`;
-  setHTML('rebalance-body', head + `<div class="table-wrap"><table class="data-table tg-table"><thead><tr>${cols.map((c, i) => `<th class="${[i && i !== 1 && i !== 8 ? 'num' : '', [0, 3, 6, 9].includes(i) ? 'tg-hm' : '', i === 1 ? 'tg-stk' : ''].join(' ').trim()}">${c}</th>`).join('')}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>` + notes);
+  setHTML('rebalance-body', head + `<div class="table-wrap"><table class="data-table tg-table"><thead><tr>${cols.map((c, i) => `<th class="${[i && i !== 1 && i !== 9 ? 'num' : '', [0, 3, 7, 10].includes(i) ? 'tg-hm' : '', i === 1 ? 'tg-stk' : ''].join(' ').trim()}">${c}</th>`).join('')}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>` + notes);
   tgRefresh(); tgStatus();
 }
 function tgRefresh() {
@@ -1555,6 +1585,8 @@ function tgRefresh() {
     const tr = document.getElementById('tg-r' + i); if (tr) tr.classList.toggle('tg-set', x.has);
   });
   set('tg-f-val', fmtINR(Math.round(c.T)));
+  const sugT = TG_ROWS.reduce((s, r) => s + (tgSuggest(tgStarOf(r)) || 0), 0);
+  set('tg-f-sug', sugT ? sugT.toFixed(2) + '%' : '—');
   set('tg-f-tgt', c.setN ? c.rows.filter(x => x.has).reduce((s, x) => s + Number(x.tgt), 0).toFixed(2) + '%' : '—');
   setHTML('tg-f-amt', c.net ? `<span class="${c.net > 0 ? 'gain-pos' : 'gain-neg'}">${tgSign(c.net, v => fmtINR(Math.round(v)))}</span>` : '₹0');
   set('tg-f-act', c.buy || c.sell ? `${c.rows.filter(x => x.qty > 0).length} buy · ${c.rows.filter(x => x.qty < 0).length} sell` : '');
@@ -1565,7 +1597,8 @@ function tgRefresh() {
   const kept = c.rows.length - c.setN;
   setHTML('tg-meter-txt', !c.setN ? 'Type a target % for at least one stock to start.' :
     `Planned <b>${p.toFixed(2)}%</b> of 100% · ${c.setN} target${c.setN === 1 ? '' : 's'} set${kept ? ` · ${kept} kept as is (counted at their current share)` : ''}` +
-    (ok ? ' · <span class="gain-pos">adds up ✓</span>' : p < 100 ? ` · <span style="color:var(--amber)">${(100 - p).toFixed(2)}% not allotted — it would stay as cash</span>` : ` · <span class="gain-neg">${(p - 100).toFixed(2)}% over — you'd need extra money</span>`));
+    (ok ? ' · <span class="gain-pos">adds up ✓</span>' : p < 100 ? ` · <span style="color:var(--amber)">${(100 - p).toFixed(2)}% not allotted — it would stay as cash</span>` : ` · <span class="gain-neg">${(p - 100).toFixed(2)}% over — you'd need extra money</span>`) +
+    (!ok && c.setN ? ` <button class="sort-chip tg-scale" onclick="tgFill('scale')" title="Keeps the same proportions between your targets">↔ Scale targets to 100%</button>` : ''));
   const k = (label, val, sub, color) => `<div class="kpi" style="--accent:${color};"><div class="kpi-label">${label}</div><div class="kpi-val">${val}</div><div class="kpi-sub">${sub}</div></div>`;
   const fresh = TG_FRESH || 0;
   const leftK = !c.setN ? k('Money needed', '—', 'set a target to see it', '#64748b')
@@ -1581,11 +1614,30 @@ function tgSet(i, v) {
   if (v === '' || isNaN(n)) delete t[r.sym]; else t[r.sym] = Math.max(0, Math.min(100, Math.round(n * 100) / 100));
   tgRefresh(); tgSave();
 }
+function tgUse(i) {
+  const r = TG_ROWS[i], v = r && tgSuggest(tgStarOf(r)); if (v === null || v === undefined) return;
+  const el = document.getElementById('tg-in' + i); if (el) el.value = v;
+  tgSet(i, String(v));
+}
 function tgFresh(v) { const n = parseFloat(v); TG_FRESH = isNaN(n) ? 0 : n; tgRefresh(); }
 function tgFill(how) {
   const t = tgMine(), T = TG_ROWS.reduce((s, r) => s + r.value, 0);
   if (how === 'clear' && Object.keys(t).length && !confirm('Clear all your target % for this view?')) return;
+  if (how === 'scale') {   // stretch the typed targets so they + the kept stocks fill 100%, same proportions
+    const Tn = Math.max(0, T + (TG_FRESH || 0)), set = TG_ROWS.filter(r => t[r.sym] !== undefined);
+    const kept = TG_ROWS.filter(r => t[r.sym] === undefined).reduce((s, r) => s + pctOf(r.value, Tn), 0);
+    const sum = set.reduce((s, r) => s + Number(t[r.sym]), 0), room = Math.max(0, 100 - kept);
+    if (!sum) return;
+    set.forEach(r => { t[r.sym] = Math.round(Number(t[r.sym]) * room / sum * 100) / 100; });
+    if (LAST_MODEL) renderRebalance(LAST_MODEL);
+    tgSave(); return;
+  }
   Object.keys(t).forEach(k => delete t[k]);
+  if (how === 'stars') {
+    const got = TG_ROWS.filter(r => tgSuggest(tgStarOf(r)) !== null);
+    if (!got.length) { alert('None of your stocks has a star rating on the R2R watchlist yet.'); return; }
+    got.forEach(r => { t[r.sym] = tgSuggest(tgStarOf(r)); });   // stocks without a rating stay blank = keep as is
+  }
   if (how === 'current') TG_ROWS.forEach(r => { t[r.sym] = Math.round(pctOf(r.value, T) * 100) / 100; });
   if (how === 'equal') { const e = Math.floor(10000 / TG_ROWS.length) / 100; TG_ROWS.forEach(r => { t[r.sym] = e; }); }
   if (LAST_MODEL) renderRebalance(LAST_MODEL);
