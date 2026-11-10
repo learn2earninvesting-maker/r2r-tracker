@@ -419,6 +419,23 @@
   :root .pf-ix .sort-chip.on, :root[data-theme="light"] .pf-ix .sort-chip.on { border-color:var(--teal);background:var(--teal-dim);color:var(--text);font-weight:600; }
   .pf-h { font-family:var(--syne);font-size:15px;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap; }
   .pf-h small { font-family:var(--dm);font-size:11px;font-weight:500;color:var(--text3); }
+  .pf-tools { display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 14px; }
+  .pf-tools .ret-periods { margin:0; }
+  .ac-btn { font:inherit;font-size:13px;font-weight:600;min-height:38px;padding:0 14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;display:inline-flex;align-items:center;gap:8px; }
+  .ac-btn:hover { border-color:var(--teal); }
+  .ac-btn .ic { color:var(--teal); }
+  .ac-btn small { font-size:11px;font-weight:500;color:var(--text3); }
+  .r2r-modal-card.ac { border-color:var(--teal); }
+  .r2r-modal-card.ac h3 { color:var(--text); }
+  .ac-list { margin:8px 0 4px;border-top:1px solid var(--border); }
+  .ac-row { display:flex;align-items:center;gap:12px;padding:13px 2px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text);cursor:pointer; }
+  .ac-row input { width:20px;height:20px;accent-color:var(--teal);margin:0;cursor:pointer; }
+  .ac-row small { display:block;font-size:11px;color:var(--text3);margin-top:2px; }
+  .ac-row.off { cursor:default;color:var(--text3); }
+  .ac-foot { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap; }
+  .ac-foot .n { font-size:12px;color:var(--text2); }
+  .ac-foot .r2r-modal-btns { margin:0; }
+  .pf-empty { background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:18px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:16px; }
   .pf-sec { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin:8px 0 8px; }
   .fam-bar { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px; }
   .fam-lbl { font-size:12px;color:var(--text2);font-weight:600;margin-right:2px; }
@@ -1693,7 +1710,7 @@ function trWindow(tr, bucket, years) {
 function trendSection(d) {
   const tr = d.trend;
   if (!tr || !tr.rows.length) return '';
-  const buckets = ['Stocks', 'Mutual Funds'].filter(b => tr.rows.filter(r => (b === 'Stocks' ? r.s : r.m) !== null).length >= 2);
+  const buckets = ['Stocks', 'Mutual Funds'].filter(b => pfOn(b) && tr.rows.filter(r => (b === 'Stocks' ? r.s : r.m) !== null).length >= 2);
   if (!buckets.length) return '';
   const span = Math.max(...buckets.map(b => { const p = tr.rows.filter(r => (b === 'Stocks' ? r.s : r.m) !== null); return (trMs(p[p.length - 1].d) - trMs(p[0].d)) / (365.25 * 864e5); }));
   const ranges = TR_RANGES.filter(([k, y]) => !y || y <= span + 0.05);
@@ -1797,8 +1814,46 @@ const PF_PERIODS = [['Since start', 'All to date', 0], ['1Y', '1 year', 1], ['2Y
 let PF_IX = (() => { try { return JSON.parse(localStorage.getItem('r2r_pf_ix') || 'null') || { NIFTY50: true, NIFTY500: true }; } catch (e) { return { NIFTY50: true, NIFTY500: true }; } })();
 function togglePfIx(k) { PF_IX[k] = !PF_IX[k]; try { localStorage.setItem('r2r_pf_ix', JSON.stringify(PF_IX)); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
 // The headline figure for a period: whole portfolio when it reaches back that far, else shares or funds on their own
+// Asset classes for the XIRR (like MProfit's "Select Asset Classes"): shares & ETFs, mutual funds, or both. Remembered on this device.
+const PF_AC_LIST = [['stk', 'Stocks & ETFs', 'Stocks', 'Shares and ETFs in your Indian Stocks tab (Sovereign Gold Bonds left out)'], ['mf', 'Mutual Funds', 'Mutual Funds', 'Every fund in your Mutual Funds tab']];
+let PF_AC = (() => { try { const v = JSON.parse(localStorage.getItem('r2r_pf_ac') || 'null'); return v && (v.stk || v.mf) ? v : { stk: true, mf: true }; } catch (e) { return { stk: true, mf: true }; } })();
+let PF_AC_DRAFT = null;
+const pfBoth = () => !!(PF_AC.stk && PF_AC.mf);
+const pfOn = scope => scope === 'Combined' ? pfBoth() : scope === 'Stocks' ? !!PF_AC.stk : !!PF_AC.mf;
+const pfScopes = () => pfBoth() ? ['Combined', 'Stocks', 'Mutual Funds'] : [PF_AC.stk ? 'Stocks' : 'Mutual Funds'];
+function pfAcLabel() { return pfBoth() ? 'All asset classes' : PF_AC.stk ? 'Stocks & ETFs' : 'Mutual Funds'; }
+function openAssetClasses() {
+  PF_AC_DRAFT = { stk: !!PF_AC.stk, mf: !!PF_AC.mf };
+  showModal(`<h3>Select asset classes for XIRR</h3>
+    <p>Pick what to include in the Performance figures. Choose one to see the XIRR of your shares or your funds on their own.</p>
+    <div class="ac-list" id="ac-list"></div>
+    <div class="ac-foot"><span class="n" id="ac-n"></span><div class="r2r-modal-btns"><button onclick="closeModal()">Cancel</button><button class="up-go" id="ac-go" onclick="doneAssetClasses()">Done</button></div></div>`);
+  const card = document.querySelector('#r2r-modal .r2r-modal-card'); if (card) card.classList.add('ac');
+  drawAssetClasses();
+}
+function drawAssetClasses() {
+  const D = PF_AC_DRAFT, n = PF_AC_LIST.filter(([k]) => D[k]).length, all = n === PF_AC_LIST.length;
+  const row = (id, on, label, sub, fn) => `<label class="ac-row"><input type="checkbox" ${on ? 'checked' : ''} onchange="${fn}"><span>${label}${sub ? `<small>${sub}</small>` : ''}</span></label>`;
+  setHTML('ac-list', row('all', all, 'All asset classes', '', 'acToggle(\'all\')') +
+    PF_AC_LIST.map(([k, label, , sub]) => row(k, D[k], esc(label), esc(sub), `acToggle('${k}')`)).join('') +
+    `<div class="ac-row off"><span>EPF, PPF, NPS, FDs, gold &amp; other assets<small>No XIRR for these yet — they don't have transaction histories in the tracker.</small></span></div>`);
+  setHTML('ac-n', n ? n + ' selected' : 'Pick at least one');
+  const go = document.getElementById('ac-go'); if (go) go.disabled = !n;
+}
+function acToggle(k) {
+  const D = PF_AC_DRAFT; if (!D) return;
+  if (k === 'all') { const all = PF_AC_LIST.every(([x]) => D[x]); PF_AC_LIST.forEach(([x]) => { D[x] = !all; }); }
+  else D[k] = !D[k];
+  drawAssetClasses();
+}
+function doneAssetClasses() {
+  const D = PF_AC_DRAFT; if (!D || !(D.stk || D.mf)) return;
+  PF_AC = { stk: !!D.stk, mf: !!D.mf }; PF_AC_DRAFT = null;
+  try { localStorage.setItem('r2r_pf_ac', JSON.stringify(PF_AC)); } catch (e) {}
+  closeModal(); if (LAST_MODEL) renderReturns(LAST_MODEL);
+}
 function pfPick(main, P) {
-  for (const sc of ['Combined', 'Stocks', 'Mutual Funds']) { const r = main.find(x => x.scope === sc && x.period === P); if (r) return { r, scope: sc }; }
+  for (const sc of pfScopes()) { const r = main.find(x => x.scope === sc && x.period === P); if (r) return { r, scope: sc }; }
   return { r: null, scope: '' };
 }
 const PF_SCOPE = { Combined: 'Shares + mutual funds', Stocks: 'Shares only', 'Mutual Funds': 'Mutual funds only' };
@@ -1812,7 +1867,7 @@ function pfSnapshotHTML(main, P, plabel) {
   const g = v === null ? null : Math.max(-15, Math.min(30, v));
   const gauge = g === null ? '' : `<div class="pf-gauge" aria-hidden="true"><div class="pf-track"><span class="z"></span><span class="b" style="left:${g >= 0 ? 33.333 : (g + 15) / 45 * 100}%;width:${Math.max(Math.abs(g) / 45 * 100, 0.8)}%;background:${v >= 0 ? 'var(--pos)' : 'var(--neg)'}"></span></div><div class="pf-ticks"><span>−15%</span><span>0%</span><span>15%</span><span>30%</span></div></div>`;
   const first = firsts[0] || r.from;
-  const why = scope === 'Combined' ? '' : `<div class="ret-why">${scope === 'Stocks' ? 'Your fund' : 'Your share'} history doesn't reach back ${esc(plabel.toLowerCase())}, so this is ${scope === 'Stocks' ? 'your shares' : 'your funds'} on their own.</div>`;
+  const why = scope === 'Combined' || !pfBoth() ? '' : `<div class="ret-why">${scope === 'Stocks' ? 'Your fund' : 'Your share'} history doesn't reach back ${esc(plabel.toLowerCase())}, so this is ${scope === 'Stocks' ? 'your shares' : 'your funds'} on their own.</div>`;
   const invSub = r.basis === 'Approximate'
     ? (sinceAll ? 'Value at the first month-end + money added since' : 'Value at the start + money added since')
     : (sinceAll ? 'Every buy and SIP, ever' + (r.basis === 'All trades' ? ' (sale money reinvested counts again)' : '') : 'Value at the start + buys since');
@@ -1868,7 +1923,8 @@ function renderReturns(d) {
   const R = d.returns || [];
   const main = R.filter(r => ['Combined', 'Stocks', 'Mutual Funds'].includes(r.scope));
   const ORDER = PF_PERIODS.map(p => p[0]);
-  const periods = ORDER.filter(p => main.some(r => r.period === p));
+  const mainSel = main.filter(r => pfScopes().includes(r.scope));
+  const periods = ORDER.filter(p => (mainSel.length ? mainSel : main).some(r => r.period === p));
   const buckets = ['Stocks', 'Mutual Funds'].filter(b => main.some(r => r.scope === b) || R.some(r => r.bucket === b && (r.scope === 'Holding' || r.scope === 'Check')));
   if (!periods.length && !buckets.length) {
     const first = d.snapshots.map(s => s.date).sort((a, b) => a - b)[0];
@@ -1881,7 +1937,8 @@ function renderReturns(d) {
   const P = periods.length ? RET_PERIOD : 'Since start';
   const label = p => (PF_PERIODS.find(x => x[0] === p) || [p, p])[1];
   const years = (PF_PERIODS.find(x => x[0] === P) || [0, 0, 0])[2];
-  let html = periods.length ? `<div class="ret-periods" role="group" aria-label="Period">${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriod('${p}')">${label(p)}</button>`).join('')}</div>` : '';
+  const acBtn = `<button class="ac-btn" onclick="openAssetClasses()" aria-haspopup="dialog"><span class="ic">⏷</span>${esc(pfAcLabel())}<small>▾</small></button>`;
+  let html = `<div class="pf-tools">${acBtn}${periods.length ? `<div class="ret-periods" role="group" aria-label="Period">${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriod('${p}')">${label(p)}</button>`).join('')}</div>` : ''}</div>`;
   const BADGE = { Exact: ['exact', '✓ Exact'], 'All trades': ['exact', '✓ All trades'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
   const tile = (scope, accent, icon) => {
     const r = main.find(x => x.scope === scope && x.period === P);
@@ -1904,9 +1961,14 @@ function renderReturns(d) {
       <button class="ret-toggle" aria-expanded="${open}">${open ? 'Hide' : 'Show'} ${what} <span class="chev">▾</span></button>${body}</div>`;
   };
   if (d.famMember) html = `<div class="fam-note">👨‍👩‍👧 Performance is worked out for the <b>whole family together</b>, so these figures include everyone — not just ${esc(d.famMember)}. The other tabs show ${esc(d.famMember)}'s holdings only.</div>` + html;
-  html += pfSnapshotHTML(main, P, label(P)) + pfVsHTML(d, main, P, years, label(P));
-  html += `<div class="pf-sec">Shares and funds — tap for each holding</div>`;
-  html += `<div class="ret-grid">${tile('Combined', '#f0a500', '🧮')}${tile('Stocks', '#3b82f6', '📈')}${tile('Mutual Funds', '#a855f7', '🧺')}</div>`;
+  const snap = pfSnapshotHTML(main, P, label(P));
+  if (!snap && !pfBoth()) {
+    const nm = PF_AC.stk ? 'shares & ETFs' : 'mutual funds';
+    html += `<div class="pf-empty">No XIRR for your <b>${nm}</b> ${P === 'Since start' ? 'yet' : 'over ' + esc(label(P).toLowerCase()) + ' — the history doesn\'t reach back that far'}. ${PF_AC.stk ? 'Send your share tradebook' : 'Send your mutual fund transaction statement'} to the Tracker bot (or upload it below) for exact figures, or pick another period or asset class.</div>`;
+  }
+  html += snap + pfVsHTML(d, main, P, years, label(P));
+  html += `<div class="pf-sec">${pfBoth() ? 'Shares and funds' : PF_AC.stk ? 'Shares & ETFs' : 'Mutual funds'} — tap for each holding</div>`;
+  html += `<div class="ret-grid">${pfOn('Combined') ? tile('Combined', '#f0a500', '🧮') : ''}${pfOn('Stocks') ? tile('Stocks', '#3b82f6', '📈') : ''}${pfOn('Mutual Funds') ? tile('Mutual Funds', '#a855f7', '🧺') : ''}</div>`;
   html += trendSection(d);
   const upd = R.map(r => r.updated).filter(Boolean).sort((a, b) => b - a)[0];
   html += `<details class="ret-about"><summary>What do these mean?</summary><div>
