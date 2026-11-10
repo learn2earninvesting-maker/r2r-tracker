@@ -423,6 +423,13 @@
   .pf-tools .ret-periods { margin:0; }
   .ac-btn { font:inherit;font-size:13px;font-weight:600;min-height:38px;padding:0 14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;display:inline-flex;align-items:center;gap:8px; }
   .ac-btn:hover { border-color:var(--teal); }
+  .pd-btn { font:inherit;min-height:44px;padding:0 14px 0 12px;border-radius:12px;border:1.5px solid var(--amber);background:var(--amber-dim);color:var(--text);cursor:pointer;display:inline-flex;align-items:center;gap:10px;box-shadow:0 0 0 3px rgba(var(--amber-rgb),.12); }
+  .pd-btn:hover { background:var(--amber);color:#0b1120; }
+  .pd-btn:hover small { color:#0b1120; }
+  .pd-btn .ic { font-size:16px; }
+  .pd-btn .t { display:flex;flex-direction:column;align-items:flex-start;line-height:1.15;font-size:14px;font-weight:700; }
+  .pd-btn .t small { font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text2); }
+  .pd-btn .chev { font-size:12px; }
   .ac-btn.on { border-color:var(--amber);background:var(--amber-dim); }
   .ac-btn .ic { color:var(--teal); }
   .ac-btn small { font-size:11px;font-weight:500;color:var(--text3); }
@@ -1751,18 +1758,17 @@ function trWindowRange(tr, bucket, from, to) {
   return { dates: w.map(p => p.d), series, short, start: w[0].d, end, firstEver: pts[0].d };
 }
 
-function trendSection(d) {
+// The charts follow the Period button at the top of the tab: sel = { years } for presets (0 = all to date) or { from, to, label } for a custom period
+function trendSection(d, sel) {
   const tr = d.trend;
+  sel = sel || { years: 0 };
   if (!tr || !tr.rows.length) return '';
   const buckets = ['Stocks', 'Mutual Funds'].filter(b => pfOn(b) && tr.rows.filter(r => (b === 'Stocks' ? r.s : r.m) !== null).length >= 2);
   if (!buckets.length) return '';
   const span = Math.max(...buckets.map(b => { const p = tr.rows.filter(r => (b === 'Stocks' ? r.s : r.m) !== null); return (trMs(p[p.length - 1].d) - trMs(p[0].d)) / (365.25 * 864e5); }));
-  const ranges = TR_RANGES.filter(([k, y]) => !y || y <= span + 0.05);
-  if (!ranges.some(([k]) => k === TR_RANGE)) TR_RANGE = ranges.some(([k]) => k === '1Y') ? '1Y' : 'Max';
-  const years = (TR_RANGES.find(([k]) => k === TR_RANGE) || [, 0])[1];
   const BADGE = { Exact: ['exact', '✓ Exact'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
   const cards = buckets.map(b => {
-    const win = trWindow(tr, b, years);
+    const win = sel.from !== undefined ? trWindowRange(tr, b, sel.from, sel.to) : trWindow(tr, b, sel.years || 0);
     TR_VIEW[b] = win;
     if (!win) return '';
     const bi = (tr.info.buckets || {})[b] || {}, badge = BADGE[bi.basis];
@@ -1790,10 +1796,9 @@ function trendSection(d) {
       <div class="tr-legend">${legend}</div>`}
       ${notes.length ? `<div class="tr-note">${notes.map(esc).join('<br>')}</div>` : ''}</div>`;
   }).filter(Boolean);
-  if (!cards.length) return '';
-  return `<div class="tr-h">Your portfolio vs the market <small>Same money, same dates, in each index${TR_MODE === 'bars' ? '' : ' · tap a name to hide or show its line'}</small></div>
+  if (!cards.length) return `<div class="tr-h">Your portfolio vs the market</div><div class="pf-empty">No weekly values for ${esc(sel.label || 'this period')}. Pick another period with the 📅 Period button at the top.</div>`;
+  return `<div class="tr-h">Your portfolio vs the market <small>${esc(sel.label || 'All to date')} · same money, same dates, in each index${TR_MODE === 'bars' ? '' : ' · tap a name to hide or show its line'}</small></div>
     <div class="tr-mode" role="tablist" aria-label="Chart type">${[['trend', '📈 Trend'], ['bars', '📊 Returns']].map(([k, l]) => `<button role="tab" aria-selected="${TR_MODE === k}" class="${TR_MODE === k ? 'on' : ''}" onclick="setTrMode('${k}')">${l}</button>`).join('')}</div>
-    <div class="tr-ranges">${ranges.map(([k]) => `<button class="sort-chip${k === TR_RANGE ? ' on' : ''}" onclick="setTrRange('${k}')">${k}</button>`).join('')}</div>
     <div class="tr-grid">${cards.join('')}</div>`;
 }
 
@@ -1854,7 +1859,7 @@ let TR_RZ = 0;
 window.addEventListener('resize', () => { clearTimeout(TR_RZ); TR_RZ = setTimeout(drawTrends, 150); });
 
 // ── Performance tab (renamed from "Returns", 10 Nov 2026): MProfit-style snapshot + "my XIRR vs index", then the tiles and trend charts
-const PF_PERIODS = [['Since start', 'All to date', 0], ['1Y', '1 year', 1], ['2Y', '2 years', 2], ['3Y', '3 years', 3], ['5Y', '5 years', 5]];
+const PF_PERIODS = [['Since start', 'All to date', 0], ['1Y', 'Trailing 1 year', 1], ['2Y', 'Trailing 2 years', 2], ['3Y', 'Trailing 3 years', 3], ['5Y', 'Trailing 5 years', 5]];
 let PF_IX = (() => { try { return JSON.parse(localStorage.getItem('r2r_pf_ix') || 'null') || { NIFTY50: true, NIFTY500: true }; } catch (e) { return { NIFTY50: true, NIFTY500: true }; } })();
 function togglePfIx(k) { PF_IX[k] = !PF_IX[k]; try { localStorage.setItem('r2r_pf_ix', JSON.stringify(PF_IX)); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
 // The headline figure for a period: whole portfolio when it reaches back that far, else shares or funds on their own
@@ -2047,7 +2052,7 @@ function pfSnapshotHTML(main, P, plabel) {
   const g = v === null ? null : Math.max(-15, Math.min(30, v));
   const gauge = g === null ? '' : `<div class="pf-gauge" aria-hidden="true"><div class="pf-track"><span class="z"></span><span class="b" style="left:${g >= 0 ? 33.333 : (g + 15) / 45 * 100}%;width:${Math.max(Math.abs(g) / 45 * 100, 0.8)}%;background:${v >= 0 ? 'var(--pos)' : 'var(--neg)'}"></span></div><div class="pf-ticks"><span>−15%</span><span>0%</span><span>15%</span><span>30%</span></div></div>`;
   const first = firsts[0] || r.from;
-  const why = scope === 'Combined' || !pfBoth() ? '' : `<div class="ret-why">${scope === 'Stocks' ? 'Your fund' : 'Your share'} history doesn't reach back ${esc(plabel.toLowerCase())}, so this is ${scope === 'Stocks' ? 'your shares' : 'your funds'} on their own.</div>`;
+  const why = scope === 'Combined' || !pfBoth() ? '' : `<div class="ret-why">${scope === 'Stocks' ? 'Your fund' : 'Your share'} history doesn't reach back ${esc(plabel.toLowerCase().replace(/^trailing /, ''))}, so this is ${scope === 'Stocks' ? 'your shares' : 'your funds'} on their own.</div>`;
   const invSub = cu ? 'Value at the start + money added in the period' : r.basis === 'Approximate'
     ? (sinceAll ? 'Value at the first month-end + money added since' : 'Value at the start + money added since')
     : (sinceAll ? 'Every buy and SIP, ever' + (r.basis === 'All trades' ? ' (sale money reinvested counts again)' : '') : 'Value at the start + buys since');
@@ -2122,8 +2127,11 @@ function renderReturns(d) {
   const label = p => p === 'Custom' ? CU.label : (PF_PERIODS.find(x => x[0] === p) || [p, p])[1];
   const years = (PF_PERIODS.find(x => x[0] === P) || [0, 0, 0])[2];
   const acBtn = `<button class="ac-btn" onclick="openAssetClasses()" aria-haspopup="dialog"><span class="ic">⏷</span>${esc(pfAcLabel())}<small>▾</small></button>`;
-  const pdBtn = pdOk ? `<button class="ac-btn${CU ? ' on' : ''}" onclick="openPeriodPicker()" aria-haspopup="dialog"><span class="ic">📅</span>${CU ? esc(CU.label) : 'Custom period'}<small>▾</small></button>` : '';
-  let html = `<div class="pf-tools">${acBtn}${periods.length ? `<div class="ret-periods" role="group" aria-label="Period">${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriodPreset('${p}')">${label(p)}</button>`).join('')}</div>` : ''}${pdBtn}</div>`;
+  // One period button (opens the picker). The quick period buttons only show when there are no weekly values yet to work periods out from.
+  const pLabel = label(P);
+  const pdBtn = pdOk ? `<button class="pd-btn" onclick="openPeriodPicker()" aria-haspopup="dialog"><span class="ic">📅</span><span class="t"><small>Period</small>${esc(pLabel)}</span><span class="chev">▾</span></button>` : '';
+  const chips = !pdOk && periods.length ? `<div class="ret-periods" role="group" aria-label="Period">${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriodPreset('${p}')">${label(p)}</button>`).join('')}</div>` : '';
+  let html = `<div class="pf-tools">${pdBtn}${acBtn}${chips}</div>`;
   const BADGE = { Exact: ['exact', '✓ Exact'], 'All trades': ['exact', '✓ All trades'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
   const tile = (scope, accent, icon) => {
     const r = main.find(x => x.scope === scope && x.period === P);
@@ -2149,13 +2157,13 @@ function renderReturns(d) {
   const snap = pfSnapshotHTML(main, P, label(P));
   if (!snap && !pfBoth()) {
     const nm = PF_AC.stk ? 'shares & ETFs' : 'mutual funds';
-    html += CU ? `<div class="pf-empty">No figure for your <b>${nm}</b> in <b>${esc(CU.label)}</b> — your weekly history doesn't cover it. Pick another period or asset class.</div>` : `<div class="pf-empty">No XIRR for your <b>${nm}</b> ${P === 'Since start' ? 'yet' : 'over ' + esc(label(P).toLowerCase()) + ' — the history doesn\'t reach back that far'}. ${PF_AC.stk ? 'Send your share tradebook' : 'Send your mutual fund transaction statement'} to the Tracker bot (or upload it below) for exact figures, or pick another period or asset class.</div>`;
+    html += CU ? `<div class="pf-empty">No figure for your <b>${nm}</b> in <b>${esc(CU.label)}</b> — your weekly history doesn't cover it. Pick another period or asset class.</div>` : `<div class="pf-empty">No XIRR for your <b>${nm}</b> ${P === 'Since start' ? 'yet' : 'over the last ' + esc(label(P).toLowerCase().replace(/^trailing /, '')) + ' — the history doesn\'t reach back that far'}. ${PF_AC.stk ? 'Send your share tradebook' : 'Send your mutual fund transaction statement'} to the Tracker bot (or upload it below) for exact figures, or pick another period or asset class.</div>`;
   }
   if (!snap && pfBoth() && CU) html += `<div class="pf-empty">No figure for <b>${esc(CU.label)}</b> — your weekly history doesn't cover it. Pick another period.</div>`;
   html += snap + pfVsHTML(d, main, P, years, label(P));
   html += `<div class="pf-sec">${pfBoth() ? 'Shares and funds' : PF_AC.stk ? 'Shares & ETFs' : 'Mutual funds'} — tap for each holding</div>`;
   html += `<div class="ret-grid">${pfOn('Combined') ? tile('Combined', '#f0a500', '🧮') : ''}${pfOn('Stocks') ? tile('Stocks', '#3b82f6', '📈') : ''}${pfOn('Mutual Funds') ? tile('Mutual Funds', '#a855f7', '🧺') : ''}</div>`;
-  html += trendSection(d);
+  html += trendSection(d, CU ? { from: CU.from, to: CU.to, label: CU.label } : { years, label: label(P) });
   const upd = R.map(r => r.updated).filter(Boolean).sort((a, b) => b - a)[0];
   html += `<details class="ret-about"><summary>What do these mean?</summary><div>
     <b>XIRR</b> is your yearly return, taking into account <i>when</i> each rupee went in or came out — the fair way to measure SIPs and staggered buying. Periods under a year show the plain gain instead.<br>
