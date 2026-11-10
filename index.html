@@ -1777,7 +1777,7 @@ function trendSection(d, sel) {
     const bi = (tr.info.buckets || {})[b] || {}, badge = BADGE[bi.basis];
     const notes = [];
     if (win.short) notes.push(`Your ${b === 'Stocks' ? 'share' : 'fund'} history here starts ${trFmt(win.firstEver)}, so this shows all of it.`);
-    if (bi.basis === 'All trades') notes.push(`Every share trade in your tradebook, including shares you've sold — the same trades as your XIRR at the top (${bi.cover || 0}% of today's value).` + (bi.dropped && bi.dropped.length ? ' Left out (more sold than bought — older buys missing): ' + bi.dropped.join(', ') + '.' : ''));
+    if (bi.basis === 'All trades') notes.push(`Every share trade in your tradebook, including shares you've sold — the same trades as your XIRR at the top (${bi.cover || 0}% of today's value).` + (bi.dropped && bi.dropped.length ? ' More shares sold than bought (a bonus, split or demerger may be missing from your tradebook — add it through the bot for an exact line): ' + bi.dropped.join(', ') + '.' : ''));
     if (bi.basis === 'Partial') notes.push(`Only the holdings your transactions fully explain (${bi.cover || 0}% of today's value). Send your older ${b === 'Stocks' ? 'tradebook' : 'fund statement'} to include the rest.`);
     if (bi.basis === 'Approximate') notes.push('From month-end values. Send your tradebook / fund statement to the Tracker bot for a week-by-week line.');
     if (bi.excluded && bi.excluded.length) notes.push('Left out (no price history): ' + bi.excluded.join(', ') + '.');
