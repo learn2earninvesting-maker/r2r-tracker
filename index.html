@@ -1751,7 +1751,10 @@ function trWindowRange(tr, bucket, from, to) {
     if (!L0) { series.push({ key: k, name: n, vals: null }); return; }
     let u = v0 / L0, last = L0;
     const vals = w.map((p, j) => { const L = p.ix[k] || last; last = L; if (j) u += p[fk] / L; return u * L; });
-    series.push({ key: k, name: n, vals, ret: trReturn(flowsWith(vals[vals.length - 1]), w[0].d, end) });
+    // plain index CAGR (start level → end level), to show next to the same-money XIRR; under a year, the plain % change
+    const days = (trMs(end) - trMs(w[0].d)) / 864e5, ratio = last / L0;
+    const cagr = ratio > 0 ? { v: (days >= 357 ? Math.pow(ratio, 365.25 / days) - 1 : ratio - 1) * 100, yearly: days >= 357 } : null;
+    series.push({ key: k, name: n, vals, ret: trReturn(flowsWith(vals[vals.length - 1]), w[0].d, end), cagr });
   });
   let cum = v0;
   series.push({ key: 'put', name: 'Money put in', vals: w.map((p, j) => j ? (cum += p[fk]) : cum), ret: null });
@@ -1786,7 +1789,7 @@ function trendSection(d, sel) {
       const r = s.ret && s.ret.v !== null && s.ret.v !== undefined ? s.ret.v : null;
       return `<button class="tr-key k-${s.key}${hid ? ' hid' : ''}${off ? ' off' : ''}" ${off ? 'disabled' : `onclick="toggleTr('${s.key}')"`} aria-pressed="${!hid && !off}">
         <span class="sw"></span><span class="nm">${esc(s.name)}</span>
-        <span class="fig">${off ? 'not enough index history' : fmtCr(last) + (s.key === 'put' ? '' : ` · <b>${r === null ? '—' : (r > 0 ? '+' : '') + r.toFixed(1) + '%'}</b>${s.ret && s.ret.abs !== null && !s.ret.short ? `<small class="tr-abs">gain ${(s.ret.abs > 0 ? '+' : '') + s.ret.abs.toFixed(1)}%</small>` : ''}`)}</span></button>`;
+        <span class="fig">${off ? 'not enough index history' : fmtCr(last) + (s.key === 'put' ? '' : ` · <b>${r === null ? '—' : (r > 0 ? '+' : '') + r.toFixed(1) + '%'}</b>${s.ret && s.ret.abs !== null && !s.ret.short ? `<small class="tr-abs">gain ${(s.ret.abs > 0 ? '+' : '') + s.ret.abs.toFixed(1)}%</small>` : ''}${s.cagr ? `<small class="tr-abs">index ${s.cagr.yearly ? 'CAGR' : 'change'} ${retPct(s.cagr.v)}</small>` : ''}`)}</span></button>`;
     }).join('');
     const yr = win.series[0].ret && win.series[0].ret.yearly;
     return `<div class="tr-card" style="--accent:${b === 'Stocks' ? 'var(--blue)' : 'var(--purple)'}">
@@ -2080,7 +2083,7 @@ function pfVsHTML(d, main, P, years, plabel) {
   const ok = k => { const s = ser.find(x => x.key === k); return s && s.vals && s.ret && s.ret.v !== null && s.ret.v !== undefined ? s : null; };
   const chips = win ? TR_IX.map(([k, n]) => { const s = ok(k), on = !!PF_IX[k] && !!s;
     return `<button class="sort-chip${on ? ' on' : ''} k-${k}" aria-pressed="${on}" ${s ? `onclick="togglePfIx('${k}')"` : 'disabled title="Not enough index history for this period"'}><span class="sw"></span>${esc(n)}</button>`; }).join('') : '';
-  const ix = TR_IX.filter(([k]) => PF_IX[k] && ok(k)).map(([k]) => { const s = ok(k); return { key: k, name: s.name, v: s.ret.v, small: 'same money → ' + fmtCr(s.vals[s.vals.length - 1]) }; });
+  const ix = TR_IX.filter(([k]) => PF_IX[k] && ok(k)).map(([k]) => { const s = ok(k); return { key: k, name: s.name, v: s.ret.v, small: 'same money → ' + fmtCr(s.vals[s.vals.length - 1]) + (s.cagr ? ' · index ' + (s.cagr.yearly ? 'CAGR ' : 'change ') + retPct(s.cagr.v) : '') }; });
   const list = rows.concat(ix), vals = list.map(x => x.v);
   const lo = Math.min(0, ...vals), hi = Math.max(0, ...vals), span = (hi - lo) || 1, zero = (-lo / span) * 100;
   const me = rows[0].v, beat = ix.filter(x => me > x.v).length;
@@ -2101,7 +2104,7 @@ function pfVsHTML(d, main, P, years, plabel) {
     ${verdict ? `<div class="bm-verdict">${verdict}</div>` : ''}
     <div class="bm-unit">${yearly ? 'XIRR, % a year' : 'Total gain over the period (under a year, so not annualised)'}</div>
     <div class="bm-chart" role="img" aria-label="Your return compared with Nifty indices">${bars}</div>
-    <div class="bm-foot">Index figures = the same money, on the same dates, in a low-cost index fund (dividends included), so SIPs and staggered buying compare fairly. Worked out from weekly values, so they can differ slightly from your XIRR.${notes.length ? '<br>' + notes.map(esc).join('<br>') : ''}</div></div>`;
+    <div class="bm-foot">Bars = the same money, on the same dates, in a low-cost index fund (dividends included), so SIPs and staggered buying compare fairly. <b>Index CAGR</b> (small grey figure) = the index's own yearly growth from the start to the end of the period, as if all the money went in on day one — shown for reference. Worked out from weekly values, so they can differ slightly from your XIRR.${notes.length ? '<br>' + notes.map(esc).join('<br>') : ''}</div></div>`;
 }
 
 function renderReturns(d) {
