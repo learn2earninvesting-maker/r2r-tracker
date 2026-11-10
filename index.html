@@ -1340,7 +1340,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 // there exactly like a file sent on Telegram. The ✅ / ❌ preview arrives on Telegram; nothing is saved from here.
 const UP_KINDS = {
   holdings: ['📈 Holdings file', 'Your current shares or mutual funds — Zerodha Console → Portfolio → Holdings, or the Excel/CSV from Groww, Upstox, Kuvera, Coin, MF Central… Replaces that platform\'s list.', false],
-  tradebook: ['📒 Tradebook / fund transactions', 'Every buy and sell, for exact returns (XIRR) — Zerodha Console → Reports → Tradebook → Equity, or your fund app\'s transaction statement. Lines already saved are skipped.', false],
+  tradebook: ['📒 Tradebook / fund transactions', 'Every buy and sell, for exact returns (XIRR) — Zerodha Console → Reports → Tradebook → Equity, or your fund app\'s transaction statement. You can pick several at once (e.g. one per year). Lines already saved are skipped.', true],
   contract: ['🧾 Contract notes', 'The Excel/CSV version of your broker\'s equity contract notes. You can pick several at once (e.g. a whole month). Their trades are added like a tradebook.', true] };
 let UP_KIND = 'holdings';
 function uploadBlock(kind) {
@@ -1365,7 +1365,7 @@ function setUpKind(k) {
   document.querySelectorAll('#r2r-modal .up-kind').forEach(el => el.classList.toggle('on', el.dataset.k === k));
   const f = document.getElementById('up-file'), multi = UP_KINDS[k][2];
   if (f) { f.multiple = multi; f.value = ''; }
-  const pick = document.getElementById('up-pick'); if (pick) pick.textContent = multi ? 'Choose the contract note files' : 'Choose the file';
+  const pick = document.getElementById('up-pick'); if (pick) pick.textContent = k === 'contract' ? 'Choose the contract note files' : k === 'tradebook' ? 'Choose the file(s)' : 'Choose the file';
 }
 function readAsBase64(file) {
   return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).replace(/^data:[^,]*,/, '')); r.onerror = () => rej(r.error); r.readAsDataURL(file); });
@@ -1379,9 +1379,11 @@ async function doUpload() {
   const bad = files.find(f => !/\.(csv|xlsx)$/i.test(f.name));
   if (bad) return show('err-msg', /\.xls$/i.test(bad.name) ? `${bad.name} is an old Excel (.xls) file. Please download it as .xlsx or .csv.` : /\.pdf$/i.test(bad.name) ? `${bad.name} is a PDF. Please download the Excel or CSV version, or send the PDF to the Tracker bot on Telegram.` : `${bad.name} isn't a CSV or Excel (.xlsx) file.`);
   if (files.some(f => f.size > 8 * 1024 * 1024)) return show('err-msg', 'That file is too large (max 8 MB).');
-  if (files.length > 31) return show('err-msg', 'Up to 31 contract notes at a time, please.');
+  if (UP_KIND === 'contract' && files.length > 31) return show('err-msg', 'Up to 31 contract notes at a time, please.');
+  if (UP_KIND === 'tradebook' && files.length > 12) return show('err-msg', 'Up to 12 tradebook files at a time, please.');
+  if (UP_KIND === 'holdings' && files.length > 1) return show('err-msg', 'Please upload one holdings file at a time.');
   if (DEMO || !AUTH) return finish('err-msg', 'This is the demo — files can\'t be uploaded here.');
-  go.disabled = true; go.textContent = 'Reading… (up to a minute)';
+  go.disabled = true; go.textContent = UP_KIND === 'tradebook' && files.length > 1 ? `Reading ${files.length} files… (about a minute each)` : 'Reading… (up to a minute)';
   try {
     const payload = { cid: AUTH.c, k: AUTH.k, what: UP_KIND, note: (document.getElementById('up-note').value || '').trim(),
       files: await Promise.all(files.map(async f => ({ name: f.name, data: await readAsBase64(f) }))) };
