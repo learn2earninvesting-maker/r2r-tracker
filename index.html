@@ -500,6 +500,37 @@
   .tag.green { background:rgba(34,197,94,.15);color:var(--pos); }
   .table-wrap { overflow-x:auto;margin-bottom:24px; }
   .table-wrap .data-table { margin-bottom:0; }
+  /* Stock Allocation Help */
+  .tg-intro { background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:16px; }
+  .tg-controls { display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:14px; }
+  .tg-fresh { display:flex;flex-direction:column;font-size:12px;color:var(--text2);font-weight:600;min-width:220px; }
+  .tg-fresh small { font-weight:400;color:var(--text3);font-size:10px;margin-top:1px; }
+  .tg-fresh input { margin-top:6px;padding:9px 11px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font:14px var(--mono);width:100%;box-sizing:border-box; }
+  .tg-quick { display:flex;flex-wrap:wrap;gap:6px;align-items:center; }
+  .tg-ql { font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-right:2px; }
+  .tg-meter-wrap { margin-bottom:16px; }
+  .tg-meter { height:8px;border-radius:6px;background:var(--bg3);overflow:hidden;border:1px solid var(--border); }
+  .tg-meter-fill { height:100%;width:0;transition:width .25s,background .25s; }
+  .tg-meter-txt { font-size:12px;color:var(--text2);margin-top:6px; }
+  .tg-in { width:74px;padding:6px 8px;border-radius:7px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font:13px var(--mono);text-align:right; }
+  .tg-in:focus { outline:none;border-color:var(--teal);box-shadow:0 0 0 2px rgba(var(--teal-rgb),.25); }
+  .tg-in::placeholder { color:var(--text3);font-family:var(--dm);font-size:11px; }
+  .tg-table tr.tg-set .tg-in { border-color:rgba(var(--teal-rgb),.6); }
+  .tg-table td { white-space:nowrap; }
+  .tg-act { display:inline-block;padding:3px 9px;border-radius:6px;font:600 12px var(--mono); }
+  .tg-act.buy { background:rgba(34,197,94,.14);color:var(--green); }
+  .tg-act.sell { background:rgba(239,68,68,.14);color:var(--red); }
+  .tg-table small { font-size:10px; }
+  @media (max-width:700px) {
+    .tg-table .tg-hm { display:none; }
+    .tg-table .tg-stk { position:sticky;left:0;z-index:1;background:var(--card);box-shadow:1px 0 0 var(--border); }
+    .tg-table thead .tg-stk { background:var(--bg3); }
+    .tg-table tfoot .tg-stk { background:var(--bg3); }
+    .tg-table td, .tg-table th { padding:9px 8px; }
+    .tg-in { width:62px; }
+  }
+  .tg-notes { font-size:11px;line-height:1.6;margin:14px 0 24px; }
+  .tg-notes #tg-status { color:var(--teal);margin-bottom:4px; }
   .upcoming { display:flex;flex-direction:column;gap:6px;margin-bottom:24px; }
   .up-item { background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:12px; }
   .up-date { font-family:var(--mono);font-size:11px;color:var(--amber);min-width:62px; }
@@ -639,6 +670,9 @@
   <!-- SHARES (from the broker holdings file) -->
   <section class="panel" id="panel-stocks"><div id="stocks-body"></div></section>
 
+  <!-- STOCK ALLOCATION HELP (target % per stock → money and shares to buy / sell) -->
+  <section class="panel" id="panel-rebalance"><div id="rebalance-body"></div></section>
+
   <!-- MUTUAL FUNDS (from the MF holdings statement) -->
   <section class="panel" id="panel-funds"><div id="funds-body"></div></section>
 
@@ -715,7 +749,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8
 // ═══════════════════════════════════════════════════════
 const TABS = [
   ['overview','Assets Overview and Allocation','🏠','Overview'],
-  ['holdings','Asset / Liability Breakdown','📊','Breakdown'], ['stocks','Indian Stocks','📈','Stocks'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'], ['returns','Performance','📐','Performance'],
+  ['holdings','Asset / Liability Breakdown','📊','Breakdown'], ['stocks','Indian Stocks','📈','Stocks'], ['rebalance','Stock Allocation Help','🎯','Rebalance'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'], ['returns','Performance','📐','Performance'],
   ['insurance','Insurance','🛡️','Insure'],
   ['payments','Payments','📅','Payments'], ['parameters','🩺 Health Check','🩺','Health'],
   // FIRE Tracker and Cash Flow are switched off for now (they need income/spending data).
@@ -889,6 +923,7 @@ async function loadAllData(manual) {
   note.style.display = fromCache ? 'block' : 'none';
   note.textContent = fromCache ? '📴 Offline — showing the last saved copy. Tap Refresh when you are back online.' : '';
   RAW_API = data;
+  if (!fromCache) tgLoadServer();   // target allocation from the sheet (Targets.gs)
   try { renderFamily(); }
   catch (e) {
     console.error(e);
@@ -1108,7 +1143,7 @@ function renderAll(d) {
   set('last-updated', (DEMO ? 'DEMO · ' : '') + (u && !isNaN(u) ? 'Sheet updated ' + u.toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Updated'));
   const pl = pricesLine(d);
   setHTML('prices-asof', pl ? '⏱ ' + pl + '<br><span style="font-size:10px">Updates every hour on weekdays · share prices run about 20 min behind the market</span>' : '');
-  renderOverview(d); renderAllocation(d); renderHoldings(d); renderStocks(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
+  renderOverview(d); renderAllocation(d); renderHoldings(d); renderStocks(d); renderRebalance(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
   renderPayments(d); renderParameters(d);   // renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
 }
@@ -1374,6 +1409,187 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
     html += `<div class="section-title">${esc(g)} <span class="tag amber" style="margin-left:4px">${fmtCr(v)}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(v, total).toFixed(1)}%${note ? ' · ' + note : ''}</span></div>` + fileTable(part, total, cols);
   });
   setHTML(bodyId, html);
+}
+// ═══════════════════════════════════════════════════════
+//  STOCK ALLOCATION HELP — client types a target % per stock; the tab shows how much money to add or take out
+//  and how many shares to buy or sell at today's price (CMP) to get there.
+//  Current % comes from the Indian Stocks tab (shares + equity ETFs, by current value).
+//  Targets are kept per family view (Whole family / each member), on this device and in the client's
+//  sheet ("Targets" tab, Targets.gs). A blank target = keep that stock as it is.
+// ═══════════════════════════════════════════════════════
+let TG = {}, TG_ROWS = [], TG_FRESH = 0, TG_SAVE_T = null, TG_SERVER = 'unknown';   // unknown | on | off
+const TG_LS = () => 'r2r_targets_' + (DEMO ? 'demo' : (AUTH && AUTH.c) || 'x');
+const tgView = () => FAM_SEL || '*';
+const tgMine = () => (TG[tgView()] = TG[tgView()] || {});
+const tgSym = a => String(a.ticker || a.name || '').toUpperCase().replace(/^(NSE|BOM|BSE):/, '').trim();
+(function tgInit() { try { TG = JSON.parse(localStorage.getItem(TG_LS()) || '{}') || {}; } catch (e) { TG = {}; } })();
+function tgKeepLocal(dirty) {
+  try { localStorage.setItem(TG_LS(), JSON.stringify(TG)); if (dirty !== undefined) localStorage.setItem(TG_LS() + '_dirty', dirty ? '1' : ''); } catch (e) {}
+}
+async function tgLoadServer() {
+  if (DEMO || !AUTH) return;
+  try {
+    const r = await fetch(`${API_URL}?act=targets&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&t=${Date.now()}`, { redirect: 'follow' });
+    const j = await r.json();
+    if (!j.ok) { TG_SERVER = 'off'; tgStatus(); return; }
+    TG_SERVER = 'on';
+    let dirty = false; try { dirty = localStorage.getItem(TG_LS() + '_dirty') === '1'; } catch (e) {}
+    if (dirty) { Object.keys(TG).forEach(m => tgPush(m)); return; }   // changes made offline → send them up
+    TG = j.targets || {}; tgKeepLocal(false);
+    if (LAST_MODEL) renderRebalance(LAST_MODEL);
+  } catch (e) { /* offline — device copy is used */ }
+}
+async function tgPush(m) {
+  if (DEMO || !AUTH) { tgStatus('saved-device'); return; }
+  tgStatus('saving');
+  try {
+    const url = `${API_URL}?act=savetargets&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&m=${encodeURIComponent(m)}&t=${encodeURIComponent(JSON.stringify(TG[m] || {}))}&n=${Date.now()}`;
+    const j = await (await fetch(url, { redirect: 'follow' })).json();
+    if (j.ok) { TG_SERVER = 'on'; tgKeepLocal(false); tgStatus('saved-sheet'); }
+    else { TG_SERVER = 'off'; tgStatus('saved-device'); }
+  } catch (e) { tgStatus('saved-device'); }
+}
+function tgSave() {
+  tgKeepLocal(true);
+  clearTimeout(TG_SAVE_T);
+  const m = tgView();
+  TG_SAVE_T = setTimeout(() => tgPush(m), 1200);
+  tgStatus('pending');
+}
+function tgStatus(s) {
+  const e = document.getElementById('tg-status'); if (!e) return;
+  const map = { pending: '✏️ Saving…', saving: '⏳ Saving…', 'saved-sheet': '✓ Targets saved to your sheet',
+    'saved-device': DEMO ? '✓ Saved on this device (demo)' : TG_SERVER === 'off' ? '✓ Saved on this device only' : '✓ Saved on this device · will copy to your sheet when back online' };
+  e.textContent = s ? map[s] || '' : (TG_SERVER === 'on' ? 'Targets are saved to your sheet automatically' : DEMO ? 'Demo · targets stay on this device' : 'Targets are saved automatically');
+}
+
+function tgRowsOf(d) {   // same holdings as the Indian Stocks tab, one line per stock (family members / platforms added together)
+  const by = {};
+  d.assets.filter(a => a.kind === 'stock' && a.cls === 'Equity').forEach(a => {
+    const k = tgSym(a); if (!k) return;
+    const r = by[k] || (by[k] = { sym: k, name: a.company || a.name, etf: a.type === 'ETF', units: 0, value: 0, cmp: null });
+    r.units += a.units || 0; r.value += a.value || 0;
+    if (r.cmp === null && a.cmp) r.cmp = a.cmp;
+  });
+  return Object.values(by).sort((a, b) => b.value - a.value);
+}
+function tgCalc() {
+  const T = TG_ROWS.reduce((s, r) => s + r.value, 0), Tn = Math.max(0, T + (TG_FRESH || 0)), t = tgMine();
+  let buy = 0, sell = 0, planned = 0, after = 0, setN = 0;
+  const rows = TG_ROWS.map(r => {
+    const tgt = t[r.sym], has = tgt !== undefined && tgt !== null && tgt !== '';
+    const cur = pctOf(r.value, T), goal = has ? tgt / 100 * Tn : r.value, gap = goal - r.value;
+    const qty = has && r.cmp ? Math.trunc(gap / r.cmp) : 0, amt = qty * (r.cmp || 0);   // whole shares, rounded down
+    if (has) setN++;
+    if (amt > 0) buy += amt; else sell -= amt;
+    planned += has ? Number(tgt) : pctOf(r.value, Tn);
+    after += r.value + amt;
+    return { r, has, tgt, cur, gap, qty, amt, after: r.value + amt };
+  });
+  const net = buy - sell, left = (TG_FRESH || 0) - net;
+  return { T, Tn, rows, buy, sell, net, left, planned, after, setN };
+}
+const tgFmtPct = p => (Math.abs(p) < 0.005 ? '0.00' : p.toFixed(2)) + '%';
+const tgN = n => n + (n === 1 ? ' stock' : ' stocks');
+const tgSign = (n, f) => (n > 0 ? '+' : n < 0 ? '−' : '') + f(Math.abs(n));
+
+function renderRebalance(d) {
+  TG_ROWS = tgRowsOf(d);
+  if (!TG_ROWS.length) { setHTML('rebalance-body', empty('No Indian stocks yet. Once your broker holdings file is in (Indian Stocks tab), this page shows each stock\'s share of your portfolio and helps you plan buys and sells to reach the allocation you want.')); return; }
+  const t = tgMine(), fam = d.famMember || (FAM_SEL === '*' && famMembers(RAW_API || {}).length > 1 ? 'Whole family' : '');
+  const noPrice = TG_ROWS.filter(r => !r.cmp).length;
+  const head = `<div class="tg-intro">
+      <div><b>How it works</b> · Type the <b>target %</b> you want for each stock. The table shows how much money to add or take out of that stock, and how many shares to buy or sell at today's price (CMP), to reach it. Leave a target blank to keep that stock as it is.</div>
+      ${fam ? `<div class="muted" style="margin-top:6px">👨‍👩‍👧 Targets for <b style="color:var(--text)">${esc(fam)}</b>. Each family view keeps its own targets.</div>` : ''}
+    </div>
+    <div class="tg-controls">
+      <label class="tg-fresh">New money to invest (₹)<small>Use a minus sign to plan taking money out</small>
+        <input type="number" inputmode="decimal" step="any" id="tg-fresh" value="${TG_FRESH || ''}" placeholder="0" oninput="tgFresh(this.value)"></label>
+      <div class="tg-quick"><span class="tg-ql">Quick fill</span>
+        <button class="sort-chip" onclick="tgFill('current')">Copy current %</button>
+        <button class="sort-chip" onclick="tgFill('equal')">Equal for all</button>
+        <button class="sort-chip" onclick="tgFill('clear')">Clear all</button></div>
+    </div>
+    <div class="tg-meter-wrap"><div class="tg-meter"><div class="tg-meter-fill" id="tg-meter-fill"></div></div><div id="tg-meter-txt" class="tg-meter-txt"></div></div>
+    <div class="kpi-grid" id="tg-kpis"></div>`;
+  const cols = ['#', 'Stock', 'CMP', 'Current value', 'Current %', 'Target %', 'Gap', 'Add / remove (₹)', 'Buy / sell at CMP', 'Value after', '% after'];
+  const body = TG_ROWS.map((r, i) => `<tr id="tg-r${i}">
+      <td class="num tg-hm">${i + 1}</td>
+      <td class="tg-stk"><span style="color:var(--text)">${esc(r.sym)}</span>${r.etf ? ' <span class="tag" style="font-size:9px;padding:1px 5px;margin-left:4px">ETF</span>' : ''}${r.name && r.name.toUpperCase() !== r.sym ? `<div class="muted" style="font-size:10px">${esc(r.name)}</div>` : ''}</td>
+      <td class="num">${r.cmp ? r.cmp.toLocaleString('en-IN', { maximumFractionDigits: 2 }) : '<span class="muted">no price</span>'}</td>
+      <td class="num tg-hm">${fmtINR(Math.round(r.value))}<div class="muted" style="font-size:10px">${r.units.toLocaleString('en-IN', { maximumFractionDigits: 3 })} sh</div></td>
+      <td class="num" id="tg-cur${i}"></td>
+      <td class="num"><input class="tg-in" type="number" inputmode="decimal" min="0" max="100" step="any" value="${t[r.sym] ?? ''}" placeholder="keep" aria-label="Target % for ${esc(r.sym)}" oninput="tgSet(${i}, this.value)"></td>
+      <td class="num tg-hm" id="tg-gap${i}"></td>
+      <td class="num" id="tg-amt${i}"></td>
+      <td id="tg-act${i}"></td>
+      <td class="num tg-hm" id="tg-aft${i}"></td>
+      <td class="num" id="tg-ap${i}"></td></tr>`).join('');
+  const foot = `<tr><td class="tg-hm"></td><td class="tg-stk">Total</td><td></td><td class="num tg-hm" id="tg-f-val"></td><td class="num">100%</td><td class="num" id="tg-f-tgt"></td><td class="tg-hm"></td><td class="num" id="tg-f-amt"></td><td id="tg-f-act"></td><td class="num tg-hm" id="tg-f-aft"></td><td></td></tr>`;
+  const notes = `<div class="muted tg-notes">
+      <div id="tg-status"></div>
+      <div>• Share counts are whole shares, rounded down, so each trade stays slightly inside the amount. “Add / remove” is the money at those whole shares.</div>
+      <div>• Covers your Indian stocks and equity ETFs (as on the Indian Stocks tab). Gold bonds, gold ETFs and REITs are on the Other Assets tab and are not included.</div>
+      <div>• Prices are today's CMP from your tracker; the price you actually get will differ a little. Brokerage, charges and taxes are not included — selling can create capital-gains tax, so check that before you sell.</div>
+      ${noPrice ? `<div>• ${noPrice} stock${noPrice === 1 ? ' has' : 's have'} no price yet, so no share count is shown for ${noPrice === 1 ? 'it' : 'them'}.</div>` : ''}
+      <div>• This is a calculator for your own planning, not a buy or sell recommendation.</div></div>`;
+  setHTML('rebalance-body', head + `<div class="table-wrap"><table class="data-table tg-table"><thead><tr>${cols.map((c, i) => `<th class="${[i && i !== 1 && i !== 8 ? 'num' : '', [0, 3, 6, 9].includes(i) ? 'tg-hm' : '', i === 1 ? 'tg-stk' : ''].join(' ').trim()}">${c}</th>`).join('')}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>` + notes);
+  tgRefresh(); tgStatus();
+}
+function tgRefresh() {
+  const c = tgCalc();
+  const gapTxt = x => { if (!x.has) return '<span class="muted">—</span>'; const g = Number(x.tgt) - pctOf(x.r.value, c.Tn);
+    return `<span class="${Math.abs(g) < 0.05 ? 'muted' : g > 0 ? 'gain-pos' : 'gain-neg'}">${tgSign(g, v => v.toFixed(2))}%</span>`; };
+  c.rows.forEach((x, i) => {
+    setHTML('tg-cur' + i, tgFmtPct(x.cur));
+    setHTML('tg-gap' + i, gapTxt(x));
+    setHTML('tg-amt' + i, !x.has ? '<span class="muted">—</span>' : x.amt ? `<span class="${x.amt > 0 ? 'gain-pos' : 'gain-neg'}">${tgSign(x.amt, v => fmtINR(Math.round(v)))}</span>` : '<span class="muted">₹0</span>');
+    let act = '<span class="muted">Keep as is</span>';
+    if (x.has && !x.r.cmp) act = '<span class="muted">No price</span>';
+    else if (x.has && x.qty > 0) act = `<span class="tg-act buy">Buy ${x.qty.toLocaleString('en-IN')}</span>`;
+    else if (x.has && x.qty < 0) act = `<span class="tg-act sell">Sell ${(-x.qty).toLocaleString('en-IN')}</span>`;
+    else if (x.has) act = Math.abs(x.gap) >= 1 ? `<span class="muted">On target<small> (gap under 1 share)</small></span>` : '<span class="muted">On target</span>';
+    setHTML('tg-act' + i, act);
+    setHTML('tg-aft' + i, fmtINR(Math.round(x.after)));
+    setHTML('tg-ap' + i, c.Tn ? tgFmtPct(pctOf(x.after, c.Tn)) : '—');
+    const tr = document.getElementById('tg-r' + i); if (tr) tr.classList.toggle('tg-set', x.has);
+  });
+  set('tg-f-val', fmtINR(Math.round(c.T)));
+  set('tg-f-tgt', c.setN ? c.rows.filter(x => x.has).reduce((s, x) => s + Number(x.tgt), 0).toFixed(2) + '%' : '—');
+  setHTML('tg-f-amt', c.net ? `<span class="${c.net > 0 ? 'gain-pos' : 'gain-neg'}">${tgSign(c.net, v => fmtINR(Math.round(v)))}</span>` : '₹0');
+  set('tg-f-act', c.buy || c.sell ? `${c.rows.filter(x => x.qty > 0).length} buy · ${c.rows.filter(x => x.qty < 0).length} sell` : '');
+  set('tg-f-aft', fmtINR(Math.round(c.after)));
+  // meter: targets + kept stocks should come to 100% of the portfolio (after new money)
+  const p = c.planned, ok = Math.abs(p - 100) < 0.1, fill = document.getElementById('tg-meter-fill');
+  if (fill) { fill.style.width = (c.setN ? Math.min(100, p) : 0) + '%'; fill.style.background = ok ? 'var(--green)' : p > 100 ? 'var(--red)' : 'var(--amber)'; }
+  const kept = c.rows.length - c.setN;
+  setHTML('tg-meter-txt', !c.setN ? 'Type a target % for at least one stock to start.' :
+    `Planned <b>${p.toFixed(2)}%</b> of 100% · ${c.setN} target${c.setN === 1 ? '' : 's'} set${kept ? ` · ${kept} kept as is (counted at their current share)` : ''}` +
+    (ok ? ' · <span class="gain-pos">adds up ✓</span>' : p < 100 ? ` · <span style="color:var(--amber)">${(100 - p).toFixed(2)}% not allotted — it would stay as cash</span>` : ` · <span class="gain-neg">${(p - 100).toFixed(2)}% over — you'd need extra money</span>`));
+  const k = (label, val, sub, color) => `<div class="kpi" style="--accent:${color};"><div class="kpi-label">${label}</div><div class="kpi-val">${val}</div><div class="kpi-sub">${sub}</div></div>`;
+  const fresh = TG_FRESH || 0;
+  const leftK = !c.setN ? k('Money needed', '—', 'set a target to see it', '#64748b')
+    : c.left >= 0 ? k(fresh ? 'Cash left over' : 'Cash freed up', fmtCr(c.left), (fresh ? `of ${fmtINR(fresh)} new money` : 'sells minus buys') + ' · ' + fmtINR(Math.round(c.left)), '#22c55e')
+    : k('Extra money needed', fmtCr(-c.left), (fresh ? `on top of ${fmtINR(fresh)} new money` : 'buys minus sells') + ' · ' + fmtINR(Math.round(-c.left)), '#ef4444');
+  setHTML('tg-kpis', k('Stocks now', fmtCr(c.T), `${TG_ROWS.length} holdings · ${fmtINR(Math.round(c.T))}`, '#f0a500') +
+    k('Total to buy', fmtCr(c.buy), `${tgN(c.rows.filter(x => x.qty > 0).length)} · ${fmtINR(Math.round(c.buy))}`, '#22c55e') +
+    k('Total to sell', fmtCr(c.sell), `${tgN(c.rows.filter(x => x.qty < 0).length)} · ${fmtINR(Math.round(c.sell))}`, '#ef4444') + leftK);
+}
+function tgSet(i, v) {
+  const r = TG_ROWS[i]; if (!r) return;
+  const t = tgMine(), n = parseFloat(v);
+  if (v === '' || isNaN(n)) delete t[r.sym]; else t[r.sym] = Math.max(0, Math.min(100, Math.round(n * 100) / 100));
+  tgRefresh(); tgSave();
+}
+function tgFresh(v) { const n = parseFloat(v); TG_FRESH = isNaN(n) ? 0 : n; tgRefresh(); }
+function tgFill(how) {
+  const t = tgMine(), T = TG_ROWS.reduce((s, r) => s + r.value, 0);
+  if (how === 'clear' && Object.keys(t).length && !confirm('Clear all your target % for this view?')) return;
+  Object.keys(t).forEach(k => delete t[k]);
+  if (how === 'current') TG_ROWS.forEach(r => { t[r.sym] = Math.round(pctOf(r.value, T) * 100) / 100; });
+  if (how === 'equal') { const e = Math.floor(10000 / TG_ROWS.length) / 100; TG_ROWS.forEach(r => { t[r.sym] = e; }); }
+  if (LAST_MODEL) renderRebalance(LAST_MODEL);
+  tgSave();
 }
 // ── Reset buttons: delete the whole stock list or fund list, then start again from a fresh holdings file.
 // The pop-up only asks; the deleting happens after the client taps ✅ on their own Telegram (Reset.gs).
