@@ -476,7 +476,7 @@
   @media (max-width:640px) { .pd-main { grid-template-columns:1fr;overflow:auto; } .pd-left { border-right:0;border-bottom:1px solid var(--border);display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:12px 14px;position:sticky;top:0;z-index:1;background:var(--card); } .pd-kind { flex:0 0 auto; } .pd-left h4 { display:none; } .pd-kind { width:auto;margin:0;padding:8px 12px;font-size:13px; } .pd-right { overflow:visible; } }
   .pf-empty { background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:18px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:16px; }
   .pf-sec { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin:8px 0 8px; }
-  body[data-tab="returns"] .fam-bar { display:none !important; }   /* Performance is always the whole family, so no name buttons there */
+  body[data-tab="returns"] .fam-bar, body[data-tab="rebalance"] .fam-bar { display:none !important; }   /* Performance and Stock Allocation Help are always the whole family */   /* Performance is always the whole family, so no name buttons there */
   .fam-bar { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px; }
   .fam-lbl { font-size:12px;color:var(--text2);font-weight:600;margin-right:2px; }
   .fam-chip { font:inherit;font-size:13px;font-weight:600;min-height:40px;padding:0 14px 0 5px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:8px; }
@@ -1424,7 +1424,7 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
 // ═══════════════════════════════════════════════════════
 let TG = {}, TG_ROWS = [], TG_FRESH = 0, TG_SAVE_T = null, TG_SERVER = 'unknown';   // unknown | on | off
 const TG_LS = () => 'r2r_targets_' + (DEMO ? 'demo' : (AUTH && AUTH.c) || 'x');
-const tgView = () => FAM_SEL || '*';
+const tgView = () => '*';   // Stock Allocation Help is always the whole family together (no per-member targets)
 const tgMine = () => (TG[tgView()] = TG[tgView()] || {});
 const tgSym = a => String(a.ticker || a.name || '').toUpperCase().replace(/^(NSE|BOM|BSE):/, '').trim();
 (function tgInit() { try { TG = JSON.parse(localStorage.getItem(TG_LS()) || '{}') || {}; } catch (e) { TG = {}; } })();
@@ -1457,7 +1457,7 @@ async function tgLoadServer() {
       try { localStorage.setItem('r2r_stars', JSON.stringify({ codes: TG_STARS.codes, names: TG_STARS.names, rules: TG_RULES })); } catch (e) {}
     }
     let dirty = false; try { dirty = localStorage.getItem(TG_LS() + '_dirty') === '1'; } catch (e) {}
-    if (dirty) { Object.keys(TG).forEach(m => tgPush(m)); if (LAST_MODEL) renderRebalance(LAST_MODEL); return; }   // changes made offline → send them up
+    if (dirty) { tgPush('*'); if (LAST_MODEL) renderRebalance(LAST_MODEL); return; }   // changes made offline → send them up
     TG = j.targets || {}; tgKeepLocal(false);
     if (LAST_MODEL) renderRebalance(LAST_MODEL);
   } catch (e) { /* offline — device copy is used */ }
@@ -1517,13 +1517,14 @@ const tgN = n => n + (n === 1 ? ' stock' : ' stocks');
 const tgSign = (n, f) => (n > 0 ? '+' : n < 0 ? '−' : '') + f(Math.abs(n));
 
 function renderRebalance(d) {
+  if (FAM_SEL !== '*' && RAW_API) d = model(RAW_API);   // always the whole family, whichever name is picked on the other tabs
   TG_ROWS = tgRowsOf(d);
   if (!TG_ROWS.length) { setHTML('rebalance-body', empty('No Indian stocks yet. Once your broker holdings file is in (Indian Stocks tab), this page shows each stock\'s share of your portfolio and helps you plan buys and sells to reach the allocation you want.')); return; }
-  const t = tgMine(), fam = d.famMember || (FAM_SEL === '*' && famMembers(RAW_API || {}).length > 1 ? 'Whole family' : '');
+  const t = tgMine(), fam = famMembers(RAW_API || {}).length > 1;
   const noPrice = TG_ROWS.filter(r => !r.cmp).length;
   const head = `<div class="tg-intro">
       <div><b>How it works</b> · Type the <b>target %</b> you want for each stock. The table shows how much money to add or take out of that stock, and how many shares to buy or sell at today's price (CMP), to reach it. Leave a target blank to keep that stock as it is.</div>
-      ${fam ? `<div class="muted" style="margin-top:6px">👨‍👩‍👧 Targets for <b style="color:var(--text)">${esc(fam)}</b>. Each family view keeps its own targets.</div>` : ''}
+      ${fam ? `<div class="muted" style="margin-top:6px">👨‍👩‍👧 This page is for the <b style="color:var(--text)">whole family together</b>: each stock's holdings across all members are added up.</div>` : ''}
     </div>
     <div class="tg-controls">
       <label class="tg-fresh">New money to invest (₹)<small>Use a minus sign to plan taking money out</small>
