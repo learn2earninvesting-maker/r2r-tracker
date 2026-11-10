@@ -469,6 +469,7 @@
   @media (max-width:640px) { .pd-main { grid-template-columns:1fr;overflow:auto; } .pd-left { border-right:0;border-bottom:1px solid var(--border);display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:12px 14px;position:sticky;top:0;z-index:1;background:var(--card); } .pd-kind { flex:0 0 auto; } .pd-left h4 { display:none; } .pd-kind { width:auto;margin:0;padding:8px 12px;font-size:13px; } .pd-right { overflow:visible; } }
   .pf-empty { background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:18px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:16px; }
   .pf-sec { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin:8px 0 8px; }
+  body[data-tab="returns"] .fam-bar { display:none !important; }   /* Performance is always the whole family, so no name buttons there */
   .fam-bar { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px; }
   .fam-lbl { font-size:12px;color:var(--text2);font-weight:600;margin-right:2px; }
   .fam-chip { font:inherit;font-size:13px;font-weight:600;min-height:40px;padding:0 14px 0 5px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:8px; }
@@ -737,6 +738,7 @@ function setTheme(t) {
 function toggleTheme() { setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light'); }
 setTheme(document.documentElement.getAttribute('data-theme') || 'dark');
 function switchTab(id) {
+  document.body.dataset.tab = id;
   document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
   document.querySelectorAll('.tab-btn,.mob-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2143,7 +2145,7 @@ function renderReturns(d) {
         : `<div class="ret-why">No overall figure for ${esc(scope === 'Stocks' ? 'your stocks' : 'your funds')} yet${checks ? ' — some holdings aren\'t covered by your transactions' : ''}. It appears ${checks ? 'once you send the missing ' + (scope === 'Stocks' ? 'tradebook' : 'statement') + ', or ' : ''}after the next month-end.</div>`}
       <button class="ret-toggle" aria-expanded="${open}">${open ? 'Hide' : 'Show'} ${what} <span class="chev">▾</span></button>${body}</div>`;
   };
-  if (d.famMember) html = `<div class="fam-note">👨‍👩‍👧 Performance is worked out for the <b>whole family together</b>, so these figures include everyone — not just ${esc(d.famMember)}. The other tabs show ${esc(d.famMember)}'s holdings only.</div>` + html;
+  if (d.famMember) html = `<div class="fam-note">👨‍👩‍👧 These figures are for the <b>whole family together</b>.</div>` + html;
   const snap = pfSnapshotHTML(main, P, label(P));
   if (!snap && !pfBoth()) {
     const nm = PF_AC.stk ? 'shares & ETFs' : 'mutual funds';
