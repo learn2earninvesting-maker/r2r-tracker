@@ -398,6 +398,42 @@
   .bm-foot { font-size:11px;color:var(--text3);line-height:1.5;margin-top:10px;border-top:1px solid var(--border);padding-top:8px; }
   .tr-note { font-size:11px;color:var(--text3);line-height:1.5;margin-top:8px;border-top:1px solid var(--border);padding-top:8px; }
   .tr-none { font-size:12px;color:var(--text3);padding:80px 0;text-align:center; }
+  .pf-snap { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;margin-bottom:12px; }
+  .pf-xirr { background:linear-gradient(0deg,rgba(34,197,94,.10),rgba(34,197,94,.10)),var(--card);border:1px solid rgba(34,197,94,.35);border-radius:14px;padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px; }
+  .pf-xirr .ret-big { font-size:46px;margin:2px 0; }
+  .pf-gauge { width:100%;max-width:300px;margin-top:8px; }
+  .pf-track { position:relative;height:12px;border-radius:6px;background:var(--bg3); }
+  .pf-track .z { position:absolute;left:33.333%;top:-4px;bottom:-4px;width:1px;background:var(--text3); }
+  .pf-track .b { position:absolute;top:2px;height:8px;border-radius:4px; }
+  .pf-ticks { display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:5px; }
+  .pf-facts { background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 14px;align-content:center; }
+  .pf-fact .k { font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;font-weight:600; }
+  .pf-fact .v { font-family:var(--syne);font-size:20px;font-weight:700;color:var(--text);margin-top:3px; }
+  .pf-fact .s { font-size:11px;color:var(--text3);margin-top:2px;line-height:1.4; }
+  .pf-vs { background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;
+    --s-you:#f0a500; --s-NIFTY50:#d95926; --s-NIFTY500:#199e70; --s-MIDCAP150:#c98500; --s-SMALLCAP250:#d55181; }
+  :root[data-theme="light"] .pf-vs { --s-you:#a86f00; --s-NIFTY50:#eb6834; --s-NIFTY500:#1baf7a; --s-MIDCAP150:#b57900; --s-SMALLCAP250:#d55181; }
+  .pf-vs .k-stk, .pf-vs .k-mf { --c:var(--teal); }
+  .pf-ix { display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 12px; }
+  .pf-ix .sort-chip { display:inline-flex;align-items:center;gap:6px;border-color:var(--border);color:var(--text2); }
+  :root .pf-ix .sort-chip.on, :root[data-theme="light"] .pf-ix .sort-chip.on { border-color:var(--teal);background:var(--teal-dim);color:var(--text);font-weight:600; }
+  .pf-h { font-family:var(--syne);font-size:15px;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap; }
+  .pf-h small { font-family:var(--dm);font-size:11px;font-weight:500;color:var(--text3); }
+  .pf-sec { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin:8px 0 8px; }
+  .fam-bar { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px; }
+  .fam-lbl { font-size:12px;color:var(--text2);font-weight:600;margin-right:2px; }
+  .fam-chip { font:inherit;font-size:13px;font-weight:600;min-height:40px;padding:0 14px 0 5px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:8px; }
+  .fam-chip .ava { width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font:700 11px var(--syne);background:var(--bg3);color:var(--amber); }
+  .fam-chip.all { padding-left:14px; }
+  .fam-chip:hover { border-color:var(--amber); }
+  .fam-chip.on { border-color:var(--amber);background:var(--amber-dim);color:var(--text); }
+  .fam-chip.on .ava { background:var(--amber);color:#0b1120; }
+  .fam-chip small { font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text3); }
+  .fam-note { background:var(--amber-dim);border:1px solid rgba(var(--amber-rgb),.35);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--text2);line-height:1.5;margin:0 0 14px; }
+  .up-who { display:flex;flex-wrap:wrap;gap:6px;margin-top:6px; }
+  .up-who button { font:inherit;font-size:13px;font-weight:600;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer; }
+  .up-who button.on { border-color:var(--teal);background:var(--teal-dim);color:var(--text); }
+  .up-field.need { border-left:3px solid var(--warn);padding-left:8px; }
   .ret-about {background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:24px; }
   .ret-about summary { cursor:pointer;font-weight:600;color:var(--teal); }
   .ret-about div { margin-top:8px; }
@@ -498,6 +534,7 @@
 <nav class="nav-tabs" id="nav-tabs"></nav>
 
 <main class="main">
+  <div class="fam-bar" id="fam-bar" style="display:none" role="group" aria-label="Family member"></div>
 
   <!-- OVERVIEW -->
   <section class="panel active" id="panel-overview">
@@ -564,7 +601,7 @@
   <!-- OTHER ASSETS (gold bonds, gold/silver ETFs, REITs, InvITs, debt ETFs from the broker file) -->
   <section class="panel" id="panel-other"><div id="other-body"></div></section>
 
-  <!-- RETURNS (XIRR, worked out every night by Returns.gs) -->
+  <!-- PERFORMANCE (was "Returns"; XIRR worked out every night by Returns.gs) -->
   <section class="panel" id="panel-returns"><div id="returns-body"></div></section>
 
   <!-- INSURANCE -->
@@ -634,7 +671,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8
 // ═══════════════════════════════════════════════════════
 const TABS = [
   ['overview','Overview','🏠','Overview'], ['allocation','Allocation','🥧','Alloc'],
-  ['holdings','Holdings','📊','Holdings'], ['stocks','Indian Stocks','📈','Stocks'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'], ['returns','Returns','📐','Returns'],
+  ['holdings','Holdings','📊','Holdings'], ['stocks','Indian Stocks','📈','Stocks'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'], ['returns','Performance','📐','Performance'],
   ['insurance','Insurance','🛡️','Insure'],
   ['payments','Payments','📅','Payments'], ['parameters','🩺 Health Check','🩺','Health'],
   // FIRE Tracker and Cash Flow are switched off for now (they need income/spending data).
@@ -726,6 +763,57 @@ async function fetchData() {
   return r.json();
 }
 
+// ═══════════════════════════════════════════════════════
+//  FAMILY — one sheet per client; family members are told apart by the Holder column
+//  (Stocks, Mutual Funds, Assets), Borrower (Liabilities) and Insured (Insurance).
+//  A blank Holder is the account holder ("Me"). Returns / Trend are worked out for the whole family.
+// ═══════════════════════════════════════════════════════
+let RAW_API = null;
+let FAM_SEL = (() => { try { return localStorage.getItem('r2r_fam') || '*'; } catch (e) { return '*'; } })();   // '*' = everyone
+// First name of the account holder (Registry "Client Name"), so "Rahul" typed in a Holder cell is the same person as a blank one
+function famSelf(api) { const n = String(api && api.client || '').trim(); return /family|demo/i.test(n) ? '' : (n.split(/\s+/)[0] || ''); }
+function famKey(v, self) {
+  const s = String(v ?? '').trim().replace(/\s+/g, ' ');
+  if (!s || /^(self|me|mine|my|own|myself)$/i.test(s) || (self && s.toLowerCase() === self.toLowerCase())) return '';
+  return s.toLowerCase();
+}
+const FAM_COLS = [['Stocks', 'Holder'], ['Mutual Funds', 'Holder'], ['Assets', 'Holder']];
+function famMembers(api) {
+  const t = (api && api.tabs) || {}, self = famSelf(api), by = {};
+  FAM_COLS.forEach(([tab, col]) => rowsOf(t[tab]).forEach(r => {
+    const k = famKey(r[col], self), raw = String(r[col] ?? '').trim();
+    const m = by[k] || (by[k] = { key: k, label: k ? raw.replace(/^\w/, c => c.toUpperCase()) : (self ? self : 'Me'), self: !k, value: 0 });
+    m.value += num(r['Current Value (₹)']) || 0;
+  }));
+  return Object.values(by).sort((a, b) => (b.self - a.self) || b.value - a.value);
+}
+// The same API answer with only one member's rows (everything else unchanged)
+function famFilter(api, sel) {
+  if (sel === '*') return api;
+  const self = famSelf(api), t = api.tabs || {}, out = Object.assign({}, t);
+  const keep = (tab, test) => { const v = t[tab]; if (!v || !v.length) return; const head = v[0].map(h => String(h).trim());
+    out[tab] = [v[0]].concat(v.slice(1).filter(r => { const o = {}; head.forEach((h, j) => { o[h] = r[j]; }); return test(o); })); };
+  FAM_COLS.forEach(([tab, col]) => keep(tab, o => famKey(o[col], self) === sel));
+  keep('Liabilities', o => famKey(o['Borrower'], self) === sel);
+  const label = (famMembers(api).find(m => m.key === sel) || {}).label || '';
+  keep('Insurance', o => { const v = String(o['Insured'] ?? '').trim(); return famKey(v, self) === sel || /family|floater|all\b/i.test(v) ||
+    (label && new RegExp('\\b' + label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i').test(v)); });
+  return Object.assign({}, api, { tabs: out, famMember: label });
+}
+function setFam(k) { FAM_SEL = k; try { localStorage.setItem('r2r_fam', k); } catch (e) {} renderFamily(); }
+function renderFamily() {
+  if (!RAW_API) return;
+  const mem = famMembers(RAW_API), bar = document.getElementById('fam-bar');
+  if (FAM_SEL !== '*' && !mem.some(m => m.key === FAM_SEL)) FAM_SEL = '*';
+  if (mem.length > 1) {
+    const ini = l => l.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    bar.innerHTML = `<span class="fam-lbl">👨‍👩‍👧 View</span><button class="fam-chip all${FAM_SEL === '*' ? ' on' : ''}" aria-pressed="${FAM_SEL === '*'}" onclick="setFam('*')">Whole family</button>` +
+      mem.map(m => `<button class="fam-chip${FAM_SEL === m.key ? ' on' : ''}" aria-pressed="${FAM_SEL === m.key}" onclick="setFam('${esc(m.key).replace(/'/g, '&#39;')}')"><span class="ava">${esc(ini(m.label))}</span>${esc(m.label)}${m.self && famSelf(RAW_API) ? ' <small>(me)</small>' : ''}</button>`).join('');
+    bar.style.display = 'flex';
+  } else { bar.style.display = 'none'; FAM_SEL = '*'; }
+  renderAll(model(famFilter(RAW_API, FAM_SEL)));
+}
+
 async function loadAllData(manual) {
   const btn = document.getElementById('refresh-btn');
   btn.classList.add('spinning');
@@ -755,7 +843,8 @@ async function loadAllData(manual) {
   const note = document.getElementById('offline-note');
   note.style.display = fromCache ? 'block' : 'none';
   note.textContent = fromCache ? '📴 Offline — showing the last saved copy. Tap Refresh when you are back online.' : '';
-  try { renderAll(model(data)); }
+  RAW_API = data;
+  try { renderFamily(); }
   catch (e) {
     console.error(e);
     const b = document.getElementById('error-banner');
@@ -928,7 +1017,7 @@ function model(api) {
     gain: num(r['Gain (₹)']), invested: num(r['Invested (₹)']), value: num(r['Value (₹)']), basis: String(r['Basis'] ?? ''), note: String(r['Note'] ?? ''), updated: parseDate(r['Updated']) }));
   const snapshots = rowsOf(t.Snapshots).map(r => ({ date: parseDate(r['Date']) })).filter(x => x.date);
   const trend = trendModel(t.Trend);
-  return { client: api.client || profile['Client Name'] || '', updated: api.updated, pricesAsOf: api.pricesAsOf || '', navAsOf: api.navAsOf || '', profile, P, today, returns, snapshots, trend,
+  return { client: api.client || profile['Client Name'] || '', famMember: api.famMember || '', updated: api.updated, pricesAsOf: api.pricesAsOf || '', navAsOf: api.navAsOf || '', profile, P, today, returns, snapshots, trend,
     assets, byClass, classes, totalAssets, liabilities, loans, cards, totalLiab, netWorth: totalAssets - totalLiab,
     emiMonthly, homeEmi, insurance, cfItems, months, annual, monthlyIncome, monthlySpend, annualSpend, fire };
 }
@@ -968,7 +1057,7 @@ function sortBar(tab) {
 
 function renderAll(d) {
   LAST_MODEL = d;
-  set('client-name', d.client ? '· ' + d.client : '');
+  set('client-name', d.client ? '· ' + d.client + (d.famMember ? ' · ' + d.famMember : '') : '');
   document.title = d.client ? `R2R · ${d.client}` : 'R2R Financial Tracker';
   const u = d.updated ? new Date(d.updated) : null;
   set('last-updated', (DEMO ? 'DEMO · ' : '') + (u && !isNaN(u) ? 'Sheet updated ' + u.toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Updated'));
@@ -1343,6 +1432,27 @@ const UP_KINDS = {
   tradebook: ['📒 Tradebook / fund transactions', 'Every buy and sell, for exact returns (XIRR) — Zerodha Console → Reports → Tradebook → Equity, or your fund app\'s transaction statement. You can pick several at once (e.g. one per year). Lines already saved are skipped.', true],
   contract: ['🧾 Contract notes', 'The Excel/CSV version of your broker\'s equity contract notes. You can pick several at once (e.g. a whole month). Their trades are added like a tradebook.', true] };
 let UP_KIND = 'holdings';
+// "Whose file is this?" — null = not answered yet, '' = me (the account holder), '+' = someone new, else the member's name
+let UP_WHO = null;
+function upWhoList() {
+  const mem = RAW_API ? famMembers(RAW_API) : [];
+  const self = RAW_API ? famSelf(RAW_API) : '';
+  const list = [{ v: '', label: self ? `Me (${self})` : 'Me' }].concat(mem.filter(m => !m.self).map(m => ({ v: m.label, label: m.label })));
+  return list;
+}
+function upWhoChips() {
+  const list = upWhoList();
+  if (list.length === 1 && UP_WHO === null) UP_WHO = '';          // no family members yet → "Me" is ticked, can still be changed
+  return list.concat([{ v: '+', label: '➕ Someone else' }]).map((x, i) =>
+    `<button type="button" data-i="${i}" class="${UP_WHO === x.v ? 'on' : ''}" aria-pressed="${UP_WHO === x.v}" onclick="setUpWho(${i})">${esc(x.label)}</button>`).join('');
+}
+function setUpWho(i) {
+  const all = upWhoList().concat([{ v: '+' }]);
+  UP_WHO = all[i].v;
+  document.querySelectorAll('#up-who button').forEach(b => { const on = +b.dataset.i === i; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+  const o = document.getElementById('up-other'); if (o) { o.style.display = UP_WHO === '+' ? 'block' : 'none'; if (UP_WHO === '+') o.focus(); }
+  const w = document.getElementById('up-who-wrap'); if (w) w.classList.remove('need');
+}
 function uploadBlock(kind) {
   const line = kind === 'tradebook' ? 'Upload your tradebook, fund transaction statement or contract notes for exact returns.' : 'Upload your latest holdings file (shares or mutual funds), a tradebook or contract notes.';
   return `<div class="reset-zone up-zone"><button class="up-btn" onclick="askUpload('${kind}')">📤 Upload a file</button><div class="muted">${line} CSV or Excel (.xlsx). You'll check it and tap ✅ on Telegram before anything changes.</div></div>`;
@@ -1350,10 +1460,13 @@ function uploadBlock(kind) {
 function askUpload(kind) {
   if (!kind) { const t = document.querySelector('.tab-btn.active'); kind = t && t.dataset.tab === 'returns' ? 'tradebook' : 'holdings'; }
   UP_KIND = UP_KINDS[kind] ? kind : 'holdings';
+  UP_WHO = null;
   showModal(`<h3>📤 Upload a file</h3>
     <div class="up-kinds">${Object.keys(UP_KINDS).map(k => `<label class="up-kind${k === UP_KIND ? ' on' : ''}" data-k="${k}"><input type="radio" name="upk" value="${k}"${k === UP_KIND ? ' checked' : ''} onchange="setUpKind('${k}')"><span><b>${UP_KINDS[k][0]}</b><br>${esc(UP_KINDS[k][1])}</span></label>`).join('')}</div>
-    <label class="up-field">Whose account? <span class="muted">(optional — e.g. "Priya's Zerodha", for family accounts)</span><input type="text" id="up-note" maxlength="60" placeholder="Leave blank if it's your own"></label>
     <label class="up-field"><span id="up-pick">Choose the file</span> (.csv or .xlsx, max 8 MB)<input type="file" id="up-file" accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
+    <div class="up-field" id="up-who-wrap"><b style="color:var(--text)">Whose file is this?</b> <span class="muted">— so it goes into the right person's list</span>
+      <div class="up-who" id="up-who" role="group" aria-label="Whose file">${upWhoChips()}</div>
+      <input type="text" id="up-other" maxlength="40" placeholder="Their first name, e.g. Priya" style="display:none" aria-label="Family member's first name"></div>
     <p class="muted" style="font-size:11px">The file goes to your R2R Tracker bot on Telegram. It shows you a summary there, and only saves when you tap ✅. Password-protected PDFs can't be read — please download the Excel or CSV version.</p>
     <div id="up-result"></div>
     <div class="r2r-modal-btns" id="up-btns"><button onclick="closeModal()">Cancel</button><button class="up-go" id="up-go" onclick="doUpload()">Upload</button></div>`);
@@ -1382,10 +1495,16 @@ async function doUpload() {
   if (UP_KIND === 'contract' && files.length > 31) return show('err-msg', 'Up to 31 contract notes at a time, please.');
   if (UP_KIND === 'tradebook' && files.length > 12) return show('err-msg', 'Up to 12 tradebook files at a time, please.');
   if (UP_KIND === 'holdings' && files.length > 1) return show('err-msg', 'Please upload one holdings file at a time.');
-  if (DEMO || !AUTH) return finish('err-msg', 'This is the demo — files can\'t be uploaded here.');
+  let holder = UP_WHO;
+  if (holder === '+') holder = (document.getElementById('up-other').value || '').replace(/['’]s\b.*$/i, '').replace(/[^\p{L} .\-]/gu, '').trim().slice(0, 40);
+  if (holder === null || holder === undefined || (UP_WHO === '+' && !holder)) {
+    const w = document.getElementById('up-who-wrap'); if (w) { w.classList.add('need'); w.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+    return show('err-msg', UP_WHO === '+' ? 'Please type the family member\'s first name.' : 'Please choose whose file this is — you, or a family member.');
+  }
+  if (DEMO || !AUTH) return finish('err-msg', 'This is the demo — files can\'t be uploaded here.' + (holder ? ` (It would have gone into ${holder}'s list.)` : ''));
   go.disabled = true; go.textContent = UP_KIND === 'tradebook' && files.length > 1 ? `Reading ${files.length} files… (about a minute each)` : 'Reading… (up to a minute)';
   try {
-    const payload = { cid: AUTH.c, k: AUTH.k, what: UP_KIND, note: (document.getElementById('up-note').value || '').trim(),
+    const payload = { cid: AUTH.c, k: AUTH.k, what: UP_KIND, holder, whoSet: true, note: holder ? holder + "'s" : '',
       files: await Promise.all(files.map(async f => ({ name: f.name, data: await readAsBase64(f) }))) };
     const r = await fetch(`${API_URL}?act=upload&t=${Date.now()}`, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'text/plain;charset=utf-8' }, redirect: 'follow' });
     const txt = await r.text();
@@ -1512,7 +1631,16 @@ function trendModel(tab) {
   let info = {};
   const hit = all.find(r => !blank(r.info));
   try { info = hit ? JSON.parse(hit.info) : {}; } catch (e) { info = {}; }
-  return { rows: all.filter(r => r.s !== null || r.m !== null), info };
+  const rows = all.filter(r => r.s !== null || r.m !== null);
+  // Combined line (shares + funds) for the Performance tab. A bucket that starts later joins with its whole value as money put in.
+  let ls = null, lm = null;
+  rows.forEach(r => {
+    let f = 0;
+    if (r.s !== null) { f += ls === null ? r.s : r.sf; ls = r.s; }
+    if (r.m !== null) { f += lm === null ? r.m : r.mf; lm = r.m; }
+    r.c = (ls || 0) + (lm || 0); r.cf = f;
+  });
+  return { rows, info };
 }
 
 // XIRR for ranges of a year or more (same method as the nightly returns); under a year, plain gain % only
@@ -1533,7 +1661,7 @@ function trReturn(flows, start, end) {
 
 // One bucket over one range: your line, the money-put-in line, and one line per index fed the same money
 function trWindow(tr, bucket, years) {
-  const vk = bucket === 'Stocks' ? 's' : 'm', fk = vk + 'f';
+  const vk = bucket === 'Stocks' ? 's' : bucket === 'Combined' ? 'c' : 'm', fk = vk + 'f';
   const pts = tr.rows.filter(r => r[vk] !== null);
   if (pts.length < 2) return null;
   const end = pts[pts.length - 1].d;
@@ -1549,7 +1677,7 @@ function trWindow(tr, bucket, years) {
   const flowsWith = endVal => [{ t: w[0].d, a: -v0 }].concat(w.slice(1).map(p => ({ t: p.d, a: -p[fk] }))).concat([{ t: end, a: endVal }]).filter(f => f.a);
   const series = [];
   const you = w.map(p => p[vk]);
-  series.push({ key: 'you', name: bucket === 'Stocks' ? 'Your stocks' : 'Your funds', vals: you, ret: trReturn(flowsWith(you[you.length - 1]), w[0].d, end) });
+  series.push({ key: 'you', name: bucket === 'Stocks' ? 'Your stocks' : bucket === 'Combined' ? 'Your portfolio' : 'Your funds', vals: you, ret: trReturn(flowsWith(you[you.length - 1]), w[0].d, end) });
   TR_IX.forEach(([k, n]) => {
     const L0 = w[0].ix[k];
     if (!L0) { series.push({ key: k, name: n, vals: null }); return; }
@@ -1664,10 +1792,82 @@ function trHover(e, rect) {
 let TR_RZ = 0;
 window.addEventListener('resize', () => { clearTimeout(TR_RZ); TR_RZ = setTimeout(drawTrends, 150); });
 
+// ── Performance tab (renamed from "Returns", 10 Nov 2026): MProfit-style snapshot + "my XIRR vs index", then the tiles and trend charts
+const PF_PERIODS = [['Since start', 'All to date', 0], ['1Y', '1 year', 1], ['2Y', '2 years', 2], ['3Y', '3 years', 3], ['5Y', '5 years', 5]];
+let PF_IX = (() => { try { return JSON.parse(localStorage.getItem('r2r_pf_ix') || 'null') || { NIFTY50: true, NIFTY500: true }; } catch (e) { return { NIFTY50: true, NIFTY500: true }; } })();
+function togglePfIx(k) { PF_IX[k] = !PF_IX[k]; try { localStorage.setItem('r2r_pf_ix', JSON.stringify(PF_IX)); } catch (e) {} if (LAST_MODEL) renderReturns(LAST_MODEL); }
+// The headline figure for a period: whole portfolio when it reaches back that far, else shares or funds on their own
+function pfPick(main, P) {
+  for (const sc of ['Combined', 'Stocks', 'Mutual Funds']) { const r = main.find(x => x.scope === sc && x.period === P); if (r) return { r, scope: sc }; }
+  return { r: null, scope: '' };
+}
+const PF_SCOPE = { Combined: 'Shares + mutual funds', Stocks: 'Shares only', 'Mutual Funds': 'Mutual funds only' };
+
+function pfSnapshotHTML(main, P, plabel) {
+  const { r, scope } = pfPick(main, P);
+  if (!r) return '';
+  const firsts = main.filter(x => x.period === 'Since start' && x.from).map(x => x.from).sort((a, b) => a - b);
+  const BADGE = { Exact: ['exact', '✓ Exact'], 'All trades': ['exact', '✓ All trades'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
+  const b = BADGE[r.basis], v = retFig(r), yearly = r.xirr !== null, sinceAll = P === 'Since start';
+  const g = v === null ? null : Math.max(-15, Math.min(30, v));
+  const gauge = g === null ? '' : `<div class="pf-gauge" aria-hidden="true"><div class="pf-track"><span class="z"></span><span class="b" style="left:${g >= 0 ? 33.333 : (g + 15) / 45 * 100}%;width:${Math.max(Math.abs(g) / 45 * 100, 0.8)}%;background:${v >= 0 ? 'var(--pos)' : 'var(--neg)'}"></span></div><div class="pf-ticks"><span>−15%</span><span>0%</span><span>15%</span><span>30%</span></div></div>`;
+  const first = firsts[0] || r.from;
+  const why = scope === 'Combined' ? '' : `<div class="ret-why">${scope === 'Stocks' ? 'Your fund' : 'Your share'} history doesn't reach back ${esc(plabel.toLowerCase())}, so this is ${scope === 'Stocks' ? 'your shares' : 'your funds'} on their own.</div>`;
+  const invSub = r.basis === 'Approximate'
+    ? (sinceAll ? 'Value at the first month-end + money added since' : 'Value at the start + money added since')
+    : (sinceAll ? 'Every buy and SIP, ever' + (r.basis === 'All trades' ? ' (sale money reinvested counts again)' : '') : 'Value at the start + buys since');
+  return `<div class="pf-snap">
+    <div class="pf-xirr"><span class="ret-lbl">${yearly ? 'XIRR' : 'Gain'} · ${esc(plabel)}</span>
+      <div class="ret-big ${retCls(v)}">${retPct(v)}${yearly ? '<span class="unit">a year</span>' : ''}</div>
+      ${b ? `<span class="basis ${b[0]}">${b[1]}</span>` : ''}
+      ${yearly ? '' : '<div class="ret-why">Less than a year of history, so this is the plain gain — not annualised.</div>'}${why}${gauge}</div>
+    <div class="pf-facts">
+      <div class="pf-fact"><div class="k">First transaction</div><div class="v">${first ? fmtDate(first) : '—'}</div>${r.from && fmtDate(r.from) !== fmtDate(first) ? `<div class="s">${sinceAll ? 'XIRR measured from' : 'This period:'} ${fmtDate(r.from)} → today</div>` : ''}</div>
+      <div class="pf-fact"><div class="k">Current valuation</div><div class="v">${fmtCr(r.value)}</div><div class="s">${PF_SCOPE[scope]}</div></div>
+      <div class="pf-fact"><div class="k">${sinceAll ? 'Total investment' : 'Invested in period'}</div><div class="v">${fmtCr(r.invested)}</div><div class="s">${invSub}</div></div>
+      <div class="pf-fact"><div class="k">Total gain</div><div class="v ${retCls(r.gain)}">${r.gain < 0 ? '−' : '+'}${fmtCr(Math.abs(r.gain))}</div><div class="s">${r.gainPct !== null ? retPct(r.gainPct) + ' · ' : ''}${r.basis === 'Approximate' ? 'from month-end values' : 'booked profits + on paper'}</div></div>
+    </div></div>`;
+}
+
+// Your XIRR next to the same money, on the same dates, in each Nifty index (from the weekly Trend tab)
+function pfVsHTML(d, main, P, years, plabel) {
+  const { r, scope } = pfPick(main, P);
+  if (!r || retFig(r) === null) return '';
+  const yearly = r.xirr !== null;
+  const sub = [['stk', 'Shares', 'Stocks'], ['mf', 'Mutual funds', 'Mutual Funds']].map(([k, n, sc]) => { const x = main.find(y => y.scope === sc && y.period === P); return x && retFig(x) !== null ? { key: k, name: n, v: retFig(x), note: x.xirr === null ? 'gain' : '' } : null; }).filter(Boolean);
+  const rows = [{ key: 'you', name: scope === 'Combined' ? 'My portfolio' : scope === 'Stocks' ? 'My shares' : 'My funds', v: retFig(r) }].concat(scope === 'Combined' && sub.length === 2 ? sub : []);
+  const win = d.trend && d.trend.rows.length >= 2 ? trWindow(d.trend, scope, years) : null;
+  const ser = win ? win.series : [];
+  const ok = k => { const s = ser.find(x => x.key === k); return s && s.vals && s.ret && s.ret.v !== null && s.ret.v !== undefined ? s : null; };
+  const chips = win ? TR_IX.map(([k, n]) => { const s = ok(k), on = !!PF_IX[k] && !!s;
+    return `<button class="sort-chip${on ? ' on' : ''} k-${k}" aria-pressed="${on}" ${s ? `onclick="togglePfIx('${k}')"` : 'disabled title="Not enough index history for this period"'}><span class="sw"></span>${esc(n)}</button>`; }).join('') : '';
+  const ix = TR_IX.filter(([k]) => PF_IX[k] && ok(k)).map(([k]) => { const s = ok(k); return { key: k, name: s.name, v: s.ret.v, small: 'same money → ' + fmtCr(s.vals[s.vals.length - 1]) }; });
+  const list = rows.concat(ix), vals = list.map(x => x.v);
+  const lo = Math.min(0, ...vals), hi = Math.max(0, ...vals), span = (hi - lo) || 1, zero = (-lo / span) * 100;
+  const me = rows[0].v, beat = ix.filter(x => me > x.v).length;
+  const verdict = !ix.length ? '' : ix.length === 1 ? (beat ? 'Ahead of ' : 'Behind ') + ix[0].name
+    : beat === ix.length ? `Ahead of all ${ix.length} indices` : beat === 0 ? `Behind all ${ix.length} indices` : `Ahead of ${beat} of ${ix.length} indices`;
+  const bars = list.map(x => { const w = Math.abs(x.v) / span * 100, left = x.v >= 0 ? zero : zero - w;
+    const diff = x.key === 'you' || !TR_IX.some(([k]) => k === x.key) ? '' : ' · you ' + (me - x.v >= 0 ? '+' : '') + (me - x.v).toFixed(1) + ' pts';
+    return `<div class="bm-row k-${x.key}${x.key === 'you' ? ' you' : ''}" tabindex="0" title="${esc(x.name + ': ' + retPct(x.v) + diff)}">
+      <div class="bm-name">${x.key === 'stk' || x.key === 'mf' ? '&nbsp;&nbsp;↳ ' : ''}${esc(x.name)}${x.small ? `<small>${esc(x.small)}</small>` : ''}</div>
+      <div class="bm-track"><span class="bm-zero" style="left:${zero}%"></span><span class="bm-bar" style="left:${left}%;width:${Math.max(w, 0.6)}%"></span></div>
+      <div class="bm-val">${retPct(x.v)}</div></div>`; }).join('');
+  const notes = [];
+  if (win && win.short) notes.push(`Your weekly history starts ${trFmt(win.firstEver)}, so the index figures cover all of it.`);
+  if (!win) notes.push('Index comparison appears after the next nightly update.');
+  return `<div class="pf-vs"><div class="pf-h">My ${yearly ? 'XIRR' : 'gain'} vs the market <small>${esc(plabel)}</small></div>
+    ${chips ? `<div class="pf-ix" role="group" aria-label="Indices to compare">${chips}</div>` : ''}
+    ${verdict ? `<div class="bm-verdict">${verdict}</div>` : ''}
+    <div class="bm-unit">${yearly ? 'XIRR, % a year' : 'Total gain over the period (under a year, so not annualised)'}</div>
+    <div class="bm-chart" role="img" aria-label="Your return compared with Nifty indices">${bars}</div>
+    <div class="bm-foot">Index figures = the same money, on the same dates, in a low-cost index fund (dividends included), so SIPs and staggered buying compare fairly. Worked out from weekly values, so they can differ slightly from your XIRR.${notes.length ? '<br>' + notes.map(esc).join('<br>') : ''}</div></div>`;
+}
+
 function renderReturns(d) {
   const R = d.returns || [];
   const main = R.filter(r => ['Combined', 'Stocks', 'Mutual Funds'].includes(r.scope));
-  const ORDER = ['1Y', '3Y', '5Y', 'Since start'];
+  const ORDER = PF_PERIODS.map(p => p[0]);
   const periods = ORDER.filter(p => main.some(r => r.period === p));
   const buckets = ['Stocks', 'Mutual Funds'].filter(b => main.some(r => r.scope === b) || R.some(r => r.bucket === b && (r.scope === 'Holding' || r.scope === 'Check')));
   if (!periods.length && !buckets.length) {
@@ -1677,10 +1877,11 @@ function renderReturns(d) {
       : `Returns aren't available yet. Your advisor will switch them on.<br><br>For exact figures, send the Tracker bot your <b>share tradebook</b> and your <b>mutual fund transaction statement</b> (Excel/CSV).`) + uploadBlock('tradebook'));
     return;
   }
-  if (periods.length && !periods.includes(RET_PERIOD)) RET_PERIOD = periods.includes('1Y') ? '1Y' : periods[periods.length - 1];
+  if (periods.length && !periods.includes(RET_PERIOD)) RET_PERIOD = periods.includes('Since start') ? 'Since start' : periods[0];
   const P = periods.length ? RET_PERIOD : 'Since start';
-  const label = p => p === 'Since start' ? 'Since start' : p.replace('Y', ' year' + (p === '1Y' ? '' : 's'));
-  let html = periods.length > 1 ? `<div class="ret-periods">${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriod('${p}')">${label(p)}</button>`).join('')}</div>` : '';
+  const label = p => (PF_PERIODS.find(x => x[0] === p) || [p, p])[1];
+  const years = (PF_PERIODS.find(x => x[0] === P) || [0, 0, 0])[2];
+  let html = periods.length ? `<div class="ret-periods" role="group" aria-label="Period">${periods.map(p => `<button class="sort-chip${p === P ? ' on' : ''}" onclick="setRetPeriod('${p}')">${label(p)}</button>`).join('')}</div>` : '';
   const BADGE = { Exact: ['exact', '✓ Exact'], 'All trades': ['exact', '✓ All trades'], Partial: ['partial', 'Matched holdings'], Approximate: ['approx', '≈ Approx.'] };
   const tile = (scope, accent, icon) => {
     const r = main.find(x => x.scope === scope && x.period === P);
@@ -1702,6 +1903,9 @@ function renderReturns(d) {
         : `<div class="ret-why">No overall figure for ${esc(scope === 'Stocks' ? 'your stocks' : 'your funds')} yet${checks ? ' — some holdings aren\'t covered by your transactions' : ''}. It appears ${checks ? 'once you send the missing ' + (scope === 'Stocks' ? 'tradebook' : 'statement') + ', or ' : ''}after the next month-end.</div>`}
       <button class="ret-toggle" aria-expanded="${open}">${open ? 'Hide' : 'Show'} ${what} <span class="chev">▾</span></button>${body}</div>`;
   };
+  if (d.famMember) html = `<div class="fam-note">👨‍👩‍👧 Performance is worked out for the <b>whole family together</b>, so these figures include everyone — not just ${esc(d.famMember)}. The other tabs show ${esc(d.famMember)}'s holdings only.</div>` + html;
+  html += pfSnapshotHTML(main, P, label(P)) + pfVsHTML(d, main, P, years, label(P));
+  html += `<div class="pf-sec">Shares and funds — tap for each holding</div>`;
   html += `<div class="ret-grid">${tile('Combined', '#f0a500', '🧮')}${tile('Stocks', '#3b82f6', '📈')}${tile('Mutual Funds', '#a855f7', '🧺')}</div>`;
   html += trendSection(d);
   const upd = R.map(r => r.updated).filter(Boolean).sort((a, b) => b - a)[0];
@@ -1712,7 +1916,10 @@ function renderReturns(d) {
     <b>Matched holdings</b> — exact, but only for the holdings your transactions fully explain; send your tradebook from your first trade to include the rest.<br>
     <b>≈ Approx.</b> — from your month-end values, so profits booked on sales and dividends may be missed.<br>
     ${d.trend && d.trend.rows.length ? '<b>Trend charts</b> — your portfolio\'s value week by week, next to the same money in each index: the index line starts with your portfolio\'s value at the start of the range, and every rupee you put in or took out after that buys or sells index units in the same week. So SIPs and staggered buying are compared fairly. Index lines use low-cost index funds (dividends included). Returns are XIRR (% a year) for ranges of a year or more, for you and for each index, so they can be compared directly; the smaller \"gain\" figure is the total gain over the period. Under a year, only the plain gain % is shown — annualising a few weeks of movement would make it look many times bigger than it is.<br>' : ''}
-    ${periods.length ? 'Periods run from the month-end that many years ago to today.' : ''}${upd ? ` Worked out ${fmtDate(upd)}, updated every night.` : ''}</div></details>`;
+    <b>Periods</b> — <i>All to date</i> runs from your first transaction (or first month-end); 1, 2, 3 and 5 years are trailing: from the month-end that many years ago to today.<br>
+    <b>Total investment</b> — every rupee you put in (all buys and SIPs). <b>Total gain</b> — today's value plus everything you took out, minus everything you put in, so profits already booked count too.<br>
+    <b>My XIRR vs the market</b> — your XIRR next to what the same money, on the same dates, would have earned in each index.<br>
+    Shares and mutual funds only — EPF, PPF, NPS, FDs and other assets are not in these figures.${upd ? ` Worked out ${fmtDate(upd)}, updated every night.` : ''}</div></details>`;
   setHTML('returns-body', html + uploadBlock('tradebook'));
   drawTrends();
 }
