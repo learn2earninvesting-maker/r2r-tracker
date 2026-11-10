@@ -1582,6 +1582,7 @@ function trendSection(d) {
     if (bi.basis === 'Partial') notes.push(`Only the holdings your transactions fully explain (${bi.cover || 0}% of today's value). Send your older ${b === 'Stocks' ? 'tradebook' : 'fund statement'} to include the rest.`);
     if (bi.basis === 'Approximate') notes.push('From month-end values. Send your tradebook / fund statement to the Tracker bot for a week-by-week line.');
     if (bi.excluded && bi.excluded.length) notes.push('Left out (no price history): ' + bi.excluded.join(', ') + '.');
+    if (bi.skipped && bi.basis !== 'Approximate') notes.push('Not included: Sovereign Gold Bonds (' + (bi.skipped.names || []).join(', ') + ', ' + fmtINR(bi.skipped.value || 0) + ') — fixed-rate bonds, kept out of the share comparison.');
     const sp = TR_IX.filter(([k]) => { const x = (tr.info.index || {})[k]; return x && x.spliceFrom && x.fundFrom && win.start < x.fundFrom; });
     if (sp.length) notes.push(sp.map(([k, n]) => `${n} before ${trFmt(tr.info.index[k].fundFrom)}`).join(', ') + ': index price without dividends (no index fund yet).');
     const legend = win.series.map(s => {
