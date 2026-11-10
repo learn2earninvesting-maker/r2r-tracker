@@ -425,7 +425,7 @@
   .fire-input-note { font-size:11px;color:var(--text3);margin:-14px 0 20px; }
   .cf-two { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px; }
   @media(max-width:640px){ .cf-two { grid-template-columns:1fr; } .cf-mini-grid2 { grid-template-columns:1fr !important; } }
-  @media(max-width:480px){ .updated { display:none; } .brand span, .brand .client { display:none; } }
+  @media(max-width:480px){ .updated { display:none; } .up-lbl { display:none; } .brand span, .brand .client { display:none; } }
   /* Reset buttons (Indian Stocks + Mutual Funds tabs) and the warning pop-up */
   .reset-zone { margin:28px 0 8px;padding:14px 16px;border:1px dashed var(--border);border-radius:12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px; }
   .reset-zone .muted { font-size:11px;flex:1;min-width:200px; }
@@ -438,6 +438,21 @@
   .r2r-modal-card.calm { border-color:var(--amber,#f0a500); }
   .r2r-modal-card.calm h3 { color:var(--amber,#f0a500); }
   .r2r-modal-btns button.go { background:var(--amber,#f0a500);color:#0b1120;border-color:var(--amber,#f0a500); }
+  .up-btn { background:transparent;border:1px solid var(--teal);color:var(--teal);border-radius:8px;padding:8px 14px;font:600 12px var(--dm);cursor:pointer; }
+  .up-btn:hover { background:var(--teal-dim); }
+  .up-zone { border-style:solid;border-color:rgba(var(--teal-rgb),0.35); }
+  .r2r-modal-card.up { border-color:var(--teal);max-height:90vh;overflow:auto; }
+  .r2r-modal-card.up h3 { color:var(--teal); }
+  .r2r-modal-btns button.up-go { background:var(--teal);border-color:var(--teal);color:#0b1120; }
+  .up-kinds { display:grid;gap:8px;margin:4px 0 12px; }
+  .up-kind { display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:12px;color:var(--text2);line-height:1.45; }
+  .up-kind b { color:var(--text);font-size:13px; }
+  .up-kind input { margin-top:3px;accent-color:var(--teal); }
+  .up-kind.on { border-color:var(--teal);background:var(--teal-dim); }
+  .up-field { display:block;font-size:12px;color:var(--text2);margin:0 0 10px; }
+  .up-field input[type=text] { width:100%;box-sizing:border-box;margin-top:4px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font:13px var(--dm); }
+  .up-field input[type=file] { margin-top:6px;font:12px var(--dm);color:var(--text2);max-width:100%; }
+  .up-bot { white-space:pre-wrap;font-size:12px;color:var(--text2);background:var(--bg3);border-radius:8px;padding:10px;margin-top:8px;max-height:220px;overflow:auto; }
   .r2r-modal { position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:20px; }
   .r2r-modal-card { max-width:440px;width:100%;background:var(--card);border:1px solid var(--red);border-radius:16px;padding:22px; }
   .r2r-modal-card h3 { font-family:var(--syne);font-size:17px;color:var(--red);margin:0 0 12px; }
@@ -472,6 +487,7 @@
   <div class="topbar-right">
     <div class="updated" id="last-updated">Loading…</div>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Switch day / night mode" aria-label="Switch day / night mode">☀️</button>
+    <button class="refresh-btn" id="upload-btn" onclick="askUpload()" title="Upload a holdings file, tradebook or contract notes">📤 <span class="up-lbl">Upload</span></button>
     <button class="refresh-btn" id="refresh-btn" onclick="loadAllData(true)"><span class="icon">↻</span> Refresh</button>
     <button class="refresh-btn" id="install-btn" style="display:none" onclick="doInstall()">⬇ Install</button>
   </div>
@@ -1188,7 +1204,7 @@ function sectorTip(e) {
 }
 function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
   let list = d.assets.filter(a => a.kind === 'stock' && filter(a)).sort((a, b) => b.value - a.value);
-  if (!list.length) { setHTML(bodyId, empty(emptyMsg)); return; }
+  if (!list.length) { setHTML(bodyId, empty(emptyMsg) + uploadBlock('holdings')); return; }
   const total = list.reduce((s, a) => s + a.value, 0), fullRank = list.slice();
   const plats = [...new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · ')).filter(Boolean))];
   let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list, d, 'stocks');
@@ -1223,7 +1239,7 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
     const etf = a => a.type === 'ETF' ? ' <span class="tag" style="font-size:9px;padding:1px 5px;margin-left:4px">ETF</span>' : '';
     const rcols = [['#', a => fullRank.indexOf(a) + 1, 1], [cols[0][0], a => cols[0][1](a).replace('</span>', '</span>' + etf(a))]].concat(cols.slice(1));
     html += `<div class="section-title">${ALLOC_STATE === 'all' ? 'All holdings' : 'Holdings'} <span class="tag amber" style="margin-left:4px">${fmtCr(v)}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(v, total).toFixed(1)}% · # = rank by allocation · counted in Equity</span></div>` + fileTable(part, total, rcols);
-    setHTML(bodyId, html + corpBlock() + resetBlock('stocks')); return;
+    setHTML(bodyId, html + uploadBlock('holdings') + corpBlock() + resetBlock('stocks')); return;
   }
   const used = new Set();
   STOCK_GROUPS.forEach(([g, test]) => {
@@ -1319,13 +1335,75 @@ async function doCorp() {
   }
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+// ── 📤 Upload: holdings files, tradebooks / MF transaction statements and contract notes (CSV or Excel .xlsx).
+// The file goes to the backend (Uploads.gs), which passes it to the client's own chat with the Tracker bot and reads it
+// there exactly like a file sent on Telegram. The ✅ / ❌ preview arrives on Telegram; nothing is saved from here.
+const UP_KINDS = {
+  holdings: ['📈 Holdings file', 'Your current shares or mutual funds — Zerodha Console → Portfolio → Holdings, or the Excel/CSV from Groww, Upstox, Kuvera, Coin, MF Central… Replaces that platform\'s list.', false],
+  tradebook: ['📒 Tradebook / fund transactions', 'Every buy and sell, for exact returns (XIRR) — Zerodha Console → Reports → Tradebook → Equity, or your fund app\'s transaction statement. Lines already saved are skipped.', false],
+  contract: ['🧾 Contract notes', 'The Excel/CSV version of your broker\'s equity contract notes. You can pick several at once (e.g. a whole month). Their trades are added like a tradebook.', true] };
+let UP_KIND = 'holdings';
+function uploadBlock(kind) {
+  const line = kind === 'tradebook' ? 'Upload your tradebook, fund transaction statement or contract notes for exact returns.' : 'Upload your latest holdings file (shares or mutual funds), a tradebook or contract notes.';
+  return `<div class="reset-zone up-zone"><button class="up-btn" onclick="askUpload('${kind}')">📤 Upload a file</button><div class="muted">${line} CSV or Excel (.xlsx). You'll check it and tap ✅ on Telegram before anything changes.</div></div>`;
+}
+function askUpload(kind) {
+  if (!kind) { const t = document.querySelector('.tab-btn.active'); kind = t && t.dataset.tab === 'returns' ? 'tradebook' : 'holdings'; }
+  UP_KIND = UP_KINDS[kind] ? kind : 'holdings';
+  showModal(`<h3>📤 Upload a file</h3>
+    <div class="up-kinds">${Object.keys(UP_KINDS).map(k => `<label class="up-kind${k === UP_KIND ? ' on' : ''}" data-k="${k}"><input type="radio" name="upk" value="${k}"${k === UP_KIND ? ' checked' : ''} onchange="setUpKind('${k}')"><span><b>${UP_KINDS[k][0]}</b><br>${esc(UP_KINDS[k][1])}</span></label>`).join('')}</div>
+    <label class="up-field">Whose account? <span class="muted">(optional — e.g. "Priya's Zerodha", for family accounts)</span><input type="text" id="up-note" maxlength="60" placeholder="Leave blank if it's your own"></label>
+    <label class="up-field"><span id="up-pick">Choose the file</span> (.csv or .xlsx, max 8 MB)<input type="file" id="up-file" accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
+    <p class="muted" style="font-size:11px">The file goes to your R2R Tracker bot on Telegram. It shows you a summary there, and only saves when you tap ✅. Password-protected PDFs can't be read — please download the Excel or CSV version.</p>
+    <div id="up-result"></div>
+    <div class="r2r-modal-btns" id="up-btns"><button onclick="closeModal()">Cancel</button><button class="up-go" id="up-go" onclick="doUpload()">Upload</button></div>`);
+  const card = document.querySelector('#r2r-modal .r2r-modal-card'); if (card) card.classList.add('up');
+  setUpKind(UP_KIND);
+}
+function setUpKind(k) {
+  UP_KIND = k;
+  document.querySelectorAll('#r2r-modal .up-kind').forEach(el => el.classList.toggle('on', el.dataset.k === k));
+  const f = document.getElementById('up-file'), multi = UP_KINDS[k][2];
+  if (f) { f.multiple = multi; f.value = ''; }
+  const pick = document.getElementById('up-pick'); if (pick) pick.textContent = multi ? 'Choose the contract note files' : 'Choose the file';
+}
+function readAsBase64(file) {
+  return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).replace(/^data:[^,]*,/, '')); r.onerror = () => rej(r.error); r.readAsDataURL(file); });
+}
+async function doUpload() {
+  const go = document.getElementById('up-go'), out = document.getElementById('up-result');
+  const show = (cls, msg, bot) => { out.innerHTML = `<p class="${cls}">${esc(msg).replace(/\n/g, '<br>')}</p>${bot ? `<div class="up-bot">${esc(bot)}</div>` : ''}`; };
+  const finish = (cls, msg, bot) => { show(cls, msg, bot); document.getElementById('up-btns').innerHTML = '<button onclick="closeModal()">Close</button>'; };
+  const files = [...(document.getElementById('up-file').files || [])];
+  if (!files.length) return show('err-msg', UP_KIND === 'contract' ? 'Please choose your contract note files first.' : 'Please choose the file first.');
+  const bad = files.find(f => !/\.(csv|xlsx)$/i.test(f.name));
+  if (bad) return show('err-msg', /\.xls$/i.test(bad.name) ? `${bad.name} is an old Excel (.xls) file. Please download it as .xlsx or .csv.` : /\.pdf$/i.test(bad.name) ? `${bad.name} is a PDF. Please download the Excel or CSV version, or send the PDF to the Tracker bot on Telegram.` : `${bad.name} isn't a CSV or Excel (.xlsx) file.`);
+  if (files.some(f => f.size > 8 * 1024 * 1024)) return show('err-msg', 'That file is too large (max 8 MB).');
+  if (files.length > 31) return show('err-msg', 'Up to 31 contract notes at a time, please.');
+  if (DEMO || !AUTH) return finish('err-msg', 'This is the demo — files can\'t be uploaded here.');
+  go.disabled = true; go.textContent = 'Reading… (up to a minute)';
+  try {
+    const payload = { cid: AUTH.c, k: AUTH.k, what: UP_KIND, note: (document.getElementById('up-note').value || '').trim(),
+      files: await Promise.all(files.map(async f => ({ name: f.name, data: await readAsBase64(f) }))) };
+    const r = await fetch(`${API_URL}?act=upload&t=${Date.now()}`, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'text/plain;charset=utf-8' }, redirect: 'follow' });
+    const txt = await r.text();
+    let j = null; try { j = JSON.parse(txt); } catch (e) { /* older backend answers "ok" */ }
+    if (!j) return finish('err-msg', 'Uploading from the dashboard isn\'t switched on yet — please ask Manuel. You can still send the file to the Tracker bot on Telegram.');
+    if (!j.ok) { go.disabled = false; go.textContent = 'Upload'; return show('err-msg', j.error || 'Something went wrong. Please try again.'); }
+    finish(j.asked ? 'ok-msg' : 'err-msg', (j.info ? j.info + '\n' : '') + j.message, j.asked && j.bot ? j.bot : '');
+  } catch (e) {
+    go.disabled = false; go.textContent = 'Upload';
+    show('err-msg', 'Could not reach the server — check your internet connection and try again. (If this keeps happening, uploads may not be switched on yet: ask Manuel.)');
+  }
+}
+
 
 // ── Mutual Funds tab: everything from the MF holdings statement(s)
 const MF_META = { Equity: ['#3b82f6', 'Equity funds', 'counted in Equity'], Hybrid: ['#06b6d4', 'Hybrid funds', 'counted in Equity'],
   Debt: ['#a855f7', 'Debt funds', 'counted in Debt'], Gold: ['#f0a500', 'Gold funds', 'counted in Gold'], Other: ['#64748b', 'Other funds', ''] };
 function renderFunds(d) {
   const list = d.assets.filter(a => a.kind === 'mf').sort((a, b) => b.value - a.value);
-  if (!list.length) { setHTML('funds-body', empty('No mutual funds yet. Send your mutual fund holdings statement (Excel or CSV from Kuvera, Groww, Coin, MF Central…) to the Tracker bot. Your funds are sorted into Equity, Hybrid, Debt and Gold here.')); return; }
+  if (!list.length) { setHTML('funds-body', empty('No mutual funds yet. Send your mutual fund holdings statement (Excel or CSV from Kuvera, Groww, Coin, MF Central…) to the Tracker bot. Your funds are sorted into Equity, Hybrid, Debt and Gold here.') + uploadBlock('holdings')); return; }
   const total = list.reduce((s, a) => s + a.value, 0);
   const by = {}; list.forEach(a => by[a.mfClass] = (by[a.mfClass] || 0) + a.value);
   const order = ['Equity', 'Hybrid', 'Debt', 'Gold', 'Other'].filter(k => by[k]);
@@ -1346,7 +1424,7 @@ function renderFunds(d) {
     const part = sortList(list.filter(a => a.mfClass === k), 'funds');
     html += `<div class="section-title">${MF_META[k][1]} <span class="tag amber" style="margin-left:4px">${fmtCr(by[k])}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(by[k], total).toFixed(1)}%${MF_META[k][2] ? ' · ' + MF_META[k][2] : ''}</span></div>` + fileTable(part, total, cols);
   });
-  setHTML('funds-body', html + resetBlock('funds'));
+  setHTML('funds-body', html + uploadBlock('holdings') + resetBlock('funds'));
 }
 
 // ── Returns tab: one tile per group showing only its XIRR; tap a tile for the holdings and details
@@ -1591,7 +1669,7 @@ function renderReturns(d) {
     const first = d.snapshots.map(s => s.date).sort((a, b) => a - b)[0];
     setHTML('returns-body', empty(first
       ? `Tracking started on ${fmtDate(first)}. Your first returns appear after the next month-end.<br><br>Want exact figures for your whole history straight away? Send the Tracker bot your <b>share tradebook</b> (Zerodha Console → Reports → Tradebook) and your <b>mutual fund transaction statement</b> (Excel/CSV from Kuvera, Groww, MF Central…).`
-      : `Returns aren't available yet. Your advisor will switch them on.<br><br>For exact figures, send the Tracker bot your <b>share tradebook</b> and your <b>mutual fund transaction statement</b> (Excel/CSV).`));
+      : `Returns aren't available yet. Your advisor will switch them on.<br><br>For exact figures, send the Tracker bot your <b>share tradebook</b> and your <b>mutual fund transaction statement</b> (Excel/CSV).`) + uploadBlock('tradebook'));
     return;
   }
   if (periods.length && !periods.includes(RET_PERIOD)) RET_PERIOD = periods.includes('1Y') ? '1Y' : periods[periods.length - 1];
@@ -1629,7 +1707,7 @@ function renderReturns(d) {
     <b>≈ Approx.</b> — from your month-end values, so profits booked on sales and dividends may be missed.<br>
     ${d.trend && d.trend.rows.length ? '<b>Trend charts</b> — your portfolio\'s value week by week, next to the same money in each index: the index line starts with your portfolio\'s value at the start of the range, and every rupee you put in or took out after that buys or sells index units in the same week. So SIPs and staggered buying are compared fairly. Index lines use low-cost index funds (dividends included). Returns are XIRR (% a year) for the chosen range, for you and for each index, so they can be compared directly; under a year the XIRR is annualised, so short-term swings look bigger. The smaller \"gain\" figure is the total gain over the period.<br>' : ''}
     ${periods.length ? 'Periods run from the month-end that many years ago to today.' : ''}${upd ? ` Worked out ${fmtDate(upd)}, updated every night.` : ''}</div></details>`;
-  setHTML('returns-body', html);
+  setHTML('returns-body', html + uploadBlock('tradebook'));
   drawTrends();
 }
 
