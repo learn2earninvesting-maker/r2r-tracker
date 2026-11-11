@@ -533,6 +533,7 @@
   .aa-ref b { color:var(--text); }
   .aa-hand { font-size:13px;color:var(--text2);background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:12px;padding:12px 16px;margin-bottom:8px; }
   .aa-hand .sort-chip { margin-left:6px; }
+  .aa-disc { font-size:13px;font-weight:600;line-height:1.5;color:var(--text);background:rgba(240,165,0,.14);border:1px solid rgba(240,165,0,.6);border-left-width:5px;border-radius:10px;padding:12px 16px;margin:8px 0 4px; }
   /* Stock Allocation Help */
   .tg-intro { background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:16px; }
   .tg-controls { display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:14px; }
@@ -1674,8 +1675,8 @@ function renderAllocate(d) {
       ${D.plain.length ? `<div>• 🏠 ${D.plain.map(esc).join(', ')} ${D.plain.length === 1 ? 'is' : 'are'} listed only as “Property”, so ${D.plain.length === 1 ? 'it is' : 'they are'} treated as ${aaPropKind({ type: 'Property', name: D.plain[0] }) === 'home' && D.plain.length === 1 ? 'your own home' : 'described by the name'}. To change it, set the Type in your sheet to <b>Home (self-occupied)</b> or <b>Rented / second property</b>.</div>` : ''}
       <div>• “Add only” shares your new money between the classes that are short, in proportion to how short each one is.</div>
       <div>• Brokerage, charges, exit loads and taxes are not included. Selling can create capital-gains tax, so check that before you sell.</div>
-      <div>• The investor types are general education to help you think, not advice for your situation. This is a calculator for your own planning, not a recommendation.</div></div>`;
-  setHTML('allocate-body', head + `<div class="table-wrap"><table class="data-table tg-table aa-table"><thead><tr>${cols.map((c, i) => `<th class="${[i && i !== 5 ? 'num' : '', [1, 2, 4].includes(i) ? 'tg-hm' : '', i === 0 ? 'tg-stk' : ''].join(' ').trim()}">${c}</th>`).join('')}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>` + refs + `<div id="aa-hand"></div>` + notes);
+      <div>• This is a calculator for your own planning.</div></div>`;
+  setHTML('allocate-body', head + `<div class="table-wrap"><table class="data-table tg-table aa-table"><thead><tr>${cols.map((c, i) => `<th class="${[i && i !== 5 ? 'num' : '', [1, 2, 4].includes(i) ? 'tg-hm' : '', i === 0 ? 'tg-stk' : ''].join(' ').trim()}">${c}</th>`).join('')}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>` + refs + `<div id="aa-hand"></div><div class="aa-disc">⚠️ All percentages on this page, including the investor types and the gold and real estate figures, are general guidance for education only. They are not investment advice or a recommendation for your situation.</div>` + notes);
   aaRefresh(); tgStatus();
 }
 function aaRefresh() {
