@@ -479,7 +479,7 @@
   @media (max-width:640px) { .pd-main { grid-template-columns:1fr;overflow:auto; } .pd-left { border-right:0;border-bottom:1px solid var(--border);display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:12px 14px;position:sticky;top:0;z-index:1;background:var(--card); } .pd-kind { flex:0 0 auto; } .pd-left h4 { display:none; } .pd-kind { width:auto;margin:0;padding:8px 12px;font-size:13px; } .pd-right { overflow:visible; } }
   .pf-empty { background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:18px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:16px; }
   .pf-sec { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin:8px 0 8px; }
-  body[data-tab="returns"] .fam-bar, body[data-tab="rebalance"] .fam-bar, body[data-tab="allocate"] .fam-bar { display:none !important; }   /* Performance and Stock Allocation Help are always the whole family */   /* Performance is always the whole family, so no name buttons there */
+  body[data-tab="returns"] .fam-bar, body[data-tab="rebalance"] .fam-bar, body[data-tab="allocate"] .fam-bar, body[data-tab="parameters"] .fam-bar { display:none !important; }   /* Performance and Stock Allocation Help are always the whole family */   /* Performance is always the whole family, so no name buttons there */
   .fam-bar { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px; }
   .fam-lbl { font-size:12px;color:var(--text2);font-weight:600;margin-right:2px; }
   .fam-chip { font:inherit;font-size:13px;font-weight:600;min-height:40px;padding:0 14px 0 5px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:8px; }
@@ -1194,7 +1194,7 @@ function renderAll(d) {
   const pl = pricesLine(d);
   setHTML('prices-asof', pl ? '⏱ ' + pl + '<br><span style="font-size:10px">Updates every hour on weekdays · share prices run about 20 min behind the market</span>' : '');
   renderOverview(d); renderAllocation(d); renderHoldings(d); renderAllocate(d); renderStocks(d); renderRebalance(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
-  renderPayments(d); renderParameters(d);   // renderFIRE / renderCashflow kept below, switched off
+  renderPayments(d); renderParameters(d.famMember && RAW_API ? model(famFilter(RAW_API, '*')) : d);   // Health Check is always the whole family · renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
 }
 
