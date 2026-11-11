@@ -476,7 +476,7 @@
   @media (max-width:640px) { .pd-main { grid-template-columns:1fr;overflow:auto; } .pd-left { border-right:0;border-bottom:1px solid var(--border);display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:12px 14px;position:sticky;top:0;z-index:1;background:var(--card); } .pd-kind { flex:0 0 auto; } .pd-left h4 { display:none; } .pd-kind { width:auto;margin:0;padding:8px 12px;font-size:13px; } .pd-right { overflow:visible; } }
   .pf-empty { background:var(--card);border:1px dashed var(--border);border-radius:14px;padding:18px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:16px; }
   .pf-sec { font-family:var(--syne);font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin:8px 0 8px; }
-  body[data-tab="returns"] .fam-bar, body[data-tab="rebalance"] .fam-bar { display:none !important; }   /* Performance and Stock Allocation Help are always the whole family */   /* Performance is always the whole family, so no name buttons there */
+  body[data-tab="returns"] .fam-bar, body[data-tab="rebalance"] .fam-bar, body[data-tab="allocate"] .fam-bar { display:none !important; }   /* Performance and Stock Allocation Help are always the whole family */   /* Performance is always the whole family, so no name buttons there */
   .fam-bar { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px; }
   .fam-lbl { font-size:12px;color:var(--text2);font-weight:600;margin-right:2px; }
   .fam-chip { font:inherit;font-size:13px;font-weight:600;min-height:40px;padding:0 14px 0 5px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:8px; }
@@ -500,6 +500,39 @@
   .tag.green { background:rgba(34,197,94,.15);color:var(--pos); }
   .table-wrap { overflow-x:auto;margin-bottom:24px; }
   .table-wrap .data-table { margin-bottom:0; }
+  /* Asset Allocation Help */
+  .aa-rule { background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:14px; }
+  .aa-rule b { color:var(--text); }
+  .aa-chip.c.on { background:rgba(59,130,246,.18);border-color:#3b82f6; }
+  .aa-chip.b.on { background:rgba(20,184,166,.18);border-color:#14b8a6; }
+  .aa-chip.g.on { background:rgba(240,165,0,.2);border-color:#f0a500; }
+  .aa-chip.on { color:var(--text) !important;font-weight:700; }
+  .aa-chip.n { border-color:var(--border);color:var(--text2); }
+  .aa-now { display:none;font:600 11px var(--mono);color:var(--text2);margin-top:2px; }
+  @media (max-width:700px) { .aa-now { display:block; } .tg-table.aa-table tbody td.aa-cls { min-width:128px;max-width:140px;width:140px; } .aa-table .aa-sub { display:none; } .tg-table.aa-table td.aa-plan { white-space:normal;min-width:112px; } .aa-table .tg-act { font-size:11px;padding:3px 6px;white-space:nowrap; } .tg-table.aa-table td, .tg-table.aa-table th { padding:9px 6px; } .aa-table .tg-in { width:54px; } }
+  .aa-chip.n.on { background:var(--bg3);border-color:var(--text3); }
+  .aa-who { font-size:14px;font-weight:700;line-height:1.55;color:var(--text);padding:13px 16px;border-radius:10px;border:1px solid var(--border);border-left-width:5px;margin:10px 0 16px; }
+  .aa-who.c { background:rgba(59,130,246,.16);border-color:#3b82f6; }
+  .aa-who.b { background:rgba(20,184,166,.16);border-color:#14b8a6; }
+  .aa-who.g { background:rgba(240,165,0,.18);border-color:#f0a500; }
+  .aa-who.n { background:var(--bg3);font-weight:500;font-size:13px;color:var(--text2); }
+  .aa-check { display:flex;gap:9px;align-items:flex-start;font-size:12px;color:var(--text2);max-width:290px;cursor:pointer; }
+  .aa-check input { margin-top:2px;width:16px;height:16px;accent-color:var(--teal);flex:none; }
+  .aa-check b { color:var(--text);font-weight:600; }
+  .aa-check small { display:block;color:var(--text3);font-size:10px;margin-top:1px;line-height:1.4; }
+  .aa-table td.aa-cls { white-space:normal;min-width:190px; }
+  .aa-bar { position:relative;height:6px;border-radius:4px;background:var(--bg3);margin:6px 0 4px;max-width:240px; }
+  .aa-bar-fill { height:100%;border-radius:4px; }
+  .aa-bar-tick { position:absolute;top:-3px;width:2px;height:12px;background:var(--text);display:none; }
+  .aa-sub { font-size:10px;line-height:1.5; }
+  .aa-plan small { display:block;font-size:10px;margin-top:3px;white-space:normal; }
+  .aa-warn { color:var(--amber);font-weight:600;font-size:12px; }
+  small.aa-warn { font-weight:400; }
+  .aa-ref { display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--text2);padding:10px 14px;border:1px dashed var(--border);border-radius:10px;margin:-12px 0 20px; }
+  .aa-ref + .aa-ref { margin-top:-12px; }
+  .aa-ref b { color:var(--text); }
+  .aa-hand { font-size:13px;color:var(--text2);background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:12px;padding:12px 16px;margin-bottom:8px; }
+  .aa-hand .sort-chip { margin-left:6px; }
   /* Stock Allocation Help */
   .tg-intro { background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.55;margin-bottom:16px; }
   .tg-controls { display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;margin-bottom:14px; }
@@ -672,6 +705,9 @@
   <!-- HOLDINGS -->
   <section class="panel" id="panel-holdings"><div id="holdings-body"></div></section>
 
+  <!-- ASSET ALLOCATION HELP (target % per asset class → money to add / reduce) -->
+  <section class="panel" id="panel-allocate"><div id="allocate-body"></div></section>
+
   <!-- SHARES (from the broker holdings file) -->
   <section class="panel" id="panel-stocks"><div id="stocks-body"></div></section>
 
@@ -754,7 +790,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8
 // ═══════════════════════════════════════════════════════
 const TABS = [
   ['overview','Assets Overview and Allocation','🏠','Overview'],
-  ['holdings','Asset / Liability Breakdown','📊','Breakdown'], ['stocks','Indian Stocks','📈','Stocks'], ['rebalance','Stock Allocation Help','🎯','Rebalance'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'], ['returns','Performance','📐','Performance'],
+  ['holdings','Asset / Liability Breakdown','📊','Breakdown'], ['allocate','Asset Allocation Help','🧭','Allocate'], ['stocks','Indian Stocks','📈','Stocks'], ['rebalance','Stock Allocation Help','🎯','Rebalance'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'], ['returns','Performance','📐','Performance'],
   ['insurance','Insurance','🛡️','Insure'],
   ['payments','Payments','📅','Payments'], ['parameters','🩺 Health Check','🩺','Health'],
   // FIRE Tracker and Cash Flow are switched off for now (they need income/spending data).
@@ -1148,7 +1184,7 @@ function renderAll(d) {
   set('last-updated', (DEMO ? 'DEMO · ' : '') + (u && !isNaN(u) ? 'Sheet updated ' + u.toLocaleString('en-IN', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : 'Updated'));
   const pl = pricesLine(d);
   setHTML('prices-asof', pl ? '⏱ ' + pl + '<br><span style="font-size:10px">Updates every hour on weekdays · share prices run about 20 min behind the market</span>' : '');
-  renderOverview(d); renderAllocation(d); renderHoldings(d); renderStocks(d); renderRebalance(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
+  renderOverview(d); renderAllocation(d); renderHoldings(d); renderAllocate(d); renderStocks(d); renderRebalance(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
   renderPayments(d); renderParameters(d);   // renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
 }
@@ -1457,9 +1493,10 @@ async function tgLoadServer() {
       try { localStorage.setItem('r2r_stars', JSON.stringify({ codes: TG_STARS.codes, names: TG_STARS.names, rules: TG_RULES })); } catch (e) {}
     }
     let dirty = false; try { dirty = localStorage.getItem(TG_LS() + '_dirty') === '1'; } catch (e) {}
-    if (dirty) { tgPush('*'); if (LAST_MODEL) renderRebalance(LAST_MODEL); return; }   // changes made offline → send them up
+    if (j.aa && j.aa.above && j.aa.below) { AA_RULES = Object.assign({}, AA_RULES, j.aa); try { localStorage.setItem('r2r_aa_rules', JSON.stringify(j.aa)); } catch (e) {} }
+    if (dirty) { tgPush('*').then(() => { if (TG[AA_M]) tgPush(AA_M); }); if (LAST_MODEL) { renderRebalance(LAST_MODEL); renderAllocate(LAST_MODEL); } return; }   // changes made offline → send them up
     TG = j.targets || {}; tgKeepLocal(false);
-    if (LAST_MODEL) renderRebalance(LAST_MODEL);
+    if (LAST_MODEL) { renderRebalance(LAST_MODEL); renderAllocate(LAST_MODEL); }
   } catch (e) { /* offline — device copy is used */ }
 }
 async function tgPush(m) {
@@ -1480,10 +1517,252 @@ function tgSave() {
   tgStatus('pending');
 }
 function tgStatus(s) {
-  const e = document.getElementById('tg-status'); if (!e) return;
   const map = { pending: '✏️ Saving…', saving: '⏳ Saving…', 'saved-sheet': '✓ Targets saved to your sheet',
     'saved-device': DEMO ? '✓ Saved on this device (demo)' : TG_SERVER === 'off' ? '✓ Saved on this device only' : '✓ Saved on this device · will copy to your sheet when back online' };
-  e.textContent = s ? map[s] || '' : (TG_SERVER === 'on' ? 'Targets are saved to your sheet automatically' : DEMO ? 'Demo · targets stay on this device' : 'Targets are saved automatically');
+  const txt = s ? map[s] || '' : (TG_SERVER === 'on' ? 'Targets are saved to your sheet automatically' : DEMO ? 'Demo · targets stay on this device' : 'Targets are saved automatically');
+  ['tg-status', 'aa-status'].forEach(id => { const e = document.getElementById(id); if (e) e.textContent = txt; });
+}
+
+// ═══════════════════════════════════════════════════════
+//  ASSET ALLOCATION HELP — the same idea as Stock Allocation Help, one level up: a target % for each
+//  asset class (Equity, Debt, Liquid, Gold, REITs / InvITs / Real estate) and how much money to add
+//  or reduce in each to get there. Always the whole family together.
+//  • Corpus = everything except the self-occupied home. Rented / second property counts unless the
+//    client switches it off. The home is shown for reference only.
+//  • Presets (Conservative / Balanced / Growth) and their notes come from TG_AA in Targets.gs; the
+//    numbers below are only the fallback. Gold and real estate: 10% each from ₹1 crore, 8% below.
+//  • Targets are saved with the stock targets (Targets tab, Member = "Asset classes").
+// ═══════════════════════════════════════════════════════
+const AA_M = 'asset classes', AA_RENT_KEY = 'RENTED PROPERTY COUNTED';
+const AA_KEYS = ['EQUITY', 'DEBT', 'LIQUID', 'GOLD', 'REAL ESTATE', 'OTHER'];
+const AA_META = {
+  'EQUITY': { label: 'Equity', icon: '📈', color: '#3b82f6' }, 'DEBT': { label: 'Debt', icon: '🏦', color: '#a855f7' },
+  'LIQUID': { label: 'Liquid', icon: '💧', color: '#22c55e' }, 'GOLD': { label: 'Gold', icon: '🪙', color: '#f0a500' },
+  'REAL ESTATE': { label: 'REITs / InvITs / Real estate', icon: '🏗️', color: '#06b6d4' }, 'OTHER': { label: 'Other', icon: '📦', color: '#94a3b8' } };
+let AA_RULES = { line: 10000000,   // order: Equity, Debt, Liquid, Gold, Real estate
+  above: { conservative: [34, 36, 10, 10, 10], balanced: [53, 22, 5, 10, 10], growth: [66, 12, 2, 10, 10] },
+  below: { conservative: [36, 38, 10, 8, 8], balanced: [56, 23, 5, 8, 8], growth: [69, 13, 2, 8, 8] },
+  notes: { conservative: 'Conservative often suits someone who needs this money within about 5 years, is close to or in retirement, or would lose sleep over a 20% fall.',
+    balanced: 'Balanced often suits someone with 5 to 10 years to go, a steady income, and the patience to sit through a bad year or two.',
+    growth: 'Growth often suits someone with 10 years or more, a stable income, an emergency fund already in place, and who has lived through a 30–40% fall without selling.' } };
+const AA_PRESETS = [['conservative', 'Conservative', 'c'], ['balanced', 'Balanced', 'b'], ['growth', 'Growth', 'g']];
+const AA_LOCK_RE = /\b(epf|vpf|ppf|nps|ssy|sukanya|gratuity|superannuation|provident)\b/i;
+let AA_D = null, AA_NEW = 0, AA_ONLY = true, AA_PRESET = '', AA_SAVE_T = null;
+const AA_LS = () => 'r2r_aa_' + (DEMO ? 'demo' : (AUTH && AUTH.c) || 'x');
+(function aaInit() {
+  try { const o = JSON.parse(localStorage.getItem('r2r_aa_rules') || 'null'); if (o && o.above && o.below) AA_RULES = Object.assign({}, AA_RULES, o); } catch (e) {}
+  try { const o = JSON.parse(localStorage.getItem(AA_LS()) || 'null'); if (o) { AA_ONLY = o.only !== false; AA_PRESET = o.preset || ''; } } catch (e) {}
+})();
+const aaMine = () => (TG[AA_M] = TG[AA_M] || {});
+const aaRentOn = () => Number(aaMine()[AA_RENT_KEY]) !== 0 || aaMine()[AA_RENT_KEY] === undefined;
+const aaHas = k => { const v = aaMine()[k]; return v !== undefined && v !== null && v !== ''; };
+const aaR1 = n => Math.round(n * 10) / 10;
+const aaKeepUi = () => { try { localStorage.setItem(AA_LS(), JSON.stringify({ only: AA_ONLY, preset: AA_PRESET })); } catch (e) {} };
+function aaSave() {
+  tgKeepLocal(true);
+  clearTimeout(AA_SAVE_T);
+  AA_SAVE_T = setTimeout(() => tgPush(AA_M), 1200);
+  tgStatus('pending');
+}
+// A property is the family's own home unless its type, name or notes say it is rented / a second property / land.
+function aaPropKind(a) {
+  const t = String(a.type || '').toLowerCase(), s = (t + ' ' + a.name + ' ' + (a.notes || '')).toLowerCase();
+  if (/self|home|residence|primary/.test(t)) return 'home';
+  return /rent|second|2nd|let ?out|leased|tenant|plot|land|commercial|shop|office|investment/.test(s) ? 'rented' : 'home';
+}
+function aaBuild(d) {
+  const rent = aaRentOn(), rows = {};
+  AA_KEYS.forEach(k => { rows[k] = { key: k, value: 0, locked: 0, lump: 0, parts: {}, lockNames: {} }; });
+  let home = 0, rented = 0, plain = [];
+  d.assets.forEach(a => {
+    const v = a.value || 0; if (!(v > 0)) return;
+    let k, part = a.kind === 'stock' ? (a.type === 'Stocks' ? 'Stocks' : a.type === 'ETF' ? 'ETFs' : a.type) : a.type;
+    if (a.cls === 'Real Estate') {
+      if (/^property$/i.test(a.type)) plain.push(a.name);
+      if (aaPropKind(a) === 'home') { home += v; return; }
+      rented += v; if (!rent) return;
+      k = 'REAL ESTATE'; rows[k].lump += v; part = 'Rented / second property';
+    } else k = a.cls === 'REITs/InvITs' ? 'REAL ESTATE' : AA_KEYS.includes(String(a.cls).toUpperCase()) ? String(a.cls).toUpperCase() : 'OTHER';
+    rows[k].value += v;
+    rows[k].parts[part] = (rows[k].parts[part] || 0) + v;
+    if (AA_LOCK_RE.test(a.type + ' ' + a.name)) { rows[k].locked += v; rows[k].lockNames[a.type] = 1; }
+  });
+  const corpus = AA_KEYS.reduce((s, k) => s + rows[k].value, 0);
+  const list = AA_KEYS.filter(k => k !== 'OTHER' || rows[k].value > 0 || aaHas('OTHER')).map(k => rows[k]);
+  return { rows, list, corpus, home, rented, rent, plain, big: corpus >= AA_RULES.line };
+}
+function aaPresetTargets(name, D) {
+  const set = ((D.big ? AA_RULES.above : AA_RULES.below) || {})[name]; if (!set) return null;
+  const oth = D.rows.OTHER.value ? aaR1(pctOf(D.rows.OTHER.value, D.corpus)) : 0, f = (100 - oth) / 100, t = {};
+  AA_KEYS.slice(0, 5).forEach((k, i) => { t[k] = aaR1(Number(set[i]) * f); });
+  if (oth) t.OTHER = oth;
+  t.EQUITY = aaR1(t.EQUITY + 100 - Object.values(t).reduce((s, v) => s + v, 0));   // rounding left-over goes to equity
+  return t;
+}
+function aaCalc(D) {
+  const t = aaMine(), nm = AA_NEW || 0, nt = Math.max(0, D.corpus + nm);
+  const rows = D.list.map(r => {
+    const has = aaHas(r.key), tgt = has ? Number(t[r.key]) : null;
+    return { r, has, tgt, cur: pctOf(r.value, D.corpus), gap: has ? tgt / 100 * nt - r.value : 0, amt: 0, stuck: 0, why: '' };
+  });
+  const short = rows.reduce((s, x) => s + Math.max(0, x.gap), 0);
+  rows.forEach(x => {
+    if (!x.has) return;
+    x.on = nt > 0 && Math.abs(x.gap) / nt * 100 < 0.5;
+    if (x.on) return;
+    if (x.gap > 0) x.amt = AA_ONLY ? (short > 0 && nm > 0 ? Math.min(x.gap, nm * x.gap / short) : 0) : x.gap;
+    else if (!AA_ONLY) {
+      const can = Math.max(0, x.r.value - x.r.locked - x.r.lump), rem = Math.min(-x.gap, can);
+      x.amt = -rem; x.stuck = -x.gap - rem;
+      x.why = x.stuck > 1 ? (x.r.lump && x.r.locked ? 'both' : x.r.lump ? 'prop' : 'lock') : '';
+    }
+  });
+  const buy = rows.reduce((s, x) => s + Math.max(0, x.amt), 0), sell = rows.reduce((s, x) => s + Math.max(0, -x.amt), 0);
+  const setN = rows.filter(x => x.has).length, planned = rows.reduce((s, x) => s + (x.has ? x.tgt : 0), 0);
+  return { rows, nm, nt, buy, sell, left: nm - buy + sell, after: D.corpus + buy - sell, setN, planned };
+}
+
+function renderAllocate(d) {
+  if (FAM_SEL !== '*' && RAW_API) d = model(RAW_API);   // always the whole family
+  const D = AA_D = aaBuild(d);
+  if (!(D.corpus > 0)) { setHTML('allocate-body', empty('Nothing to plan yet. Once your stocks, mutual funds and other assets are in, this page shows how your money is split between equity, debt, liquid, gold and real estate, and helps you plan the split you want.')); return; }
+  const t = aaMine(), fam = famMembers(RAW_API || {}).length > 1;
+  const partsTxt = r => { const p = Object.keys(r.parts).sort((a, b) => r.parts[b] - r.parts[a]);
+    return p.slice(0, 3).map(k => `${esc(k)} ${fmtCr(r.parts[k])}`).join(' · ') + (p.length > 3 ? ` · +${p.length - 3} more` : ''); };
+  const lineCr = fmtCr(AA_RULES.line);
+  const pa = (AA_RULES.above.balanced || [])[3], pb = (AA_RULES.below.balanced || [])[3];
+  const head = `<div class="tg-intro">
+      <div><b>How it works</b> · Pick the kind of investor closest to you, or type your own <b>target %</b> for each asset class. The table shows how much money to add or reduce in each class to get there.</div>
+      ${fam ? `<div class="muted" style="margin-top:6px">👨‍👩‍👧 This page is for the <b style="color:var(--text)">whole family together</b>.</div>` : ''}
+    </div>
+    <div class="aa-rule">${D.big
+      ? `🧭 Your corpus is <b>${fmtCr(D.corpus)}</b>, above ${lineCr}: about <b>${pa}% each</b> is suggested for gold and for REITs / InvITs / real estate.`
+      : `🧭 Your corpus is <b>${fmtCr(D.corpus)}</b>, under ${lineCr}: <b>${pb}% each</b> is also good for gold and for REITs / InvITs / real estate. Move towards ${pa}% as your corpus grows past ${lineCr}.`}</div>
+    <div class="tg-quick" style="margin-bottom:0"><span class="tg-ql">Investor type</span>
+      ${AA_PRESETS.map(p => `<button class="sort-chip aa-chip ${p[2]}" data-p="${p[0]}" onclick="aaFill('${p[0]}')">${p[1]}</button>`).join('')}
+      <button class="sort-chip aa-chip n" data-p="current" onclick="aaFill('current')">Copy current %</button>
+      <button class="sort-chip aa-chip n" data-p="clear" onclick="aaFill('clear')">Clear all</button></div>
+    <div class="aa-who n" id="aa-who"></div>
+    <div class="tg-controls">
+      <label class="tg-fresh">New money to invest (₹)<small>Leave blank if you are only moving money around</small>
+        <input type="number" inputmode="decimal" step="any" min="0" id="aa-new" value="${AA_NEW || ''}" placeholder="0" oninput="aaNew(this.value)"></label>
+      <label class="aa-check"><input type="checkbox" id="aa-only" ${AA_ONLY ? 'checked' : ''} onchange="aaOnly(this.checked)"><span><b>Add only, don't sell</b><small>New money goes to the classes that are short. Nothing is sold, so no tax or exit load.</small></span></label>
+      ${D.rented > 0 ? `<label class="aa-check"><input type="checkbox" id="aa-rent" ${D.rent ? 'checked' : ''} onchange="aaRent(this.checked)"><span><b>Count rented / second property</b><small>${fmtCr(D.rented)} · switch off to leave it out of the corpus and the targets</small></span></label>` : ''}
+    </div>
+    <div class="tg-meter-wrap"><div class="tg-meter"><div class="tg-meter-fill" id="aa-meter-fill"></div></div><div id="aa-meter-txt" class="tg-meter-txt"></div></div>
+    <div class="kpi-grid" id="aa-kpis"></div>`;
+  const cols = ['Asset class', 'Current value', 'Current %', 'Target %', 'Gap', 'Add / reduce (₹)', '% after'];
+  const body = D.list.map((r, i) => { const m = AA_META[r.key];
+    return `<tr id="aa-r${i}">
+      <td class="tg-stk aa-cls"><span style="color:var(--text)">${m.icon} ${m.label}</span>
+        <div class="aa-bar"><div class="aa-bar-fill" style="width:${Math.min(100, pctOf(r.value, D.corpus)).toFixed(1)}%;background:${m.color}"></div><div class="aa-bar-tick" id="aa-tick${i}"></div></div>
+        <div class="aa-now">Now ${tgFmtPct(pctOf(r.value, D.corpus))} · ${fmtCr(r.value)}${r.locked ? ' · 🔒 ' + fmtCr(r.locked) : ''}</div>
+        <div class="muted aa-sub">${partsTxt(r) || 'nothing here yet'}${r.locked ? `<br>🔒 ${fmtCr(r.locked)} locked (${esc(Object.keys(r.lockNames).join(', '))})` : ''}</div></td>
+      <td class="num tg-hm">${fmtINR(Math.round(r.value))}</td>
+      <td class="num tg-hm">${tgFmtPct(pctOf(r.value, D.corpus))}</td>
+      <td class="num"><input class="tg-in" type="number" inputmode="decimal" min="0" max="100" step="any" id="aa-in${i}" value="${t[r.key] ?? ''}" placeholder="—" aria-label="Target % for ${m.label}" oninput="aaSet(${i}, this.value)"></td>
+      <td class="num tg-hm" id="aa-gap${i}"></td>
+      <td id="aa-amt${i}" class="aa-plan"></td>
+      <td class="num" id="aa-ap${i}"></td></tr>`; }).join('');
+  const foot = `<tr><td class="tg-stk">Corpus</td><td class="num tg-hm">${fmtINR(Math.round(D.corpus))}</td><td class="num tg-hm">100%</td><td class="num" id="aa-f-tgt"></td><td class="tg-hm"></td><td id="aa-f-amt"></td><td class="num" id="aa-f-aft"></td></tr>`;
+  const refs = (D.rented > 0 && !D.rent ? `<div class="aa-ref"><span>🏢 Rented / second property · <b>${fmtCr(D.rented)}</b></span><span class="muted">Shown for reference. Not in the corpus or the targets.</span></div>` : '') +
+    (D.home > 0 ? `<div class="aa-ref"><span>🏠 Self-occupied home · <b>${fmtCr(D.home)}</b></span><span class="muted">Shown for reference. Not in the corpus or the targets.</span></div>` : '');
+  const notes = `<div class="muted tg-notes">
+      <div id="aa-status" style="color:var(--teal);margin-bottom:4px"></div>
+      <div>• Corpus = all your assets except the home you live in. Hybrid mutual funds are counted as equity, the same as on the Breakdown tab.</div>
+      <div>• 🔒 EPF, PPF, NPS, SSY and similar are counted in your %, but this page never asks you to take money out of them. A property is never asked to be sold in parts.</div>
+      ${D.plain.length ? `<div>• 🏠 ${D.plain.map(esc).join(', ')} ${D.plain.length === 1 ? 'is' : 'are'} listed only as “Property”, so ${D.plain.length === 1 ? 'it is' : 'they are'} treated as ${aaPropKind({ type: 'Property', name: D.plain[0] }) === 'home' && D.plain.length === 1 ? 'your own home' : 'described by the name'}. To change it, set the Type in your sheet to <b>Home (self-occupied)</b> or <b>Rented / second property</b>.</div>` : ''}
+      <div>• “Add only” shares your new money between the classes that are short, in proportion to how short each one is.</div>
+      <div>• Brokerage, charges, exit loads and taxes are not included. Selling can create capital-gains tax, so check that before you sell.</div>
+      <div>• The investor types are general education to help you think, not advice for your situation. This is a calculator for your own planning, not a recommendation.</div></div>`;
+  setHTML('allocate-body', head + `<div class="table-wrap"><table class="data-table tg-table aa-table"><thead><tr>${cols.map((c, i) => `<th class="${[i && i !== 5 ? 'num' : '', [1, 2, 4].includes(i) ? 'tg-hm' : '', i === 0 ? 'tg-stk' : ''].join(' ').trim()}">${c}</th>`).join('')}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>` + refs + `<div id="aa-hand"></div>` + notes);
+  aaRefresh(); tgStatus();
+}
+function aaRefresh() {
+  const D = AA_D; if (!D) return;
+  const c = aaCalc(D);
+  c.rows.forEach((x, i) => {
+    const tick = document.getElementById('aa-tick' + i);
+    if (tick) { tick.style.display = x.has ? 'block' : 'none'; tick.style.left = Math.min(100, x.tgt || 0) + '%'; }
+    const g = x.has ? x.tgt - pctOf(x.r.value, c.nt) : 0;
+    setHTML('aa-gap' + i, !x.has ? '<span class="muted">—</span>' : `<span class="${Math.abs(g) < 0.05 ? 'muted' : g > 0 ? 'gain-pos' : 'gain-neg'}">${tgSign(g, v => v.toFixed(2))}%</span>`);
+    let plan = '<span class="muted">No target</span>';
+    if (x.has && x.on) plan = '<span class="muted">On target</span>';
+    else if (x.has && x.gap > 0) plan = x.amt > 0.5 ? `<span class="tg-act buy">Add ${fmtINR(Math.round(x.amt))}</span>` + (x.gap - x.amt > 1 ? `<small class="muted">still short by ${fmtCr(x.gap - x.amt)}</small>` : '')
+      : `<span class="aa-warn">Short by ${fmtCr(x.gap)}</span><small class="muted">add new money to fill it</small>`;
+    else if (x.has && AA_ONLY) plan = `<span class="aa-warn">Over by ${fmtCr(-x.gap)}</span><small class="muted">leave as is · no new money here</small>`;
+    else if (x.has) plan = (x.amt < -0.5 ? `<span class="tg-act sell">Reduce ${fmtINR(Math.round(-x.amt))}</span>` : '') +
+      (x.why ? `<small class="aa-warn">${fmtCr(x.stuck)} over · ${x.why === 'prop' ? 'a property can\'t be sold in parts' : x.why === 'lock' ? 'locked, stays where it is' : 'locked or in property'}</small>` : '');
+    setHTML('aa-amt' + i, plan);
+    set('aa-ap' + i, c.after ? tgFmtPct(pctOf(x.r.value + x.amt, c.after)) : '—');
+    const tr = document.getElementById('aa-r' + i); if (tr) tr.classList.toggle('tg-set', x.has);
+  });
+  set('aa-f-tgt', c.setN ? aaR1(c.planned).toFixed(1) + '%' : '—');
+  const net = c.buy - c.sell;
+  setHTML('aa-f-amt', net ? `<span class="${net > 0 ? 'gain-pos' : 'gain-neg'}">${tgSign(net, v => fmtINR(Math.round(v)))}</span>` : '₹0');
+  set('aa-f-aft', '100%');
+  const p = c.planned, ok = Math.abs(p - 100) < 0.1, fill = document.getElementById('aa-meter-fill');
+  if (fill) { fill.style.width = (c.setN ? Math.min(100, p) : 0) + '%'; fill.style.background = ok ? 'var(--green)' : p > 100 ? 'var(--red)' : 'var(--amber)'; }
+  setHTML('aa-meter-txt', !c.setN ? 'Pick an investor type above, or type a target % for each class, to start.' :
+    `Targets add up to <b>${p.toFixed(1)}%</b> of 100%` + (ok ? ' · <span class="gain-pos">adds up ✓</span>' : p < 100 ? ` · <span style="color:var(--amber)">${(100 - p).toFixed(1)}% not allotted yet</span>` : ` · <span class="gain-neg">${(p - 100).toFixed(1)}% over</span>`) +
+    (!ok ? ` <button class="sort-chip tg-scale" onclick="aaFill('scale')" title="Keeps the same proportions between your targets">↔ Scale targets to 100%</button>` : ''));
+  const k = (label, val, sub, color) => `<div class="kpi" style="--accent:${color};"><div class="kpi-label">${label}</div><div class="kpi-val">${val}</div><div class="kpi-sub">${sub}</div></div>`;
+  const leftK = !c.setN ? k('Money needed', '—', 'set targets to see it', '#64748b')
+    : c.left >= -0.5 ? k(c.nm ? 'New money left over' : 'Cash freed up', fmtCr(Math.max(0, c.left)), c.nm ? `of ${fmtINR(c.nm)} new money` : 'reduces minus adds', '#22c55e')
+    : k('Extra money needed', fmtCr(-c.left), c.nm ? `on top of ${fmtINR(c.nm)} new money` : 'adds minus reduces', '#ef4444');
+  setHTML('aa-kpis', k('Corpus', fmtCr(D.corpus), (D.home > 0 ? 'home not counted' : 'all assets') + (D.rented > 0 ? (D.rent ? ' · rented property counted' : ' · rented property left out') : ''), '#f0a500') +
+    k('Total to add', fmtCr(c.buy), `${c.rows.filter(x => x.amt > 0.5).length} class${c.rows.filter(x => x.amt > 0.5).length === 1 ? '' : 'es'}`, '#22c55e') +
+    k('Total to reduce', fmtCr(c.sell), AA_ONLY ? 'add only is on' : `${c.rows.filter(x => x.amt < -0.5).length} class${c.rows.filter(x => x.amt < -0.5).length === 1 ? '' : 'es'}`, '#ef4444') + leftK);
+  const eq = c.rows.find(x => x.r.key === 'EQUITY'), hasStocks = LAST_MODEL && LAST_MODEL.assets.some(a => a.kind === 'stock' && a.cls === 'Equity');
+  setHTML('aa-hand', eq && eq.amt > 0.5 && hasStocks ? `<div class="aa-hand">➡️ Equity gets <b>${fmtINR(Math.round(eq.amt))}</b>. <button class="sort-chip" onclick="aaToStocks(${Math.round(eq.amt)})">🎯 Plan the stocks in Stock Allocation Help</button><div class="muted" style="font-size:11px;margin-top:4px">Equity also includes your mutual funds. If only part of this goes into stocks, change the amount there.</div></div>` : '');
+  // investor-type note + which button is on
+  const pr = AA_PRESETS.find(q => q[0] === AA_PRESET), who = document.getElementById('aa-who');
+  if (who) { who.className = 'aa-who ' + (pr ? pr[2] : 'n');
+    who.textContent = pr ? (AA_RULES.notes || {})[pr[0]] || '' : AA_PRESET === 'current' ? 'Targets are set to what you hold today. Change any box to plan a shift.' : c.setN ? 'Your own targets. They should add up to 100%.' : 'Tap an investor type to see who it usually suits and to fill in its targets. You can change any number afterwards.'; }
+  document.querySelectorAll('.aa-chip').forEach(b => b.classList.toggle('on', b.dataset.p === AA_PRESET));
+}
+function aaSet(i, v) {
+  const r = AA_D && AA_D.list[i]; if (!r) return;
+  const t = aaMine(), n = parseFloat(v);
+  if (v === '' || isNaN(n)) delete t[r.key]; else t[r.key] = Math.max(0, Math.min(100, Math.round(n * 100) / 100));
+  AA_PRESET = 'own'; aaKeepUi(); aaRefresh(); aaSave();
+}
+function aaNew(v) { const n = parseFloat(v); AA_NEW = isNaN(n) || n < 0 ? 0 : n; aaRefresh(); }
+function aaOnly(on) { AA_ONLY = !!on; aaKeepUi(); aaRefresh(); }
+function aaRent(on) {
+  aaMine()[AA_RENT_KEY] = on ? 1 : 0;
+  if (LAST_MODEL) { AA_D = aaBuild(FAM_SEL !== '*' && RAW_API ? model(RAW_API) : LAST_MODEL);
+    if (AA_PRESETS.some(p => p[0] === AA_PRESET)) Object.assign(aaMine(), aaPresetTargets(AA_PRESET, AA_D));   // the corpus changed, so the 8% / 10% rule may have too
+    renderAllocate(LAST_MODEL); }
+  aaSave();
+}
+function aaFill(how) {
+  const D = AA_D; if (!D) return;
+  const t = aaMine(), keys = D.list.map(r => r.key);
+  if (how === 'clear' && keys.some(aaHas) && !confirm('Clear all your asset class targets?')) return;
+  if (how === 'scale') {
+    const sum = keys.reduce((s, k) => s + (aaHas(k) ? Number(t[k]) : 0), 0); if (!sum) return;
+    keys.forEach(k => { if (aaHas(k)) t[k] = aaR1(Number(t[k]) * 100 / sum); });
+    const big = keys.filter(aaHas).sort((a, b) => t[b] - t[a])[0];
+    t[big] = aaR1(t[big] + 100 - keys.reduce((s, k) => s + (aaHas(k) ? Number(t[k]) : 0), 0));
+    AA_PRESET = 'own';
+  } else {
+    AA_KEYS.forEach(k => delete t[k]);
+    if (how === 'current') {
+      D.list.forEach(r => { t[r.key] = aaR1(pctOf(r.value, D.corpus)); });
+      const big = D.list.slice().sort((a, b) => b.value - a.value)[0].key;
+      t[big] = aaR1(t[big] + 100 - D.list.reduce((s, r) => s + t[r.key], 0));
+    } else if (how !== 'clear') { const p = aaPresetTargets(how, D); if (!p) return; Object.assign(t, p); }
+    AA_PRESET = how === 'clear' ? '' : how;
+  }
+  aaKeepUi();
+  if (LAST_MODEL) renderAllocate(LAST_MODEL);
+  aaSave();
+}
+function aaToStocks(amt) {
+  TG_FRESH = amt;
+  if (LAST_MODEL) renderRebalance(LAST_MODEL);
+  switchTab('rebalance');
 }
 
 function tgRowsOf(d) {   // same holdings as the Indian Stocks tab, one line per stock (family members / platforms added together)
