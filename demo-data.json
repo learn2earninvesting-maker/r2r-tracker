@@ -62,6 +62,11 @@
     "Months of expenses to hold as liquid buffer"
    ],
    [
+    "Annual Income (₹)",
+    2400000,
+    "Family's total yearly income (all earning members). Used for the Life Cover check"
+   ],
+   [
     "Last Reviewed",
     "",
     "Date of your last review with the client"

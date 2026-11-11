@@ -2832,6 +2832,10 @@ function renderParameters(d) {
   const term = d.insurance.filter(p => p.cat === 'Term').reduce((s, p) => s + (p.cover || 0), 0);
   const health = d.insurance.filter(p => p.cat === 'Health').reduce((s, p) => s + (p.cover || 0), 0);
   const noInc = !annInc;
+  // Life cover (whole family): Term + Life (Savings) sum assured vs 10× yearly income + loans outstanding
+  const lifeTerm = term, lifeSav = d.insurance.filter(p => p.cat === 'Life (Savings)').reduce((s, p) => s + (p.cover || 0), 0), lifeCover = lifeTerm + lifeSav;
+  const lcInc = d.P('Annual Income (₹)', 0) || annInc || 0, lcLoans = d.loans.reduce((s, l) => s + (l.outstanding || 0), 0);
+  const lcNeed = lcInc ? lcInc * 10 + lcLoans : 0;
   const mk = (o) => {
     const v = o.value;
     if (o.na || v === null || !isFinite(v)) return { ...o, na: true, fmt: 'N/A', status: 'na', barPct: 0, barColor: '#64748b' };
@@ -2855,6 +2859,11 @@ function renderParameters(d) {
     mk({ icon:'🏥', label:'Health Cover', benchmark:'≥ ₹10 L (family)', hib:true, pass:1e6, warn:5e5, value: health, f: v => fmtCr(v), bar: v => v / 2e6 * 100,
       note: `Health cover (base + top-ups) of ${fmtCr(health)}.`, derivation:'Sum of health policies incl. super top-ups',
       suggestion: 'A super top-up is a low-cost way to raise cover above the base policy.' }),
+    mk({ icon:'🛡️', label:'Life Cover', benchmark: lcNeed ? `≥ ${fmtCr(lcNeed)} (10× income + loans)` : '≥ 10× yearly income + loans', hib:true, pass:100, warn:70, na: !lcNeed, value: pctOf(lifeCover, lcNeed), f: () => fmtCr(lifeCover), bar: v => v,
+      note: lcNeed ? `Life cover of ${fmtCr(lifeCover)}${lifeSav ? ` (term ${fmtCr(lifeTerm)} + savings policies ${fmtCr(lifeSav)})` : ''} against a need of ${fmtCr(lcNeed)}: 10 × yearly income of ${fmtCr(lcInc)}${lcLoans ? ` + loans of ${fmtCr(lcLoans)}` : ''}. That is ${pctOf(lifeCover, lcNeed).toFixed(0)}% of the need${lifeCover < lcNeed ? `, short by ${fmtCr(lcNeed - lifeCover)}` : ''}.`
+        : `Life cover of ${fmtCr(lifeCover)}${lcLoans ? ` · loans of ${fmtCr(lcLoans)}` : ''}. Add your family's yearly income in the Profile tab (“Annual Income (₹)”) to see the cover you need.`,
+      derivation:'(Term + Life savings sum assured) ÷ (10 × yearly income + loans)',
+      suggestion: lcNeed > lifeCover ? `A pure term plan is the low-cost way to close the gap of ${fmtCr(lcNeed - lifeCover)}. Cover should sit on the earning members.` : '' }),
   ];
   params.forEach((p, i) => p.no = i + 1);
   const meas = params.filter(p => !p.na), pass = meas.filter(p => p.status === 'pass').length, warn = meas.filter(p => p.status === 'warn').length, fail = meas.length - pass - warn, na = params.length - meas.length;
