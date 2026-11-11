@@ -63,7 +63,7 @@
   .refresh-btn.spinning .icon { display:inline-block;animation:spin 1s linear infinite; }
   @keyframes spin { to { transform:rotate(360deg); } }
 
-  .nav-tabs { display:flex;gap:4px;padding:12px 20px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none; }
+  .nav-tabs { display:flex;flex-wrap:wrap;gap:6px 4px;padding:12px 20px;border-bottom:1px solid var(--border); }
   .nav-tabs::-webkit-scrollbar { display:none; }
   .tab-btn { background:transparent;border:1px solid transparent;color:var(--text3);font-family:var(--dm);font-size:13px;font-weight:500;padding:7px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:all 0.2s; }
   .tab-btn:hover { color:var(--text);border-color:var(--border);background:var(--bg3); }
@@ -244,6 +244,9 @@
     .nav-tabs { display:none; }
     .mobile-nav { position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--bg2);border-top:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none; }
     .mobile-nav::-webkit-scrollbar { display:none; }
+    .mobile-nav.more-r { box-shadow:inset -28px 0 18px -14px rgba(var(--teal-rgb),0.55); }
+    .mobile-nav.more-l { box-shadow:inset 28px 0 18px -14px rgba(var(--teal-rgb),0.55); }
+    .mobile-nav.more-l.more-r { box-shadow:inset -28px 0 18px -14px rgba(var(--teal-rgb),0.55),inset 28px 0 18px -14px rgba(var(--teal-rgb),0.55); }
     .mob-tab { flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 12px;cursor:pointer;color:var(--text3);font-size:9px;font-family:var(--dm);font-weight:500;transition:color 0.2s;white-space:nowrap;border:none;background:transparent; }
     .mob-tab.active { color:var(--teal); }
     .mob-tab .icon { font-size:18px; }
@@ -799,6 +802,9 @@ const TABS = [
 ];
 document.getElementById('nav-tabs').innerHTML = TABS.map((t,i)=>`<button class="tab-btn${i?'':' active'}" data-tab="${t[0]}" onclick="switchTab('${t[0]}')">${t[1]}</button>`).join('');
 document.getElementById('mobile-nav').innerHTML = TABS.map((t,i)=>`<button class="mob-tab${i?'':' active'}" data-tab="${t[0]}" onclick="switchTab('${t[0]}')"><span class="icon">${t[2]}</span>${t[3]}</button>`).join('');
+(function(){ const n=document.getElementById('mobile-nav'); if(!n) return;
+  const f=()=>{ n.classList.toggle('more-l', n.scrollLeft>4); n.classList.toggle('more-r', n.scrollLeft+n.clientWidth<n.scrollWidth-4); };
+  n.addEventListener('scroll',f,{passive:true}); window.addEventListener('resize',f); setTimeout(f,0); window._mobNavHint=f; })();
 function setTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
   try { localStorage.setItem('r2r_theme', t); } catch (e) {}
@@ -811,6 +817,8 @@ function switchTab(id) {
   document.body.dataset.tab = id;
   document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
   document.querySelectorAll('.tab-btn,.mob-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+  const mb = document.querySelector('.mob-tab[data-tab="' + id + '"]'); if (mb && mb.offsetParent) { const n = mb.parentNode; n.scrollTo({ left: mb.offsetLeft - (n.clientWidth - mb.offsetWidth) / 2, behavior: 'smooth' }); }
+  if (window._mobNavHint) setTimeout(window._mobNavHint, 300);
   window.scrollTo({ top: 0, behavior: 'smooth' });
   try { sessionStorage.setItem('r2r_tab', id); } catch (e) {}
   if (id === 'returns' && typeof drawTrends === 'function') drawTrends();
