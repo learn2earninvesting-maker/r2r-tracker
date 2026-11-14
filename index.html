@@ -7,18 +7,18 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#030b12">
+<meta name="theme-color" content="#F2F3EE">
 <script>
   // Day / night mode: remembered on this device; first visit follows the phone's setting.
   (function () { var t = null; try { t = localStorage.getItem('r2r_theme'); } catch (e) {}
-    if (!t) t = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    if (!t) t = 'light';
     document.documentElement.setAttribute('data-theme', t); })();
 </script>
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="R2R">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -633,6 +633,160 @@
   .r2r-modal-btns button { border-radius:8px;padding:9px 16px;font:600 13px var(--dm);cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text); }
   .r2r-modal-btns button.danger { background:var(--red);border-color:var(--red);color:#fff; }
   .r2r-modal-btns button:disabled { opacity:.6;cursor:default; }
+
+  /* ═══════════ R2R redesign (Nov 2026): light + dark palette, Archivo, pastel boxes, cream main tile ═══════════ */
+  :root, :root[data-theme="light"] {
+    --bg:#F2F3EE; --bg2:#FFFFFF; --bg3:#E2E4DC; --card:#FFFFFF; --border:#D9DCD2;
+    --amber:#16181D; --amber2:#16181D; --amber-dim:#FBEFC9; --amber-rgb:22,24,29;
+    --green:#1E6B45; --red:#A12B1F; --blue:#2B5FA8; --purple:#6C45A8; --cyan:#1F4D3F;
+    --text:#16181D; --text2:#3A3F46; --text3:#555B63;
+    --teal:#1F4D3F; --teal2:#1F4D3F; --teal-dim:#DDEFE3; --teal-rgb:31,77,63;
+    --topbar:rgba(242,243,238,0.95); --line:#ECEEE7; --pos:#1E6B45; --neg:#A12B1F; --warn:#8A6100;
+    --syne:'Archivo',system-ui,sans-serif; --dm:'Archivo',system-ui,sans-serif; --mono:'Archivo',system-ui,sans-serif;
+    --ink:#16181D; --on-ink:#FFFFFF; --cream:#FAF4E4; --cream-line:#E8DFC8; --track:#E2E4DC;
+    --p-blue:#DCE7F5; --p-mint:#DDEFE3; --p-blush:#F8E1DC; --p-butter:#FBEFC9; --p-lilac:#E9E1F4; --butter-ink:#5C4300;
+  }
+  :root[data-theme="dark"] {
+    --bg:#111413; --bg2:#181C1A; --bg3:#181C1A; --card:#222725; --border:#2F3533;
+    --amber:#F1F2EC; --amber2:#F1F2EC; --amber-dim:#3A3118; --amber-rgb:241,242,236;
+    --green:#6FCF97; --red:#F28B82; --blue:#6C9BE0; --purple:#A486E0; --cyan:#4FA98A;
+    --text:#F1F2EC; --text2:#C9CEC9; --text3:#A3AAA6;
+    --teal:#4FA98A; --teal2:#4FA98A; --teal-dim:#1D3327; --teal-rgb:79,169,138;
+    --topbar:rgba(17,20,19,0.95); --line:#2F3533; --pos:#6FCF97; --neg:#F28B82; --warn:#F0D88A;
+    --ink:#F1F2EC; --on-ink:#111413; --cream:#2A2620; --cream-line:#3B352B; --track:#181C1A;
+    --p-blue:#1F2C3D; --p-mint:#1D3327; --p-blush:#3D2320; --p-butter:#3A3118; --p-lilac:#2E2740; --butter-ink:#F0D88A;
+  }
+  body { font-family:'Archivo',system-ui,sans-serif; }
+  button, input, select { font-family:inherit; }
+
+  /* ── shell: sidebar (laptop), top bar (tablet), side menu (phone) ── */
+  .side { position:fixed;top:0;left:0;bottom:0;width:232px;box-sizing:border-box;padding:28px 18px;background:var(--bg);border-right:1px solid var(--border);display:flex;flex-direction:column;gap:24px;z-index:300;overflow-y:auto;transition:transform .2s ease; }
+  .side-brand { display:flex;flex-direction:column;gap:2px;padding:0 10px; }
+  .side-brand b { font-size:20px;font-weight:800;letter-spacing:-0.01em; }
+  .side-brand span { font-size:12px;color:var(--text3); }
+  .side-nav { display:flex;flex-direction:column;gap:4px; }
+  .tab-btn { display:flex;align-items:center;min-height:46px;padding:0 14px;border:0;border-radius:12px;background:transparent;color:var(--ink);font-size:15px;font-weight:700;text-align:left;text-decoration:none;cursor:pointer;white-space:nowrap; }
+  .tab-btn:hover { background:var(--bg3);color:var(--ink);border-color:transparent; }
+  .tab-btn.active { background:var(--ink);color:var(--on-ink);border-color:transparent; }
+  .tab-btn.old-link { font-weight:600;color:var(--text3); }
+  .side-foot { margin-top:auto;display:flex;flex-direction:column;gap:10px;padding:0 6px; }
+  .side-foot .client { font-size:13px;font-weight:700; }
+  .updated { font-family:inherit;font-size:11px;color:var(--text3);background:var(--bg3);border:0;padding:6px 10px;border-radius:99px;align-self:flex-start; }
+  .side-btns { display:flex;flex-wrap:wrap;gap:6px; }
+  .pill-btn, .refresh-btn, .theme-btn { width:auto;height:auto;min-height:40px;padding:0 14px;border:1px solid var(--ink);border-radius:99px;background:transparent;color:var(--ink);font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px; }
+  .pill-btn:hover, .refresh-btn:hover, .theme-btn:hover { background:var(--bg3); }
+  .content { margin-left:232px;min-height:100vh; }
+  .bar { display:none;position:sticky;top:0;z-index:100;background:var(--topbar);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 18px;align-items:center;gap:12px; }
+  .bar-brand { font-size:18px;font-weight:800;letter-spacing:-0.01em; }
+  .menu-btn { min-height:44px;min-width:44px;border:1px solid var(--ink);border-radius:12px;background:transparent;color:var(--ink);display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer; }
+  .top-nav { display:none;gap:4px;background:var(--track);border-radius:14px;padding:4px;overflow-x:auto;scrollbar-width:none; }
+  .top-nav::-webkit-scrollbar { display:none; }
+  .top-nav .tab-btn { min-height:44px;padding:0 11px;border-radius:11px;font-size:14px;justify-content:center; }
+  .top-nav .old-link { display:none; }
+  .bar .bar-theme { margin-left:auto; }
+  .scrim { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:250; }
+  @media (max-width:1099px) {
+    .side { transform:translateX(-105%);width:260px;box-shadow:0 0 40px rgba(0,0,0,0.25); }
+    body.menu-open .side { transform:none; }
+    body.menu-open .scrim { display:block; }
+    .content { margin-left:0; }
+    .bar { display:flex; }
+    .side .side-btns #theme-btn { display:none; }
+  }
+  @media (min-width:700px) and (max-width:1099px) { .top-nav { display:flex; } .bar-brand { margin-right:4px; } .menu-btn { order:9; } .bar .bar-theme { margin-left:auto; } }
+  .main { padding:24px 18px 40px;max-width:1180px; }
+  @media (min-width:700px) { .main { padding:28px 32px 48px; } }
+  @media (min-width:1100px) { .main { padding:32px 40px 56px; } }
+  .subbar { padding:0 18px;max-width:1180px;margin:18px auto -6px;box-sizing:border-box; }
+  @media (min-width:700px) { .subbar { padding:0 32px; } }
+  @media (min-width:1100px) { .subbar { padding:0 40px; } }
+  .subbar:empty { display:none; }
+  .seg { display:inline-flex;background:var(--track);border-radius:12px;padding:4px;max-width:100%; }
+  .seg button { min-height:44px;padding:0 18px;border:0;border-radius:9px;background:transparent;color:var(--ink);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap; }
+  .seg button.on { background:var(--card); }
+  @media (max-width:699px) { .seg { display:flex; } .seg button { flex:1;padding:0 6px;font-size:13px; } }
+  .disclaimer { color:var(--text3);font-size:12px;line-height:1.5;padding:0 18px 28px;max-width:1180px;margin:0 auto; }
+  .gate-card h1, .loader-brand { color:var(--ink); }
+
+  /* ── common pieces ── */
+  .pg-head { display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:16px; }
+  .pg-kicker { font-size:14px;color:var(--text3); }
+  .pg-big { font-size:36px;font-weight:800;letter-spacing:-0.02em;line-height:1.08; }
+  @media (min-width:700px) { .pg-big { font-size:46px; } }
+  .pg-sub { font-size:13px;font-weight:700;color:var(--pos);margin-top:2px; }
+  .pills { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px; }
+  .pills.two { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  @media (min-width:700px) { .pills { display:flex;gap:10px; } .pills .pill { min-width:120px; } }
+  .pill { border-radius:14px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;background:var(--card); }
+  .pill span { font-size:12px;color:var(--text3); }
+  .pill b { font-size:16px;font-weight:800; }
+  .pill.blue{background:var(--p-blue)} .pill.mint{background:var(--p-mint)} .pill.blush{background:var(--p-blush)} .pill.butter{background:var(--p-butter)} .pill.lilac{background:var(--p-lilac)}
+  .cardx { background:var(--card);border-radius:16px;padding:16px; }
+  .cream { background:var(--cream);border-radius:16px;padding:2px 14px; }
+  .rowx { display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-top:1px solid var(--line); }
+  .cream .rowx { border-top:1px solid var(--cream-line); }
+  .rowx:first-child { border-top:0; }
+  .rowx .a { font-size:15px;font-weight:700; } .rowx .b { font-size:12px;color:var(--text3);margin-top:2px; } .rowx .c { font-size:15px;font-weight:800;text-align:right;white-space:nowrap; }
+  .card-title { display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px;font-weight:700;margin-bottom:4px; }
+  .upc { background:var(--p-butter);border-radius:14px;padding:12px 14px;margin-bottom:14px; }
+  .upc h4 { margin:0 0 4px;font-size:12px;font-weight:800;color:var(--butter-ink); }
+  .upc .rowx { border-top:0;padding:6px 0; } .upc .b { color:var(--neg);font-weight:700; }
+  .note { font-size:12px;color:var(--text3);line-height:1.5;margin-top:12px; }
+  .stack { display:flex;flex-direction:column;gap:14px; }
+
+  /* Home */
+  .home-grid { display:grid;grid-template-columns:minmax(0,1fr);gap:14px; }
+  @media (min-width:1100px) { .home-grid { grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start; } }
+  .home-donut { display:grid;grid-template-columns:minmax(0,1fr);gap:8px;justify-items:center; }
+  @media (min-width:700px) { .home-donut { grid-template-columns:260px minmax(0,1fr);gap:28px;align-items:center;justify-items:stretch;background:var(--cream);border-radius:22px;padding:24px; } .home-donut .cream { padding:0;background:transparent; } }
+  .cls-btn { width:100%;border:0;background:transparent;color:var(--ink);min-height:56px;display:flex;align-items:center;gap:12px;text-align:left;padding:0;cursor:pointer;font-size:15px; }
+  .cls-btn i { width:14px;height:14px;border-radius:4px;flex:0 0 auto; }
+  .cls-btn .n { flex:1;font-weight:700; } .cls-btn .amt { color:var(--text3);font-size:14px; } .cls-btn .p { width:48px;text-align:right;font-weight:800;font-size:16px; }
+  .cls-row { border-top:1px solid var(--cream-line); } .cls-row:first-child { border-top:0; }
+  .cls-in { padding:0 0 12px 26px;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--text2); }
+  .cls-in div { display:flex;justify-content:space-between;gap:10px; } .cls-in b { font-weight:700; }
+  .qcards { display:grid;grid-template-columns:minmax(0,1fr);gap:8px; }
+  @media (min-width:700px) and (max-width:1099px) { .qcards { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+  .qcard { border:0;border-radius:14px;min-height:60px;padding:10px 14px;display:flex;align-items:center;gap:10px;text-align:left;cursor:pointer;color:var(--ink);background:var(--card); }
+  .qcard div { flex:1; } .qcard .a { font-size:14px;font-weight:700; } .qcard .b { font-size:12px;color:var(--text3); } .qcard .c { font-size:16px;font-weight:800; }
+
+  /* Tiles (Mutual funds, Other assets) */
+  .tiles { display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin:14px 0; }
+  @media (min-width:700px) { .tiles { grid-template-columns:repeat(2,minmax(0,1fr));align-items:start; } }
+  .tile { border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:8px;background:var(--card); }
+  .tile-h { display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:20px;font-weight:800;letter-spacing:-0.01em; }
+  .tile-p { font-size:12px;color:var(--text3); }
+  .tile .rowx { border-top:1px solid rgba(128,128,128,0.25);padding:9px 0 0; }
+  .tile .rowx .a { font-size:14px;font-weight:500; } .tile .rowx .c { font-size:14px;font-weight:600; }
+  details.more-detail { margin-top:18px; } details.more-detail summary { cursor:pointer;font-size:14px;font-weight:700;min-height:44px;display:flex;align-items:center; }
+
+  /* ── restyle the existing pieces ── */
+  .kpi-grid { gap:8px;margin-bottom:16px; }
+  .kpi { border:0;border-radius:14px;padding:12px 14px;background:var(--p-blue); }
+  .kpi::before, .kpi-icon { display:none; }
+  .kpi:hover { border-color:transparent; }
+  .kpi:nth-child(4n+2) { background:var(--p-mint); } .kpi:nth-child(4n+3) { background:var(--p-butter); } .kpi:nth-child(4n+4) { background:var(--p-lilac); }
+  .kpi-label { text-transform:none;letter-spacing:0;font-size:12px;margin-bottom:4px;color:var(--text3); }
+  .kpi-val { font-size:20px;font-weight:800; } .kpi-sub { font-size:11px;color:var(--text3); }
+  .section-title { color:var(--ink);text-transform:none;letter-spacing:0;font-size:15px;margin:22px 0 10px; }
+  .section-title::after { display:none; }
+  .chart-card, .inv-card, .ins-card, .param-card, .bank-group, .nw-display { border:0;border-radius:16px;box-shadow:none !important; }
+  .chart-title { text-transform:none;letter-spacing:0;font-size:14px;font-weight:700;color:var(--ink); }
+  .table-wrap { background:var(--cream);border:0;border-radius:16px;box-shadow:none !important; }
+  .data-table th { text-transform:none;letter-spacing:0;font-size:12px;font-weight:700;color:var(--text3);background:transparent;border-bottom:1px solid var(--cream-line); }
+  .data-table td { border-bottom:1px solid var(--cream-line); }
+  .data-table tbody tr:hover td { background:transparent; }
+  .data-table tfoot td { background:transparent;font-weight:800; }
+  .alloc-pill { display:inline-block;min-width:52px;text-align:center;padding:6px 8px;border-radius:10px;background:var(--p-lilac);font-weight:800;color:var(--ink); }
+  .sort-chip { border:1px solid var(--ink) !important;border-radius:99px !important;background:transparent !important;color:var(--ink) !important;font-weight:700 !important;min-height:40px; }
+  .sort-chip.on { background:var(--ink) !important;color:var(--on-ink) !important; }
+  .legend-pct { color:var(--ink);font-weight:800; }
+  .sect-toggle { margin:-8px 0 16px; }
+  .gain-pos { color:var(--pos) !important; } .gain-neg { color:var(--neg) !important; }
+  #funds-body .chart-card, #funds-body .sort-bar, #funds-body .table-wrap, #funds-body .section-title { display:none; }
+  .empty { background:var(--card);border:0;border-radius:16px;color:var(--text3); }
+  body[data-tab="plan"] .fam-bar, body[data-tab="returns"] .fam-bar, body[data-tab="more"] .fam-bar, body[data-tab="goals"] .fam-bar, body[data-tab="insurance"] .fam-bar { display:none !important; }
+  .pill-btn.primary { background:var(--ink);color:var(--on-ink);text-decoration:none;min-height:46px;padding:0 20px;font-size:14px; }
 </style>
 </head>
 <body>
@@ -651,66 +805,42 @@
   </div>
 </div>
 
-<header class="topbar">
-  <div class="brand">R2R<span>Financial Tracker</span><span class="client" id="client-name"></span></div>
-  <div class="topbar-right">
+<div class="scrim" id="scrim" onclick="closeMenu()"></div>
+<aside class="side" id="side">
+  <div class="side-brand"><b>R2R</b><span>Risks to Reward</span></div>
+  <nav class="side-nav" id="nav-tabs" aria-label="Sections"></nav>
+  <div class="side-foot">
+    <div class="client" id="client-name"></div>
     <div class="updated" id="last-updated">Loading…</div>
-    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Switch day / night mode" aria-label="Switch day / night mode">☀️</button>
-    <button class="refresh-btn" id="upload-btn" onclick="askUpload()" title="Upload a holdings file, tradebook or contract notes">📤 <span class="up-lbl">Upload</span></button>
-    <button class="refresh-btn" id="refresh-btn" onclick="loadAllData(true)"><span class="icon">↻</span> Refresh</button>
-    <button class="refresh-btn" id="install-btn" style="display:none" onclick="doInstall()">⬇ Install</button>
+    <div class="side-btns">
+      <button class="pill-btn" id="theme-btn" onclick="toggleTheme()">Dark mode</button>
+      <button class="refresh-btn" id="refresh-btn" onclick="loadAllData(true)"><span class="icon">↻</span> Refresh</button>
+      <button class="refresh-btn" id="upload-btn" onclick="askUpload()" title="Upload a holdings file, tradebook or contract notes">Upload</button>
+      <button class="refresh-btn" id="install-btn" style="display:none" onclick="doInstall()">Install</button>
+    </div>
   </div>
+</aside>
+<div class="content">
+<header class="bar">
+  <button class="menu-btn" onclick="openMenu()" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+  <div class="bar-brand">R2R</div>
+  <nav class="top-nav" id="mobile-nav" aria-label="Sections"></nav>
+  <button class="pill-btn bar-theme" id="theme-btn2" onclick="toggleTheme()">Dark mode</button>
 </header>
 <div class="offline-note" id="offline-note"></div>
 <div id="error-banner"></div>
-
-<nav class="nav-tabs" id="nav-tabs"></nav>
+<div class="subbar" id="subbar"></div>
 
 <main class="main">
   <div class="fam-bar" id="fam-bar" style="display:none" role="group" aria-label="Family member"></div>
 
   <!-- ASSETS OVERVIEW AND ALLOCATION (Overview + Allocation merged into one tab) -->
   <section class="panel active" id="panel-overview">
-    <div class="nw-display">
-      <div><div class="nw-item-label">Total Assets</div><div class="nw-item-val amber" id="nw-assets">—</div><div class="nw-item-raw" id="nw-assets-raw">—</div></div>
-      <div><div class="nw-item-label">Total Liabilities</div><div class="nw-item-val red" id="nw-liab">—</div><div class="nw-item-raw" id="nw-liab-raw">—</div></div>
-      <div><div class="nw-item-label">Net Worth</div><div class="nw-item-val green" id="nw-net">—</div><div class="nw-item-raw" id="nw-net-raw">—</div></div>
-    </div>
-    <div class="muted" id="prices-asof" style="font-size:11px;margin:-6px 0 14px;text-align:center"></div>
-    <div class="kpi-grid" id="kpi-grid"></div>
-
-    <div class="section-title">Allocation</div>
-    <div class="alloc-grid" style="margin-bottom:20px;">
-      <div class="chart-card">
-        <div class="chart-title">By Asset Class</div>
-        <div class="donut-wrap">
-          <svg id="donut-svg" width="140" height="140" viewBox="0 0 140 140"></svg>
-          <div class="donut-legend" id="donut-legend"></div>
-        </div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-title">Assets vs Liabilities</div>
-        <div id="gauges"></div>
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:4px;padding-top:10px;border-top:1px solid var(--border);">
-          <div><div style="font-size:11px;color:var(--text3);">Leverage Ratio</div><div style="font-size:10px;color:var(--text3);">Debt / Assets</div></div>
-          <div style="font-family:var(--syne);font-size:28px;font-weight:800;color:var(--amber);" id="gauge-ratio">—</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-title">Asset Inventory</div>
-    <div class="inv-grid" id="asset-inventory"></div>
-    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:4px;margin-bottom:24px;">
-      <span style="font-family:var(--syne);font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;">Total Portfolio</span>
-      <span style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--amber);" id="tbl-assets-total">—</span>
-    </div>
-
-    <div class="section-title">Coming Up</div>
-    <div id="ov-upcoming"></div>
+    <div id="home-body"></div>
   </section>
 
   <!-- HOLDINGS -->
-  <section class="panel" id="panel-holdings"><div id="holdings-body"></div></section>
+  <section class="panel" id="panel-holdings"></section>
 
   <!-- ASSET ALLOCATION HELP (target % per asset class → money to add / reduce) -->
   <section class="panel" id="panel-allocate"><div id="allocate-body"></div></section>
@@ -725,13 +855,14 @@
   <section class="panel" id="panel-funds"><div id="funds-body"></div></section>
 
   <!-- OTHER ASSETS (gold bonds, gold/silver ETFs, REITs, InvITs, debt ETFs from the broker file) -->
-  <section class="panel" id="panel-other"><div id="other-body"></div></section>
+  <section class="panel" id="panel-other"><div id="other-tiles"></div><details class="more-detail"><summary>See every holding in detail</summary><div id="other-body"></div><div id="holdings-body"></div></details></section>
 
   <!-- PERFORMANCE (was "Returns"; XIRR worked out every night by Returns.gs) -->
   <section class="panel" id="panel-returns"><div id="returns-body"></div></section>
 
   <!-- INSURANCE -->
   <section class="panel" id="panel-insurance">
+    <div id="ins-upcoming"></div>
     <div class="ins-summary" id="ins-summary"></div>
     <div id="ins-body"></div>
     <div style="font-size:11px;color:var(--text3);margin-bottom:24px;">* Premiums usually change with age and applicable tax.</div>
@@ -750,6 +881,10 @@
   </section>
 
 
+
+  <section class="panel" id="panel-goals"><div id="goals-body"></div></section>
+  <section class="panel" id="panel-xray"><div id="xray-body"></div></section>
+  <section class="panel" id="panel-uploads"><div id="uploads-body"></div></section>
 
   <!-- HEALTH CHECK -->
   <section class="panel" id="panel-parameters">
@@ -785,7 +920,7 @@
 
 <p class="disclaimer">R2R · Risks to Reward — an educational tracking tool built from the data you maintain. Benchmarks are general rules of thumb, not personalised investment, tax or insurance advice.</p>
 
-<nav class="mobile-nav" id="mobile-nav"></nav>
+</div>
 
 <script>
 // ═══════════════════════════════════════════════════════
@@ -795,35 +930,42 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8
 // ═══════════════════════════════════════════════════════
 //  TABS
 // ═══════════════════════════════════════════════════════
-const TABS = [
-  ['overview','Assets Overview and Allocation','🏠','Overview'],
-  ['holdings','Asset / Liability Breakdown','📊','Breakdown'], ['allocate','Asset Allocation Help','🧭','Allocate'], ['stocks','Indian Stocks','📈','Stocks'], ['rebalance','Stock Allocation Help','🎯','Rebalance'], ['funds','Mutual Funds','🧺','MFs'], ['other','Other Assets','🪙','Other'], ['returns','Performance','📐','Performance'],
-  ['insurance','Insurance','🛡️','Insure'],
-  ['payments','Payments','📅','Payments'], ['parameters','🩺 Health Check','🩺','Health'],
-  // FIRE Tracker and Cash Flow are switched off for now (they need income/spending data).
-  // To bring them back, re-add: ['fire','FIRE Tracker','🔥','FIRE'], ['cashflow','Cash Flow','💸','Cash Flow'],
-];
-document.getElementById('nav-tabs').innerHTML = TABS.map((t,i)=>`<button class="tab-btn${i?'':' active'}" data-tab="${t[0]}" onclick="switchTab('${t[0]}')">${t[1]}</button>`).join('');
-document.getElementById('mobile-nav').innerHTML = TABS.map((t,i)=>`<button class="mob-tab${i?'':' active'}" data-tab="${t[0]}" onclick="switchTab('${t[0]}')"><span class="icon">${t[2]}</span>${t[3]}</button>`).join('');
-(function(){ const n=document.getElementById('mobile-nav'); if(!n) return;
-  const f=()=>{ n.classList.toggle('more-l', n.scrollLeft>4); n.classList.toggle('more-r', n.scrollLeft+n.clientWidth<n.scrollWidth-4); };
-  n.addEventListener('scroll',f,{passive:true}); window.addEventListener('resize',f); setTimeout(f,0); window._mobNavHint=f; })();
+const TABS = [['overview','Home'],['hold','Holdings'],['plan','Plan'],['returns','Returns'],['insurance','Insurance'],['goals','Goals'],['more','More']];
+const SUBS = { hold: [['stocks','Stocks & ETFs'],['funds','Mutual funds'],['other','Other assets']], plan: [['allocate','Asset classes'],['rebalance','Stocks']], more: [['parameters','Health check'],['xray','Portfolio X-ray'],['uploads','Uploads']] };
+const PANELS = { overview: ['overview'], returns: ['returns'], insurance: ['insurance','payments'], goals: ['goals'] };
+const OLD_TO_NEW = { payments: 'insurance', holdings: 'hold' };
+Object.keys(SUBS).forEach(t => SUBS[t].forEach(s => { OLD_TO_NEW[s[0]] = t; }));
+const OLD_URL = 'old.html';   // the previous dashboard, kept so clients can go back
+let SUB_SEL = (() => { try { return JSON.parse(sessionStorage.getItem('r2r_sub') || '{}') || {}; } catch (e) { return {}; } })();
+(function () {
+  const h = TABS.map((t, i) => `<button class="tab-btn${i ? '' : ' active'}" data-tab="${t[0]}" onclick="switchTab('${t[0]}')">${t[1]}</button>`).join('') + `<a class="tab-btn old-link" href="${OLD_URL}">Old version</a>`;
+  document.getElementById('nav-tabs').innerHTML = h; document.getElementById('mobile-nav').innerHTML = h;
+})();
+function openMenu() { document.body.classList.add('menu-open'); }
+function closeMenu() { document.body.classList.remove('menu-open'); }
 function setTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
   try { localStorage.setItem('r2r_theme', t); } catch (e) {}
-  const b = document.getElementById('theme-btn'); if (b) b.textContent = t === 'light' ? '🌙' : '☀️';
-  const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = t === 'light' ? '#ffffff' : '#030b12';
+  ['theme-btn', 'theme-btn2'].forEach(id => { const b = document.getElementById(id); if (b) b.textContent = t === 'dark' ? 'Light mode' : 'Dark mode'; });
+  const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = t === 'dark' ? '#111413' : '#F2F3EE';
 }
-function toggleTheme() { setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light'); }
-setTheme(document.documentElement.getAttribute('data-theme') || 'dark');
-function switchTab(id) {
-  document.body.dataset.tab = id;
-  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
-  document.querySelectorAll('.tab-btn,.mob-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
-  const mb = document.querySelector('.mob-tab[data-tab="' + id + '"]'); if (mb && mb.offsetParent) { const n = mb.parentNode; n.scrollTo({ left: mb.offsetLeft - (n.clientWidth - mb.offsetWidth) / 2, behavior: 'smooth' }); }
-  if (window._mobNavHint) setTimeout(window._mobNavHint, 300);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  try { sessionStorage.setItem('r2r_tab', id); } catch (e) {}
+function toggleTheme() { setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
+setTheme(document.documentElement.getAttribute('data-theme') || 'light');
+function switchTab(id, sub) {
+  if (OLD_TO_NEW[id]) { sub = id === 'holdings' ? 'other' : id === 'payments' ? null : id; id = OLD_TO_NEW[id]; }
+  if (!TABS.some(t => t[0] === id)) id = 'overview';
+  const subs = SUBS[id];
+  if (subs) { if (sub && subs.some(s => s[0] === sub)) SUB_SEL[id] = sub; sub = SUB_SEL[id] && subs.some(s => s[0] === SUB_SEL[id]) ? SUB_SEL[id] : subs[0][0]; } else sub = '';
+  const show = subs ? [sub] : PANELS[id];
+  const changed = document.body.dataset.tab !== id;
+  document.body.dataset.tab = id; document.body.dataset.sub = sub;
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', show.includes(p.id.replace('panel-', ''))));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+  const sb = document.getElementById('subbar');
+  if (sb) sb.innerHTML = subs ? `<div class="seg" role="group">${subs.map(s => `<button class="${s[0] === sub ? 'on' : ''}" aria-pressed="${s[0] === sub}" onclick="switchTab('${id}','${s[0]}')">${s[1]}</button>`).join('')}</div>` : '';
+  closeMenu();
+  if (changed) window.scrollTo({ top: 0, behavior: 'smooth' });
+  try { sessionStorage.setItem('r2r_tab', id); sessionStorage.setItem('r2r_sub', JSON.stringify(SUB_SEL)); } catch (e) {}
   if (id === 'returns' && typeof drawTrends === 'function') drawTrends();
 }
 
@@ -1072,7 +1214,7 @@ function model(api) {
   const liabilities = rowsOf(t.Liabilities).map(r => ({
     type: String(r['Loan Type'] ?? 'Loan').trim(), lender: r['Lender'] ?? '', borrower: r['Borrower'] ?? '',
     outstanding: num(r['Outstanding (₹)']), emi: num(r['EMI (₹/month)']), rate: blank(r['Interest Rate %']) ? null : num(r['Interest Rate %']),
-    ends: parseDate(r['Ends On']), limit: blank(r['Credit Limit (₹)']) ? null : num(r['Credit Limit (₹)']), notes: r['Notes'] ?? '' }));
+    ends: parseDate(r['Ends On']), emiDay: blank(r['EMI Day']) ? null : num(r['EMI Day']), limit: blank(r['Credit Limit (₹)']) ? null : num(r['Credit Limit (₹)']), notes: r['Notes'] ?? '' }));
   const totalLiab = liabilities.reduce((s, l) => s + l.outstanding, 0);
   const loans = liabilities.filter(l => !/credit card/i.test(l.type));
   const cards = liabilities.filter(l => /credit card/i.test(l.type));
@@ -1160,7 +1302,7 @@ function model(api) {
 // ═══════════════════════════════════════════════════════
 // ── Sorting for the holdings lists (Holdings, Indian Stocks, Other Assets, Mutual Funds). Choice is remembered per tab.
 let LAST_MODEL = null;
-const SORTS = [['value', 'Value'], ['pnl', 'Gain / loss ₹'], ['pct', 'Return %'], ['name', 'A–Z']];
+const SORTS = [['value', 'Allocation %'], ['pct', 'Return %'], ['name', 'A–Z']];
 const SORT_STATE = (() => { try { return JSON.parse(localStorage.getItem('r2r_sort') || '{}') || {}; } catch (e) { return {}; } })();
 function sortOf(tab) { return SORT_STATE[tab] || { key: 'value', dir: -1 }; }
 function setSort(tab, key) {
@@ -1197,7 +1339,7 @@ function renderAll(d) {
   const pl = pricesLine(d);
   setHTML('prices-asof', pl ? '⏱ ' + pl + '<br><span style="font-size:10px">Updates every hour on weekdays · share prices run about 20 min behind the market</span>' : '');
   renderOverview(d); renderAllocation(d); renderHoldings(d); renderAllocate(d); renderStocks(d); renderRebalance(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
-  renderPayments(d); renderParameters(d.famMember && RAW_API ? model(famFilter(RAW_API, '*')) : d);   // Health Check is always the whole family · renderFIRE / renderCashflow kept below, switched off
+  renderPayments(d); renderParameters(d.famMember && RAW_API ? model(famFilter(RAW_API, '*')) : d); renderOtherTiles(d); renderGoals(d); renderMore(d); renderHome(d); askExtras();   // Health Check is always the whole family · renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
 }
 
@@ -1313,9 +1455,9 @@ function fileTable(list, total, cols) {
   const inv = list.reduce((s, a) => s + (a.invested ?? 0), 0), val = list.reduce((s, a) => s + a.value, 0), pnl = list.filter(a => a.pnl !== null).reduce((s, a) => s + a.pnl, 0);
   const pc = (p, base) => base ? `<br><small>${(p / base * 100).toFixed(1)}%</small>` : '';
   const pnlCell = a => a.pnl === null ? '' : `<span class="${a.pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${a.pnl >= 0 ? '+' : ''}${fmtINR(a.pnl)}${pc(a.pnl, a.invested)}</span>`;
-  const all = cols.concat([['Invested (₹)', a => a.invested === null ? '' : fmtINR(a.invested), 1], ['Current (₹)', a => `<span style="color:var(--text)">${fmtINR(a.value)}</span>`, 1],
-    ['P&L', pnlCell, 1], ['% of tab', a => pctOf(a.value, total).toFixed(1) + '%', 1]]);
-  const foot = all.map((c, i) => i === 0 ? `<td>Total</td>` : c[0] === 'Invested (₹)' ? `<td class="num">${fmtINR(inv)}</td>` : c[0] === 'Current (₹)' ? `<td class="num">${fmtINR(val)}</td>` : c[0] === 'P&L' ? `<td class="num ${pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${pnl >= 0 ? '+' : ''}${fmtINR(pnl)}${pc(pnl, inv)}</td>` : c[0] === '% of tab' ? `<td class="num">${pctOf(val, total).toFixed(1)}%</td>` : '<td></td>').join('');
+  const all = [cols[0], ['Allocation', a => `<span class="alloc-pill">${pctOf(a.value, total).toFixed(1)}%</span>`, 1]].concat(cols.slice(1), [['Invested (₹)', a => a.invested === null ? '' : fmtINR(a.invested), 1], ['Current (₹)', a => `<span style="color:var(--text)">${fmtINR(a.value)}</span>`, 1],
+    ['P&L', pnlCell, 1]]);
+  const foot = all.map((c, i) => i === 0 ? `<td>Total</td>` : c[0] === 'Invested (₹)' ? `<td class="num">${fmtINR(inv)}</td>` : c[0] === 'Current (₹)' ? `<td class="num">${fmtINR(val)}</td>` : c[0] === 'P&L' ? `<td class="num ${pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${pnl >= 0 ? '+' : ''}${fmtINR(pnl)}${pc(pnl, inv)}</td>` : c[0] === 'Allocation' ? `<td class="num">${pctOf(val, total).toFixed(1)}%</td>` : '<td></td>').join('');
   return `<div class="table-wrap"><table class="data-table"><thead><tr>${all.map(x => `<th${x[2] ? ' class="num"' : ''}>${x[0]}</th>`).join('')}</tr></thead><tbody>${list.map(a => `<tr>${all.map(x => `<td${x[2] ? ' class="num"' : ''}>${x[1](a)}</td>`).join('')}</tr>`).join('')}</tbody><tfoot><tr>${foot}</tr></tfoot></table></div>`;
 }
 function fileKpis(list, extra) {
@@ -1423,7 +1565,7 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
   let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list, d, 'stocks');
   if (tab === 'stocks') {
     if (!ALLOC_BANDS.some(b => b[0] === ALLOC_STATE)) ALLOC_STATE = 'all';
-    html += sectorPie(list, total);
+    html += sectorWrap(list, total);
     if (SECTOR_STATE && !list.some(a => sectorOf(a) === SECTOR_STATE)) SECTOR_STATE = '';
     if (SECTOR_STATE) {
       const shown = list.filter(a => sectorOf(a) === SECTOR_STATE), v = shown.reduce((s, a) => s + a.value, 0);
@@ -1465,7 +1607,7 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
 }
 // ═══════════════════════════════════════════════════════
 //  STOCK ALLOCATION HELP — client types a target % per stock; the tab shows how much money to add or take out
-//  and how many shares to buy or sell at today's price (CMP) to get there.
+//  and how many shares to add or remove at today's price (CMP) to get there.
 //  Current % comes from the Indian Stocks tab (shares + equity ETFs, by current value).
 //  Targets are kept per family view (Whole family / each member), on this device and in the client's
 //  sheet ("Targets" tab, Targets.gs). A blank target = keep that stock as it is.
@@ -1644,7 +1786,7 @@ function renderAllocate(d) {
   const lineCr = fmtCr(AA_RULES.line);
   const pa = (AA_RULES.above.balanced || [])[3], pb = (AA_RULES.below.balanced || [])[3];
   const head = `<div class="tg-intro">
-      <div><b>How it works</b> · Pick the kind of investor closest to you, or type your own <b>target %</b> for each asset class. The table shows how much money to add or reduce in each class to get there.</div>
+      <div><b>How it works</b> · Pick the kind of investor closest to you, or type your own <b>target %</b> for each asset class. The table shows how much money to add or remove in each class to get there.</div>
       ${fam ? `<div class="muted" style="margin-top:6px">👨‍👩‍👧 This page is for the <b style="color:var(--text)">whole family together</b>.</div>` : ''}
     </div>
     <div class="aa-rule">${D.big
@@ -1658,12 +1800,12 @@ function renderAllocate(d) {
     <div class="tg-controls">
       <label class="tg-fresh">New money to invest (₹)<small>Leave blank if you are only moving money around</small>
         <input type="number" inputmode="decimal" step="any" min="0" id="aa-new" value="${AA_NEW || ''}" placeholder="0" oninput="aaNew(this.value)"></label>
-      <label class="aa-check"><input type="checkbox" id="aa-only" ${AA_ONLY ? 'checked' : ''} onchange="aaOnly(this.checked)"><span><b>Add only, don't sell</b><small>New money goes to the classes that are short. Nothing is sold, so no tax or exit load.</small></span></label>
+      <label class="aa-check"><input type="checkbox" id="aa-only" ${AA_ONLY ? 'checked' : ''} onchange="aaOnly(this.checked)"><span><b>Add only, don't remove</b><small>New money goes to the classes that are short. Nothing is removed, so no tax or exit load.</small></span></label>
       ${D.rented > 0 ? `<label class="aa-check"><input type="checkbox" id="aa-rent" ${D.rent ? 'checked' : ''} onchange="aaRent(this.checked)"><span><b>Count rented / second property</b><small>${fmtCr(D.rented)} · switch off to leave it out of the corpus and the targets</small></span></label>` : ''}
     </div>
     <div class="tg-meter-wrap"><div class="tg-meter"><div class="tg-meter-fill" id="aa-meter-fill"></div></div><div id="aa-meter-txt" class="tg-meter-txt"></div></div>
     <div class="kpi-grid" id="aa-kpis"></div>`;
-  const cols = ['Asset class', 'Current value', 'Current %', 'Target %', 'Gap', 'Add / reduce (₹)', '% after'];
+  const cols = ['Asset class', 'Current value', 'Current %', 'Target %', 'Gap', 'Add / remove (₹)', '% after'];
   const body = D.list.map((r, i) => { const m = AA_META[r.key];
     return `<tr id="aa-r${i}">
       <td class="tg-stk aa-cls"><span style="color:var(--text)">${m.icon} ${m.label}</span>
@@ -1703,7 +1845,7 @@ function aaRefresh() {
     else if (x.has && x.gap > 0) plan = x.amt > 0.5 ? `<span class="tg-act buy">Add ${fmtINR(Math.round(x.amt))}</span>` + (x.gap - x.amt > 1 ? `<small class="muted">still short by ${fmtCr(x.gap - x.amt)}</small>` : '')
       : `<span class="aa-warn">Short by ${fmtCr(x.gap)}</span><small class="muted">add new money to fill it</small>`;
     else if (x.has && AA_ONLY) plan = `<span class="aa-warn">Over by ${fmtCr(-x.gap)}</span><small class="muted">leave as is · no new money here</small>`;
-    else if (x.has) plan = (x.amt < -0.5 ? `<span class="tg-act sell">Reduce ${fmtINR(Math.round(-x.amt))}</span>` : '') +
+    else if (x.has) plan = (x.amt < -0.5 ? `<span class="tg-act sell">Remove ${fmtINR(Math.round(-x.amt))}</span>` : '') +
       (x.why ? `<small class="aa-warn">${fmtCr(x.stuck)} over · ${x.why === 'prop' ? 'a property can\'t be sold in parts' : x.why === 'lock' ? 'locked, stays where it is' : 'locked or in property'}</small>` : '');
     setHTML('aa-amt' + i, plan);
     set('aa-ap' + i, c.after ? tgFmtPct(pctOf(x.r.value + x.amt, c.after)) : '—');
@@ -1717,14 +1859,14 @@ function aaRefresh() {
   if (fill) { fill.style.width = (c.setN ? Math.min(100, p) : 0) + '%'; fill.style.background = ok ? 'var(--green)' : p > 100 ? 'var(--red)' : 'var(--amber)'; }
   setHTML('aa-meter-txt', !c.setN ? 'Pick an investor type above, or type a target % for each class, to start.' :
     `Targets add up to <b>${p.toFixed(1)}%</b> of 100%` + (ok ? ' · <span class="gain-pos">adds up ✓</span>' : p < 100 ? ` · <span style="color:var(--amber)">${(100 - p).toFixed(1)}% not allotted yet</span>` : ` · <span class="gain-neg">${(p - 100).toFixed(1)}% over</span>`) +
-    (!ok ? ` <button class="sort-chip tg-scale" onclick="aaFill('scale')" title="Keeps the same proportions between your targets">↔ Scale targets to 100%</button>` : ''));
+    (!ok ? ` <button class="sort-chip tg-scale" onclick="aaFill('scale')" title="Keeps the same proportions between your targets">Make targets total 100%</button>` : ''));
   const k = (label, val, sub, color) => `<div class="kpi" style="--accent:${color};"><div class="kpi-label">${label}</div><div class="kpi-val">${val}</div><div class="kpi-sub">${sub}</div></div>`;
   const leftK = !c.setN ? k('Money needed', '—', 'set targets to see it', '#64748b')
-    : c.left >= -0.5 ? k(c.nm ? 'New money left over' : 'Cash freed up', fmtCr(Math.max(0, c.left)), c.nm ? `of ${fmtINR(c.nm)} new money` : 'reduces minus adds', '#22c55e')
-    : k('Extra money needed', fmtCr(-c.left), c.nm ? `on top of ${fmtINR(c.nm)} new money` : 'adds minus reduces', '#ef4444');
+    : c.left >= -0.5 ? k(c.nm ? 'New money left over' : 'Cash freed up', fmtCr(Math.max(0, c.left)), c.nm ? `of ${fmtINR(c.nm)} new money` : 'removes minus adds', '#22c55e')
+    : k('Extra money needed', fmtCr(-c.left), c.nm ? `on top of ${fmtINR(c.nm)} new money` : 'adds minus removes', '#ef4444');
   setHTML('aa-kpis', k('Corpus', fmtCr(D.corpus), (D.home > 0 ? 'home not counted' : 'all assets') + (D.rented > 0 ? (D.rent ? ' · rented property counted' : ' · rented property left out') : ''), '#f0a500') +
     k('Total to add', fmtCr(c.buy), `${c.rows.filter(x => x.amt > 0.5).length} class${c.rows.filter(x => x.amt > 0.5).length === 1 ? '' : 'es'}`, '#22c55e') +
-    k('Total to reduce', fmtCr(c.sell), AA_ONLY ? 'add only is on' : `${c.rows.filter(x => x.amt < -0.5).length} class${c.rows.filter(x => x.amt < -0.5).length === 1 ? '' : 'es'}`, '#ef4444') + leftK);
+    k('Total to remove', fmtCr(c.sell), AA_ONLY ? 'add only is on' : `${c.rows.filter(x => x.amt < -0.5).length} class${c.rows.filter(x => x.amt < -0.5).length === 1 ? '' : 'es'}`, '#ef4444') + leftK);
   const eq = c.rows.find(x => x.r.key === 'EQUITY'), hasStocks = LAST_MODEL && LAST_MODEL.assets.some(a => a.kind === 'stock' && a.cls === 'Equity');
   setHTML('aa-hand', eq && eq.amt > 0.5 && hasStocks ? `<div class="aa-hand">➡️ Equity gets <b>${fmtINR(Math.round(eq.amt))}</b>. <button class="sort-chip" onclick="aaToStocks(${Math.round(eq.amt)})">🎯 Plan the stocks in Stock Allocation Help</button><div class="muted" style="font-size:11px;margin-top:4px">Equity also includes your mutual funds. If only part of this goes into stocks, change the amount there.</div></div>` : '');
   // investor-type note + which button is on
@@ -1810,11 +1952,11 @@ const tgSign = (n, f) => (n > 0 ? '+' : n < 0 ? '−' : '') + f(Math.abs(n));
 function renderRebalance(d) {
   if (FAM_SEL !== '*' && RAW_API) d = model(RAW_API);   // always the whole family, whichever name is picked on the other tabs
   TG_ROWS = tgRowsOf(d);
-  if (!TG_ROWS.length) { setHTML('rebalance-body', empty('No Indian stocks yet. Once your broker holdings file is in (Indian Stocks tab), this page shows each stock\'s share of your portfolio and helps you plan buys and sells to reach the allocation you want.')); return; }
+  if (!TG_ROWS.length) { setHTML('rebalance-body', empty('No Indian stocks yet. Once your broker holdings file is in (Indian Stocks tab), this page shows each stock\'s share of your portfolio and helps you plan what to add and remove to reach the allocation you want.')); return; }
   const t = tgMine(), fam = famMembers(RAW_API || {}).length > 1;
   const noPrice = TG_ROWS.filter(r => !r.cmp).length;
   const head = `<div class="tg-intro">
-      <div><b>How it works</b> · Type the <b>target %</b> you want for each stock. The table shows how much money to add or take out of that stock, and how many shares to buy or sell at today's price (CMP), to reach it. Leave a target blank to keep that stock as it is.</div>
+      <div><b>How it works</b> · Type the <b>target %</b> you want for each stock. The table shows how much money to add or take out of that stock, and how many shares to add or remove at today's price (CMP), to reach it. Leave a target blank to keep that stock as it is.</div>
       ${fam ? `<div class="muted" style="margin-top:6px">👨‍👩‍👧 This page is for the <b style="color:var(--text)">whole family together</b>: each stock's holdings across all members are added up.</div>` : ''}
     </div>
     <div class="tg-controls">
@@ -1828,7 +1970,7 @@ function renderRebalance(d) {
     </div>
     <div class="tg-meter-wrap"><div class="tg-meter"><div class="tg-meter-fill" id="tg-meter-fill"></div></div><div id="tg-meter-txt" class="tg-meter-txt"></div></div>
     <div class="kpi-grid" id="tg-kpis"></div>`;
-  const cols = ['#', 'Stock', 'CMP', 'Current value', 'Current %', 'Suggested', 'Target %', 'Gap', 'Add / remove (₹)', 'Buy / sell at CMP', 'Value after', '% after'];
+  const cols = ['#', 'Stock', 'CMP', 'Current value', 'Current %', 'Suggested', 'Target %', 'Gap', 'Add / remove (₹)', 'Add / remove at CMP', 'Value after', '% after'];
   const sugCell = (r, i) => { const n = tgStarOf(r), v = n ? tgSuggest(n) : null;
     if (!n) return '<span class="muted" style="font-size:10px">not on watchlist</span>';
     if (v === null) return `<span class="muted" style="font-size:10px">no band for ${n}★</span>`;
@@ -1854,7 +1996,7 @@ function renderRebalance(d) {
       <div>• Prices are today's CMP from your tracker; the price you actually get will differ a little. Brokerage, charges and taxes are not included — selling can create capital-gains tax, so check that before you sell.</div>
       ${noPrice ? `<div>• ${noPrice} stock${noPrice === 1 ? ' has' : 's have'} no price yet, so no share count is shown for ${noPrice === 1 ? 'it' : 'them'}.</div>` : ''}
       <div>• ⭐ Stars come from the R2R watchlist. Suggested % by rating: ${Object.keys(TG_RULES).sort((a, b) => b - a).map(n => `${n}★ ${tgBand(n)}`).join(' · ')} (the middle of each band is used). A stock not on the watchlist gets no suggestion — set its target yourself or leave it blank to keep it.</div>
-      <div>• This is a calculator for your own planning, not a buy or sell recommendation.</div></div>`;
+      <div>• This is a calculator for your own planning, not a recommendation to add or remove.</div></div>`;
   setHTML('rebalance-body', head + `<div class="table-wrap"><table class="data-table tg-table"><thead><tr>${cols.map((c, i) => `<th class="${[i && i !== 1 && i !== 9 ? 'num' : '', [0, 3, 7, 10].includes(i) ? 'tg-hm' : '', i === 1 ? 'tg-stk' : ''].join(' ').trim()}">${c}</th>`).join('')}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>` + notes);
   tgRefresh(); tgStatus();
 }
@@ -1868,8 +2010,8 @@ function tgRefresh() {
     setHTML('tg-amt' + i, !x.has ? '<span class="muted">—</span>' : x.amt ? `<span class="${x.amt > 0 ? 'gain-pos' : 'gain-neg'}">${tgSign(x.amt, v => fmtINR(Math.round(v)))}</span>` : '<span class="muted">₹0</span>');
     let act = '<span class="muted">Keep as is</span>';
     if (x.has && !x.r.cmp) act = '<span class="muted">No price</span>';
-    else if (x.has && x.qty > 0) act = `<span class="tg-act buy">Buy ${x.qty.toLocaleString('en-IN')}</span>`;
-    else if (x.has && x.qty < 0) act = `<span class="tg-act sell">Sell ${(-x.qty).toLocaleString('en-IN')}</span>`;
+    else if (x.has && x.qty > 0) act = `<span class="tg-act buy">Add ${x.qty.toLocaleString('en-IN')}</span>`;
+    else if (x.has && x.qty < 0) act = `<span class="tg-act sell">Remove ${(-x.qty).toLocaleString('en-IN')}</span>`;
     else if (x.has) act = Math.abs(x.gap) >= 1 ? `<span class="muted">On target<small> (gap under 1 share)</small></span>` : '<span class="muted">On target</span>';
     setHTML('tg-act' + i, act);
     setHTML('tg-aft' + i, fmtINR(Math.round(x.after)));
@@ -1881,7 +2023,7 @@ function tgRefresh() {
   set('tg-f-sug', sugT ? sugT.toFixed(2) + '%' : '—');
   set('tg-f-tgt', c.setN ? c.rows.filter(x => x.has).reduce((s, x) => s + Number(x.tgt), 0).toFixed(2) + '%' : '—');
   setHTML('tg-f-amt', c.net ? `<span class="${c.net > 0 ? 'gain-pos' : 'gain-neg'}">${tgSign(c.net, v => fmtINR(Math.round(v)))}</span>` : '₹0');
-  set('tg-f-act', c.buy || c.sell ? `${c.rows.filter(x => x.qty > 0).length} buy · ${c.rows.filter(x => x.qty < 0).length} sell` : '');
+  set('tg-f-act', c.buy || c.sell ? `${c.rows.filter(x => x.qty > 0).length} add · ${c.rows.filter(x => x.qty < 0).length} remove` : '');
   set('tg-f-aft', fmtINR(Math.round(c.after)));
   // meter: targets + kept stocks should come to 100% of the portfolio (after new money)
   const p = c.planned, ok = Math.abs(p - 100) < 0.1, fill = document.getElementById('tg-meter-fill');
@@ -1890,15 +2032,15 @@ function tgRefresh() {
   setHTML('tg-meter-txt', !c.setN ? 'Type a target % for at least one stock to start.' :
     `Planned <b>${p.toFixed(2)}%</b> of 100% · ${c.setN} target${c.setN === 1 ? '' : 's'} set${kept ? ` · ${kept} kept as is (counted at their current share)` : ''}` +
     (ok ? ' · <span class="gain-pos">adds up ✓</span>' : p < 100 ? ` · <span style="color:var(--amber)">${(100 - p).toFixed(2)}% not allotted — it would stay as cash</span>` : ` · <span class="gain-neg">${(p - 100).toFixed(2)}% over — you'd need extra money</span>`) +
-    (!ok && c.setN ? ` <button class="sort-chip tg-scale" onclick="tgFill('scale')" title="Keeps the same proportions between your targets">↔ Scale targets to 100%</button>` : ''));
+    (!ok && c.setN ? ` <button class="sort-chip tg-scale" onclick="tgFill('scale')" title="Keeps the same proportions between your targets">Make targets total 100%</button>` : ''));
   const k = (label, val, sub, color) => `<div class="kpi" style="--accent:${color};"><div class="kpi-label">${label}</div><div class="kpi-val">${val}</div><div class="kpi-sub">${sub}</div></div>`;
   const fresh = TG_FRESH || 0;
   const leftK = !c.setN ? k('Money needed', '—', 'set a target to see it', '#64748b')
-    : c.left >= 0 ? k(fresh ? 'Cash left over' : 'Cash freed up', fmtCr(c.left), (fresh ? `of ${fmtINR(fresh)} new money` : 'sells minus buys') + ' · ' + fmtINR(Math.round(c.left)), '#22c55e')
-    : k('Extra money needed', fmtCr(-c.left), (fresh ? `on top of ${fmtINR(fresh)} new money` : 'buys minus sells') + ' · ' + fmtINR(Math.round(-c.left)), '#ef4444');
+    : c.left >= 0 ? k(fresh ? 'Cash left over' : 'Cash freed up', fmtCr(c.left), (fresh ? `of ${fmtINR(fresh)} new money` : 'removes minus adds') + ' · ' + fmtINR(Math.round(c.left)), '#22c55e')
+    : k('Extra money needed', fmtCr(-c.left), (fresh ? `on top of ${fmtINR(fresh)} new money` : 'adds minus removes') + ' · ' + fmtINR(Math.round(-c.left)), '#ef4444');
   setHTML('tg-kpis', k('Stocks now', fmtCr(c.T), `${TG_ROWS.length} holdings · ${fmtINR(Math.round(c.T))}`, '#f0a500') +
-    k('Total to buy', fmtCr(c.buy), `${tgN(c.rows.filter(x => x.qty > 0).length)} · ${fmtINR(Math.round(c.buy))}`, '#22c55e') +
-    k('Total to sell', fmtCr(c.sell), `${tgN(c.rows.filter(x => x.qty < 0).length)} · ${fmtINR(Math.round(c.sell))}`, '#ef4444') + leftK);
+    k('Total to add', fmtCr(c.buy), `${tgN(c.rows.filter(x => x.qty > 0).length)} · ${fmtINR(Math.round(c.buy))}`, '#22c55e') +
+    k('Total to remove', fmtCr(c.sell), `${tgN(c.rows.filter(x => x.qty < 0).length)} · ${fmtINR(Math.round(c.sell))}`, '#ef4444') + leftK);
 }
 function tgSet(i, v) {
   const r = TG_ROWS[i]; if (!r) return;
@@ -2051,13 +2193,13 @@ function setUpWho(i) {
 }
 function uploadBlock(kind) {
   const line = kind === 'tradebook' ? 'Upload your tradebook, fund transaction statement or contract notes for exact returns.' : 'Upload your latest holdings file (shares or mutual funds), a tradebook or contract notes.';
-  return `<div class="reset-zone up-zone"><button class="up-btn" onclick="askUpload('${kind}')">📤 Upload a file</button><div class="muted">${line} CSV or Excel (.xlsx). You'll check it and tap ✅ on Telegram before anything changes.</div></div>`;
+  return `<div class="reset-zone up-zone"><button class="up-btn" onclick="askUpload('${kind}')">Upload a file</button><div class="muted">${line} CSV or Excel (.xlsx). You'll check it and tap ✅ on Telegram before anything changes.</div></div>`;
 }
 function askUpload(kind) {
   if (!kind) { const t = document.querySelector('.tab-btn.active'); kind = t && t.dataset.tab === 'returns' ? 'tradebook' : 'holdings'; }
   UP_KIND = UP_KINDS[kind] ? kind : 'holdings';
   UP_WHO = null;
-  showModal(`<h3>📤 Upload a file</h3>
+  showModal(`<h3>Upload a file</h3>
     <div class="up-kinds">${Object.keys(UP_KINDS).map(k => `<label class="up-kind${k === UP_KIND ? ' on' : ''}" data-k="${k}"><input type="radio" name="upk" value="${k}"${k === UP_KIND ? ' checked' : ''} onchange="setUpKind('${k}')"><span><b>${UP_KINDS[k][0]}</b><br>${esc(UP_KINDS[k][1])}</span></label>`).join('')}</div>
     <label class="up-field"><span id="up-pick">Choose the file</span> (.csv or .xlsx, max 8 MB)<input type="file" id="up-file" accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
     <div class="up-field" id="up-who-wrap"><b style="color:var(--text)">Whose file is this?</b> <span class="muted">— so it goes into the right person's list</span>
@@ -2119,7 +2261,7 @@ async function doUpload() {
 const MF_META = { Equity: ['#3b82f6', 'Equity funds', 'counted in Equity'], Hybrid: ['#06b6d4', 'Hybrid funds', 'counted in Equity'],
   Debt: ['#a855f7', 'Debt funds', 'counted in Debt'], Gold: ['#f0a500', 'Gold funds', 'counted in Gold'], Other: ['#64748b', 'Other funds', ''] };
 function renderFunds(d) {
-  const list = d.assets.filter(a => a.kind === 'mf').sort((a, b) => b.value - a.value);
+  const list = d.assets.filter(a => a.kind === 'mf' && a.mfClass !== 'Gold').sort((a, b) => b.value - a.value);
   if (!list.length) { setHTML('funds-body', empty('No mutual funds yet. Send your mutual fund holdings statement (Excel or CSV from Kuvera, Groww, Coin, MF Central…) to the Tracker bot. Your funds are sorted into Equity, Hybrid, Debt and Gold here.') + uploadBlock('holdings')); return; }
   const total = list.reduce((s, a) => s + a.value, 0);
   const by = {}; list.forEach(a => by[a.mfClass] = (by[a.mfClass] || 0) + a.value);
@@ -2900,6 +3042,142 @@ function renderParameters(d) {
 // ═══════════════════════════════════════════════════════
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; document.getElementById('install-btn').style.display = 'flex'; });
+// ═══════════════════════════════════════════════════════
+//  REDESIGN (Nov 2026): Home, Mutual fund tiles, Other-asset tiles, Goals, More
+// ═══════════════════════════════════════════════════════
+const HOME_COL = { 'Equity': '#1F4D3F', 'Debt': '#2B5FA8', 'Gold': '#E0A526', 'Real estate': '#6C45A8', 'Liquid': '#8FA69D', 'Other': '#C4573F' };
+const HOME_LABEL = { 'Real estate': 'Real estate (REITs / InvITs included)' };
+let HOME_OPEN = '';
+function isHome(a) { return a.cls === 'Real Estate' && aaPropKind(a) === 'home'; }
+function homeOpen(k) { HOME_OPEN = HOME_OPEN === k ? '' : k; if (LAST_MODEL) renderHome(LAST_MODEL); }
+function upcomingMonth(d) {
+  const y = d.today.getFullYear(), m = d.today.getMonth(), ev = [];
+  d.insurance.forEach(p => { if (p.next && p.premium && p.next.getFullYear() === y && p.next.getMonth() === m) ev.push({ a: p.name + ' premium', b: (p.cat ? p.cat + ' insurance · ' : '') + 'due ' + p.next.getDate() + ' ' + MONTHS[m], c: fmtINR(p.premium), t: +p.next }); });
+  d.loans.forEach(l => { if (l.emi > 0 && l.outstanding > 0) { const day = l.emiDay >= 1 && l.emiDay <= 31 ? Math.min(Math.round(l.emiDay), new Date(y, m + 1, 0).getDate()) : 0;
+    ev.push({ a: l.type + ' EMI', b: (l.lender ? esc(l.lender) + ' · ' : '') + (day ? 'due ' + day + ' ' + MONTHS[m] : 'due this month'), c: fmtINR(l.emi), t: day ? +new Date(y, m, day) : 9e15, emi: 1 }); } });
+  return ev.sort((a, b) => a.t - b.t);
+}
+function upcomingHTML(ev, emptyMsg) {
+  return `<div class="upc"><h4>Upcoming this month</h4>${ev.length ? ev.map(e => `<div class="rowx"><div><div class="a">${esc(e.a)}</div><div class="b">${e.b}</div></div><div class="c">${e.c}</div></div>`).join('') : `<div class="note" style="margin:0">${emptyMsg}</div>`}</div>`;
+}
+function renderHome(d) {
+  const homeVal = d.assets.filter(isHome).reduce((s, a) => s + a.value, 0), corpus = d.totalAssets - homeVal;
+  const m = {};
+  d.assets.filter(a => !isHome(a)).forEach(a => { const k = (a.cls === 'REITs/InvITs' || a.cls === 'Real Estate') ? 'Real estate' : (HOME_COL[a.cls] ? a.cls : 'Other');
+    m[k] = m[k] || { k, v: 0, types: {} }; m[k].v += a.value; m[k].types[a.type] = (m[k].types[a.type] || 0) + a.value; });
+  const cls = Object.keys(HOME_COL).filter(k => m[k]).map(k => m[k]);
+  const R = 76, C = 2 * Math.PI * R; let off = 0;
+  const segs = cls.map(c => { const len = corpus ? c.v / corpus * C : 0, s = `<circle cx="100" cy="100" r="${R}" fill="none" stroke="${HOME_COL[c.k]}" stroke-width="30" stroke-dasharray="${Math.max(0, len - 2).toFixed(2)} ${(C - len + 2).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" stroke-opacity="${!HOME_OPEN || HOME_OPEN === c.k ? 1 : 0.25}"></circle>`; off += len; return s; }).join('');
+  const sel = cls.find(c => c.k === HOME_OPEN);
+  const donut = `<svg width="230" height="230" viewBox="0 0 200 200" role="img" aria-label="Asset allocation donut" style="max-width:100%"><g transform="rotate(-90 100 100)">${segs}</g>
+    <text x="100" y="94" text-anchor="middle" font-size="13" style="fill:var(--text3)">${sel ? esc(sel.k) : 'Corpus'}</text><text x="100" y="118" text-anchor="middle" font-size="22" font-weight="800" style="fill:var(--text)">${sel ? pctOf(sel.v, corpus).toFixed(0) + '%' : fmtCr(corpus)}</text></svg>`;
+  const rows = cls.map(c => `<div class="cls-row"><button class="cls-btn" aria-expanded="${HOME_OPEN === c.k}" onclick="homeOpen('${c.k}')"><i style="background:${HOME_COL[c.k]}"></i><span class="n">${esc(HOME_LABEL[c.k] || c.k)}</span><span class="amt">${fmtCr(c.v)}</span><span class="p">${pctOf(c.v, corpus).toFixed(0)}%</span></button>
+    ${HOME_OPEN === c.k ? `<div class="cls-in">${Object.entries(c.types).sort((a, b) => b[1] - a[1]).map(([n, v]) => `<div><span>${esc(n)}</span><b>${fmtCr(v)}</b></div>`).join('')}</div>` : ''}</div>`).join('');
+  const up = upcomingMonth(d);
+  const liab = d.liabilities.filter(l => l.outstanding > 0 || l.emi > 0);
+  const liabHTML = `<div class="cardx"><div class="card-title"><span>Liabilities</span><span style="font-size:16px;font-weight:800;color:var(--neg)">${d.totalLiab ? fmtCr(d.totalLiab) : '₹0'}</span></div>
+    ${liab.length ? liab.map(l => `<div class="rowx"><div><div class="a">${esc(l.type)}${l.lender ? ' · ' + esc(l.lender) : ''}</div><div class="b">${[l.rate !== null ? l.rate + '%' : '', l.emi ? 'EMI ' + fmtINR(l.emi) : '', l.ends ? 'ends ' + MONTHS[l.ends.getMonth()] + ' ' + l.ends.getFullYear() : ''].filter(Boolean).join(' · ')}</div></div><div class="c" style="color:var(--neg)">${fmtCr(l.outstanding)}</div></div>`).join('') : '<div class="note" style="margin:0">No loans in your sheet.</div>'}</div>`;
+  const x = d.returns.find(r => r.scope === 'Combined' && r.period === '1Y' && r.xirr !== null);
+  const score = (document.getElementById('param-checks') || {}).textContent || '';
+  const q = (a, b, c, tab) => `<button class="qcard" onclick="switchTab('${tab}')"><div><div class="a">${a}</div><div class="b">${b}</div></div><span class="c">${c}</span></button>`;
+  const quick = `<div class="qcards">${q('Your XIRR', x ? 'Last 1 year, stocks and mutual funds' : 'See how your money has done', x ? x.xirr.toFixed(1) + '%' : '', 'returns')}${q('Health check', 'Checks passed', esc(score.trim() === '—' ? '' : score), 'parameters')}${q('Uploads', 'Month-end files and tradebooks', '', 'uploads')}</div>`;
+  const pl = pricesLine(d);
+  setHTML('home-body', !d.assets.length ? empty('No assets yet. Add them in the Assets tab of your sheet.') : `
+    <div class="pg-head"><div><div class="pg-kicker">${esc(d.client || 'Your family')} · net worth</div><div class="pg-big">${fmtCr(d.netWorth)}</div></div>
+      <div class="pills"><div class="pill mint"><span>Assets</span><b>${fmtCr(d.totalAssets)}</b></div><div class="pill blush"><span>Loans</span><b style="color:var(--neg)">${d.totalLiab ? fmtCr(d.totalLiab) : '₹0'}</b></div><div class="pill blue"><span>Investable corpus</span><b>${fmtCr(corpus)}</b></div></div></div>
+    <div class="home-grid"><div class="stack">
+      <div class="home-donut"><div style="display:flex;justify-content:center">${donut}</div><div class="cream">${rows}</div></div>
+      <div class="note" style="margin-top:0">Tap a row to see what is inside. ${homeVal ? 'Your home (' + fmtCr(homeVal) + ') and loans are not in the chart. ' : ''}Every holding is counted once.${pl ? '<br>' + pl : ''}</div>
+    </div><div class="stack">${upcomingHTML(up, 'No insurance premium or EMI is due this month.')}${liabHTML}${quick}</div></div>`);
+  setHTML('ins-upcoming', upcomingHTML(up.filter(e => !e.emi), 'No premium is due this month.'));
+}
+// ── Mutual funds as four tiles (gold funds live under Other assets → Gold)
+function mfGroup(a) {
+  if (/liquid|overnight|money market/i.test((a.category || '') + ' ' + a.name)) return 'Liquid funds';
+  return { Equity: 'Equity funds', Hybrid: 'Hybrid funds', Debt: 'Debt funds' }[a.mfClass] || 'Other funds';
+}
+function tileHTML(t, v, p, bg, rows) {
+  return `<div class="tile" style="background:${bg}"><div class="tile-h"><span>${esc(t)}</span><span>${fmtCr(v)}</span></div><div class="tile-p">${p}</div>${rows.map(r => `<div class="rowx"><div><div class="a">${esc(r[0])}</div><div class="b">${r[1]}</div></div><div class="c">${r[2]}</div></div>`).join('')}</div>`;
+}
+const _renderFunds = renderFunds;
+renderFunds = function (d) {
+  _renderFunds(d);
+  const list = d.assets.filter(a => a.kind === 'mf' && a.mfClass !== 'Gold'), body = document.getElementById('funds-body');
+  if (!list.length || !body) return;
+  const total = list.reduce((s, a) => s + a.value, 0), g = {};
+  list.forEach(a => { const k = mfGroup(a); (g[k] = g[k] || []).push(a); });
+  const bg = { 'Equity funds': 'var(--p-butter)', 'Hybrid funds': 'var(--p-lilac)', 'Debt funds': 'var(--p-mint)', 'Liquid funds': 'var(--p-blue)', 'Other funds': 'var(--card)' };
+  const html = `<div class="tiles">${Object.keys(bg).filter(k => g[k]).map(k => { const v = g[k].reduce((s, a) => s + a.value, 0);
+    return tileHTML(k, v, pctOf(v, total).toFixed(0) + '% of mutual funds' + (k === 'Hybrid funds' ? ' · counts as equity' : ''), bg[k], g[k].sort((a, b) => b.value - a.value).map(a => [a.name,
+      a.pnl !== null && a.invested ? `Return <span class="${a.pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${a.pnl >= 0 ? '+' : ''}${(a.pnl / a.invested * 100).toFixed(1)}%</span> · gain ${a.pnl >= 0 ? '+' : ''}${fmtCr(a.pnl)}` : esc(a.category || ''), fmtCr(a.value)])); }).join('')}</div>`;
+  const anchor = body.querySelector('.chart-card');
+  if (anchor) anchor.insertAdjacentHTML('beforebegin', html); else body.insertAdjacentHTML('beforeend', html);
+};
+// ── Other assets as tiles
+function isNps(a) { return /\bnps\b|national pension/i.test(a.type + ' ' + a.name); }
+function npsTier(a) { const s = a.type + ' ' + a.name; return /tier\s*-?\s*(2|ii)\b/i.test(s) ? 2 : 1; }
+function otherGroup(a) {
+  if (isNps(a)) return 'NPS';
+  if (a.cls === 'Liquid') return 'Liquid assets';
+  if (a.cls === 'Gold') return 'Gold';
+  if (a.cls === 'REITs/InvITs' || a.cls === 'Real Estate') return 'REITs / InvITs / Real estate';
+  if (a.cls === 'Debt') return /epf|ppf|vpf|nps|ssy|sukanya|gratuity|superann|provident/i.test(a.type + ' ' + a.name) ? 'Debt locked' : 'Debt (other)';
+  return a.cls === 'Equity' ? 'Equity (other)' : 'Other';
+}
+function renderOtherTiles(d) {
+  const list = d.assets.filter(a => !(a.kind === 'stock' && a.cls === 'Equity') && !(a.kind === 'mf' && a.mfClass !== 'Gold'));
+  if (!list.length) { setHTML('other-tiles', ''); return; }
+  const counted = list.filter(a => !isHome(a)), total = counted.reduce((s, a) => s + a.value, 0), homeVal = list.filter(isHome).reduce((s, a) => s + a.value, 0), g = {};
+  list.forEach(a => { const k = otherGroup(a); (g[k] = g[k] || []).push(a); });
+  const bg = { 'Liquid assets': 'var(--p-blue)', 'Gold': 'var(--p-butter)', 'REITs / InvITs / Real estate': 'var(--p-lilac)', 'Debt locked': 'var(--p-mint)', 'NPS': 'var(--p-blush)', 'Debt (other)': 'var(--p-mint)', 'Equity (other)': 'var(--p-butter)', 'Other': 'var(--card)' };
+  const locked = (g['Debt locked'] || []).concat((g['NPS'] || []).filter(a => npsTier(a) === 1)).reduce((s, a) => s + a.value, 0);
+  setHTML('other-tiles', `<div class="pg-head"><div><div class="pg-kicker">Other assets · outside stocks and mutual funds</div><div class="pg-big">${fmtCr(total)}</div></div>
+    <div class="pills"><div class="pill blue"><span>Locked</span><b>${fmtCr(locked) === '—' ? '₹0' : fmtCr(locked)}</b></div><div class="pill mint"><span>Not locked</span><b>${fmtCr(total - locked)}</b></div>${homeVal ? `<div class="pill lilac"><span>Home, not counted</span><b>${fmtCr(homeVal)}</b></div>` : ''}</div></div>
+    <div class="tiles">${Object.keys(bg).filter(k => g[k]).map(k => { const v = g[k].filter(a => !isHome(a)).reduce((s, a) => s + a.value, 0);
+      return tileHTML(k, v, pctOf(v, total).toFixed(0) + '% of other assets' + (g[k].some(isHome) ? ' · home not counted' : ''), bg[k], g[k].sort((a, b) => isHome(a) - isHome(b) || b.value - a.value).map(a => [a.name,
+        isHome(a) ? 'Home you live in · outside corpus' : esc([k === 'NPS' ? '' : a.type, a.kind === 'mf' ? 'counted here, not under Mutual funds' : '', k === 'Debt locked' ? 'locked asset' : '', k === 'NPS' ? (npsTier(a) === 1 ? 'Tier 1 · locked' : 'Tier 2 · not locked') : '', a.platform].filter(Boolean).join(' · ')), fmtCr(a.value)])); }).join('')}</div>`);
+}
+// ── Goals (reads a "Goals" tab from the sheet when there is one)
+function renderGoals(d) {
+  const rows = EXTRAS && EXTRAS.goals ? rowsOf(EXTRAS.goals) : [];
+  const pick = (r, keys) => { for (const k of keys) if (!blank(r[k])) return r[k]; return ''; };
+  const goals = rows.map(r => ({ name: String(pick(r, ['Goal', 'Name', 'Goal Name'])).trim(), target: num(pick(r, ['Target (₹)', 'Target', 'Target Amount (₹)'])), saved: num(pick(r, ['Saved (₹)', 'Saved', 'Set Aside (₹)', 'Current (₹)'])), by: String(pick(r, ['Target Year', 'By', 'Target Date'])).trim(), status: String(pick(r, ['Status'])).trim() })).filter(x => x.name && x.target);
+  if (!goals.length) { setHTML('goals-body', `<div class="pg-head"><div><div class="pg-kicker">Goals · whole family</div><div class="pg-big">No goals yet</div></div></div>${empty(EXTRAS ? 'Add your goals in the Goals tab of your sheet: the goal, the target amount, the target year and the amount set aside so far. Each one then shows here with a progress bar.' : 'Loading your goals…')}`); return; }
+  const behind = goals.filter(x => /behind/i.test(x.status)).length;
+  setHTML('goals-body', `<div class="pg-head"><div><div class="pg-kicker">Goals · whole family</div><div class="pg-big">${goals.length} goal${goals.length === 1 ? '' : 's'}</div></div>
+    <div class="pills"><div class="pill mint"><span>On track</span><b>${goals.length - behind}</b></div><div class="pill blush"><span>Behind</span><b>${behind}</b></div></div></div>
+    <div class="cream">${goals.map(x => { const p = Math.min(100, pctOf(x.saved, x.target)), bad = /behind/i.test(x.status), c = bad ? 'var(--neg)' : 'var(--pos)';
+      return `<div class="rowx" style="display:block"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><div class="a">${esc(x.name)}</div><div class="b">Target ${fmtCr(x.target)}${x.by ? ' by ' + esc(x.by) : ''} · ${fmtCr(x.saved)} set aside${bad ? ' · behind' : ''}</div></div><div class="c" style="color:${c}">${p.toFixed(0)}%</div></div>
+        <div style="height:8px;background:var(--cream-line);border-radius:99px;margin-top:8px"><div style="height:8px;width:${p}%;background:${c};border-radius:99px"></div></div></div>`; }).join('')}</div>
+    <div class="note">Progress is the money set aside against each target.</div>`);
+}
+function renderMore(d) {
+  setHTML('xray-body', `<div class="pg-head"><div><div class="pg-kicker">Portfolio X-ray</div><div class="pg-big">Your stocks vs the R2R watchlist</div></div></div>
+    <div class="cardx">${EXTRAS && EXTRAS.xray ? `<a class="pill-btn primary" href="${esc(EXTRAS.xray)}" target="_blank" rel="noopener">Open my X-ray</a><div class="note">Opens with your current share holdings and today's prices. Mutual funds, gold and REITs are not part of the X-ray.</div>`
+      : `<div class="note" style="margin:0;font-size:14px">${EXTRAS ? (DEMO ? 'The demo has no X-ray link. In your own dashboard an "Open my X-ray" button shows here.' : 'Your X-ray needs your share holdings first. Upload your broker holdings file and the button will show here.') : 'Loading your X-ray link…'}</div>`}</div>
+    <div class="note">Facts only, no verdicts.</div>`);
+  setHTML('uploads-body', `<div class="pg-head"><div><div class="pg-kicker">Uploads</div><div class="pg-big">Send your files</div></div></div>${uploadBlock('holdings')}${uploadBlock('tradebook')}
+    <div class="note">Holdings file and mutual fund statement at each month-end; tradebook or contract notes for exact returns. You can also send files to the R2R Tracker bot on Telegram.</div>`);
+}
+let SECT_HIDE = (() => { try { return localStorage.getItem('r2r_sect_hide') === '1'; } catch (e) { return false; } })();
+function toggleSect() { SECT_HIDE = !SECT_HIDE; try { localStorage.setItem('r2r_sect_hide', SECT_HIDE ? '1' : '0'); } catch (e) {} if (LAST_MODEL) renderStocks(LAST_MODEL); }
+function sectorWrap(list, total) {
+  return SECT_HIDE ? '<div class="sect-toggle" style="margin-top:0"><button class="pill-btn" onclick="toggleSect()">Show sector chart</button></div>' : sectorPie(list, total) + '<div class="sect-toggle"><button class="pill-btn" onclick="toggleSect()">Hide sector chart</button></div>';
+}
+
+// ── Extras from the backend (Redesign.gs): Goals tab and the X-ray link
+let EXTRAS = null, EXTRAS_AT = 0;
+async function loadExtras() {
+  if (DEMO) EXTRAS = { ok: true, xray: '', goals: [['Goal', 'Target (₹)', 'Target Year', 'Saved (₹)', 'Status', 'Notes'], ['Child education', 6000000, 2034, 3720000, 'On track', ''], ['Retirement', 60000000, 2045, 14400000, 'On track', ''], ['Car', 1500000, 2027, 600000, 'Behind', '']] };
+  else {
+    if (!AUTH) return;
+    try { const r = await fetch(`${API_URL}?act=extras&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&t=${Date.now()}`, { redirect: 'follow' }); const j = await r.json(); EXTRAS = j && j.ok ? j : (EXTRAS || { ok: false, goals: null, xray: '' }); }
+    catch (e) { EXTRAS = EXTRAS || { ok: false, goals: null, xray: '' }; }
+  }
+  if (LAST_MODEL) { renderGoals(LAST_MODEL); renderMore(LAST_MODEL); }
+}
+function askExtras() { if (Date.now() - EXTRAS_AT > 60000) { EXTRAS_AT = Date.now(); loadExtras(); } }
+
 function doInstall() { if (!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.finally(() => { deferredPrompt = null; document.getElementById('install-btn').style.display = 'none'; }); }
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 
