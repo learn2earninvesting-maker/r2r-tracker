@@ -576,6 +576,29 @@
   }
   .tg-notes { font-size:11px;line-height:1.6;margin:14px 0 24px; }
   .tg-notes #tg-status { color:var(--teal);margin-bottom:4px; }
+  /* ➕ new stock planner (Plan → Stocks) */
+  .ns-card { background:var(--card);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:12px;margin-bottom:16px; }
+  .ns-card > summary { list-style:none;display:flex;gap:12px;align-items:center;padding:14px 16px;cursor:pointer;font-size:14px;color:var(--text); }
+  .ns-card > summary::-webkit-details-marker { display:none; }
+  .ns-card > summary::after { content:'Open';margin-left:auto;font-size:12px;font-weight:700;color:var(--green);white-space:nowrap; }
+  .ns-card[open] > summary::after { content:'Close'; }
+  .ns-card > summary small { display:block;font-size:12px;color:var(--text3);font-weight:400;margin-top:2px; }
+  .ns-plus { font-size:18px; }
+  .ns-body { padding:0 16px 16px; }
+  .ns-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px 18px;margin-bottom:14px; }
+  .ns-grid .tg-fresh { min-width:0; }
+  .tg-fresh select { margin-top:6px;padding:9px 11px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font:14px var(--mono);width:100%;box-sizing:border-box; }
+  .ns-or { font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.6px; }
+  .ns-src { display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:14px; }
+  .ns-src .seg button { min-height:38px;font-size:13px; }
+  .ns-out { background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.55; }
+  .ns-big { font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px; }
+  .ns-big .gain-pos { color:var(--green); }
+  .ns-row { display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:10px;margin:12px 0 4px; }
+  .ns-row div { background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 10px; }
+  .ns-row small { display:block;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;font-weight:700; }
+  .ns-row b { font:700 14px var(--mono);color:var(--text); }
+  .ns-why { font-size:12px;color:var(--text3);margin-top:8px; }
   .upcoming { display:flex;flex-direction:column;gap:6px;margin-bottom:24px; }
   .up-item { background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:12px; }
   .up-date { font-family:var(--mono);font-size:11px;color:var(--amber);min-width:62px; }
@@ -1641,7 +1664,7 @@ let TG_STARS = { codes: {}, names: {} }, TG_RULES = { 4: [6, 8], 3: [4, 4], 2: [
 const tgNameKey = s => String(s || '').toLowerCase().replace(/\b(ltd|limited|the|india|co|company|corp|corporation)\b/g, '').replace(/[^a-z0-9]/g, '');
 (function tgStarInit() {
   try { const o = JSON.parse(localStorage.getItem('r2r_stars') || 'null'); if (o && o.codes) { TG_STARS = { codes: o.codes, names: o.names || {} }; if (o.rules) TG_RULES = o.rules; } } catch (e) {}
-  if (DEMO) TG_STARS = { codes: { HDFCBANK: 4, RELIANCE: 3, ITC: 3, INFY: 4, LT: 4, BAJFINANCE: 2, TITAN: 3 }, names: {} };   // demo only
+  if (DEMO) TG_STARS = { codes: { HDFCBANK: 4, RELIANCE: 3, ITC: 3, INFY: 4, LT: 4, BAJFINANCE: 2, TITAN: 3, TRENT: 4, POLYCAB: 3, DIXON: 2 }, names: {} };   // demo only
 })();
 const tgStarOf = r => TG_STARS.codes[r.sym] || TG_STARS.names[tgNameKey(r.name)] || 0;
 const tgRule = n => TG_RULES[n] || TG_RULES[String(n)] || null;
@@ -2014,8 +2037,8 @@ function renderRebalance(d) {
       ${noPrice ? `<div>• ${noPrice} stock${noPrice === 1 ? ' has' : 's have'} no price yet, so no share count is shown for ${noPrice === 1 ? 'it' : 'them'}.</div>` : ''}
       <div>• ⭐ Stars come from the R2R watchlist. Suggested % by rating: ${Object.keys(TG_RULES).sort((a, b) => b - a).map(n => `${n}★ ${tgBand(n)}`).join(' · ')} (the middle of each band is used). A stock not on the watchlist gets no suggestion — set its target yourself or leave it blank to keep it.</div>
       <div>• This is a calculator for your own planning, not a recommendation to add or remove.</div></div>`;
-  setHTML('rebalance-body', head + `<div class="table-wrap"><table class="data-table tg-table"><thead><tr>${cols.map((c, i) => `<th class="${[i && i !== 1 && i !== 9 ? 'num' : '', [0, 3, 7, 10].includes(i) ? 'tg-hm' : '', i === 1 ? 'tg-stk' : ''].join(' ').trim()}">${c}</th>`).join('')}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>` + notes);
-  tgRefresh(); tgStatus();
+  setHTML('rebalance-body', head + nsCard() + `<div class="table-wrap"><table class="data-table tg-table"><thead><tr>${cols.map((c, i) => `<th class="${[i && i !== 1 && i !== 9 ? 'num' : '', [0, 3, 7, 10].includes(i) ? 'tg-hm' : '', i === 1 ? 'tg-stk' : ''].join(' ').trim()}">${c}</th>`).join('')}</tr></thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>` + notes);
+  tgRefresh(); tgStatus(); nsRefresh();
 }
 function tgRefresh() {
   const c = tgCalc();
@@ -2093,6 +2116,100 @@ function tgFill(how) {
   if (how === 'equal') { const e = Math.floor(10000 / TG_ROWS.length) / 100; TG_ROWS.forEach(r => { t[r.sym] = e; }); }
   if (LAST_MODEL) renderRebalance(LAST_MODEL);
   tgSave();
+}
+// ── ➕ New stock planner (Plan → Stocks). For a stock the family does not hold yet: how many shares to add
+// for the % you want (from its star rating, or typed), or what % a chosen amount becomes. Sized on the whole
+// family's current stock total (same total as the table). A calculator only: nothing is saved or sent.
+let NS = { open: false, sym: '', star: 0, starFrom: '', pct: '', amt: '', price: '', src: 'new', last: 'pct' };
+const nsT = () => TG_ROWS.reduce((s, r) => s + r.value, 0);
+const nsKey = v => String(v || '').toUpperCase().replace(/^(NSE|BSE|BOM):/, '').trim();
+const nsStarLookup = sym => sym ? (TG_STARS.codes[sym] || TG_STARS.names[tgNameKey(sym)] || 0) : 0;
+const nsHeld = sym => sym && TG_ROWS.find(r => r.sym === sym || tgNameKey(r.name) === tgNameKey(sym));
+function nsCard() {
+  const codes = Object.keys(TG_STARS.codes || {}).filter(c => !nsHeld(c)).sort();
+  const opts = codes.map(c => `<option value="${esc(c)}">${tgStarsTxt(TG_STARS.codes[c])}</option>`).join('');
+  const starOpts = [0, 5, 4, 3, 2, 1].map(n => `<option value="${n}"${Number(NS.star) === n ? ' selected' : ''}>${n ? n + '★' + (tgRule(n) ? ' · suggests ' + tgSuggest(n) + '%' : ' · no band set') : 'Choose…'}</option>`).join('');
+  const num = (id, val, ph, fn, extra) => `<input type="number" inputmode="decimal" step="any" min="0" id="${id}" value="${esc(String(val))}" placeholder="${ph}" oninput="${fn}(this.value)"${extra || ''}>`;
+  return `<details class="ns-card" id="ns-card"${NS.open ? ' open' : ''} ontoggle="NS.open=this.open">
+    <summary><span class="ns-plus">➕</span><span><b>Adding a new stock?</b><small>See how many shares to add for the % you want, based on your current stock total of <b id="ns-tot">${fmtCr(nsT())}</b></small></span></summary>
+    <div class="ns-body">
+      <div class="ns-grid">
+        <label class="tg-fresh">Stock<small>Pick from the R2R watchlist, or type any name</small>
+          <input id="ns-sym" list="ns-list" autocomplete="off" value="${esc(NS.sym)}" placeholder="e.g. TRENT" oninput="nsSym(this.value)"></label>
+        <datalist id="ns-list">${opts}</datalist>
+        <label class="tg-fresh">Star rating<small id="ns-star-src">${NS.starFrom === 'wl' ? 'From the R2R watchlist' : 'Choose one if the stock is not on the watchlist'}</small>
+          <select id="ns-star" onchange="nsStar(this.value)">${starOpts}</select></label>
+        <label class="tg-fresh">Target % of your stocks<small>Filled in from the star rating. You can change it</small>
+          ${num('ns-pct', NS.pct, 'e.g. 4', 'nsPct', ' max="90"')}</label>
+        <label class="tg-fresh"><span><span class="ns-or">or</span> an amount (₹)</span><small>Type an amount instead to see the % it becomes</small>
+          ${num('ns-amt', NS.amt, '₹', 'nsAmt')}</label>
+        <label class="tg-fresh">Price per share (₹)<small>Today's price, from your broker app</small>
+          ${num('ns-price', NS.price, 'e.g. 1250', 'nsPrice')}</label>
+      </div>
+      <div class="ns-src"><span class="tg-ql">Money comes from</span>
+        <div class="seg" role="group"><button id="ns-src-new" class="${NS.src === 'new' ? 'on' : ''}" onclick="nsSrc('new')">New money</button><button id="ns-src-old" class="${NS.src === 'old' ? 'on' : ''}" onclick="nsSrc('old')">My existing stocks</button></div></div>
+      <div id="ns-out" class="ns-out"></div>
+      <div class="muted tg-notes" style="margin:10px 0 0">
+        <div>• <b>New money</b>: the amount is worked out so the stock is exactly that % of your stocks <i>after</i> the new money goes in.</div>
+        <div>• <b>My existing stocks</b>: the total stays the same; the money comes out of stocks you already hold. Use the table below to choose which ones. Removing can create capital-gains tax.</div>
+        <div>• Whole shares only, rounded down. Brokerage, charges and taxes are not included. Covers Indian stocks and equity ETFs, for the whole family together.</div>
+        <div>• This is a calculator for your own planning, not a recommendation to add any stock.</div></div>
+    </div></details>`;
+}
+function nsSym(v) {
+  NS.sym = v; const k = nsKey(v), n = nsStarLookup(k);
+  if (n) { NS.starFrom = 'wl'; nsStar(n, true); }
+  else { if (NS.starFrom === 'wl') { NS.starFrom = ''; } set('ns-star-src', 'Choose one if the stock is not on the watchlist'); nsRefresh(); }
+}
+function nsStar(v, fromWl) {
+  NS.star = Number(v) || 0; if (!fromWl) NS.starFrom = NS.starFrom === 'wl' && NS.star === nsStarLookup(nsKey(NS.sym)) ? 'wl' : '';
+  const el = document.getElementById('ns-star'); if (el) el.value = String(NS.star);
+  set('ns-star-src', NS.starFrom === 'wl' ? 'From the R2R watchlist' : 'Choose one if the stock is not on the watchlist');
+  const sug = NS.star ? tgSuggest(NS.star) : null;
+  if (sug !== null) { NS.pct = String(sug); NS.last = 'pct'; NS.amt = ''; const p = document.getElementById('ns-pct'), a = document.getElementById('ns-amt'); if (p) p.value = NS.pct; if (a) a.value = ''; }
+  nsRefresh();
+}
+function nsPct(v) { NS.pct = v; NS.last = 'pct'; NS.amt = ''; const a = document.getElementById('ns-amt'); if (a) a.value = ''; nsRefresh(); }
+function nsAmt(v) { NS.amt = v; NS.last = 'amt'; NS.pct = ''; const p = document.getElementById('ns-pct'); if (p) p.value = ''; nsRefresh(); }
+function nsPrice(v) { NS.price = v; nsRefresh(); }
+function nsSrc(s) { NS.src = s; ['new', 'old'].forEach(x => { const b = document.getElementById('ns-src-' + x); if (b) b.classList.toggle('on', x === s); }); nsRefresh(); }
+function nsCalc() {
+  const T = nsT(), P = parseFloat(NS.price), old = NS.src === 'old';
+  let w, A;
+  if (NS.last === 'amt') {
+    A = parseFloat(NS.amt); if (!(A > 0)) return { T, need: 'amt' };
+    if (old && A >= T) return { T, err: `That is more than your whole stock total of ${fmtINR(Math.round(T))}. Choose “New money”, or a smaller amount.` };
+    w = old ? A / T : A / (T + A);
+  } else {
+    w = parseFloat(NS.pct) / 100; if (!(w > 0)) return { T, need: 'pct' };
+    if (w >= 0.9) return { T, err: 'Please use a target under 90%.' };
+    A = old ? w * T : w * T / (1 - w);   // new money: A / (T + A) = w
+  }
+  const sh = P > 0 ? Math.floor(A / P) : null, spend = sh === null ? A : sh * P, total = old ? T : T + spend;
+  return { T, P, w, A, sh, spend, total, pAfter: total ? spend / total * 100 : 0, old };
+}
+function nsRefresh() {
+  const out = document.getElementById('ns-out'); if (!out) return;
+  set('ns-tot', fmtCr(nsT()));
+  const k = nsKey(NS.sym), held = nsHeld(k), name = k ? esc(k) : 'the new stock';
+  const pa = document.getElementById('ns-pct'), am = document.getElementById('ns-amt');
+  if (held) { out.innerHTML = `📌 Your family already holds <b>${esc(held.sym)}</b>. Set its target % in the table below instead.`; return; }
+  if (!TG_ROWS.length || !(nsT() > 0)) { out.innerHTML = 'Once your stock holdings are in, this works out the shares to add based on your stock total.'; return; }
+  const c = nsCalc();
+  if (pa) pa.placeholder = NS.last === 'amt' && c.w ? (c.w * 100).toFixed(2) : 'e.g. 4';
+  if (am) am.placeholder = NS.last === 'pct' && c.A ? '≈ ' + fmtINR(Math.round(c.A)) : '₹';
+  if (c.err) { out.innerHTML = `<span class="gain-neg">${c.err}</span>`; return; }
+  if (c.need) { out.innerHTML = 'Pick a star rating or type a target % (or an amount) to start.'; return; }
+  const pctTxt = (c.w * 100).toFixed(2) + '%';
+  if (c.sh === null) { out.innerHTML = `<div class="ns-big">About <span class="gain-pos">${fmtINR(Math.round(c.A))}</span> for ${name}</div>That makes it <b>${pctTxt}</b> of your stocks. Type the price per share to see how many shares that is.`; return; }
+  if (c.sh === 0) { out.innerHTML = `At ${fmtINR(c.P)} a share, ${fmtINR(Math.round(c.A))} does not buy one whole share. One share would be <b>${(c.P / (c.old ? c.T : c.T + c.P) * 100).toFixed(2)}%</b> of your stocks.`; return; }
+  const cell = (l, v) => `<div><small>${l}</small><b>${v}</b></div>`;
+  out.innerHTML = `<div class="ns-big">Add <span class="gain-pos">${c.sh.toLocaleString('en-IN')} share${c.sh === 1 ? '' : 's'}</span> of ${name}</div>
+    <div>About <b>${fmtINR(Math.round(c.spend))}</b> at ${fmtINR(c.P)} a share. It becomes <b>${c.pAfter.toFixed(2)}%</b> of your stocks${NS.last === 'pct' ? ` (target ${pctTxt}; a little under, as only whole shares are counted)` : ''}.</div>
+    <div class="ns-row">${cell('Stocks now', fmtCr(c.T))}${cell(c.old ? 'Moved into ' + (k || 'it') : 'New money needed', fmtINR(Math.round(c.spend)))}${cell('Stocks after', fmtCr(c.total))}${c.old ? cell('Take out of the others', fmtINR(Math.round(c.spend))) : ''}</div>
+    ${c.old
+      ? `<div class="ns-why">To keep your total the same, remove about <b>${fmtINR(Math.round(c.spend))}</b> from the stocks you hold: about ${(c.spend / c.T * 100).toFixed(1)}% of each if you spread it evenly, or from the ones that are over target in the table below.</div>`
+      : NS.last === 'pct' ? `<div class="ns-why">Why not just ${pctTxt} of ${fmtCr(c.T)} (${fmtINR(Math.round(c.w * c.T))})? Because the new money makes your total bigger. ${fmtINR(Math.round(c.A))} is the amount that is ${pctTxt} once it is added.</div>` : ''}`;
 }
 // ── Reset buttons: delete the whole stock list or fund list, then start again from a fresh holdings file.
 // The pop-up only asks; the deleting happens after the client taps ✅ on their own Telegram (Reset.gs).
