@@ -580,8 +580,23 @@
   .ns-card { background:var(--card);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:12px;margin-bottom:16px; }
   .ns-card > summary { list-style:none;display:flex;gap:12px;align-items:center;padding:14px 16px;cursor:pointer;font-size:14px;color:var(--text); }
   .ns-card > summary::-webkit-details-marker { display:none; }
-  .ns-card > summary::after { content:'Open';margin-left:auto;font-size:12px;font-weight:700;color:var(--green);white-space:nowrap; }
-  .ns-card[open] > summary::after { content:'Close'; }
+  .ns-card > summary { flex-wrap:wrap; }
+  .ns-card > summary::after { content:'➕ Plan a new stock';margin-left:auto;font-size:13px;font-weight:800;color:#fff;background:var(--green);border-radius:999px;padding:9px 16px;white-space:nowrap;box-shadow:0 2px 8px rgba(34,197,94,.35); }
+  .ns-card > summary:hover::after { filter:brightness(1.07); }
+  .ns-card[open] > summary::after { content:'Close ✕';background:var(--bg3);color:var(--text);box-shadow:none;border:1px solid var(--border); }
+  .ns-card > summary > span:nth-child(2) { flex:1 1 220px;min-width:0; }
+  @media (max-width:560px) { .ns-card > summary::after { margin-left:0;width:100%;text-align:center;box-sizing:border-box;padding:11px 16px;font-size:14px; } }
+  .ns-pick { position:relative; }
+  .ns-dd { position:absolute;left:0;right:0;top:100%;margin-top:4px;z-index:30;max-height:300px;overflow-y:auto;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 28px rgba(0,0,0,.18);display:none; }
+  .ns-dd.on { display:block; }
+  .ns-dd button { display:flex;width:100%;gap:8px;align-items:center;text-align:left;padding:10px 12px;border:0;border-bottom:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;font-size:13px; }
+  .ns-dd button:last-child { border-bottom:0; }
+  .ns-dd button:hover, .ns-dd button:focus { background:var(--bg3);outline:none; }
+  .ns-dd .c { font-weight:700;font-family:var(--mono);min-width:0; }
+  .ns-dd .n { color:var(--text3);font-size:11px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+  .ns-dd .s { font-size:10px;letter-spacing:-1px;white-space:nowrap; }
+  .ns-dd .h { font-size:10px;color:var(--teal);white-space:nowrap; }
+  .ns-dd .e { padding:10px 12px;font-size:12px;color:var(--text3); }
   .ns-card > summary small { display:block;font-size:12px;color:var(--text3);font-weight:400;margin-top:2px; }
   .ns-plus { font-size:18px; }
   .ns-body { padding:0 16px 16px; }
@@ -1660,11 +1675,11 @@ const tgSym = a => String(a.ticker || a.name || '').toUpperCase().replace(/^(NSE
 (function tgInit() { try { TG = JSON.parse(localStorage.getItem(TG_LS()) || '{}') || {}; } catch (e) { TG = {}; } })();
 // ⭐ star ratings from the R2R watchlist (Targets.gs reads the watchlist sheet) and the suggested % for each rating.
 // TG_RULES comes from TG_STAR_RULES in Targets.gs, so the advisor can change the bands there; this is only the fallback.
-let TG_STARS = { codes: {}, names: {} }, TG_RULES = { 4: [6, 8], 3: [4, 4], 2: [2, 2] };
+let TG_STARS = { codes: {}, names: {}, list: [] }, TG_RULES = { 4: [6, 8], 3: [4, 4], 2: [2, 2] };
 const tgNameKey = s => String(s || '').toLowerCase().replace(/\b(ltd|limited|the|india|co|company|corp|corporation)\b/g, '').replace(/[^a-z0-9]/g, '');
 (function tgStarInit() {
-  try { const o = JSON.parse(localStorage.getItem('r2r_stars') || 'null'); if (o && o.codes) { TG_STARS = { codes: o.codes, names: o.names || {} }; if (o.rules) TG_RULES = o.rules; } } catch (e) {}
-  if (DEMO) TG_STARS = { codes: { HDFCBANK: 4, RELIANCE: 3, ITC: 3, INFY: 4, LT: 4, BAJFINANCE: 2, TITAN: 3, TRENT: 4, POLYCAB: 3, DIXON: 2 }, names: {} };   // demo only
+  try { const o = JSON.parse(localStorage.getItem('r2r_stars') || 'null'); if (o && o.codes) { TG_STARS = { codes: o.codes, names: o.names || {}, list: o.list || [] }; if (o.rules) TG_RULES = o.rules; } } catch (e) {}
+  if (DEMO) TG_STARS = { codes: { HDFCBANK: 4, RELIANCE: 3, ITC: 3, INFY: 4, LT: 4, BAJFINANCE: 2, TITAN: 3, TRENT: 4, POLYCAB: 3, DIXON: 2 }, names: {}, list: [['BAJFINANCE','Bajaj Finance',2],['DIXON','Dixon Technologies',2],['HDFCBANK','HDFC Bank',4],['INFY','Infosys',4],['ITC','ITC',3],['KAYNES','Kaynes Technology',0],['LT','Larsen & Toubro',4],['POLYCAB','Polycab India',3],['RELIANCE','Reliance Industries',3],['TITAN','Titan Company',3],['TRENT','Trent',4]] };   // demo only
 })();
 const tgStarOf = r => TG_STARS.codes[r.sym] || TG_STARS.names[tgNameKey(r.name)] || 0;
 const tgRule = n => TG_RULES[n] || TG_RULES[String(n)] || null;
@@ -1682,9 +1697,9 @@ async function tgLoadServer() {
     if (!j.ok) { TG_SERVER = 'off'; tgStatus(); return; }
     TG_SERVER = 'on';
     if (j.stars) {
-      TG_STARS = { codes: j.stars.codes || {}, names: j.stars.names || {} };
+      TG_STARS = { codes: j.stars.codes || {}, names: j.stars.names || {}, list: j.stars.list || [] };
       if (j.rules && Object.keys(j.rules).length) TG_RULES = j.rules;
-      try { localStorage.setItem('r2r_stars', JSON.stringify({ codes: TG_STARS.codes, names: TG_STARS.names, rules: TG_RULES })); } catch (e) {}
+      try { localStorage.setItem('r2r_stars', JSON.stringify({ codes: TG_STARS.codes, names: TG_STARS.names, list: TG_STARS.list, rules: TG_RULES })); } catch (e) {}
     }
     let dirty = false; try { dirty = localStorage.getItem(TG_LS() + '_dirty') === '1'; } catch (e) {}
     if (j.aa && j.aa.above && j.aa.below) { AA_RULES = Object.assign({}, AA_RULES, j.aa); try { localStorage.setItem('r2r_aa_rules', JSON.stringify(j.aa)); } catch (e) {} }
@@ -2126,17 +2141,15 @@ const nsKey = v => String(v || '').toUpperCase().replace(/^(NSE|BSE|BOM):/, '').
 const nsStarLookup = sym => sym ? (TG_STARS.codes[sym] || TG_STARS.names[tgNameKey(sym)] || 0) : 0;
 const nsHeld = sym => sym && TG_ROWS.find(r => r.sym === sym || tgNameKey(r.name) === tgNameKey(sym));
 function nsCard() {
-  const codes = Object.keys(TG_STARS.codes || {}).filter(c => !nsHeld(c)).sort();
-  const opts = codes.map(c => `<option value="${esc(c)}">${tgStarsTxt(TG_STARS.codes[c])}</option>`).join('');
   const starOpts = [0, 5, 4, 3, 2, 1].map(n => `<option value="${n}"${Number(NS.star) === n ? ' selected' : ''}>${n ? n + '★' + (tgRule(n) ? ' · suggests ' + tgSuggest(n) + '%' : ' · no band set') : 'Choose…'}</option>`).join('');
   const num = (id, val, ph, fn, extra) => `<input type="number" inputmode="decimal" step="any" min="0" id="${id}" value="${esc(String(val))}" placeholder="${ph}" oninput="${fn}(this.value)"${extra || ''}>`;
   return `<details class="ns-card" id="ns-card"${NS.open ? ' open' : ''} ontoggle="NS.open=this.open">
-    <summary><span class="ns-plus">➕</span><span><b>Adding a new stock?</b><small>See how many shares to add for the % you want, based on your current stock total of <b id="ns-tot">${fmtCr(nsT())}</b></small></span></summary>
+    <summary><span class="ns-plus">🆕</span><span><b>Adding a new stock?</b><small>See how many shares to add for the % you want, based on your current stock total of <b id="ns-tot">${fmtCr(nsT())}</b></small></span></summary>
     <div class="ns-body">
       <div class="ns-grid">
-        <label class="tg-fresh">Stock<small>Pick from the R2R watchlist, or type any name</small>
-          <input id="ns-sym" list="ns-list" autocomplete="off" value="${esc(NS.sym)}" placeholder="e.g. TRENT" oninput="nsSym(this.value)"></label>
-        <datalist id="ns-list">${opts}</datalist>
+        <div class="ns-pick"><label class="tg-fresh">Stock<small>Tap to see all ${nsList().length || ''} R2R watchlist stocks, or type to search</small>
+          <input id="ns-sym" autocomplete="off" value="${esc(NS.sym)}" placeholder="Tap to choose" oninput="nsSym(this.value);nsDD(true)" onfocus="nsDD(true)" onclick="nsDD(true)" onblur="setTimeout(()=>nsDD(false),180)" onkeydown="if(event.key==='Escape')nsDD(false)"></label>
+          <div class="ns-dd" id="ns-dd" role="listbox"></div></div>
         <label class="tg-fresh">Star rating<small id="ns-star-src">${NS.starFrom === 'wl' ? 'From the R2R watchlist' : 'Choose one if the stock is not on the watchlist'}</small>
           <select id="ns-star" onchange="nsStar(this.value)">${starOpts}</select></label>
         <label class="tg-fresh">Target % of your stocks<small>Filled in from the star rating. You can change it</small>
@@ -2155,6 +2168,26 @@ function nsCard() {
         <div>• Whole shares only, rounded down. Brokerage, charges and taxes are not included. Covers Indian stocks and equity ETFs, for the whole family together.</div>
         <div>• This is a calculator for your own planning, not a recommendation to add any stock.</div></div>
     </div></details>`;
+}
+// every Active watchlist stock: [code, name, stars] — from Targets.gs; older backend sends only rated codes
+function nsList() {
+  const L = (TG_STARS.list || []).length ? TG_STARS.list : Object.keys(TG_STARS.codes || {}).sort().map(c => [c, '', TG_STARS.codes[c]]);
+  return L.map(x => ({ c: nsKey(x[0]), n: x[1] || '', s: Number(x[2]) || 0 }));
+}
+function nsDD(show) {
+  const dd = document.getElementById('ns-dd'); if (!dd) return;
+  if (!show) { dd.classList.remove('on'); return; }
+  const q = String(NS.sym || '').trim(), qk = q.toUpperCase(), qn = tgNameKey(q), all = nsList();
+  const exact = all.some(x => x.c === qk);
+  const hits = !q || exact ? all : all.filter(x => x.c.includes(qk) || (qn && tgNameKey(x.n).includes(qn)));
+  dd.innerHTML = !all.length ? '<div class="e">The watchlist has not loaded yet. Type the stock name instead.</div>'
+    : !hits.length ? '<div class="e">Not on the R2R watchlist. You can still use it: choose a star rating below.</div>'
+    : hits.map(x => `<button type="button" onmousedown="event.preventDefault()" onclick="nsPick('${esc(x.c)}')"><span class="c">${esc(x.c)}</span><span class="n">${esc(x.n && x.n.toUpperCase() !== x.c ? x.n : '')}</span>${nsHeld(x.c) ? '<span class="h">you hold it</span>' : ''}<span class="s">${x.s ? tgStarsTxt(x.s) : '<span class="muted" style="letter-spacing:0">no stars</span>'}</span></button>`).join('');
+  dd.classList.add('on');
+}
+function nsPick(c) {
+  const el = document.getElementById('ns-sym'); if (el) { el.value = c; el.blur(); }
+  nsDD(false); nsSym(c);
 }
 function nsSym(v) {
   NS.sym = v; const k = nsKey(v), n = nsStarLookup(k);
