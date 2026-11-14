@@ -786,6 +786,7 @@
   #funds-body .chart-card, #funds-body .sort-bar, #funds-body .table-wrap, #funds-body .section-title { display:none; }
   .empty { background:var(--card);border:0;border-radius:16px;color:var(--text3); }
   body[data-tab="plan"] .fam-bar, body[data-tab="returns"] .fam-bar, body[data-tab="more"] .fam-bar, body[data-tab="goals"] .fam-bar, body[data-tab="insurance"] .fam-bar { display:none !important; }
+  .pill-btn.primary { background:var(--ink);color:var(--on-ink);text-decoration:none;min-height:46px;padding:0 20px;font-size:14px; }
 </style>
 </head>
 <body>
@@ -1213,7 +1214,7 @@ function model(api) {
   const liabilities = rowsOf(t.Liabilities).map(r => ({
     type: String(r['Loan Type'] ?? 'Loan').trim(), lender: r['Lender'] ?? '', borrower: r['Borrower'] ?? '',
     outstanding: num(r['Outstanding (₹)']), emi: num(r['EMI (₹/month)']), rate: blank(r['Interest Rate %']) ? null : num(r['Interest Rate %']),
-    ends: parseDate(r['Ends On']), limit: blank(r['Credit Limit (₹)']) ? null : num(r['Credit Limit (₹)']), notes: r['Notes'] ?? '' }));
+    ends: parseDate(r['Ends On']), emiDay: blank(r['EMI Day']) ? null : num(r['EMI Day']), limit: blank(r['Credit Limit (₹)']) ? null : num(r['Credit Limit (₹)']), notes: r['Notes'] ?? '' }));
   const totalLiab = liabilities.reduce((s, l) => s + l.outstanding, 0);
   const loans = liabilities.filter(l => !/credit card/i.test(l.type));
   const cards = liabilities.filter(l => /credit card/i.test(l.type));
@@ -1338,7 +1339,7 @@ function renderAll(d) {
   const pl = pricesLine(d);
   setHTML('prices-asof', pl ? '⏱ ' + pl + '<br><span style="font-size:10px">Updates every hour on weekdays · share prices run about 20 min behind the market</span>' : '');
   renderOverview(d); renderAllocation(d); renderHoldings(d); renderAllocate(d); renderStocks(d); renderRebalance(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
-  renderPayments(d); renderParameters(d.famMember && RAW_API ? model(famFilter(RAW_API, '*')) : d); renderOtherTiles(d); renderGoals(d); renderMore(d); renderHome(d);   // Health Check is always the whole family · renderFIRE / renderCashflow kept below, switched off
+  renderPayments(d); renderParameters(d.famMember && RAW_API ? model(famFilter(RAW_API, '*')) : d); renderOtherTiles(d); renderGoals(d); renderMore(d); renderHome(d); askExtras();   // Health Check is always the whole family · renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
 }
 
@@ -3052,7 +3053,8 @@ function homeOpen(k) { HOME_OPEN = HOME_OPEN === k ? '' : k; if (LAST_MODEL) ren
 function upcomingMonth(d) {
   const y = d.today.getFullYear(), m = d.today.getMonth(), ev = [];
   d.insurance.forEach(p => { if (p.next && p.premium && p.next.getFullYear() === y && p.next.getMonth() === m) ev.push({ a: p.name + ' premium', b: (p.cat ? p.cat + ' insurance · ' : '') + 'due ' + p.next.getDate() + ' ' + MONTHS[m], c: fmtINR(p.premium), t: +p.next }); });
-  d.loans.forEach(l => { if (l.emi > 0 && l.outstanding > 0) ev.push({ a: l.type + ' EMI', b: (l.lender ? esc(l.lender) + ' · ' : '') + 'due this month', c: fmtINR(l.emi), t: 9e15 }); });
+  d.loans.forEach(l => { if (l.emi > 0 && l.outstanding > 0) { const day = l.emiDay >= 1 && l.emiDay <= 31 ? Math.min(Math.round(l.emiDay), new Date(y, m + 1, 0).getDate()) : 0;
+    ev.push({ a: l.type + ' EMI', b: (l.lender ? esc(l.lender) + ' · ' : '') + (day ? 'due ' + day + ' ' + MONTHS[m] : 'due this month'), c: fmtINR(l.emi), t: day ? +new Date(y, m, day) : 9e15, emi: 1 }); } });
   return ev.sort((a, b) => a.t - b.t);
 }
 function upcomingHTML(ev, emptyMsg) {
@@ -3087,7 +3089,7 @@ function renderHome(d) {
       <div class="home-donut"><div style="display:flex;justify-content:center">${donut}</div><div class="cream">${rows}</div></div>
       <div class="note" style="margin-top:0">Tap a row to see what is inside. ${homeVal ? 'Your home (' + fmtCr(homeVal) + ') and loans are not in the chart. ' : ''}Every holding is counted once.${pl ? '<br>' + pl : ''}</div>
     </div><div class="stack">${upcomingHTML(up, 'No insurance premium or EMI is due this month.')}${liabHTML}${quick}</div></div>`);
-  setHTML('ins-upcoming', upcomingHTML(up.filter(e => e.t < 9e15), 'No premium is due this month.'));
+  setHTML('ins-upcoming', upcomingHTML(up.filter(e => !e.emi), 'No premium is due this month.'));
 }
 // ── Mutual funds as four tiles (gold funds live under Other assets → Gold)
 function mfGroup(a) {
@@ -3112,7 +3114,10 @@ renderFunds = function (d) {
   if (anchor) anchor.insertAdjacentHTML('beforebegin', html); else body.insertAdjacentHTML('beforeend', html);
 };
 // ── Other assets as tiles
+function isNps(a) { return /\bnps\b|national pension/i.test(a.type + ' ' + a.name); }
+function npsTier(a) { const s = a.type + ' ' + a.name; return /tier\s*-?\s*(2|ii)\b/i.test(s) ? 2 : 1; }
 function otherGroup(a) {
+  if (isNps(a)) return 'NPS';
   if (a.cls === 'Liquid') return 'Liquid assets';
   if (a.cls === 'Gold') return 'Gold';
   if (a.cls === 'REITs/InvITs' || a.cls === 'Real Estate') return 'REITs / InvITs / Real estate';
@@ -3124,20 +3129,20 @@ function renderOtherTiles(d) {
   if (!list.length) { setHTML('other-tiles', ''); return; }
   const counted = list.filter(a => !isHome(a)), total = counted.reduce((s, a) => s + a.value, 0), homeVal = list.filter(isHome).reduce((s, a) => s + a.value, 0), g = {};
   list.forEach(a => { const k = otherGroup(a); (g[k] = g[k] || []).push(a); });
-  const bg = { 'Liquid assets': 'var(--p-blue)', 'Gold': 'var(--p-butter)', 'REITs / InvITs / Real estate': 'var(--p-lilac)', 'Debt locked': 'var(--p-mint)', 'Debt (other)': 'var(--p-mint)', 'Equity (other)': 'var(--p-butter)', 'Other': 'var(--card)' };
-  const locked = (g['Debt locked'] || []).reduce((s, a) => s + a.value, 0);
+  const bg = { 'Liquid assets': 'var(--p-blue)', 'Gold': 'var(--p-butter)', 'REITs / InvITs / Real estate': 'var(--p-lilac)', 'Debt locked': 'var(--p-mint)', 'NPS': 'var(--p-blush)', 'Debt (other)': 'var(--p-mint)', 'Equity (other)': 'var(--p-butter)', 'Other': 'var(--card)' };
+  const locked = (g['Debt locked'] || []).concat((g['NPS'] || []).filter(a => npsTier(a) === 1)).reduce((s, a) => s + a.value, 0);
   setHTML('other-tiles', `<div class="pg-head"><div><div class="pg-kicker">Other assets · outside stocks and mutual funds</div><div class="pg-big">${fmtCr(total)}</div></div>
-    <div class="pills"><div class="pill blue"><span>Debt locked</span><b>${fmtCr(locked) === '—' ? '₹0' : fmtCr(locked)}</b></div><div class="pill mint"><span>Not locked</span><b>${fmtCr(total - locked)}</b></div>${homeVal ? `<div class="pill lilac"><span>Home, not counted</span><b>${fmtCr(homeVal)}</b></div>` : ''}</div></div>
+    <div class="pills"><div class="pill blue"><span>Locked</span><b>${fmtCr(locked) === '—' ? '₹0' : fmtCr(locked)}</b></div><div class="pill mint"><span>Not locked</span><b>${fmtCr(total - locked)}</b></div>${homeVal ? `<div class="pill lilac"><span>Home, not counted</span><b>${fmtCr(homeVal)}</b></div>` : ''}</div></div>
     <div class="tiles">${Object.keys(bg).filter(k => g[k]).map(k => { const v = g[k].filter(a => !isHome(a)).reduce((s, a) => s + a.value, 0);
       return tileHTML(k, v, pctOf(v, total).toFixed(0) + '% of other assets' + (g[k].some(isHome) ? ' · home not counted' : ''), bg[k], g[k].sort((a, b) => isHome(a) - isHome(b) || b.value - a.value).map(a => [a.name,
-        isHome(a) ? 'Home you live in · outside corpus' : esc([a.type, a.kind === 'mf' ? 'counted here, not under Mutual funds' : '', k === 'Debt locked' ? 'locked asset' : '', a.platform].filter(Boolean).join(' · ')), fmtCr(a.value)])); }).join('')}</div>`);
+        isHome(a) ? 'Home you live in · outside corpus' : esc([k === 'NPS' ? '' : a.type, a.kind === 'mf' ? 'counted here, not under Mutual funds' : '', k === 'Debt locked' ? 'locked asset' : '', k === 'NPS' ? (npsTier(a) === 1 ? 'Tier 1 · locked' : 'Tier 2 · not locked') : '', a.platform].filter(Boolean).join(' · ')), fmtCr(a.value)])); }).join('')}</div>`);
 }
 // ── Goals (reads a "Goals" tab from the sheet when there is one)
 function renderGoals(d) {
-  const rows = RAW_API && RAW_API.tabs && RAW_API.tabs.Goals ? rowsOf(RAW_API.tabs.Goals) : [];
+  const rows = EXTRAS && EXTRAS.goals ? rowsOf(EXTRAS.goals) : [];
   const pick = (r, keys) => { for (const k of keys) if (!blank(r[k])) return r[k]; return ''; };
   const goals = rows.map(r => ({ name: String(pick(r, ['Goal', 'Name', 'Goal Name'])).trim(), target: num(pick(r, ['Target (₹)', 'Target', 'Target Amount (₹)'])), saved: num(pick(r, ['Saved (₹)', 'Saved', 'Set Aside (₹)', 'Current (₹)'])), by: String(pick(r, ['Target Year', 'By', 'Target Date'])).trim(), status: String(pick(r, ['Status'])).trim() })).filter(x => x.name && x.target);
-  if (!goals.length) { setHTML('goals-body', `<div class="pg-head"><div><div class="pg-kicker">Goals · whole family</div><div class="pg-big">No goals yet</div></div></div>${empty('Goals will show here with a progress bar for each one, once the Goals tab is set up in your sheet.')}`); return; }
+  if (!goals.length) { setHTML('goals-body', `<div class="pg-head"><div><div class="pg-kicker">Goals · whole family</div><div class="pg-big">No goals yet</div></div></div>${empty(EXTRAS ? 'Add your goals in the Goals tab of your sheet: the goal, the target amount, the target year and the amount set aside so far. Each one then shows here with a progress bar.' : 'Loading your goals…')}`); return; }
   const behind = goals.filter(x => /behind/i.test(x.status)).length;
   setHTML('goals-body', `<div class="pg-head"><div><div class="pg-kicker">Goals · whole family</div><div class="pg-big">${goals.length} goal${goals.length === 1 ? '' : 's'}</div></div>
     <div class="pills"><div class="pill mint"><span>On track</span><b>${goals.length - behind}</b></div><div class="pill blush"><span>Behind</span><b>${behind}</b></div></div></div>
@@ -3148,7 +3153,8 @@ function renderGoals(d) {
 }
 function renderMore(d) {
   setHTML('xray-body', `<div class="pg-head"><div><div class="pg-kicker">Portfolio X-ray</div><div class="pg-big">Your stocks vs the R2R watchlist</div></div></div>
-    <div class="cardx"><div class="a" style="font-weight:700;margin-bottom:6px">How to open it</div><div class="note" style="margin:0;font-size:14px">Your X-ray link is sent on Telegram by the R2R Tracker bot after each month-end holdings upload and after each results season. To get it now, send <b>/xray</b> to the bot.</div></div>
+    <div class="cardx">${EXTRAS && EXTRAS.xray ? `<a class="pill-btn primary" href="${esc(EXTRAS.xray)}" target="_blank" rel="noopener">Open my X-ray</a><div class="note">Opens with your current share holdings and today's prices. Mutual funds, gold and REITs are not part of the X-ray.</div>`
+      : `<div class="note" style="margin:0;font-size:14px">${EXTRAS ? (DEMO ? 'The demo has no X-ray link. In your own dashboard an "Open my X-ray" button shows here.' : 'Your X-ray needs your share holdings first. Upload your broker holdings file and the button will show here.') : 'Loading your X-ray link…'}</div>`}</div>
     <div class="note">Facts only, no verdicts.</div>`);
   setHTML('uploads-body', `<div class="pg-head"><div><div class="pg-kicker">Uploads</div><div class="pg-big">Send your files</div></div></div>${uploadBlock('holdings')}${uploadBlock('tradebook')}
     <div class="note">Holdings file and mutual fund statement at each month-end; tradebook or contract notes for exact returns. You can also send files to the R2R Tracker bot on Telegram.</div>`);
@@ -3158,6 +3164,19 @@ function toggleSect() { SECT_HIDE = !SECT_HIDE; try { localStorage.setItem('r2r_
 function sectorWrap(list, total) {
   return SECT_HIDE ? '<div class="sect-toggle" style="margin-top:0"><button class="pill-btn" onclick="toggleSect()">Show sector chart</button></div>' : sectorPie(list, total) + '<div class="sect-toggle"><button class="pill-btn" onclick="toggleSect()">Hide sector chart</button></div>';
 }
+
+// ── Extras from the backend (Redesign.gs): Goals tab and the X-ray link
+let EXTRAS = null, EXTRAS_AT = 0;
+async function loadExtras() {
+  if (DEMO) EXTRAS = { ok: true, xray: '', goals: [['Goal', 'Target (₹)', 'Target Year', 'Saved (₹)', 'Status', 'Notes'], ['Child education', 6000000, 2034, 3720000, 'On track', ''], ['Retirement', 60000000, 2045, 14400000, 'On track', ''], ['Car', 1500000, 2027, 600000, 'Behind', '']] };
+  else {
+    if (!AUTH) return;
+    try { const r = await fetch(`${API_URL}?act=extras&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&t=${Date.now()}`, { redirect: 'follow' }); const j = await r.json(); EXTRAS = j && j.ok ? j : (EXTRAS || { ok: false, goals: null, xray: '' }); }
+    catch (e) { EXTRAS = EXTRAS || { ok: false, goals: null, xray: '' }; }
+  }
+  if (LAST_MODEL) { renderGoals(LAST_MODEL); renderMore(LAST_MODEL); }
+}
+function askExtras() { if (Date.now() - EXTRAS_AT > 60000) { EXTRAS_AT = Date.now(); loadExtras(); } }
 
 function doInstall() { if (!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.finally(() => { deferredPrompt = null; document.getElementById('install-btn').style.display = 'none'; }); }
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
