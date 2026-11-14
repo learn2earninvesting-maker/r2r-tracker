@@ -916,7 +916,7 @@
   <section class="panel" id="panel-funds"><div id="funds-body"></div></section>
 
   <!-- OTHER ASSETS (gold bonds, gold/silver ETFs, REITs, InvITs, debt ETFs from the broker file) -->
-  <section class="panel" id="panel-other"><div id="other-tiles"></div><details class="more-detail"><summary><span class="md-open">See every holding in detail ▾</span><span class="md-close">Hide details ▴</span></summary><div id="other-body"></div><div id="holdings-body"></div></details></section>
+  <section class="panel" id="panel-other"><div id="other-tiles"></div><details class="more-detail"><summary><span class="md-open">See every holding in detail ▾</span><span class="md-close">Hide details ▴</span></summary><div id="other-detail"></div><div id="other-body" hidden></div><div id="holdings-body" hidden></div></details></section>
 
   <!-- PERFORMANCE (was "Returns"; XIRR worked out every night by Returns.gs) -->
   <section class="panel" id="panel-returns"><div id="returns-body"></div></section>
@@ -3322,6 +3322,17 @@ function otherGroup(a) {
   if (a.cls === 'Debt') return /epf|ppf|vpf|nps|ssy|sukanya|gratuity|superann|provident/i.test(a.type + ' ' + a.name) ? 'Debt locked' : 'Debt (other)';
   return a.cls === 'Equity' ? 'Equity (other)' : 'Other';
 }
+// "See every holding in detail": each Other-assets item listed once, in the same groups as the tiles
+function renderOtherDetail(g, keys) {
+  const n = (x, d) => Number(x).toLocaleString('en-IN', { maximumFractionDigits: d });
+  setHTML('other-detail', keys.length ? keys.map(k => `<div class="cardx" style="margin-bottom:12px"><div class="card-title"><span>${esc(k)}</span><span style="font-size:13px;font-weight:600">${g[k].length} item${g[k].length === 1 ? '' : 's'}</span></div>
+    ${g[k].slice().sort((a, b) => b.value - a.value).map(a => {
+      const sub = [a.type, a.holder, a.platform].filter(x => x && String(x).trim()).map(x => esc(String(x))).join(' · ');
+      const u = a.units !== null && a.units !== undefined ? [n(a.units, 3) + ' units', a.avg ? 'avg ' + n(a.avg, 2) : '', a.cmp ? 'CMP ' + n(a.cmp, 2) : ''].filter(Boolean).join(' · ') : '';
+      const pl = a.pnl !== null && a.invested ? `Invested ${fmtCr(a.invested)} · <span class="${a.pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${a.pnl >= 0 ? '+' : ''}${fmtCr(a.pnl)} (${(a.pnl / a.invested * 100).toFixed(1)}%)</span>` : '';
+      return `<div class="rowx"><div><div class="a">${esc(a.name)}</div><div class="b">${[sub, u, pl, isHome(a) ? 'Home you live in · outside corpus' : ''].filter(Boolean).join('<br>')}</div></div><div class="c">${a.value ? fmtCr(a.value) : '₹0'}</div></div>`;
+    }).join('')}</div>`).join('') : '');
+}
 // Liquid assets tile shows one total per type (savings accounts, FDs …); each account is listed under "See every holding in detail"
 function liquidSummary(items) {
   const name = t => /saving/i.test(t) ? 'Savings accounts' : /^(fd|fixed)/i.test(t) ? 'Fixed deposits' : /^(rd|recurring)/i.test(t) ? 'Recurring deposits' : (t || 'Other');
@@ -3342,6 +3353,7 @@ function renderOtherTiles(d) {
   const liqRows = liquidSummary(g['Liquid assets'] || []);
   const bg = { 'Liquid assets': 'var(--p-blue)', 'Gold': 'var(--p-butter)', 'REITs / InvITs / Real estate': 'var(--p-lilac)', 'Debt locked': 'var(--p-mint)', 'NPS': 'var(--p-blush)', 'Debt (other)': 'var(--p-mint)', 'Equity (other)': 'var(--p-butter)', 'Other': 'var(--card)' };
   const locked = (g['Debt locked'] || []).concat((g['NPS'] || []).filter(a => npsTier(a) === 1)).reduce((s, a) => s + a.value, 0);
+  renderOtherDetail(g, Object.keys(bg).filter(k => g[k]));
   setHTML('other-tiles', `<div class="pg-head"><div><div class="pg-kicker">Other assets · outside stocks and mutual funds</div><div class="pg-big">${fmtCr(total)}</div></div>
     <div class="pills"><div class="pill blue"><span>Locked</span><b>${fmtCr(locked) === '—' ? '₹0' : fmtCr(locked)}</b></div><div class="pill mint"><span>Not locked</span><b>${fmtCr(total - locked)}</b></div>${homeVal ? `<div class="pill lilac"><span>Home, not counted</span><b>${fmtCr(homeVal)}</b></div>` : ''}</div></div>
     <div class="tiles">${Object.keys(bg).filter(k => g[k]).map(k => { const v = g[k].filter(a => !isHome(a)).reduce((s, a) => s + a.value, 0);
