@@ -797,7 +797,12 @@
   .tile-p { font-size:12px;color:var(--text3); }
   .tile .rowx { border-top:1px solid rgba(128,128,128,0.25);padding:9px 0 0; }
   .tile .rowx .a { font-size:14px;font-weight:500; } .tile .rowx .c { font-size:14px;font-weight:600; }
-  details.more-detail { margin-top:18px; } details.more-detail summary { cursor:pointer;font-size:14px;font-weight:700;min-height:44px;display:flex;align-items:center; }
+  details.more-detail { margin-top:18px; }
+  details.more-detail summary { cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 22px;border-radius:99px;background:var(--ink);color:var(--on-ink);font-size:14px;font-weight:700;box-shadow:0 2px 10px rgba(0,0,0,.15);margin-bottom:12px; }
+  details.more-detail summary::-webkit-details-marker { display:none; }
+  details.more-detail summary:hover { opacity:.9; }
+  details.more-detail summary .md-close, details.more-detail[open] summary .md-open { display:none; }
+  details.more-detail[open] summary .md-close { display:inline; }
 
   /* ── restyle the existing pieces ── */
   .kpi-grid { gap:8px;margin-bottom:16px; }
@@ -911,7 +916,7 @@
   <section class="panel" id="panel-funds"><div id="funds-body"></div></section>
 
   <!-- OTHER ASSETS (gold bonds, gold/silver ETFs, REITs, InvITs, debt ETFs from the broker file) -->
-  <section class="panel" id="panel-other"><div id="other-tiles"></div><details class="more-detail"><summary>See every holding in detail</summary><div id="other-body"></div><div id="holdings-body"></div></details></section>
+  <section class="panel" id="panel-other"><div id="other-tiles"></div><details class="more-detail"><summary><span class="md-open">See every holding in detail ▾</span><span class="md-close">Hide details ▴</span></summary><div id="other-body"></div><div id="holdings-body"></div></details></section>
 
   <!-- PERFORMANCE (was "Returns"; XIRR worked out every night by Returns.gs) -->
   <section class="panel" id="panel-returns"><div id="returns-body"></div></section>
@@ -3317,17 +3322,30 @@ function otherGroup(a) {
   if (a.cls === 'Debt') return /epf|ppf|vpf|nps|ssy|sukanya|gratuity|superann|provident/i.test(a.type + ' ' + a.name) ? 'Debt locked' : 'Debt (other)';
   return a.cls === 'Equity' ? 'Equity (other)' : 'Other';
 }
+// Liquid assets tile shows one total per type (savings accounts, FDs …); each account is listed under "See every holding in detail"
+function liquidSummary(items) {
+  const name = t => /saving/i.test(t) ? 'Savings accounts' : /^(fd|fixed)/i.test(t) ? 'Fixed deposits' : /^(rd|recurring)/i.test(t) ? 'Recurring deposits' : (t || 'Other');
+  const g = {};
+  items.forEach(a => { const k = name(String(a.type || '').trim()); (g[k] = g[k] || []).push(a); });
+  const order = ['Savings accounts', 'Fixed deposits', 'Recurring deposits'];
+  return Object.keys(g).sort((a, b) => ((order.indexOf(a) + 1) || 99) - ((order.indexOf(b) + 1) || 99)).map(k => {
+    const v = g[k].reduce((s, a) => s + a.value, 0), n = g[k].length, held = g[k].filter(a => a.value > 0).length;
+    const unit = k === 'Savings accounts' ? 'account' : 'deposit';
+    return [k, n + ' ' + unit + (n === 1 ? '' : 's') + (held < n ? ' · ' + held + ' with money' : ''), v ? fmtCr(v) : '₹0'];
+  });
+}
 function renderOtherTiles(d) {
   const list = d.assets.filter(a => !(a.kind === 'stock' && a.cls === 'Equity') && !(a.kind === 'mf' && a.mfClass !== 'Gold'));
   if (!list.length) { setHTML('other-tiles', ''); return; }
   const counted = list.filter(a => !isHome(a)), total = counted.reduce((s, a) => s + a.value, 0), homeVal = list.filter(isHome).reduce((s, a) => s + a.value, 0), g = {};
   list.forEach(a => { const k = otherGroup(a); (g[k] = g[k] || []).push(a); });
+  const liqRows = liquidSummary(g['Liquid assets'] || []);
   const bg = { 'Liquid assets': 'var(--p-blue)', 'Gold': 'var(--p-butter)', 'REITs / InvITs / Real estate': 'var(--p-lilac)', 'Debt locked': 'var(--p-mint)', 'NPS': 'var(--p-blush)', 'Debt (other)': 'var(--p-mint)', 'Equity (other)': 'var(--p-butter)', 'Other': 'var(--card)' };
   const locked = (g['Debt locked'] || []).concat((g['NPS'] || []).filter(a => npsTier(a) === 1)).reduce((s, a) => s + a.value, 0);
   setHTML('other-tiles', `<div class="pg-head"><div><div class="pg-kicker">Other assets · outside stocks and mutual funds</div><div class="pg-big">${fmtCr(total)}</div></div>
     <div class="pills"><div class="pill blue"><span>Locked</span><b>${fmtCr(locked) === '—' ? '₹0' : fmtCr(locked)}</b></div><div class="pill mint"><span>Not locked</span><b>${fmtCr(total - locked)}</b></div>${homeVal ? `<div class="pill lilac"><span>Home, not counted</span><b>${fmtCr(homeVal)}</b></div>` : ''}</div></div>
     <div class="tiles">${Object.keys(bg).filter(k => g[k]).map(k => { const v = g[k].filter(a => !isHome(a)).reduce((s, a) => s + a.value, 0);
-      return tileHTML(k, v, pctOf(v, total).toFixed(0) + '% of other assets' + (g[k].some(isHome) ? ' · home not counted' : ''), bg[k], g[k].sort((a, b) => isHome(a) - isHome(b) || b.value - a.value).map(a => [a.name,
+      return tileHTML(k, v, pctOf(v, total).toFixed(0) + '% of other assets' + (g[k].some(isHome) ? ' · home not counted' : ''), bg[k], k === 'Liquid assets' ? liqRows : g[k].sort((a, b) => isHome(a) - isHome(b) || b.value - a.value).map(a => [a.name,
         isHome(a) ? 'Home you live in · outside corpus' : esc([k === 'NPS' ? '' : a.type, a.kind === 'mf' ? 'counted here, not under Mutual funds' : '', k === 'Debt locked' ? 'locked asset' : '', k === 'NPS' ? (npsTier(a) === 1 ? 'Tier 1 · locked' : 'Tier 2 · not locked') : '', a.platform].filter(Boolean).join(' · ')), fmtCr(a.value)])); }).join('')}</div>`);
 }
 // ── Goals (reads a "Goals" tab from the sheet when there is one)
