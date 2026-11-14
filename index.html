@@ -787,6 +787,23 @@
   .empty { background:var(--card);border:0;border-radius:16px;color:var(--text3); }
   body[data-tab="plan"] .fam-bar, body[data-tab="returns"] .fam-bar, body[data-tab="more"] .fam-bar, body[data-tab="goals"] .fam-bar, body[data-tab="insurance"] .fam-bar { display:none !important; }
   .pill-btn.primary { background:var(--ink);color:var(--on-ink);text-decoration:none;min-height:46px;padding:0 20px;font-size:14px; }
+
+/* Add-a-goal form */
+.gf-t { font-weight:800;font-size:17px;margin-bottom:6px; }
+.gf-intro { font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:14px; }
+.gf-f { display:block;margin-bottom:14px; }
+.gf-l { display:block;font-weight:700;font-size:13px;margin-bottom:5px; }
+.gf-h { display:block;font-size:12px;color:var(--text3);line-height:1.45;margin-top:5px; }
+.gf-in { width:100%;box-sizing:border-box;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:15px; }
+.gf-in:focus { outline:none;border-color:var(--teal); }
+.gf-row { display:flex;gap:8px;flex-wrap:wrap; } .gf-row .gf-in { flex:1 1 160px; }
+.gf-box { background:var(--p-blue);border-radius:12px;padding:12px;margin-bottom:14px;color:var(--text); }
+.gf-box .gf-h { color:var(--text2); } .gf-box .gf-in { background:var(--bg2); }
+.gf-out { font-size:13px;line-height:1.5;margin:8px 0 0; } .gf-out:empty { display:none; }
+#gf-need { background:var(--p-butter);color:var(--text);border-radius:10px;padding:10px 12px;margin:-4px 0 14px; }
+.gf-out .pill-btn { margin-top:6px; }
+.gf-err { color:var(--neg);font-size:13px;font-weight:600;min-height:4px;margin-bottom:6px; }
+.gf-btns { display:flex;gap:8px;flex-wrap:wrap; }
 </style>
 </head>
 <body>
@@ -3142,15 +3159,87 @@ function renderGoals(d) {
   const rows = EXTRAS && EXTRAS.goals ? rowsOf(EXTRAS.goals) : [];
   const pick = (r, keys) => { for (const k of keys) if (!blank(r[k])) return r[k]; return ''; };
   const goals = rows.map(r => ({ name: String(pick(r, ['Goal', 'Name', 'Goal Name'])).trim(), target: num(pick(r, ['Target (₹)', 'Target', 'Target Amount (₹)'])), saved: num(pick(r, ['Saved (₹)', 'Saved', 'Set Aside (₹)', 'Current (₹)'])), by: String(pick(r, ['Target Year', 'By', 'Target Date'])).trim(), status: String(pick(r, ['Status'])).trim() })).filter(x => x.name && x.target);
-  if (!goals.length) { setHTML('goals-body', `<div class="pg-head"><div><div class="pg-kicker">Goals · whole family</div><div class="pg-big">No goals yet</div></div></div>${empty(EXTRAS ? 'Add your goals in the Goals tab of your sheet: the goal, the target amount, the target year and the amount set aside so far. Each one then shows here with a progress bar.' : 'Loading your goals…')}`); return; }
+  if (!goals.length) { setHTML('goals-body', `<div class="pg-head"><div><div class="pg-kicker">Goals · whole family</div><div class="pg-big">No goals yet</div></div></div>${EXTRAS ? goalForm(true) : empty('Loading your goals…')}`); return; }
   const behind = goals.filter(x => /behind/i.test(x.status)).length;
   setHTML('goals-body', `<div class="pg-head"><div><div class="pg-kicker">Goals · whole family</div><div class="pg-big">${goals.length} goal${goals.length === 1 ? '' : 's'}</div></div>
     <div class="pills"><div class="pill mint"><span>On track</span><b>${goals.length - behind}</b></div><div class="pill blush"><span>Behind</span><b>${behind}</b></div></div></div>
     <div class="cream">${goals.map(x => { const p = Math.min(100, pctOf(x.saved, x.target)), bad = /behind/i.test(x.status), c = bad ? 'var(--neg)' : 'var(--pos)';
       return `<div class="rowx" style="display:block"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><div class="a">${esc(x.name)}</div><div class="b">Target ${fmtCr(x.target)}${x.by ? ' by ' + esc(x.by) : ''} · ${fmtCr(x.saved)} set aside${bad ? ' · behind' : ''}</div></div><div class="c" style="color:${c}">${p.toFixed(0)}%</div></div>
         <div style="height:8px;background:var(--cream-line);border-radius:99px;margin-top:8px"><div style="height:8px;width:${p}%;background:${c};border-radius:99px"></div></div></div>`; }).join('')}</div>
-    <div class="note">Progress is the money set aside against each target.</div>`);
+    <div class="note">Progress is the money set aside against each target.</div>${goalForm(false)}`);
 }
+// ── Add a goal from the dashboard (saved to the Goals tab of the client's sheet via ?act=addgoal)
+let GF_OPEN = false, GF_BUSY = false, GF_MSG = '';
+const GF_RET = 10;   // return assumed for the "set aside each month" guide, % a year
+function goalForm(first) {
+  if (!GF_OPEN) return `<div class="sect-toggle" style="margin-top:14px">${GF_MSG ? `<div class="note" style="margin:0 0 8px">${GF_MSG}</div>` : ''}<button class="pill-btn primary" onclick="gfOpen(true)">+ Add a goal</button></div>`;
+  const yr = new Date().getFullYear();
+  const f = (id, label, input, help) => `<label class="gf-f"><span class="gf-l">${label}</span>${input}<small class="gf-h">${help}</small></label>`;
+  const n = (id, ph, extra = '') => `<input class="gf-in" id="${id}" type="number" inputmode="decimal" min="0" step="any" placeholder="${ph}" oninput="gfCalc()" ${extra}>`;
+  return `<div class="cardx gf" style="margin-top:14px">
+    <div class="gf-t">${first ? 'Add your first goal' : 'Add a goal'}</div>
+    <div class="gf-intro">A goal is something you are saving for with a date attached: a child's education, retirement, a house, a car. Fill in one goal at a time. It is saved to the Goals tab of your sheet, where you can change it later.</div>
+    ${f('gf-name', 'Goal', `<input class="gf-in" id="gf-name" type="text" maxlength="60" placeholder="e.g. Child's education">`, 'A short name you will recognise. If two children each have an education goal, add them separately.')}
+    ${f('gf-year', 'Target year', `<input class="gf-in" id="gf-year" type="number" inputmode="numeric" min="${yr}" max="${yr + 60}" step="1" placeholder="e.g. ${yr + 10}" oninput="gfCalc()">`, 'The year you will need the money.')}
+    <div class="gf-box">
+      <div class="gf-l">Not sure of the amount? Start from today's cost</div>
+      <div class="gf-row">${n('gf-today', "Today's cost (₹)")}
+        <select class="gf-in" id="gf-infl" onchange="gfCalc()"><option value="6">6% a year (most goals)</option><option value="10">10% a year (education, medical)</option><option value="4">4% a year (car, gadgets)</option></select></div>
+      <small class="gf-h">Prices rise every year. At 6% a year, things cost about twice as much in 12 years. Pick the rate that fits the goal and the target year above.</small>
+      <div id="gf-future" class="gf-out"></div>
+    </div>
+    ${f('gf-target', 'Target amount (₹)', n('gf-target', 'e.g. 6000000'), 'The amount you will need <b>in the target year</b>, not at today\'s prices. Use the figure above if you worked it out.')}
+    ${f('gf-saved', 'Already set aside (₹)', n('gf-saved', '0'), 'Money you have already kept for this goal (a fund, FD or PPF you think of as this goal\'s money). Count each rupee in one goal only. Leave empty if nothing yet.')}
+    <div id="gf-need" class="gf-out"></div>
+    ${f('gf-status', 'Status', `<select class="gf-in" id="gf-status"><option>On track</option><option>Behind</option></select>`, 'Choose <b>On track</b> if what you save each month will cover the gap shown above; otherwise <b>Behind</b>. You can change it later.')}
+    ${f('gf-notes', 'Notes (optional)', `<input class="gf-in" id="gf-notes" type="text" maxlength="120" placeholder="e.g. SIP in the flexi-cap fund">`, 'Anything you want to remember about this goal.')}
+    <div id="gf-err" class="gf-err"></div>
+    <div class="gf-btns"><button class="pill-btn primary" id="gf-save" onclick="gfSave()" ${GF_BUSY ? 'disabled' : ''}>${GF_BUSY ? 'Saving…' : 'Save goal'}</button><button class="pill-btn" onclick="gfOpen(false)">Cancel</button></div>
+  </div>`;
+}
+function gfOpen(on) { GF_OPEN = on; GF_MSG = ''; if (LAST_MODEL) renderGoals(LAST_MODEL); if (on) setTimeout(() => { const e = document.getElementById('gf-name'); if (e) e.focus(); }, 50); }
+const gfVal = id => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
+function gfYears() { const y = parseInt(gfVal('gf-year'), 10), now = new Date().getFullYear(); return y >= now && y <= now + 60 ? Math.max(y - now, 0) : null; }
+function gfCalc() {
+  const yrs = gfYears(), today = num(gfVal('gf-today')), infl = num(gfVal('gf-infl'));
+  const fut = document.getElementById('gf-future'), need = document.getElementById('gf-need');
+  if (fut) {
+    if (today > 0 && yrs !== null) { const v = Math.round(today * Math.pow(1 + infl / 100, yrs) / 1000) * 1000;
+      fut.innerHTML = `In ${yrs ? yrs + ' year' + (yrs === 1 ? '' : 's') : 'this year'} that will cost about <b>${fmtCr(v)}</b>. <button class="pill-btn" onclick="gfUse(${v})">Use this as the target</button>`; }
+    else fut.innerHTML = today > 0 ? 'Fill in the target year to see the future cost.' : '';
+  }
+  if (need) {
+    const t = num(gfVal('gf-target')), s = num(gfVal('gf-saved'));
+    if (t > 0 && yrs !== null) {
+      const m = Math.max(yrs * 12, 1), r = GF_RET / 100 / 12, grown = s * Math.pow(1 + r, m), gap = t - grown;
+      need.innerHTML = gap <= 0 ? `What you have set aside could reach the target by itself if it grows about ${GF_RET}% a year.`
+        : `To close the gap you would need to set aside about <b>${fmtINR(Math.round(gap * r / (Math.pow(1 + r, m) - 1) / 100) * 100)} a month</b> until ${esc(gfVal('gf-year'))}. This guide assumes your money grows about ${GF_RET}% a year; the real return will differ.`;
+    } else need.innerHTML = '';
+  }
+}
+function gfUse(v) { const e = document.getElementById('gf-target'); if (e) { e.value = v; gfCalc(); } }
+async function gfSave() {
+  const err = m => { const e = document.getElementById('gf-err'); if (e) e.textContent = m; };
+  const g = { name: gfVal('gf-name'), target: num(gfVal('gf-target')), year: parseInt(gfVal('gf-year'), 10), saved: num(gfVal('gf-saved')), status: gfVal('gf-status') || 'On track', notes: gfVal('gf-notes') };
+  if (!g.name) return err('Give the goal a name.');
+  if (gfYears() === null) return err('Enter a target year between ' + new Date().getFullYear() + ' and ' + (new Date().getFullYear() + 60) + '.');
+  if (!(g.target > 0)) return err('Enter the target amount.');
+  if (g.saved < 0) return err('Already set aside cannot be negative.');
+  const keep = { name: g.name, target: gfVal('gf-target'), year: gfVal('gf-year'), saved: gfVal('gf-saved'), status: g.status, notes: g.notes };
+  if (DEMO) { EXTRAS.goals.push([g.name, g.target, g.year, g.saved, g.status, g.notes]); GF_OPEN = false; GF_MSG = `“${esc(g.name)}” added. (Demo: nothing is saved.)`; renderGoals(LAST_MODEL); return; }
+  if (!AUTH) return err('This dashboard is not linked to your sheet. Open it from your R2R link first.');
+  GF_BUSY = true; renderGoals(LAST_MODEL); gfRefill(keep);
+  try {
+    const r = await fetch(`${API_URL}?act=addgoal&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&g=${encodeURIComponent(JSON.stringify(g))}&t=${Date.now()}`, { redirect: 'follow' });
+    const j = await r.json();
+    GF_BUSY = false;
+    if (!j || !j.ok) { renderGoals(LAST_MODEL); gfRefill(keep); return err((j && j.error) || 'Could not save the goal. Please try again.'); }
+    if (j.goals) EXTRAS = Object.assign({}, EXTRAS || {}, { ok: true, goals: j.goals });
+    GF_OPEN = false; GF_MSG = `“${esc(g.name)}” added to your Goals tab.`; renderGoals(LAST_MODEL);
+  } catch (e) { GF_BUSY = false; renderGoals(LAST_MODEL); gfRefill(keep); err('No connection. Check your internet and try again.'); }
+}
+function gfRefill(k) { const set = (id, v) => { const e = document.getElementById(id); if (e && v !== undefined) e.value = v; }; set('gf-name', k.name); set('gf-target', k.target); set('gf-year', k.year); set('gf-saved', k.saved); set('gf-status', k.status); set('gf-notes', k.notes); gfCalc(); }
+
 function renderMore(d) {
   setHTML('xray-body', `<div class="pg-head"><div><div class="pg-kicker">Portfolio X-ray</div><div class="pg-big">Your stocks vs the R2R watchlist</div></div></div>
     <div class="cardx">${EXTRAS && EXTRAS.xray ? `<a class="pill-btn primary" href="${esc(EXTRAS.xray)}" target="_blank" rel="noopener">Open my X-ray</a><div class="note">Opens with your current share holdings and today's prices. Mutual funds, gold and REITs are not part of the X-ray.</div>`
