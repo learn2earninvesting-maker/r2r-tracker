@@ -743,6 +743,11 @@
   .seg { display:inline-flex;background:var(--track);border-radius:12px;padding:4px;max-width:100%; }
   .seg button { min-height:44px;padding:0 18px;border:0;border-radius:9px;background:transparent;color:var(--ink);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap; }
   .seg button.on { background:var(--card); }
+  /* Holdings sub-tabs: one pastel per section; the selected one gets a dark outline */
+  .seg.tint { background:transparent;padding:0;gap:6px; }
+  .seg.tint button { background:var(--k);color:var(--text2, var(--ink));opacity:.8; }
+  .seg.tint button.on { opacity:1;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink); }
+  .seg.tint button[data-k=stocks] { --k:var(--p-blue); } .seg.tint button[data-k=funds] { --k:var(--p-mint); } .seg.tint button[data-k=other] { --k:var(--p-blush); }
   @media (max-width:699px) { .seg { display:flex; } .seg button { flex:1;padding:0 6px;font-size:13px; } }
   .disclaimer { color:var(--text3);font-size:12px;line-height:1.5;padding:0 18px 28px;max-width:1180px;margin:0 auto; }
   .gate-card h1, .loader-brand { color:var(--ink); }
@@ -1023,7 +1028,7 @@ function switchTab(id, sub) {
   document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', show.includes(p.id.replace('panel-', ''))));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
   const sb = document.getElementById('subbar');
-  if (sb) sb.innerHTML = subs ? `<div class="seg" role="group">${subs.map(s => `<button class="${s[0] === sub ? 'on' : ''}" aria-pressed="${s[0] === sub}" onclick="switchTab('${id}','${s[0]}')">${s[1]}</button>`).join('')}</div>` : '';
+  if (sb) sb.innerHTML = subs ? `<div class="seg${id === 'hold' ? ' tint' : ''}" role="group">${subs.map(s => `<button data-k="${s[0]}" class="${s[0] === sub ? 'on' : ''}" aria-pressed="${s[0] === sub}" onclick="switchTab('${id}','${s[0]}')">${s[1]}</button>`).join('')}</div>` : '';
   closeMenu();
   if (changed) window.scrollTo({ top: 0, behavior: 'smooth' });
   try { sessionStorage.setItem('r2r_tab', id); sessionStorage.setItem('r2r_sub', JSON.stringify(SUB_SEL)); } catch (e) {}
