@@ -3826,7 +3826,7 @@ function askExtras() { if (Date.now() - EXTRAS_AT > 60000) { EXTRAS_AT = Date.no
 
 // ═══════════════════════════════════════════════════════
 //  STOCKS X-RAY — the client's own stocks against the R2R research for the latest results season.
-//  Research files are built from the season's Tickertape CSV + StockScans concall summary and growth
+//  Research files are built each results season from the coverage CSV + the concall summary and growth
 //  catalysts PDFs (research/tools/build_season.py) and published by the tracker bot (Research.gs):
 //  research/live.json → research/seasons/<folder>/index.json (+ stocks/<TICKER>.json, loaded on tap).
 //  Facts only, no buy or sell verdicts. Always the whole family.
@@ -3906,7 +3906,7 @@ function xrRow(r, selT) {
 
 function renderXray(d) {
   const el = document.getElementById('xray-body'); if (!el) return;
-  const disc = `<div class="xr-disc"><b>For education only.</b> Facts from your holdings and the R2R research for the results season (StockScans concall summaries and growth catalysts, Tickertape numbers). Not a buy or sell recommendation.</div>`;
+  const disc = `<div class="xr-disc"><b>For education only.</b> Facts from your holdings and the R2R research for the results season. Not a buy or sell recommendation.</div>`;
   if (!XR.idx) { el.innerHTML = `<div class="xr"><div class="xr-head"><div class="k">Stocks X-ray</div><div class="v">Your stocks, analysed</div></div><div class="xr-empty">${XR.err ? esc(XR.err) : 'Loading the R2R research…'}</div></div>`; return; }
   const { T, rows } = xrRows(d);
   if (!rows.length) { el.innerHTML = `<div class="xr"><div class="xr-head"><div class="k">Stocks X-ray · ${esc(XR.idx.label)} results season</div><div class="v">Your stocks, analysed</div></div><div class="xr-empty">No shares yet. Once your broker holdings file is in (Holdings → Stocks &amp; ETFs), this page shows each of your stocks against the R2R research: growth, valuation, quality, ownership, what management said on the concall and the growth catalysts.</div>${disc}</div>`; return; }
@@ -4020,7 +4020,7 @@ function xrSnap(r) {
   const ema = f('EMA 40W');
   if (ema > 0 && r.px > 0) says.push([r.px >= ema ? '#1E6B45' : '#A12B1F', `Price is ${r.px >= ema ? 'above' : 'below'} its 40-week EMA`]);
   return tiles + (says.length ? `<div class="xr-cream"><h4>What the numbers say</h4><ul class="xr-says">${says.map(([c, t]) => `<li><i style="background:${c}"></i><span>${esc(t)}</span></li>`).join('')}</ul></div>` : '') +
-    `<div class="xr-src">Numbers: Tickertape export, ${esc(XR.idx.label)} season. Price: today's price from your tracker.</div>`;
+    `<div class="xr-src">Numbers for the ${esc(XR.idx.label)} season. Price: today's price from your tracker.</div>`;
 }
 function xrNums(s) {
   const f = k => xm(s, k);
@@ -4039,7 +4039,7 @@ function xrNums(s) {
     pair('Receivable days', f('Days Receivable 3 Years Back'), f('Days Receivable'), '3 yrs ago', v => xrN(v, 0) + ' days', true).replace(' pts', ' days'),
     chg('Promoter holding', 'Change In Promoter Holdings 3 Years'), chg('FII holding', 'Change In FII Holdings 3 Years'), chg('DII holding', 'Change In DII Holdings 3 Years'),
   ].join('');
-  return `<div class="xr-cream"><h4>Then vs now</h4>${rows || '<div class="xr-note">No comparison figures in this season\'s data.</div>'}</div><div class="xr-src">Figures in ₹ crore from the Tickertape export, ${esc(XR.idx.label)} season.</div>`;
+  return `<div class="xr-cream"><h4>Then vs now</h4>${rows || '<div class="xr-note">No comparison figures in this season\'s data.</div>'}</div><div class="xr-src">Figures in ₹ crore, ${esc(XR.idx.label)} season.</div>`;
 }
 function xrConcall(c) {
   if (!c) return '<div class="xr-empty">No concall summary this season.</div>';
@@ -4049,13 +4049,13 @@ function xrConcall(c) {
     ${c.takeaways && c.takeaways.length ? `<div class="xr-box"><h4>Key takeaways</h4><ul>${c.takeaways.map(p => `<li>${lab(p)}</li>`).join('')}</ul></div>` : ''}
     ${c.watch && c.watch.text ? `<div class="xr-box butter"><h4>What to watch next quarter</h4><p>${esc(c.watch.text)}</p></div>` : ''}
     ${(c.sections || []).map((s, i) => `<details class="xr-acc"${i === 0 ? ' open' : ''}><summary>${esc(s.title)}</summary><div class="in">${(s.points || []).map(p => `<div class="pt"><span>${lab(p)}</span></div>`).join('')}${s.table ? tbl(s.table) : ''}${(s.quotes || []).map(q => `<blockquote class="xr-q">${esc(q.text)}</blockquote>`).join('')}</div></details>`).join('')}
-    <div class="xr-src">Source: StockScans transcript summary${c.quarter ? ', ' + esc(c.quarter) : ''}. Management's own words and outlook, not a forecast.</div></div>`;
+    <div class="xr-src">Management's own words and outlook${c.quarter ? ' from the ' + esc(c.quarter) + ' concall' : ''}, not a forecast.</div></div>`;
 }
 function xrCats(g) {
   if (!g || !g.items || !g.items.length) return '<div class="xr-empty">No growth catalysts this season.</div>';
   return `<div class="xr-cc"><div class="xr-tags"><span class="xr-tag new">${g.items.length} growth catalyst${g.items.length === 1 ? '' : 's'}</span>${g.asof ? `<span class="xr-tag">as of ${esc(g.asof)}</span>` : ''}</div>
     ${g.items.map((it, i) => `<div class="xr-cat"><span class="n" style="background:${XR_SC[i % XR_SC.length]}">${i + 1}</span><div><b>${esc(it.title)}</b><p>${esc(it.text)}</p></div></div>`).join('')}
-    <div class="xr-src">Source: StockScans Growth Catalysts. These are possibilities management has described, not forecasts.</div></div>`;
+    <div class="xr-src">These are possibilities management has described, not forecasts.</div></div>`;
 }
 function xrOpen(t) { XR.sel = t; if (XR.sub === 'con' || XR.sub === 'cat') xrDetail(t); renderXray(LAST_MODEL);
   const p = document.getElementById('xr-pane'); if (p && !window.matchMedia('(min-width:1100px)').matches) window.scrollTo({ top: 0, behavior: 'smooth' }); else if (p) p.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
