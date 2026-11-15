@@ -869,6 +869,10 @@
 .prf-seg { display:inline-flex;border:1px solid var(--ink);border-radius:99px;overflow:hidden;flex:0 0 auto; }
 .prf-seg button { font:inherit;font-size:12px;font-weight:700;padding:9px 14px;background:transparent;color:var(--ink);border:0;cursor:pointer; }
 .prf-seg button.on { background:var(--ink);color:var(--on-ink); }
+.prf-add { font:inherit;font-size:14px;font-weight:700;padding:8px 14px;border-radius:99px;border:1.5px dashed var(--ink);background:transparent;color:var(--ink);cursor:pointer; }
+.prf-add:hover { background:var(--bg3); }
+.prf-x { font:inherit;font-size:16px;line-height:1;width:22px;height:22px;border-radius:50%;border:0;background:var(--card);color:var(--text2);cursor:pointer;margin-left:2px;padding:0; }
+.prf-addbox { margin:12px 0 0; }
 .prf-ok { color:var(--pos);font-size:13px;font-weight:700;margin-top:8px; } .prf-ok:empty { display:none; }
 .prf-ro { font-size:15px;font-weight:700;text-align:right;white-space:nowrap; }
 .prf-dep { background:var(--p-lilac);color:var(--text);border-radius:14px;padding:12px 14px;margin:0 0 16px;font-size:13px;line-height:1.5; }
@@ -1144,6 +1148,11 @@ function famKey(v, self) {
   return s.toLowerCase();
 }
 const FAM_COLS = [['Stocks', 'Holder'], ['Mutual Funds', 'Holder'], ['Assets', 'Holder']];
+// Names added with "+ Add member" on the Profile tab, kept in the Profile row "Family Members" (comma-separated)
+function pfExtraNames(api) {
+  const row = rowsOf(((api || {}).tabs || {}).Profile).find(r => String(r.Field).trim() === 'Family Members');
+  return row ? String(row.Value ?? '').split(',').map(x => x.trim()).filter(Boolean) : [];
+}
 function famMembers(api) {
   const t = (api && api.tabs) || {}, self = famSelf(api), by = {};
   FAM_COLS.forEach(([tab, col]) => rowsOf(t[tab]).forEach(r => {
@@ -1151,6 +1160,7 @@ function famMembers(api) {
     const m = by[k] || (by[k] = { key: k, label: k ? raw.replace(/^\w/, c => c.toUpperCase()) : (self ? self : 'Me'), self: !k, value: 0 });
     m.value += num(r['Current Value (₹)']) || 0;
   }));
+  pfExtraNames(api).forEach(n => { const k = famKey(n, self); if (!by[k]) by[k] = { key: k, label: n.replace(/^\w/, c => c.toUpperCase()), self: !k, value: 0, extra: true }; });
   return Object.values(by).sort((a, b) => (b.self - a.self) || b.value - a.value);
 }
 // The same API answer with only one member's rows (everything else unchanged)
@@ -1169,7 +1179,7 @@ function famFilter(api, sel) {
 function setFam(k) { FAM_SEL = k; try { localStorage.setItem('r2r_fam', k); } catch (e) {} renderFamily(); }
 function renderFamily() {
   if (!RAW_API) return;
-  const mem = famMembers(RAW_API), bar = document.getElementById('fam-bar');
+  const mem = famMembers(RAW_API).filter(m => !m.extra), bar = document.getElementById('fam-bar');
   if (FAM_SEL !== '*' && !mem.some(m => m.key === FAM_SEL)) FAM_SEL = '*';
   if (mem.length > 1) {
     const ini = l => l.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
@@ -1791,6 +1801,7 @@ let AA_RULES = { line: 10000000,   // order: Equity, Debt, Liquid, Gold, Real es
   notes: { conservative: 'Conservative often suits someone who needs this money within about 5 years, is close to or in retirement, or would lose sleep over a 20% fall.',
     balanced: 'Balanced often suits someone with 5 to 10 years to go, a steady income, and the patience to sit through a bad year or two.',
     growth: 'Growth often suits someone with 10 years or more, a stable income, an emergency fund already in place, and who has lived through a 30–40% fall without selling.' } };
+function aaMyType() { try { return String(pfProfile()['Investor Type'] ?? '').trim().toLowerCase(); } catch (e) { return ''; } }   // from the Profile tab
 const AA_PRESETS = [['conservative', 'Conservative', 'c'], ['balanced', 'Balanced', 'b'], ['growth', 'Growth', 'g']];
 const AA_LOCK_RE = /\b(epf|vpf|ppf|nps|ssy|sukanya|gratuity|superannuation|provident)\b/i;
 let AA_D = null, AA_NEW = 0, AA_ONLY = true, AA_PRESET = '', AA_SAVE_T = null;
@@ -1885,7 +1896,7 @@ function renderAllocate(d) {
       ? `🧭 Your corpus is <b>${fmtCr(D.corpus)}</b>, above ${lineCr}: about <b>${pa}% each</b> is suggested for gold and for REITs / InvITs / real estate.`
       : `🧭 Your corpus is <b>${fmtCr(D.corpus)}</b>, under ${lineCr}: <b>${pb}% each</b> is also good for gold and for REITs / InvITs / real estate. Move towards ${pa}% as your corpus grows past ${lineCr}.`}</div>
     <div class="tg-quick" style="margin-bottom:0"><span class="tg-ql">Investor type</span>
-      ${AA_PRESETS.map(p => `<button class="sort-chip aa-chip ${p[2]}" data-p="${p[0]}" onclick="aaFill('${p[0]}')">${p[1]}</button>`).join('')}
+      ${AA_PRESETS.map(p => `<button class="sort-chip aa-chip ${p[2]}" data-p="${p[0]}" onclick="aaFill('${p[0]}')">${p[1]}${aaMyType() === p[0] ? ' <small>· yours</small>' : ''}</button>`).join('')}
       <button class="sort-chip aa-chip n" data-p="current" onclick="aaFill('current')">Copy current %</button>
       <button class="sort-chip aa-chip n" data-p="clear" onclick="aaFill('clear')">Clear all</button></div>
     <div class="aa-who n" id="aa-who"></div>
@@ -3218,6 +3229,7 @@ function renderParameters(d) {
   const lifeTerm = term, lifeSav = d.insurance.filter(p => p.cat === 'Life (Savings)').reduce((s, p) => s + (p.cover || 0), 0), lifeCover = lifeTerm + lifeSav;
   const lcInc = d.P('Annual Income (₹)', 0) || annInc || 0, lcLoans = d.loans.reduce((s, l) => s + (l.outstanding || 0), 0);
   const lcNeed = lcInc ? lcInc * 10 + lcLoans : 0;
+  const efExp = d.P('Monthly Expenses (₹)', 0), efMonths = d.P('Emergency Fund (months)', 0) || 6, efNeed = efExp * efMonths;
   const mk = (o) => {
     const v = o.value;
     if (o.na || v === null || !isFinite(v)) return { ...o, na: true, fmt: 'N/A', status: 'na', barPct: 0, barColor: '#64748b' };
@@ -3235,6 +3247,11 @@ function renderParameters(d) {
     mk({ icon:'💧', label:'Liquid Assets', benchmark:'≥ 15% of net worth', hib:true, pass:20, warn:15, na: nw <= 0, value: pctOf(liq, nw), f: v => v.toFixed(1) + '%', bar: v => v / 30 * 100,
       note: `Liquid holdings (savings, FDs) of ${fmtCr(liq)} against net worth of ${fmtCr(nw)}.`, derivation:'Liquid assets ÷ Net worth',
       suggestion: `15% of net worth is ${fmtCr(nw * 0.15)}. Build it with FDs or liquid funds before adding risk.` }),
+    mk({ icon:'🧯', label:'Emergency Fund', benchmark: `≥ ${efMonths} months of spending`, hib:true, pass:100, warn:50, na: !efNeed, value: pctOf(liq, efNeed), f: () => efExp ? (liq / efExp).toFixed(1) + ' months' : 'N/A', bar: v => v,
+      note: efNeed ? `Liquid money (savings, FDs, liquid funds) of ${fmtCr(liq)} covers ${(liq / efExp).toFixed(1)} months of spending at ${fmtINR(efExp)} a month. Your target is ${efMonths} months: ${fmtCr(efNeed)}.`
+        : 'Add your monthly family spending in the Profile tab to see how many months your liquid money would last.',
+      derivation:'Liquid assets ÷ (monthly spending × target months)',
+      suggestion: efNeed > liq ? `About ${fmtCr(efNeed - liq)} more in a savings account, FD or liquid fund would reach ${efMonths} months.` : '' }),
     mk({ icon:'📈', label:'Investment Assets', benchmark:'≥ 50% of net worth', hib:true, pass:60, warn:50, na: nw <= 0, value: pctOf(invest, nw), f: v => v.toFixed(1) + '%', bar: v => v,
       note: `Investments (equity, debt, gold, REITs) of ${fmtCr(invest)} vs net worth of ${fmtCr(nw)}.`, derivation:'(Equity + Debt + Gold + REITs) ÷ Net worth',
       suggestion: 'Money parked beyond the emergency fund can move into the long-term plan agreed with R2R tutorial support.' }),
@@ -3259,10 +3276,10 @@ function renderParameters(d) {
   const bar = document.getElementById('param-score-bar'); bar.style.background = col; bar.style.width = score + '%';
   const badge = s => ({ pass:['status-pass','✅ On Track'], warn:['status-warn','⚠️ Watch'], fail:['status-fail','❌ Action'], na:['status-na','N/A'] }[s]);
   { const pr = (() => { try { return pfProfile(); } catch (e) { return d.profile || {}; } })();
-    const lines = PF_FIELDS.filter(x => x.uses).map(x => `<li>${x.uses.map(u => `${u[0]} <b>${u[1]}</b>`).join(', ')} uses <b>${esc(x.label.replace(/ \(₹\)$/, ''))}</b>: ${blank(pr[x.f]) ? '<span style="color:var(--neg);font-weight:700">not filled in, so it shows N/A</span>' : pfShow(x.f, pr[x.f])}</li>`).join('');
+    const lines = PF_FIELDS.filter(x => x.health).map(x => `<li>${x.health.map(u => `${u[0]} <b>${u[1]}</b>`).join(', ')} uses <b>${esc(x.label.replace(/ \(₹\)$/, ''))}</b>: ${blank(pr[x.f]) ? (x.f === 'Emergency Fund (months)' ? 'not filled in, so 6 months is used' : '<span style="color:var(--neg);font-weight:700">not filled in, so it shows N/A</span>') : pfShow(x.f, pr[x.f])}</li>`).join('');
     setHTML('param-profile', `<div class="prf-dep"><div class="prf-dep-t">👤 Figures that depend on your Profile settings</div><ul>${lines}</ul><div class="prf-dep-f">Every other check is worked out from your holdings, loans and insurance. <button class="pill-btn" onclick="switchTab('profile')">Open Profile</button></div></div>`); }
   setHTML('param-grid', params.map(p => { const [cls, txt] = badge(p.status);
-    return `<div class="param-card"><div class="param-card-header"><div class="param-card-icon">${p.icon}</div><div class="param-card-title">${p.label}${PF_FIELDS.some(x => (x.uses || []).some(u => u[1] === p.label)) ? ' <span class="prf-tag">Profile</span>' : ''}</div><div class="param-card-status ${cls}">${txt}</div></div>
+    return `<div class="param-card"><div class="param-card-header"><div class="param-card-icon">${p.icon}</div><div class="param-card-title">${p.label}${PF_FIELDS.some(x => (x.health || []).some(u => u[1] === p.label)) ? ' <span class="prf-tag">Profile</span>' : ''}</div><div class="param-card-status ${cls}">${txt}</div></div>
       <div class="param-card-body"><div class="param-vals"><div class="param-actual" style="color:${p.barColor}">${p.fmt}</div><div class="param-benchmark">Benchmark: ${p.benchmark}</div></div>
       <div class="param-bar-track"><div class="param-bar-fill" style="background:${p.barColor};width:0" data-w="${p.barPct}%"></div></div><div class="param-note">${p.note}</div>
       ${p.status === 'warn' || p.status === 'fail' ? `<div class="param-suggestion"><div class="param-suggestion-label">💡 Worth discussing</div><div class="param-suggestion-text">${p.suggestion}</div></div>` : ''}</div></div>`; }).join(''));
@@ -3493,15 +3510,24 @@ function renderMore(d) {
 //  Saves to the Profile tab of the client's sheet via ?act=saveprofile (Profile.gs)
 // ═══════════════════════════════════════════════════════
 const PF_FIELDS = [
-  { f: 'Annual Income (₹)', label: 'Family yearly income (₹)', ph: 'e.g. 2400000', max: 1e10, step: 'any',
-    help: 'The total yearly income of everyone in the family who earns. The Life Cover check in Health check uses it.', uses: [['🛡️', 'Life Cover']] },
+  { f: 'Annual Income (₹)', label: 'Family yearly income (₹)', kind: 'money', ph: 'e.g. 2400000', max: 1e10, health: [['🛡️', 'Life Cover']],
+    help: 'The total yearly income of everyone in the family who earns. The Life Cover check in Health check uses it.' },
+  { f: 'Monthly Expenses (₹)', label: 'Monthly family spending (₹)', kind: 'money', ph: 'e.g. 80000', max: 1e8, health: [['🧯', 'Emergency Fund']],
+    help: 'What the household spends in a normal month: groceries, bills, rent, school fees, EMIs and insurance premiums. Leave out SIPs and other investing. The Emergency Fund check uses it.' },
+  { f: 'Emergency Fund (months)', label: 'Emergency fund target (months)', kind: 'int', ph: 'e.g. 6', max: 36, health: [['🧯', 'Emergency Fund']],
+    help: 'How many months of spending you want ready in savings, FDs or liquid funds. 6 months is a common choice. Leave empty to use 6.' },
+  { f: 'Investor Type', label: 'Investor type', kind: 'pick', opts: ['Conservative', 'Balanced', 'Growth'],
+    help: 'How much ups and downs you can live with. Plan → Asset classes marks this type for you. Not sure? Open that tab: each type says who it usually suits.' },
+  { f: 'Dependents', label: 'People who depend on the family income', kind: 'int', ph: 'e.g. 3', max: 20,
+    help: 'Children, parents or anyone else who relies on the family income. It helps R2R tutorial support when you talk about cover and goals.' },
 ];
-let PF_EDIT = false, PF_BUSY = false, PF_MSG = '', PF_OUT = false;
+let PF_EDIT = false, PF_BUSY = false, PF_MSG = '', PF_OUT = false, PF_ADD = false, PF_MMSG = '';
 function pfProfile() { const o = {}; rowsOf(((RAW_API || {}).tabs || {}).Profile).forEach(r => { if (!blank(r.Field)) o[String(r.Field).trim()] = r.Value; }); return o; }
 function pfShow(f, v) {
   if (blank(v)) return '<span style="color:var(--text3);font-weight:500">Not filled in</span>';
   if (/\(₹/.test(f)) return fmtINR(num(v));
   if (/months/i.test(f)) return num(v) + ' month' + (num(v) === 1 ? '' : 's');
+  if (f === 'Dependents') return num(v) === 0 ? 'None' : String(num(v));
   return esc(v);
 }
 function renderProfile(d) {
@@ -3509,16 +3535,21 @@ function renderProfile(d) {
   const name = (RAW_API && RAW_API.client) || pr['Client Name'] || (d && d.client) || 'Your profile';
   const ini = l => String(l).split(/\s+/).map(w => w[0] || '').join('').slice(0, 2).toUpperCase();
   const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-  const rev = pr['Last Reviewed'], revD = blank(rev) ? null : new Date(rev);
-  const famHtml = mem.length
-    ? `<div class="prf-fam">${mem.map(m => `<span class="prf-mem"><span class="ava">${esc(ini(m.label))}</span>${esc(m.label)}${m.self ? ' <small>(you)</small>' : ''}</span>`).join('')}</div>`
-    : `<div class="prf-fam"><span class="prf-mem"><span class="ava">${esc(ini(self || 'Me'))}</span>${esc(self || 'Me')} <small>(you)</small></span></div>`;
-  const setRows = PF_FIELDS.map(x => PF_EDIT
-    ? `<label class="gf-f"><span class="gf-l">${x.label}</span><input class="gf-in" id="pf-${PF_FIELDS.indexOf(x)}" type="number" inputmode="decimal" min="0" max="${x.max}" step="${x.step}" placeholder="${x.ph}" value="${blank(pr[x.f]) ? '' : esc(num(pr[x.f]))}"><small class="gf-h">${x.help}</small></label>`
+  const list = mem.some(m => m.self) ? mem : [{ key: '', label: self || 'Me', self: true }].concat(mem);
+  const famHtml = `<div class="prf-fam">${list.map(m => `<span class="prf-mem"><span class="ava">${esc(ini(m.label))}</span>${esc(m.label)}${m.self ? ' <small>(you)</small>' : ''}${m.extra ? `<button class="prf-x" title="Remove ${esc(m.label)}" aria-label="Remove ${esc(m.label)}" onclick="pfRemoveMember('${esc(m.label).replace(/'/g, '&#39;')}')" ${PF_BUSY ? 'disabled' : ''}>×</button>` : ''}</span>`).join('')}
+      ${PF_ADD ? '' : `<button class="prf-add" onclick="pfAddOpen(true)" ${PF_BUSY ? 'disabled' : ''}>+ Add member</button>`}</div>
+    ${PF_ADD ? `<div class="gf-box prf-addbox"><label class="gf-f" style="margin:0"><span class="gf-l">First name</span><input class="gf-in" id="pf-new" type="text" maxlength="30" placeholder="e.g. Priya" onkeydown="if(event.key==='Enter')pfAddMember()">
+      <small class="gf-h">Use the name you will give when you send their files, so the bot can match them.</small></label>
+      <div id="pf-merr" class="gf-err" style="margin-top:8px"></div><div class="gf-btns"><button class="pill-btn primary" onclick="pfAddMember()" ${PF_BUSY ? 'disabled' : ''}>${PF_BUSY ? 'Saving…' : 'Add'}</button><button class="pill-btn" onclick="pfAddOpen(false)">Cancel</button></div></div>` : ''}
+    <div class="prf-ok">${PF_MMSG}</div>`;
+  const setRows = PF_FIELDS.map((x, i) => PF_EDIT
+    ? `<label class="gf-f"><span class="gf-l">${x.label}</span>${x.kind === 'pick'
+        ? `<select class="gf-in" id="pf-${i}"><option value="">Not chosen yet</option>${x.opts.map(o => `<option${String(pr[x.f] ?? '').trim() === o ? ' selected' : ''}>${o}</option>`).join('')}</select>`
+        : `<input class="gf-in" id="pf-${i}" type="number" inputmode="${x.kind === 'int' ? 'numeric' : 'decimal'}" min="0" max="${x.max}" step="${x.kind === 'int' ? 1 : 'any'}" placeholder="${x.ph}" value="${blank(pr[x.f]) ? '' : esc(num(pr[x.f]))}">`}<small class="gf-h">${x.help}</small></label>`
     : `<div class="prf-set"><div><div class="a">${x.label}</div><div class="b">${x.help}</div></div><div class="prf-ro">${pfShow(x.f, pr[x.f])}</div></div>`).join('');
   const details = PF_EDIT
     ? `${setRows}<div id="pf-err" class="gf-err"></div><div class="gf-btns"><button class="pill-btn primary" onclick="pfSave()" ${PF_BUSY ? 'disabled' : ''}>${PF_BUSY ? 'Saving…' : 'Save'}</button><button class="pill-btn" onclick="pfOpen(false)">Cancel</button></div>`
-    : `${setRows}<div class="prf-set"><div><div class="a">Last review with R2R tutorial support</div><div class="b">Filled in by R2R tutorial support.</div></div><div class="prf-ro">${revD && !isNaN(revD) ? revD.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : pfShow('', '')}</div></div>
+    : `${setRows}
        <div class="prf-ok">${PF_MSG}</div><div class="sect-toggle" style="margin-top:10px"><button class="pill-btn primary" onclick="pfOpen(true)">Edit details</button></div>`;
   const u = d && d.updated ? new Date(d.updated) : null, pl = d ? pricesLine(d) : '';
   setHTML('profile-body', `<div class="pg-head"><div><div class="pg-kicker">Profile</div><div class="pg-big">${esc(name)}</div></div></div>
@@ -3526,7 +3557,7 @@ function renderProfile(d) {
       <div>
         <div class="cardx prf-sec"><div class="prf-h">Your family</div>
           <div class="note" style="margin:0 0 8px">Everyone whose money is in this tracker.</div>${famHtml}
-          <div class="note">To add someone, send their holdings file to the R2R Tracker bot (or use Uploads) and pick <b>Someone else</b> when asked whose file it is.</div></div>
+          <div class="note">After adding someone, send their holdings file to the R2R Tracker bot (or use Uploads) and pick their name when asked whose file it is. Names with × have no holdings yet and can be removed.</div></div>
         <div class="cardx prf-sec"><div class="prf-h">Your details</div>${details}</div>
       </div>
       <div>
@@ -3553,6 +3584,19 @@ function pfPatch(vals) {   // put the saved values into the data we already have
   const h = t.Profile[0], fi = h.indexOf('Field'), vi = h.indexOf('Value');
   Object.keys(vals).forEach(f => { const r = t.Profile.find((r, i) => i && String(r[fi]).trim() === f); if (r) r[vi] = vals[f]; else { const n = h.map(() => ''); n[fi] = f; n[vi] = vals[f]; t.Profile.push(n); } });
 }
+// Sends Profile values to the sheet (?act=saveprofile, Profile.gs). → { ok, error, changed }
+async function pfSend(vals) {
+  if (DEMO) { pfPatch(vals); return { ok: true, changed: true, demo: true }; }
+  if (!AUTH) return { ok: false, error: 'This dashboard is not linked to your sheet. Open it from your R2R link first.' };
+  try {
+    const r = await fetch(`${API_URL}?act=saveprofile&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&p=${encodeURIComponent(JSON.stringify(vals))}&t=${Date.now()}`, { redirect: 'follow' });
+    const j = await r.json();
+    if (!j || !j.ok) return { ok: false, error: (j && j.error) || 'Could not save. Please try again.' };
+    pfPatch(j.saved || vals);
+    try { localStorage.setItem('r2r_cache', JSON.stringify(RAW_API)); } catch (e) {}
+    return { ok: true, changed: !!j.changed };
+  } catch (e) { return { ok: false, error: 'No connection. Check your internet and try again.' }; }
+}
 async function pfSave() {
   const err = m => { const e = document.getElementById('pf-err'); if (e) e.textContent = m; };
   const vals = {}, keep = [];
@@ -3560,23 +3604,45 @@ async function pfSave() {
     const x = PF_FIELDS[i], raw = (document.getElementById('pf-' + i) || {}).value; keep.push(raw);
     const v = String(raw ?? '').trim();
     if (v === '') { vals[x.f] = ''; continue; }
+    if (x.kind === 'pick') { if (!x.opts.includes(v)) return err(`${x.label}: pick one of the choices.`); vals[x.f] = v; continue; }
     const n = Number(v);
     if (!isFinite(n) || n < 0 || n > x.max) return err(`${x.label}: enter a number between 0 and ${x.max.toLocaleString('en-IN')}.`);
     vals[x.f] = Math.round(n);
   }
   const refill = () => keep.forEach((v, i) => { const e = document.getElementById('pf-' + i); if (e) e.value = v ?? ''; });
-  if (DEMO) { pfPatch(vals); PF_EDIT = false; PF_MSG = 'Saved. (Demo: nothing is saved to a sheet.)'; renderFamily(); return; }
-  if (!AUTH) return err('This dashboard is not linked to your sheet. Open it from your R2R link first.');
   PF_BUSY = true; renderProfile(LAST_MODEL); refill();
-  try {
-    const r = await fetch(`${API_URL}?act=saveprofile&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&p=${encodeURIComponent(JSON.stringify(vals))}&t=${Date.now()}`, { redirect: 'follow' });
-    const j = await r.json();
-    PF_BUSY = false;
-    if (!j || !j.ok) { renderProfile(LAST_MODEL); refill(); return err((j && j.error) || 'Could not save. Please try again.'); }
-    pfPatch(j.saved || vals); PF_EDIT = false; PF_MSG = j.changed ? '✓ Saved to the Profile tab of your sheet.' : '✓ Nothing changed.';
-    try { localStorage.setItem('r2r_cache', JSON.stringify(RAW_API)); } catch (e) {}
-    renderFamily();
-  } catch (e) { PF_BUSY = false; renderProfile(LAST_MODEL); refill(); err('No connection. Check your internet and try again.'); }
+  const r = await pfSend(vals);
+  PF_BUSY = false;
+  if (!r.ok) { renderProfile(LAST_MODEL); refill(); return err(r.error); }
+  PF_EDIT = false; PF_MSG = r.demo ? 'Saved. (Demo: nothing is saved to a sheet.)' : r.changed ? '✓ Saved to the Profile tab of your sheet.' : '✓ Nothing changed.';
+  renderFamily();
+}
+// ── + Add member / × remove (names without holdings live in the Profile row "Family Members")
+function pfAddOpen(on) { PF_ADD = on; PF_MMSG = ''; renderProfile(LAST_MODEL); if (on) setTimeout(() => { const e = document.getElementById('pf-new'); if (e) e.focus(); }, 50); }
+async function pfAddMember() {
+  const inp = document.getElementById('pf-new'), err = m => { const e = document.getElementById('pf-merr'); if (e) e.textContent = m; };
+  const name = String(inp ? inp.value : '').trim().replace(/\s+/g, ' ');
+  if (!/^[A-Za-zऀ-෿][A-Za-zऀ-෿ .\-]{0,29}$/.test(name)) return err('Type a first name using letters only, e.g. Priya.');
+  const self = famSelf(RAW_API), mem = famMembers(RAW_API);
+  if ((self && name.toLowerCase() === self.toLowerCase()) || /^(me|self)$/i.test(name)) return err('That is you. You are already in the list.');
+  const dup = mem.find(m => m.label.toLowerCase() === name.toLowerCase()); if (dup) return err(`${dup.label} is already in your family list.`);
+  const extra = pfExtraNames(RAW_API);
+  if (extra.length >= 12) return err('You can add up to 12 names here.');
+  const nice = name.replace(/^\w/, c => c.toUpperCase());
+  PF_BUSY = true; renderProfile(LAST_MODEL);
+  const r = await pfSend({ 'Family Members': extra.concat([nice]).join(', ') });
+  PF_BUSY = false;
+  if (!r.ok) { renderProfile(LAST_MODEL); const e = document.getElementById('pf-new'); if (e) e.value = name; return err(r.error); }
+  PF_ADD = false; PF_MMSG = `✓ ${esc(nice)} added.${r.demo ? ' (Demo: nothing is saved.)' : ''}`; renderFamily();
+}
+async function pfRemoveMember(name) {
+  const extra = pfExtraNames(RAW_API), left = extra.filter(n => n.toLowerCase() !== String(name).toLowerCase());
+  if (left.length === extra.length) return;
+  PF_BUSY = true; renderProfile(LAST_MODEL);
+  const r = await pfSend({ 'Family Members': left.join(', ') });
+  PF_BUSY = false;
+  PF_MMSG = r.ok ? `✓ ${esc(name)} removed.${r.demo ? ' (Demo: nothing is saved.)' : ''}` : '⚠️ ' + esc(r.error);
+  if (r.ok) renderFamily(); else renderProfile(LAST_MODEL);
 }
 function pfSignOut() {
   ['r2r_auth', 'r2r_cache'].forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
