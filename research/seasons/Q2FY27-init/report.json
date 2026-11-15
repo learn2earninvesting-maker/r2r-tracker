@@ -1,0 +1,24 @@
+{
+ "season": "Q2FY27",
+ "label": "Q2 FY27",
+ "folder": "Q2FY27-init",
+ "built": "2026-11-15T17:52:58Z",
+ "csvStocks": 50,
+ "concall": 47,
+ "concallLatest": 45,
+ "catalysts": 50,
+ "noConcall": [
+  "HBL Engineering Ltd",
+  "KDDL Ltd",
+  "Marine Electricals (India) Ltd"
+ ],
+ "olderConcall": [
+  "DEE Development Engineers Ltd (Q1 FY27)",
+  "Innova Captab Ltd (Q1 FY27)"
+ ],
+ "noCatalysts": [],
+ "unmatched": {
+  "concall": [],
+  "catalysts": []
+ }
+}

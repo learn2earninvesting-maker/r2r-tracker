@@ -880,6 +880,167 @@
 .prf-dep ul { margin:4px 0 8px;padding-left:18px; }
 .prf-dep-f { display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--text2); }
 .prf-tag { display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:var(--p-lilac);color:var(--text);vertical-align:middle;margin-left:4px; }
+
+/* ═══════════ Stocks X-ray (Nov 2026): your own stocks against the R2R research for the results season ═══════════ */
+body[data-tab="xray"] .fam-bar { display:none !important; }
+.xr { display:flex;flex-direction:column;gap:16px; }
+.xr-head { display:flex;flex-direction:column;gap:4px; }
+.xr-head .k { font-size:14px;color:var(--text3); }
+.xr-head .v { font-size:36px;font-weight:900;letter-spacing:-0.02em;line-height:1.05; }
+.xr-head .s { font-size:13px;font-weight:700;color:var(--text2); }
+@media (min-width:700px) { .xr-head .v { font-size:44px; } }
+.xr-top { display:grid;grid-template-columns:minmax(0,1fr);gap:16px; }
+@media (min-width:700px) { .xr-top { grid-template-columns:repeat(2,minmax(0,1fr));align-items:end; } }
+.xr-ink { background:#16181D;color:#fff;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:12px; }
+:root[data-theme="dark"] .xr-ink { background:#2A2F2D; }
+.xr-ink .lbl { display:flex;justify-content:space-between;align-items:center;gap:10px; }
+.xr-ink .lbl span { font-size:12px;font-weight:800;letter-spacing:.04em;color:#F2C94C; }
+.xr-ink .lbl b { font-size:11px;font-weight:800;padding:5px 10px;border-radius:99px;background:#F2C94C;color:#16181D; }
+.xr-ink .big { font-size:22px;font-weight:800;line-height:1.25; }
+.xr-ink .meter { display:flex;height:12px;border-radius:99px;overflow:hidden;background:#3A3F46; }
+.xr-ink .meter i { display:block;background:linear-gradient(90deg,#4C8DFF,#2EB67D); }
+.xr-ink .row { display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#C9CEC9;flex-wrap:wrap; }
+.xr-ink .row b { color:#fff; }
+.xr-ink .foot { font-size:13px;color:#C9CEC9;border-top:1px solid #3A3F46;padding-top:12px; }
+.xr-ink .foot b { color:#fff; }
+.xr-h2 { font-size:17px;font-weight:800;margin:0; }
+.xr-h2 small { font-size:12px;font-weight:600;color:var(--text3); }
+.xr-tiles { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
+@media (min-width:700px) { .xr-tiles { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media (min-width:1300px) { .xr-tiles.six { grid-template-columns:repeat(6,minmax(0,1fr)); } }
+.xr-t { border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:3px;background:var(--p-blue); }
+.xr-t span { font-size:12px;color:var(--text3);font-weight:600; }
+.xr-t b { font-size:24px;font-weight:900;letter-spacing:-0.01em; }
+.xr-t small { font-size:11px;color:var(--text2); }
+.xr-t.mint{background:var(--p-mint)} .xr-t.butter{background:var(--p-butter)} .xr-t.lilac{background:var(--p-lilac)} .xr-t.blush{background:var(--p-blush)}
+.xr-card { background:var(--card);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px; }
+.xr-card .hd { display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap; }
+.xr-card .hd b { font-size:15px;font-weight:800; }
+.xr-card .hd span { font-size:12px;color:var(--text3); }
+.xr-pair { display:grid;grid-template-columns:minmax(0,1fr);gap:14px;align-items:start; }
+@media (min-width:700px) { .xr-pair { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.xr-trend { display:flex;height:26px;border-radius:10px;overflow:hidden;gap:3px;background:var(--track); }
+.xr-trend i { display:flex;align-items:center;font-style:normal;font-size:12px;font-weight:800;color:#fff;padding:0 10px;white-space:nowrap;overflow:hidden; }
+.xr-trend .up { background:#1E8A5A; } .xr-trend .dn { background:#C2413A; }
+.xr-sub { display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--text2);flex-wrap:wrap; }
+.xr-sub .neg { color:var(--neg);font-weight:700; }
+.xr-bar { display:flex;align-items:center;gap:10px;font-size:13px; }
+.xr-bar .n { width:140px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.xr-bar .tr { flex:1;height:10px;border-radius:99px;background:var(--track);overflow:hidden; }
+.xr-bar .tr i { display:block;height:100%;border-radius:99px;background:#9B7BFF; }
+.xr-bar b { width:48px;text-align:right; }
+.xr-pill { font-size:13px;font-weight:800;padding:4px 10px;border-radius:99px;background:var(--p-lilac); }
+.xr-sect { display:flex;height:16px;border-radius:99px;overflow:hidden;gap:2px; }
+.xr-sect i { display:block; }
+.xr-leg { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px; }
+.xr-leg div { display:flex;align-items:center;gap:8px;font-size:12px; }
+.xr-leg i { width:10px;height:10px;border-radius:3px;flex:0 0 auto; }
+.xr-leg span { flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.xr-flags { display:grid;grid-template-columns:minmax(0,1fr);gap:8px; }
+@media (min-width:700px) and (max-width:1099px) { .xr-flags { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.xr-flag { display:flex;align-items:center;gap:12px;padding:12px;border:0;border-radius:14px;background:var(--card);text-align:left;color:var(--ink);min-height:60px;width:100%;cursor:pointer; }
+.xr-flag.on { box-shadow:inset 0 0 0 2px var(--ink); }
+.xr-flag .c { flex:0 0 auto;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900; }
+.xr-flag .t { flex:1;min-width:0; }
+.xr-flag .t b { display:block;font-size:14px;font-weight:700; }
+.xr-flag .t small { display:block;font-size:12px;color:var(--text3);margin-top:2px; }
+.xr-chips { display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px; }
+.xr-chips::-webkit-scrollbar { display:none; }
+.xr-chip { min-height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--ink);background:transparent;color:var(--ink);font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer; }
+.xr-chip.on { background:var(--ink);color:var(--on-ink); }
+.xr-list { display:grid;grid-template-columns:minmax(0,1fr);gap:8px; }
+@media (min-width:700px) and (max-width:1099px) { .xr-list { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.xr-row { display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:16px;background:var(--card);border:0;text-align:left;color:var(--ink);width:100%; }
+button.xr-row { cursor:pointer; }
+button.xr-row:hover { box-shadow:inset 0 0 0 1px var(--border); }
+.xr-row.sel { background:var(--p-blue);box-shadow:inset 0 0 0 2px var(--ink); }
+.xr-row .l1 { display:flex;align-items:center;gap:10px; }
+.xr-row .nm { flex:1;min-width:0; }
+.xr-row .nm b { display:block;font-size:15px;font-weight:800; }
+.xr-row .nm small { display:block;font-size:12px;color:var(--text3);margin-top:2px; }
+.xr-row .w { min-width:54px;text-align:center;padding:6px 8px;border-radius:10px;background:var(--p-lilac);font-size:14px;font-weight:800; }
+.xr-row .go { color:var(--text3);font-size:18px;font-weight:800; }
+.xr-tags { display:flex;flex-wrap:wrap;gap:6px; }
+.xr-tag { display:inline-flex;align-items:center;min-height:24px;padding:0 9px;border-radius:99px;font-size:11px;font-weight:700;white-space:nowrap;background:var(--bg3);color:var(--text2); }
+.xr-tag.g{background:var(--p-lilac);color:#6C45A8} .xr-tag.hi{background:var(--p-butter);color:var(--butter-ink)} .xr-tag.lo{background:var(--p-blue);color:#2B5FA8}
+.xr-tag.up{background:var(--p-mint);color:var(--pos)} .xr-tag.dn{background:var(--p-blush);color:var(--neg)} .xr-tag.new{background:var(--ink);color:var(--on-ink)} .xr-tag.miss{background:var(--card);color:var(--neg);box-shadow:inset 0 0 0 1px var(--border)}
+:root[data-theme="dark"] .xr-tag.g{color:#C9B5FF} :root[data-theme="dark"] .xr-tag.lo{color:#9DBDF2}
+.xr-disc { font-size:12px;line-height:1.5;color:var(--text3);background:var(--p-butter);border-radius:14px;padding:12px 14px; }
+.xr-disc b { color:var(--ink); }
+.xr-note { font-size:12px;color:var(--text3);line-height:1.5; }
+/* two panes on a laptop: your stocks on the left, the selected stock on the right */
+.xr-split { display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start; }
+@media (min-width:1100px) { .xr-split { grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:24px; } .xr-split > .xr-pane { position:sticky;top:16px; } }
+@media (max-width:1099px) { .xr-split.has-sel > .xr-left { display:none; } .xr-split:not(.has-sel) > .xr-pane { display:none; } }
+.xr-pane { background:var(--card);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:16px;min-width:0; }
+@media (min-width:1100px) { .xr-pane { padding:24px; } }
+.xr-back { display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:14px;font-weight:800;border:0;background:transparent;color:var(--ink);padding:0;cursor:pointer;align-self:flex-start; }
+@media (min-width:1100px) { .xr-back { display:none; } }
+.xr-hero { background:#16181D;color:#fff;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:12px; }
+:root[data-theme="dark"] .xr-hero { background:#2A2F2D; }
+.xr-hero .tags { display:flex;flex-wrap:wrap;gap:6px; }
+.xr-hero .tags span { display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border-radius:99px;font-size:12px;font-weight:700;background:#3A3F46;color:#fff; }
+.xr-hero .tags .own { background:#2EB67D;color:#16181D; } .xr-hero .tags .star { background:#F2C94C;color:#16181D; }
+.xr-hero h3 { margin:0;font-size:28px;font-weight:900;letter-spacing:-0.02em;line-height:1.1; }
+.xr-hero .px { display:flex;align-items:baseline;gap:10px;flex-wrap:wrap; }
+.xr-hero .px b { font-size:34px;font-weight:900; }
+.xr-hero .px span { font-size:13px;font-weight:800; }
+.xr-hero .px .up { color:#6FCF97; } .xr-hero .px .dn { color:#FF9A92; }
+.xr-hero .you { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px; }
+.xr-hero .you div { background:#2A2F33;border-radius:14px;padding:10px 12px; }
+:root[data-theme="dark"] .xr-hero .you div { background:#3A403D; }
+.xr-hero .you small { display:block;font-size:11px;color:#C9CEC9; }
+.xr-hero .you b { font-size:16px; }
+.xr-hero .wl { font-size:12px;color:#C9CEC9; }
+.xr-hero .wl a { color:#fff;font-weight:700; }
+.xr-seg { display:flex;gap:4px;background:var(--track);border-radius:14px;padding:4px;overflow-x:auto;scrollbar-width:none; }
+.xr-seg::-webkit-scrollbar { display:none; }
+.xr-seg button { flex:1 0 auto;min-height:44px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:var(--ink);font-size:14px;font-weight:700;white-space:nowrap;cursor:pointer; }
+.xr-seg button.on { background:var(--ink);color:var(--on-ink);font-weight:800; }
+@media (max-width:699px) { .xr-seg button { flex:1 1 auto;padding:0 6px;font-size:13px; } .xr > .xr-pane { background:transparent;padding:0; } }
+.xr-ft { display:grid;grid-template-columns:minmax(0,1fr);gap:10px; }
+@media (min-width:700px) { .xr-ft { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.xr-f { border-radius:18px;padding:16px;background:var(--p-blue);display:flex;flex-direction:column;gap:9px; }
+.xr-f h4 { margin:0;font-size:18px;font-weight:900; }
+.xr-f div { display:flex;justify-content:space-between;gap:10px;padding-top:9px;border-top:1px solid rgba(128,128,128,.25);font-size:13px; }
+.xr-f div span { color:var(--text2); } .xr-f div b { font-weight:800;text-align:right; }
+.xr-f.butter{background:var(--p-butter)} .xr-f.mint{background:var(--p-mint)} .xr-f.lilac{background:var(--p-lilac)}
+.xr-cream { background:var(--cream);border-radius:18px;padding:16px; }
+.xr-cream h4 { margin:0 0 10px;font-size:15px;font-weight:800; }
+.xr-says { list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px; }
+.xr-says li { display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.4; }
+.xr-says li i { flex:0 0 auto;width:12px;height:12px;border-radius:4px;margin-top:4px; }
+.xr-num { display:flex;align-items:center;gap:10px;padding:14px 0;border-top:1px solid var(--cream-line); }
+.xr-num:first-of-type { border-top:0; }
+.xr-num .a { flex:1;min-width:0; } .xr-num .a b { display:block;font-size:15px;font-weight:800; } .xr-num .a small { display:block;font-size:12px;color:var(--text3);margin-top:3px; }
+.xr-num .a small em { font-style:normal;font-weight:700;color:var(--ink); }
+.xr-cc { display:flex;flex-direction:column;gap:12px; }
+.xr-box { border-radius:18px;padding:16px;background:var(--p-blue); }
+.xr-box h4 { margin:0 0 8px;font-size:16px;font-weight:900; }
+.xr-box ul { margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.45; }
+.xr-box p { margin:0;font-size:14px;line-height:1.45; }
+.xr-box.butter { background:var(--p-butter); } .xr-box.butter h4 { color:var(--butter-ink); }
+details.xr-acc { background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden; }
+.xr-pane details.xr-acc { background:var(--bg); }
+details.xr-acc summary { list-style:none;cursor:pointer;min-height:54px;display:flex;align-items:center;gap:10px;padding:0 16px;font-size:15px;font-weight:800; }
+details.xr-acc summary::-webkit-details-marker { display:none; }
+details.xr-acc summary::after { content:'+';margin-left:auto;font-size:20px;font-weight:800; }
+details.xr-acc[open] summary::after { content:'−'; }
+.xr-acc .in { padding:0 16px 16px;display:flex;flex-direction:column;gap:8px; }
+.xr-acc .pt { display:flex;gap:10px;font-size:14px;line-height:1.45; }
+.xr-acc .pt::before { content:'';flex:0 0 auto;width:8px;height:8px;border-radius:99px;background:#4C8DFF;margin-top:7px; }
+.xr-q { margin:6px 0 0;padding:12px 14px;border-radius:12px;background:var(--p-lilac);font-size:14px;line-height:1.45;font-style:italic; }
+.xr-tbl { width:100%;border-collapse:collapse;font-size:13px; }
+.xr-tbl th { text-align:left;font-size:12px;font-weight:700;color:var(--text3);padding:6px 8px;border-bottom:1px solid var(--cream-line); }
+.xr-tbl td { padding:8px;border-bottom:1px solid var(--cream-line);vertical-align:top;line-height:1.4; }
+.xr-tbl td:first-child { font-weight:700; }
+.xr-tblw { overflow-x:auto;background:var(--cream);border-radius:12px; }
+.xr-cat { display:flex;gap:12px;padding:14px;border-radius:16px;background:var(--bg);border:1px solid var(--line); }
+.xr-cat .n { flex:0 0 auto;width:36px;height:36px;border-radius:12px;color:#16181D;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900; }
+.xr-cat b { display:block;font-size:15px;font-weight:800; }
+.xr-cat p { margin:4px 0 0;font-size:13px;color:var(--text2);line-height:1.5; }
+.xr-src { font-size:12px;color:var(--text3); }
+.xr-empty { background:var(--card);border-radius:16px;padding:18px;color:var(--text2);font-size:14px;line-height:1.5; }
 </style>
 </head>
 <body>
@@ -1025,9 +1186,9 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8
 // ═══════════════════════════════════════════════════════
 //  TABS
 // ═══════════════════════════════════════════════════════
-const TABS = [['overview','Home'],['hold','Holdings'],['plan','Plan'],['returns','Returns'],['insurance','Insurance'],['goals','Goals'],['more','More'],['profile','Profile']];
-const SUBS = { hold: [['stocks','Stocks & ETFs'],['funds','Mutual funds'],['other','Other assets']], plan: [['allocate','Asset classes'],['rebalance','Stocks']], more: [['parameters','Health check'],['xray','Portfolio X-ray'],['uploads','Uploads']] };
-const PANELS = { overview: ['overview'], returns: ['returns'], insurance: ['insurance','payments'], goals: ['goals'], profile: ['profile'] };
+const TABS = [['overview','Home'],['hold','Holdings'],['plan','Plan'],['xray','Stocks X-ray'],['returns','Returns'],['insurance','Insurance'],['goals','Goals'],['more','FinHealth'],['profile','Profile']];
+const SUBS = { hold: [['stocks','Stocks & ETFs'],['funds','Mutual funds'],['other','Other assets']], plan: [['allocate','Asset classes'],['rebalance','Stocks']], more: [['parameters','Health check'],['uploads','Uploads']] };   // "more" is shown as FinHealth
+const PANELS = { overview: ['overview'], xray: ['xray'], returns: ['returns'], insurance: ['insurance','payments'], goals: ['goals'], profile: ['profile'] };
 const OLD_TO_NEW = { payments: 'insurance', holdings: 'hold' };
 Object.keys(SUBS).forEach(t => SUBS[t].forEach(s => { OLD_TO_NEW[s[0]] = t; }));
 const OLD_URL = 'old.html';   // the previous dashboard, kept so clients can go back
@@ -1441,7 +1602,7 @@ function renderAll(d) {
   const pl = pricesLine(d);
   setHTML('prices-asof', pl ? '⏱ ' + pl + '<br><span style="font-size:10px">Updates every hour on weekdays · share prices run about 20 min behind the market</span>' : '');
   renderOverview(d); renderAllocation(d); renderHoldings(d); renderAllocate(d); renderStocks(d); renderRebalance(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
-  renderPayments(d); renderParameters(d.famMember && RAW_API ? model(famFilter(RAW_API, '*')) : d); renderOtherTiles(d); renderGoals(d); renderMore(d); renderProfile(d); renderHome(d); askExtras();   // Health Check is always the whole family · renderFIRE / renderCashflow kept below, switched off
+  renderPayments(d); renderParameters(d.famMember && RAW_API ? model(famFilter(RAW_API, '*')) : d); renderOtherTiles(d); renderGoals(d); renderMore(d); renderXray(d); renderProfile(d); renderHome(d); askExtras();   // Health Check is always the whole family · renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
 }
 
@@ -3497,11 +3658,7 @@ async function gfSave() {
 }
 function gfRefill(k) { const set = (id, v) => { const e = document.getElementById(id); if (e && v !== undefined) e.value = v; }; set('gf-name', k.name); set('gf-target', k.target); set('gf-year', k.year); set('gf-saved', k.saved); set('gf-status', k.status); set('gf-notes', k.notes); gfCalc(); }
 
-function renderMore(d) {
-  setHTML('xray-body', `<div class="pg-head"><div><div class="pg-kicker">Portfolio X-ray</div><div class="pg-big">Your stocks vs the R2R watchlist</div></div></div>
-    <div class="cardx">${EXTRAS && EXTRAS.xray ? `<a class="pill-btn primary" href="${esc(EXTRAS.xray)}" target="_blank" rel="noopener">Open my X-ray</a><div class="note">Opens with your current share holdings and today's prices. Mutual funds, gold and REITs are not part of the X-ray.</div>`
-      : `<div class="note" style="margin:0;font-size:14px">${EXTRAS ? (DEMO ? 'The demo has no X-ray link. In your own dashboard an "Open my X-ray" button shows here.' : 'Your X-ray needs your share holdings first. Upload your broker holdings file and the button will show here.') : 'Loading your X-ray link…'}</div>`}</div>
-    <div class="note">Facts only, no verdicts.</div>`);
+function renderMore(d) {   // FinHealth tab: Health check + Uploads (the X-ray is its own tab now: renderXray)
   setHTML('uploads-body', `<div class="pg-head"><div><div class="pg-kicker">Uploads</div><div class="pg-big">Send your files</div></div></div>${uploadBlock('holdings')}${uploadBlock('tradebook')}
     <div class="note">Holdings file and mutual fund statement at each month-end; tradebook or contract notes for exact returns. You can also send files to the R2R Tracker bot on Telegram.</div>`);
 }
@@ -3667,10 +3824,253 @@ async function loadExtras() {
 }
 function askExtras() { if (Date.now() - EXTRAS_AT > 60000) { EXTRAS_AT = Date.now(); loadExtras(); } }
 
+// ═══════════════════════════════════════════════════════
+//  STOCKS X-RAY — the client's own stocks against the R2R research for the latest results season.
+//  Research files are built from the season's Tickertape CSV + StockScans concall summary and growth
+//  catalysts PDFs (research/tools/build_season.py) and published by the tracker bot (Research.gs):
+//  research/live.json → research/seasons/<folder>/index.json (+ stocks/<TICKER>.json, loaded on tap).
+//  Facts only, no buy or sell verdicts. Always the whole family.
+// ═══════════════════════════════════════════════════════
+const XR_BASE = 'research/';
+const XR_WL_URL = 'https://live-stock-watchlist.netlify.app/';
+let XR = { live: null, idx: null, names: null, err: '', det: {}, sel: null, sub: 'snap', sort: 'alloc', flag: '' };
+async function xrLoad() {
+  try {
+    const pv = (params.get('season') || '').trim();   // ?season=<folder>: preview a built season before it is published (link from the bot)
+    const l = /^[\w-]{3,60}$/.test(pv) ? { folder: pv, preview: true } : await (await fetch(XR_BASE + 'live.json?t=' + Date.now(), { cache: 'no-cache' })).json();
+    const i = await (await fetch(XR_BASE + 'seasons/' + encodeURIComponent(l.folder) + '/index.json')).json();
+    XR.live = l; XR.idx = i; XR.names = null; XR.det = {}; XR.err = '';
+  } catch (e) { if (!XR.idx) XR.err = 'The R2R research could not be loaded just now. Check your internet and tap Refresh.'; }
+  if (LAST_MODEL) renderXray(LAST_MODEL);
+}
+async function xrDetail(t) {
+  if (!XR.live || XR.det[t] !== undefined) return;
+  XR.det[t] = null;   // loading
+  try { const r = await fetch(XR_BASE + 'seasons/' + encodeURIComponent(XR.live.folder) + '/stocks/' + encodeURIComponent(t) + '.json'); XR.det[t] = r.ok ? await r.json() : false; }
+  catch (e) { XR.det[t] = false; }
+  if (LAST_MODEL) renderXray(LAST_MODEL);
+}
+const xm = (s, k) => { const v = s && s.m ? s.m[k] : null; return typeof v === 'number' && isFinite(v) ? v : null; };
+const xrN = (n, d = 1) => n === null || n === undefined ? '—' : Number(n).toLocaleString('en-IN', { maximumFractionDigits: d });
+const xrSgn = (n, f) => (n > 0 ? '+' : n < 0 ? '−' : '') + f(Math.abs(n));
+const xrP = n => n === null || n === undefined ? '—' : Math.abs(n) > 500 ? (n > 0 ? 'over +500%' : 'below −500%') : xrSgn(n, v => xrN(v, Math.abs(v) < 10 ? 1 : 0)) + '%';
+const xrPts = n => n === null || n === undefined ? '—' : xrSgn(n, v => xrN(v, 1)) + ' pts';
+const xrCr = n => n === null || n === undefined ? '—' : (n < 0 ? '−' : '') + '₹' + Math.abs(n).toLocaleString('en-IN', { maximumFractionDigits: Math.abs(n) < 100 ? 1 : 0 }) + ' cr';
+const xrMed = a => { a = a.filter(v => v !== null).sort((x, y) => x - y); if (!a.length) return null; const h = a.length >> 1; return a.length % 2 ? a[h] : (a[h - 1] + a[h]) / 2; };
+
+function xrMatch(r) {
+  const S = XR.idx.stocks;
+  if (r.sym && S[r.sym]) return r.sym;
+  if (!XR.names) { XR.names = {}; Object.keys(S).forEach(t => { XR.names[tgNameKey(S[t].n)] = t; }); }
+  const k = tgNameKey(r.name);
+  if (k && XR.names[k]) return XR.names[k];
+  if (k.length > 6) for (const nk in XR.names) if (nk.startsWith(k) || k.startsWith(nk)) return XR.names[nk];
+  return null;
+}
+// Demo: a family that holds stocks from the R2R Universe (the demo sheet's own shares are not in it)
+const XR_DEMO = [['COFORGE', 150], ['AARTIPHARM', 250], ['DIVISLAB', 20], ['NAVINFLUOR', 20], ['GRWRHITECH', 25], ['GRAVITA', 120], ['ASTRAMICRO', 100], ['HFCL', 800], ['NRBBEARING', 300], ['HBLENGINE', 150]];
+function xrRows(d) {
+  if (FAM_SEL !== '*' && RAW_API) d = model(RAW_API);   // always the whole family
+  let rows = tgRowsOf(d);
+  if (DEMO && XR.idx) rows = XR_DEMO.filter(x => XR.idx.stocks[x[0]]).map(([t, q]) => { const p = xm(XR.idx.stocks[t], 'Close Price') || 0; return { sym: t, name: XR.idx.stocks[t].n, etf: false, units: q, value: q * p, cmp: p }; })
+    .concat(rows.filter(r => !XR.idx.stocks[r.sym]).slice(0, 2));
+  const T = rows.reduce((s, r) => s + r.value, 0);
+  return { T, rows: rows.map(r => { const t = XR.idx ? xrMatch(r) : null, s = t ? XR.idx.stocks[t] : null;
+    return Object.assign({}, r, { t, s, w: pctOf(r.value, T), px: r.cmp || xm(s, 'Close Price') }); }).sort((a, b) => b.value - a.value) };
+}
+const XR_FLAGS = [
+  ['pe', 'P/E above its own 5-year median', 'hi', r => { const pe = xm(r.s, 'Price To Earnings'), md = xm(r.s, 'Price To Earnings Median 5 Years'); return pe > 0 && md > 0 && pe > md * 1.02; }],
+  ['cfo', 'Cash from operations below profit', 'dn', r => { const c = xm(r.s, 'CFO To PAT'), p = xm(r.s, 'PAT'); return c !== null && p > 0 && c < 100; }],
+  ['debt', 'Debt more than doubled in 3 years', 'g', r => { const a = xm(r.s, 'Debt'), b = xm(r.s, 'Debt 3 Years Back'); return a !== null && b > 0 && a >= 2 * b && a >= 50; }],
+  ['prom', 'Promoter stake down 1+ point in a year', 'lo', r => { const c = xm(r.s, 'Change In Promoter Holdings 1 Year'); return c !== null && c <= -1; }],
+  ['pledge', 'Promoter pledge above 5% a year ago', 'dn', r => (xm(r.s, 'Pledged Percentage 1 Year Back') || 0) > 5],
+  ['ema', 'Below its 40-week EMA', 'dn', r => { const e = xm(r.s, 'EMA 40W'); return e > 0 && r.px > 0 && r.px < e; }],
+  ['nocc', 'No new concall summary this season', 'miss', r => !r.s.cc || !r.s.cc.latest],
+];
+const XR_FC = { hi: ['var(--p-butter)', 'var(--butter-ink)'], dn: ['var(--p-blush)', 'var(--neg)'], g: ['var(--p-lilac)', '#6C45A8'], lo: ['var(--p-blue)', '#2B5FA8'], miss: ['var(--bg3)', 'var(--text2)'] };
+const XR_SC = ['#4C8DFF', '#F29A38', '#2EB67D', '#9B7BFF', '#F2C94C', '#FF7A7A', '#3CC6C6', '#C9A0FF', '#8FD16A'];
+const xrShort = n => String(n || '').replace(/\s+(Ltd|Limited)\.?$/i, '').replace(/\s+\(India\)$/i, '');
+
+function xrPeTag(r) {
+  const pe = xm(r.s, 'Price To Earnings'), md = xm(r.s, 'Price To Earnings Median 5 Years');
+  if (!(pe > 0) || !(md > 0)) return '';
+  return pe > md * 1.02 ? '<span class="xr-tag hi">P/E above 5Y median</span>' : pe < md * 0.98 ? '<span class="xr-tag lo">P/E below 5Y median</span>' : '<span class="xr-tag">P/E at 5Y median</span>';
+}
+function xrTrendTag(r) { const e = xm(r.s, 'EMA 40W'); if (!(e > 0) || !(r.px > 0)) return ''; return r.px >= e ? '<span class="xr-tag up">▲ Above 40W EMA</span>' : '<span class="xr-tag dn">▼ Below 40W EMA</span>'; }
+function xrCcTag(r) { const c = r.s.cc; return !c ? '<span class="xr-tag miss">No concall this season</span>' : c.latest ? '<span class="xr-tag new">New concall</span>' : `<span class="xr-tag miss">Concall: ${esc(c.q)}</span>`; }
+function xrRow(r, selT) {
+  if (!r.s) return `<div class="xr-row"><div class="l1"><div class="nm"><b>${esc(xrShort(r.name) || r.sym)}</b><small>${r.etf ? 'ETF' : esc(r.sym)}</small></div><span class="w">${r.w.toFixed(1)}%</span></div><div class="xr-tags"><span class="xr-tag">${r.etf ? 'ETF · not analysed' : 'Not in the R2R Universe'}</span></div></div>`;
+  return `<button class="xr-row${selT === r.t ? ' sel' : ''}" onclick="xrOpen('${esc(r.t).replace(/'/g, '&#39;')}')" aria-label="Open the analysis of ${esc(xrShort(r.s.n))}"><div class="l1"><div class="nm"><b>${esc(xrShort(r.s.n))}</b><small>${esc(r.s.s)}</small></div><span class="w">${r.w.toFixed(1)}%</span><span class="go" aria-hidden="true">›</span></div>
+    <div class="xr-tags">${xm(r.s, 'Revenue Growth TTM') !== null ? `<span class="xr-tag g">Rev ${xrP(xm(r.s, 'Revenue Growth TTM'))}</span>` : ''}${xrPeTag(r)}${xrTrendTag(r)}${xrCcTag(r)}</div></button>`;
+}
+
+function renderXray(d) {
+  const el = document.getElementById('xray-body'); if (!el) return;
+  const disc = `<div class="xr-disc"><b>For education only.</b> Facts from your holdings and the R2R research for the results season (StockScans concall summaries and growth catalysts, Tickertape numbers). Not a buy or sell recommendation.</div>`;
+  if (!XR.idx) { el.innerHTML = `<div class="xr"><div class="xr-head"><div class="k">Stocks X-ray</div><div class="v">Your stocks, analysed</div></div><div class="xr-empty">${XR.err ? esc(XR.err) : 'Loading the R2R research…'}</div></div>`; return; }
+  const { T, rows } = xrRows(d);
+  if (!rows.length) { el.innerHTML = `<div class="xr"><div class="xr-head"><div class="k">Stocks X-ray · ${esc(XR.idx.label)} results season</div><div class="v">Your stocks, analysed</div></div><div class="xr-empty">No shares yet. Once your broker holdings file is in (Holdings → Stocks &amp; ETFs), this page shows each of your stocks against the R2R research: growth, valuation, quality, ownership, what management said on the concall and the growth catalysts.</div>${disc}</div>`; return; }
+  const cov = rows.filter(r => r.s), covV = cov.reduce((s, r) => s + r.value, 0);
+  const wsum = (k, cap) => { let v = 0, w = 0; cov.forEach(r => { let x = xm(r.s, k); if (x === null) return; if (cap) x = Math.max(-cap, Math.min(cap, x)); v += x * r.value; w += r.value; }); return w ? v / w : null; };
+  const harm = k => { let v = 0, w = 0; cov.forEach(r => { const x = xm(r.s, k); if (!(x > 0)) return; v += r.value / x; w += r.value; }); return v ? w / v : null; };
+  const pe = harm('Price To Earnings'), pe5 = harm('Price To Earnings Median 5 Years');
+  const emaRows = cov.filter(r => xm(r.s, 'EMA 40W') > 0 && r.px > 0), up = emaRows.filter(r => r.px >= xm(r.s, 'EMA 40W'));
+  const upV = up.reduce((s, r) => s + r.value, 0), emaV = emaRows.reduce((s, r) => s + r.value, 0), down = emaRows.filter(r => r.px < xm(r.s, 'EMA 40W'));
+  const newCc = cov.filter(r => r.s.cc && r.s.cc.latest).length, withCat = cov.filter(r => r.s.cat).length;
+  const head = `<div class="xr-top"><div class="xr-head"><div class="k">Stocks X-ray · ${esc(XR.idx.label)} results season</div><div class="v">${fmtCr(T)}</div><div class="s">in ${rows.length} stock${rows.length === 1 ? '' : 's'}${famMembers(RAW_API || {}).length > 1 ? ' · whole family' : ''}</div></div>
+    ${XR.live && XR.live.preview ? '<div class="xr-disc" style="grid-column:1/-1"><b>Preview.</b> This season is not published yet. Clients still see the live season until you tap Publish in the bot.</div>' : ''}<div class="xr-ink"><div class="lbl"><span>R2R RESEARCH COVERAGE</span><b>${esc(XR.idx.label)}</b></div>
+      <div class="big">${cov.length} of your ${rows.length} stocks ${cov.length === 1 ? 'is' : 'are'} in the R2R Universe</div>
+      <div class="meter"><i style="width:${pctOf(covV, T).toFixed(1)}%"></i></div>
+      <div class="row"><span><b>${Math.round(pctOf(covV, T))}%</b> of your stock value covered</span><span>${rows.length - cov.length ? (rows.length - cov.length) + ' not covered' : 'all covered'}</span></div>
+      <div class="foot">New concall summaries for <b>${newCc} holding${newCc === 1 ? '' : 's'}</b> · growth catalysts for <b>${withCat}</b></div></div></div>`;
+  if (!cov.length) { el.innerHTML = `<div class="xr">${head}<div class="xr-empty">None of your stocks is in the R2R Universe this season, so there is no analysis to show yet.</div>${rows.map(r => xrRow(r)).join('')}${disc}</div>`; return; }
+
+  const tiles = `<div class="xr-h2">Portfolio facts <small>· covered stocks, weighted by your money</small></div>
+    <div class="xr-tiles six">
+      <div class="xr-t"><span>Weighted P/E</span><b>${xrN(pe, 1)}</b><small>5-year median ${xrN(pe5, 1)}</small></div>
+      <div class="xr-t butter"><span>Revenue growth</span><b>${xrP(wsum('Revenue Growth TTM', 300))}</b><small>weighted, last 12 months</small></div>
+      <div class="xr-t mint"><span>PAT growth</span><b>${xrP(xrMed(cov.map(r => xm(r.s, 'PAT Growth TTM'))))}</b><small>median of your holdings</small></div>
+      <div class="xr-t lilac"><span>Debt to equity</span><b>${xrN(wsum('Debt To Equity'), 2)}</b><small>weighted</small></div>
+      <div class="xr-t blush"><span>Cash flow / profit</span><b>${xrN(xrMed(cov.map(r => xm(r.s, 'CFO To PAT'))), 0)}%</b><small>median CFO to PAT</small></div>
+      <div class="xr-t mint"><span>Above 40W EMA</span><b>${up.length} of ${emaRows.length}</b><small>${Math.round(pctOf(upV, emaV))}% of covered value</small></div></div>`;
+  const trend = `<div class="xr-card"><div class="hd"><b>Trend · 40-week EMA</b><span>by value</span></div>
+    <div class="xr-trend">${upV ? `<i class="up" style="width:${pctOf(upV, emaV)}%">${Math.round(pctOf(upV, emaV))}% above</i>` : ''}${emaV - upV > 0 ? `<i class="dn" style="width:${pctOf(emaV - upV, emaV)}%">${pctOf(emaV - upV, emaV) >= 18 ? Math.round(pctOf(emaV - upV, emaV)) + '% below' : ''}</i>` : ''}</div>
+    <div class="xr-sub"><span>${up.length} holding${up.length === 1 ? '' : 's'} above</span>${down.length ? `<span class="neg">Below: ${down.slice(0, 3).map(r => esc(xrShort(r.s.n)) + ' (' + xrP((r.px / xm(r.s, 'EMA 40W') - 1) * 100) + ')').join(', ')}${down.length > 3 ? ' +' + (down.length - 3) : ''}</span>` : '<span>none below</span>'}</div></div>`;
+  const top3 = rows.slice(0, 3), top3w = top3.reduce((s, r) => s + r.w, 0), maxW = Math.max(...top3.map(r => r.w), 1);
+  const conc = `<div class="xr-card"><div class="hd"><b>Concentration</b><span class="xr-pill">Top ${top3.length} = ${top3w.toFixed(1)}%</span></div>
+    ${top3.map(r => `<div class="xr-bar"><span class="n">${esc(xrShort(r.s ? r.s.n : r.name) || r.sym)}</span><span class="tr"><i style="width:${(r.w / maxW * 100).toFixed(1)}%"></i></span><b>${r.w.toFixed(1)}%</b></div>`).join('')}</div>`;
+  const sec = {}; rows.forEach(r => { const k = r.s ? r.s.s : 'Not covered'; sec[k] = (sec[k] || 0) + r.w; });
+  let secs = Object.entries(sec).sort((a, b) => (a[0] === 'Not covered') - (b[0] === 'Not covered') || b[1] - a[1]);
+  if (secs.length > 9) { const keep = secs.filter(s => s[0] !== 'Not covered').slice(0, 7), nc = secs.find(s => s[0] === 'Not covered'); const rest = secs.filter(s => !keep.includes(s) && s !== nc).reduce((t, s) => t + s[1], 0); secs = keep.concat([['Other sectors', rest]]).concat(nc ? [nc] : []); }
+  const col = (n, i) => n === 'Not covered' ? '#B9BDB4' : n === 'Other sectors' ? '#8E948C' : XR_SC[i % XR_SC.length];
+  const sectors = `<div class="xr-card"><div class="hd"><b>Sector split</b><span>of your stock value</span></div>
+    <div class="xr-sect">${secs.map((s, i) => `<i style="width:${s[1]}%;background:${col(s[0], i)}"></i>`).join('')}</div>
+    <div class="xr-leg">${secs.map((s, i) => `<div><i style="background:${col(s[0], i)}"></i><span>${esc(s[0])}</span><b>${s[1].toFixed(1)}%</b></div>`).join('')}</div></div>`;
+  const fl = XR_FLAGS.map(f => ({ k: f[0], t: f[1], c: f[2], hits: cov.filter(f[3]) })).filter(f => f.hits.length);
+  const flags = fl.length ? `<div class="xr-h2">Fact flags <small>· tap one to see those stocks</small></div><div class="xr-flags">${fl.map(f => `<button class="xr-flag${XR.flag === f.k ? ' on' : ''}" aria-pressed="${XR.flag === f.k}" onclick="xrFlag('${f.k}')"><span class="c" style="background:${XR_FC[f.c][0]};color:${XR_FC[f.c][1]}">${f.hits.length}</span><span class="t"><b>${f.t}</b><small>${esc(f.hits.slice(0, 6).map(r => xrShort(r.s.n)).join(', '))}${f.hits.length > 6 ? ' +' + (f.hits.length - 6) : ''}</small></span><span aria-hidden="true">›</span></button>`).join('')}</div>` : '';
+
+  // the list
+  let list = rows.slice();
+  const flagOn = XR.flag && fl.find(f => f.k === XR.flag);
+  if (flagOn) { const set = new Set(flagOn.hits.map(r => r.t)); list = list.filter(r => r.s && set.has(r.t)); }
+  const sv = { growth: r => r.s ? xm(r.s, 'Revenue Growth TTM') ?? -1e9 : -2e9, pe: r => { const a = xm(r.s, 'Price To Earnings'), b = xm(r.s, 'Price To Earnings Median 5 Years'); return r.s && a > 0 && b > 0 ? -(a / b) : -1e9; }, trend: r => { const e = xm(r.s, 'EMA 40W'); return r.s && e > 0 && r.px > 0 ? r.px / e : -1e9; } }[XR.sort];
+  if (sv) list.sort((a, b) => sv(b) - sv(a));
+  const firstCov = list.find(r => r.s) || cov[0];
+  const shownT = XR.sel && rows.some(r => r.t === XR.sel) ? XR.sel : (firstCov && firstCov.t);
+  const wide = window.matchMedia('(min-width:1100px)').matches;
+  const listHtml = `<div class="xr-h2" style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><span>Your stocks</span><small>tap a stock for its analysis</small></div>
+    <div class="xr-chips" role="group" aria-label="Sort">${[['alloc', 'Allocation %'], ['growth', 'Revenue growth'], ['pe', 'P/E vs 5Y'], ['trend', 'Trend']].map(([k, l]) => `<button class="xr-chip${XR.sort === k ? ' on' : ''}" aria-pressed="${XR.sort === k}" onclick="xrSort('${k}')">${l}</button>`).join('')}</div>
+    ${flagOn ? `<div class="xr-chips"><button class="xr-chip on" onclick="xrFlag('')">${esc(flagOn.t)} · ${flagOn.hits.length} ✕</button></div>` : ''}
+    <div class="xr-list">${list.map(r => xrRow(r, wide || XR.sel ? shownT : null)).join('')}</div>`;
+  const pane = shownT ? xrPane(rows.find(r => r.t === shownT), disc) : '';
+  if (XR.sel && !wide) { el.innerHTML = `<div class="xr"><div class="xr-pane" id="xr-pane">${pane}</div></div>`; return; }   // phone / tablet: the stock page on its own
+  el.innerHTML = wide
+    ? `<div class="xr">${head}${tiles}<div class="xr-split${XR.sel ? ' has-sel' : ''}"><div class="xr-left xr">${listHtml}${trend}${conc}${sectors}${flags}</div><div class="xr-pane" id="xr-pane">${pane}</div></div>${disc}</div>`
+    : `<div class="xr">${head}${tiles}<div class="xr-pair">${trend}${conc}</div>${sectors}${flags}<div class="xr-left xr">${listHtml}</div>${disc}</div>`;
+}
+
+function xrPane(r, disc) {
+  if (!r || !r.s) return '';
+  const s = r.s, t = r.t, hasDet = !!(s.cc || s.cat);
+  if (hasDet && (XR.sub === 'con' || XR.sub === 'cat')) xrDetail(t);
+  const ema = xm(s, 'EMA 40W'), dist = ema > 0 && r.px > 0 ? (r.px / ema - 1) * 100 : null;
+  const star = tgStarOf({ sym: r.sym, name: s.n });
+  const hero = `<button class="xr-back" onclick="xrBack()">‹ Stocks X-ray</button>
+    <div class="xr-hero"><div class="tags"><span>${esc(s.s)}</span><span class="own">In your portfolio</span>${star ? `<span class="star">${'★'.repeat(Math.min(5, star))} on the R2R watchlist</span>` : ''}</div>
+      <h3>${esc(xrShort(s.n))}</h3>
+      <div class="px"><b>₹${xrN(r.px, 2)}</b>${dist !== null ? `<span class="${dist >= 0 ? 'up' : 'dn'}">${dist >= 0 ? '▲' : '▼'} ${xrN(Math.abs(dist), 1)}% ${dist >= 0 ? 'above' : 'below'} 40W EMA (₹${xrN(ema, 0)})</span>` : ''}</div>
+      <div class="you"><div><small>You hold</small><b>${xrN(r.units, 3)}</b></div><div><small>Value</small><b>${fmtCr(r.value)}</b></div><div><small>Of your stocks</small><b>${r.w.toFixed(1)}%</b></div></div>
+      <div class="wl">Best value range: see the <a href="${XR_WL_URL}" target="_blank" rel="noopener">R2R Watchlist Universe</a></div></div>`;
+  const seg = `<div class="xr-seg" role="tablist">${[['snap', 'Snapshot'], ['nums', 'Numbers'], ['con', 'Concall'], ['cat', 'Catalysts']].map(([k, l]) => `<button role="tab" class="${XR.sub === k ? 'on' : ''}" aria-selected="${XR.sub === k}" onclick="xrSub('${k}')">${l}</button>`).join('')}</div>`;
+  let body = '';
+  if (XR.sub === 'snap') body = xrSnap(r);
+  else if (XR.sub === 'nums') body = xrNums(s);
+  else {
+    const det = XR.det[t];
+    if (XR.sub === 'con' && !s.cc) body = `<div class="xr-empty">There is no concall summary for ${esc(xrShort(s.n))} this season.</div>`;
+    else if (XR.sub === 'cat' && !s.cat) body = `<div class="xr-empty">There are no growth catalysts for ${esc(xrShort(s.n))} this season.</div>`;
+    else if (det === undefined || det === null) body = `<div class="xr-empty">Loading…</div>`;
+    else if (det === false) body = `<div class="xr-empty">This could not be loaded. Check your internet and try again.</div>`;
+    else body = XR.sub === 'con' ? xrConcall(det.concall) : xrCats(det.catalysts);
+  }
+  return hero + seg + body + disc;
+}
+function xrSnap(r) {
+  const s = r.s, f = (k, d) => xm(s, k);
+  const tile = (cls, h, rows) => `<div class="xr-f ${cls}"><h4>${h}</h4>${rows.map(([a, b]) => `<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`;
+  const chg1 = (v, k) => v === null ? '—' : xrN(v, 1) + '%' + (f(k) !== null ? ' · ' + xrSgn(f(k), x => xrN(x, 1)) + ' in 1 yr' : '');
+  const tiles = `<div class="xr-ft">
+    ${tile('', 'Growth', [['Revenue, last 12 months', xrCr(f('Revenue')) + ' · ' + xrP(f('Revenue Growth TTM'))], ['Profit (PAT), last 12 months', xrCr(f('PAT')) + ' · ' + xrP(f('PAT Growth TTM'))], ['PAT, latest quarter vs a year ago', xrP(f('PAT Growth YoY'))], ['EPS growth, 3 years', xrP(f('EPS Growth 3 Years'))]])}
+    ${tile('butter', 'Valuation', [['P/E now', f('Price To Earnings') > 0 ? xrN(f('Price To Earnings'), 1) : '—'], ['Own 5-year median P/E', f('Price To Earnings Median 5 Years') > 0 ? xrN(f('Price To Earnings Median 5 Years'), 1) : '—'], ['Industry median P/E', xrN(f('Industry PE Median'), 1)], ['PEG · EV/EBITDA', xrN(f('PEG'), 2) + ' · ' + xrN(f('EV To EBITDA'), 1)]])}
+    ${tile('mint', 'Quality', [['Cash from operations / profit', f('CFO To PAT') === null ? '—' : xrN(f('CFO To PAT'), 0) + '%'], ['Debt to equity', xrN(f('Debt To Equity'), 2)], ['Receivable days', xrN(f('Days Receivable'), 0) + (f('Days Receivable 3 Years Back') !== null ? ' (' + xrN(f('Days Receivable 3 Years Back'), 0) + ' three years ago)' : '')], ['Capital work in progress', xrCr(f('CWIP'))]])}
+    ${tile('lilac', 'Ownership', [['Promoters', chg1(f('Promoter Holdings'), 'Change In Promoter Holdings 1 Year')], ['FIIs', chg1(f('FII Holdings'), 'Change In FII Holdings 1 Year')], ['DIIs', chg1(f('DII Holdings'), 'Change In DII Holdings 1 Year')], ['Promoter pledge, a year ago', f('Pledged Percentage 1 Year Back') === null ? '—' : xrN(f('Pledged Percentage 1 Year Back'), 2) + '%']])}</div>`;
+  const says = [];
+  const pe = f('Price To Earnings'), md = f('Price To Earnings Median 5 Years'), ind = f('Industry PE Median');
+  if (pe > 0 && md > 0) says.push([pe > md ? '#B07A00' : '#2B5FA8', `P/E is ${pe > md * 1.02 ? 'above' : pe < md * 0.98 ? 'below' : 'about at'} its own 5-year median (${xrN(pe, 1)} vs ${xrN(md, 1)})`]);
+  if (pe > 0 && ind > 0) says.push(['#2B5FA8', `P/E is ${pe > ind * 1.02 ? 'above' : pe < ind * 0.98 ? 'below' : 'about at'} the industry median (${xrN(pe, 1)} vs ${xrN(ind, 1)})`]);
+  const db = f('Debt'), db3 = f('Debt 3 Years Back');
+  if (db === 0 && (db3 || 0) === 0) says.push(['#1E6B45', 'No debt now or three years ago']);
+  else if (db !== null && db3 > 0 && Math.abs(db / db3 - 1) >= 0.2) says.push(['#6C45A8', `Debt has ${db > db3 ? 'gone up' : 'come down'} from ${xrCr(db3)} to ${xrCr(db)} in 3 years`]);
+  const cfo = f('CFO To PAT'), pat = f('PAT');
+  if (cfo !== null && pat > 0) says.push([cfo >= 100 ? '#1E6B45' : '#A12B1F', cfo < 0 ? 'Cash from operations was negative while profit was positive' : cfo >= 100 ? `Cash from operations is ${xrN(cfo / 100, 1)}× reported profit` : `Cash from operations is ${xrN(cfo, 0)}% of reported profit`]);
+  const pc = f('Change In Promoter Holdings 1 Year');
+  if (pc !== null && Math.abs(pc) >= 1) says.push([pc < 0 ? '#A12B1F' : '#1E6B45', `Promoter stake ${pc < 0 ? 'fell' : 'rose'} ${xrN(Math.abs(pc), 1)} points in a year`]);
+  const rd = f('Days Receivable'), rd3 = f('Days Receivable 3 Years Back');
+  if (rd !== null && rd3 !== null && Math.abs(rd - rd3) >= 15) says.push(['#B07A00', `Customers take ${xrN(Math.abs(rd - rd3), 0)} days ${rd > rd3 ? 'longer' : 'less'} to pay than three years ago (${xrN(rd3, 0)} → ${xrN(rd, 0)} days)`]);
+  const ema = f('EMA 40W');
+  if (ema > 0 && r.px > 0) says.push([r.px >= ema ? '#1E6B45' : '#A12B1F', `Price is ${r.px >= ema ? 'above' : 'below'} its 40-week EMA`]);
+  return tiles + (says.length ? `<div class="xr-cream"><h4>What the numbers say</h4><ul class="xr-says">${says.map(([c, t]) => `<li><i style="background:${c}"></i><span>${esc(t)}</span></li>`).join('')}</ul></div>` : '') +
+    `<div class="xr-src">Numbers: Tickertape export, ${esc(XR.idx.label)} season. Price: today's price from your tracker.</div>`;
+}
+function xrNums(s) {
+  const f = k => xm(s, k);
+  const pair = (label, then, now, when, fmt, abs) => {
+    if (then === null || now === null) return '';
+    const ch = abs ? xrPts(now - then) : then ? xrP((now / then - 1) * 100) : '—';
+    return `<div class="xr-num"><div class="a"><b>${label}</b><small>${when} <em>${fmt(then)}</em> → now <em>${fmt(now)}</em></small></div><span class="xr-tag g">${ch}</span></div>`;
+  };
+  const chg = (label, k) => f(k) === null ? '' : `<div class="xr-num"><div class="a"><b>${label}</b><small>change over 3 years</small></div><span class="xr-tag g">${xrPts(f(k))}</span></div>`;
+  const rows = [
+    pair('Debt', f('Debt 3 Years Back'), f('Debt'), '3 yrs ago', xrCr),
+    pair('Fixed assets', f('Fixed Assets 3 Years Back'), f('Fixed Assets'), '3 yrs ago', xrCr),
+    pair('Profit (PAT)', f('PAT 3 Years Back'), f('PAT'), '3 yrs ago', xrCr),
+    pair('Profit (PAT)', f('PAT 1 Year Back'), f('PAT'), '1 yr ago', xrCr),
+    pair('Cash from operations', f('Operating Cash Flow 1 Year Back'), f('Operating Cash Flow'), '1 yr ago', xrCr),
+    pair('Receivable days', f('Days Receivable 3 Years Back'), f('Days Receivable'), '3 yrs ago', v => xrN(v, 0) + ' days', true).replace(' pts', ' days'),
+    chg('Promoter holding', 'Change In Promoter Holdings 3 Years'), chg('FII holding', 'Change In FII Holdings 3 Years'), chg('DII holding', 'Change In DII Holdings 3 Years'),
+  ].join('');
+  return `<div class="xr-cream"><h4>Then vs now</h4>${rows || '<div class="xr-note">No comparison figures in this season\'s data.</div>'}</div><div class="xr-src">Figures in ₹ crore from the Tickertape export, ${esc(XR.idx.label)} season.</div>`;
+}
+function xrConcall(c) {
+  if (!c) return '<div class="xr-empty">No concall summary this season.</div>';
+  const lab = p => (p.label ? `<b>${esc(p.label)}:</b> ` : '') + esc(p.text);
+  const tbl = t => `<div class="xr-tblw"><table class="xr-tbl"><thead><tr>${t.cols.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(r => `<tr>${r.map(v => `<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  return `<div class="xr-cc"><div class="xr-tags"><span class="xr-tag new">${esc(c.quarter || 'Concall')}${c.date ? ' concall · ' + esc(c.date) : ''}</span>${c.quarter && XR.idx && c.quarter.replace(/\s/g, '') === XR.idx.season ? '<span class="xr-tag up">Latest quarter</span>' : '<span class="xr-tag hi">Earlier quarter — the latest is not out yet</span>'}</div>
+    ${c.takeaways && c.takeaways.length ? `<div class="xr-box"><h4>Key takeaways</h4><ul>${c.takeaways.map(p => `<li>${lab(p)}</li>`).join('')}</ul></div>` : ''}
+    ${c.watch && c.watch.text ? `<div class="xr-box butter"><h4>What to watch next quarter</h4><p>${esc(c.watch.text)}</p></div>` : ''}
+    ${(c.sections || []).map((s, i) => `<details class="xr-acc"${i === 0 ? ' open' : ''}><summary>${esc(s.title)}</summary><div class="in">${(s.points || []).map(p => `<div class="pt"><span>${lab(p)}</span></div>`).join('')}${s.table ? tbl(s.table) : ''}${(s.quotes || []).map(q => `<blockquote class="xr-q">${esc(q.text)}</blockquote>`).join('')}</div></details>`).join('')}
+    <div class="xr-src">Source: StockScans transcript summary${c.quarter ? ', ' + esc(c.quarter) : ''}. Management's own words and outlook, not a forecast.</div></div>`;
+}
+function xrCats(g) {
+  if (!g || !g.items || !g.items.length) return '<div class="xr-empty">No growth catalysts this season.</div>';
+  return `<div class="xr-cc"><div class="xr-tags"><span class="xr-tag new">${g.items.length} growth catalyst${g.items.length === 1 ? '' : 's'}</span>${g.asof ? `<span class="xr-tag">as of ${esc(g.asof)}</span>` : ''}</div>
+    ${g.items.map((it, i) => `<div class="xr-cat"><span class="n" style="background:${XR_SC[i % XR_SC.length]}">${i + 1}</span><div><b>${esc(it.title)}</b><p>${esc(it.text)}</p></div></div>`).join('')}
+    <div class="xr-src">Source: StockScans Growth Catalysts. These are possibilities management has described, not forecasts.</div></div>`;
+}
+function xrOpen(t) { XR.sel = t; if (XR.sub === 'con' || XR.sub === 'cat') xrDetail(t); renderXray(LAST_MODEL);
+  const p = document.getElementById('xr-pane'); if (p && !window.matchMedia('(min-width:1100px)').matches) window.scrollTo({ top: 0, behavior: 'smooth' }); else if (p) p.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+function xrBack() { XR.sel = null; renderXray(LAST_MODEL); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function xrSub(k) { XR.sub = k; renderXray(LAST_MODEL); }
+function xrSort(k) { XR.sort = k; renderXray(LAST_MODEL); }
+function xrFlag(k) { XR.flag = XR.flag === k ? '' : k; renderXray(LAST_MODEL); }
+window.addEventListener('resize', (() => { let w = window.innerWidth >= 1100, t; return () => { clearTimeout(t); t = setTimeout(() => { const n = window.innerWidth >= 1100; if (n !== w) { w = n; if (LAST_MODEL) renderXray(LAST_MODEL); } }, 150); }; })());
+xrLoad();
+
 function doInstall() { if (!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.finally(() => { deferredPrompt = null; document.getElementById('install-btn').style.display = 'none'; if (LAST_MODEL) renderProfile(LAST_MODEL); }); }
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 
 try { const t = sessionStorage.getItem('r2r_tab'); if (t && TABS.some(x => x[0] === t)) switchTab(t); } catch (e) {}
+{ const pt = params.get('tab'); if (pt && (TABS.some(x => x[0] === pt) || OLD_TO_NEW[pt])) switchTab(pt); }   // e.g. ?tab=xray from the bot's message
 loadAllData();
 </script>
 </body>
