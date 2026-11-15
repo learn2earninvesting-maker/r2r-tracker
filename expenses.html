@@ -295,14 +295,14 @@ function getAuth(){
 }
 function showLinkGate(msg){
   const inp=h("input",{type:"search",placeholder:"Paste your expense link here","aria-label":"Your expense link",autocomplete:"off"});
-  const go=h("button",{class:"btn pri",type:"button",onclick:()=>{ const a=keysFrom(inp.value); if(!a){ note.textContent="That link isn't complete. Copy the whole link from your advisor's WhatsApp message."; return; } store.set("r2rx_auth",JSON.stringify(a)); S.auth=a; load(); }},"Open");
+  const go=h("button",{class:"btn pri",type:"button",onclick:()=>{ const a=keysFrom(inp.value); if(!a){ note.textContent="That link isn't complete. Copy the whole link from the WhatsApp message R2R tutorial support sent you."; return; } store.set("r2rx_auth",JSON.stringify(a)); S.auth=a; load(); }},"Open");
   const note=h("p",{class:"sub"},"");
   $("#who").textContent="";
-  $("#main").replaceChildren(h("div",{class:"card"},h("h2",null,"Open your expenses"),h("p",null,msg||"Open the personal link your advisor sent you, or paste it below. You only need to do this once on this phone."),h("div",{class:"row"},h("div",{style:"flex:1;min-width:200px"},inp),go),note));
+  $("#main").replaceChildren(h("div",{class:"card"},h("h2",null,"Open your expenses"),h("p",null,msg||"Open the personal link R2R tutorial support sent you, or paste it below. You only need to do this once on this phone."),h("div",{class:"row"},h("div",{style:"flex:1;min-width:200px"},inp),go),note));
   $("#foot").replaceChildren();
 }
 async function load(){
-  if(!/^https:\/\/script\.google\.com\//.test(API_URL)) return showError("Not set up yet","Your advisor still needs to finish setting up this page.");
+  if(!/^https:\/\/script\.google\.com\//.test(API_URL)) return showError("Not set up yet","R2R tutorial support still needs to finish setting up this page.");
   const a=S.auth||(S.auth=getAuth());
   if(!a) return showLinkGate();
   if(!S.data){ try{ const cached=JSON.parse(store.get("r2rx_cache")||"null"); if(cached&&cached.ok){ S.data=cached; S.txs=parseTxs(); $("#who").textContent=cached.client; render(); } }catch(e){} }
@@ -310,7 +310,7 @@ async function load(){
   try{
     const res=await fetch(API_URL+"?x="+encodeURIComponent(a.c)+"&k="+encodeURIComponent(a.k)+"&t="+Date.now(),{cache:"no-store"});
     const j=await res.json();
-    if(!j.ok){ S.data=null; try{ localStorage.removeItem("r2rx_cache"); }catch(e){} return showLinkGate(j.error||"Please ask your advisor for a fresh link."); }
+    if(!j.ok){ S.data=null; try{ localStorage.removeItem("r2rx_cache"); }catch(e){} return showLinkGate(j.error||"Please ask R2R tutorial support for a fresh link."); }
     S.data=j; S.txs=parseTxs(); $("#who").textContent=j.client; render();
     store.set("r2rx_cache",JSON.stringify(j));
   }catch(e){ if(S.data){ render(); $("#foot").prepend(h("span",{class:"pill warn"},"Offline — showing your last update")); } else showError("Couldn't load","Check your internet connection and try again."); }

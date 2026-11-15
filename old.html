@@ -646,7 +646,7 @@
 <div class="gate" id="gate">
   <div class="gate-card">
     <h1>R2R</h1>
-    <p id="gate-msg">Open this app using the personal link your advisor sent you. The link is your key — please don't share it.</p>
+    <p id="gate-msg">Open this app using the personal link R2R tutorial support sent you. The link is your key — please don't share it.</p>
     <p class="muted" style="font-size:12px;">Just exploring? <a href="?demo=1">See a demo</a></p>
   </div>
 </div>
@@ -1477,7 +1477,7 @@ const tgMine = () => (TG[tgView()] = TG[tgView()] || {});
 const tgSym = a => String(a.ticker || a.name || '').toUpperCase().replace(/^(NSE|BOM|BSE):/, '').trim();
 (function tgInit() { try { TG = JSON.parse(localStorage.getItem(TG_LS()) || '{}') || {}; } catch (e) { TG = {}; } })();
 // ⭐ star ratings from the R2R watchlist (Targets.gs reads the watchlist sheet) and the suggested % for each rating.
-// TG_RULES comes from TG_STAR_RULES in Targets.gs, so the advisor can change the bands there; this is only the fallback.
+// TG_RULES comes from TG_STAR_RULES in Targets.gs, so R2R tutorial support can change the bands there; this is only the fallback.
 let TG_STARS = { codes: {}, names: {} }, TG_RULES = { 4: [6, 8], 3: [4, 4], 2: [2, 2] };
 const tgNameKey = s => String(s || '').toLowerCase().replace(/\b(ltd|limited|the|india|co|company|corp|corporation)\b/g, '').replace(/[^a-z0-9]/g, '');
 (function tgStarInit() {
@@ -2670,7 +2670,7 @@ function renderReturns(d) {
     const first = d.snapshots.map(s => s.date).sort((a, b) => a - b)[0];
     setHTML('returns-body', empty(first
       ? `Tracking started on ${fmtDate(first)}. Your first returns appear after the next month-end.<br><br>Want exact figures for your whole history straight away? Send the Tracker bot your <b>share tradebook</b> (Zerodha Console → Reports → Tradebook) and your <b>mutual fund transaction statement</b> (Excel/CSV from Kuvera, Groww, MF Central…).`
-      : `Returns aren't available yet. Your advisor will switch them on.<br><br>For exact figures, send the Tracker bot your <b>share tradebook</b> and your <b>mutual fund transaction statement</b> (Excel/CSV).`) + uploadBlock('tradebook'));
+      : `Returns aren't available yet. R2R tutorial support will switch them on.<br><br>For exact figures, send the Tracker bot your <b>share tradebook</b> and your <b>mutual fund transaction statement</b> (Excel/CSV).`) + uploadBlock('tradebook'));
     return;
   }
   if (periods.length && !periods.includes(RET_PERIOD)) RET_PERIOD = periods.includes('Since start') ? 'Since start' : periods[0];
@@ -2866,7 +2866,7 @@ function renderParameters(d) {
       suggestion: `15% of net worth is ${fmtCr(nw * 0.15)}. Build it with FDs or liquid funds before adding risk.` }),
     mk({ icon:'📈', label:'Investment Assets', benchmark:'≥ 50% of net worth', hib:true, pass:60, warn:50, na: nw <= 0, value: pctOf(invest, nw), f: v => v.toFixed(1) + '%', bar: v => v,
       note: `Investments (equity, debt, gold, REITs) of ${fmtCr(invest)} vs net worth of ${fmtCr(nw)}.`, derivation:'(Equity + Debt + Gold + REITs) ÷ Net worth',
-      suggestion: 'Money parked beyond the emergency fund can move into the long-term plan agreed with your advisor.' }),
+      suggestion: 'Money parked beyond the emergency fund can move into the long-term plan agreed with R2R tutorial support.' }),
     mk({ icon:'🏥', label:'Health Cover', benchmark:'≥ ₹10 L (family)', hib:true, pass:1e6, warn:5e5, value: health, f: v => fmtCr(v), bar: v => v / 2e6 * 100,
       note: `Health cover (base + top-ups) of ${fmtCr(health)}.`, derivation:'Sum of health policies incl. super top-ups',
       suggestion: 'A super top-up is a low-cost way to raise cover above the base policy.' }),
