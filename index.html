@@ -871,6 +871,11 @@
 .prf-seg button.on { background:var(--ink);color:var(--on-ink); }
 .prf-ok { color:var(--pos);font-size:13px;font-weight:700;margin-top:8px; } .prf-ok:empty { display:none; }
 .prf-ro { font-size:15px;font-weight:700;text-align:right;white-space:nowrap; }
+.prf-dep { background:var(--p-lilac);color:var(--text);border-radius:14px;padding:12px 14px;margin:0 0 16px;font-size:13px;line-height:1.5; }
+.prf-dep-t { font-weight:800;font-size:14px;margin-bottom:4px; }
+.prf-dep ul { margin:4px 0 8px;padding-left:18px; }
+.prf-dep-f { display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--text2); }
+.prf-tag { display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:var(--p-lilac);color:var(--text);vertical-align:middle;margin-left:4px; }
 </style>
 </head>
 <body>
@@ -992,6 +997,7 @@
       <div class="param-legend-item"><div class="param-legend-dot" style="background:#ef4444;"></div>❌ Action Needed</div>
       <div class="param-legend-item"><div class="param-legend-dot" style="background:#64748b;"></div>N/A — data not in sheet</div>
     </div>
+    <div id="param-profile"></div>
     <div class="param-grid" id="param-grid"></div>
     <div class="section-title">Benchmark Reference</div>
     <div class="table-wrap">
@@ -3252,8 +3258,11 @@ function renderParameters(d) {
   set('param-checks', `${pass}/${meas.length}`);
   const bar = document.getElementById('param-score-bar'); bar.style.background = col; bar.style.width = score + '%';
   const badge = s => ({ pass:['status-pass','✅ On Track'], warn:['status-warn','⚠️ Watch'], fail:['status-fail','❌ Action'], na:['status-na','N/A'] }[s]);
+  { const pr = (() => { try { return pfProfile(); } catch (e) { return d.profile || {}; } })();
+    const lines = PF_FIELDS.filter(x => x.uses).map(x => `<li>${x.uses.map(u => `${u[0]} <b>${u[1]}</b>`).join(', ')} uses <b>${esc(x.label.replace(/ \(₹\)$/, ''))}</b>: ${blank(pr[x.f]) ? '<span style="color:var(--neg);font-weight:700">not filled in, so it shows N/A</span>' : pfShow(x.f, pr[x.f])}</li>`).join('');
+    setHTML('param-profile', `<div class="prf-dep"><div class="prf-dep-t">👤 Figures that depend on your Profile settings</div><ul>${lines}</ul><div class="prf-dep-f">Every other check is worked out from your holdings, loans and insurance. <button class="pill-btn" onclick="switchTab('profile')">Open Profile</button></div></div>`); }
   setHTML('param-grid', params.map(p => { const [cls, txt] = badge(p.status);
-    return `<div class="param-card"><div class="param-card-header"><div class="param-card-icon">${p.icon}</div><div class="param-card-title">${p.label}</div><div class="param-card-status ${cls}">${txt}</div></div>
+    return `<div class="param-card"><div class="param-card-header"><div class="param-card-icon">${p.icon}</div><div class="param-card-title">${p.label}${PF_FIELDS.some(x => (x.uses || []).some(u => u[1] === p.label)) ? ' <span class="prf-tag">Profile</span>' : ''}</div><div class="param-card-status ${cls}">${txt}</div></div>
       <div class="param-card-body"><div class="param-vals"><div class="param-actual" style="color:${p.barColor}">${p.fmt}</div><div class="param-benchmark">Benchmark: ${p.benchmark}</div></div>
       <div class="param-bar-track"><div class="param-bar-fill" style="background:${p.barColor};width:0" data-w="${p.barPct}%"></div></div><div class="param-note">${p.note}</div>
       ${p.status === 'warn' || p.status === 'fail' ? `<div class="param-suggestion"><div class="param-suggestion-label">💡 Worth discussing</div><div class="param-suggestion-text">${p.suggestion}</div></div>` : ''}</div></div>`; }).join(''));
@@ -3485,9 +3494,7 @@ function renderMore(d) {
 // ═══════════════════════════════════════════════════════
 const PF_FIELDS = [
   { f: 'Annual Income (₹)', label: 'Family yearly income (₹)', ph: 'e.g. 2400000', max: 1e10, step: 'any',
-    help: 'The total yearly income of everyone in the family who earns. The life cover check in Health check uses it.' },
-  { f: 'Emergency Fund (months)', label: 'Emergency fund (months)', ph: 'e.g. 6', max: 36, step: '1',
-    help: 'How many months of spending you want to keep ready in savings, FDs or liquid funds. Health check uses it. 6 months is a common choice.' },
+    help: 'The total yearly income of everyone in the family who earns. The Life Cover check in Health check uses it.', uses: [['🛡️', 'Life Cover']] },
 ];
 let PF_EDIT = false, PF_BUSY = false, PF_MSG = '', PF_OUT = false;
 function pfProfile() { const o = {}; rowsOf(((RAW_API || {}).tabs || {}).Profile).forEach(r => { if (!blank(r.Field)) o[String(r.Field).trim()] = r.Value; }); return o; }
