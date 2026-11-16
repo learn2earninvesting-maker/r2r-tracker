@@ -873,6 +873,8 @@
 .prf-add:hover { background:var(--bg3); }
 .prf-x { font:inherit;font-size:16px;line-height:1;width:22px;height:22px;border-radius:50%;border:0;background:var(--card);color:var(--text2);cursor:pointer;margin-left:2px;padding:0; }
 .prf-addbox { margin:12px 0 0; }
+.prf-push-n { font-size:13px;line-height:1.5;margin-top:6px;color:var(--text2); } .prf-push-n b { color:var(--text); }
+.prf-push-btns { display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex:0 0 auto; } @media (max-width:520px) { .prf-push-btns { flex-direction:column;align-items:stretch; } }
 .prf-ok { color:var(--pos);font-size:13px;font-weight:700;margin-top:8px; } .prf-ok:empty { display:none; }
 .prf-ro { font-size:15px;font-weight:700;text-align:right;white-space:nowrap; }
 .prf-dep { background:var(--p-lilac);color:var(--text);border-radius:14px;padding:12px 14px;margin:0 0 16px;font-size:13px;line-height:1.5; }
@@ -3719,6 +3721,7 @@ function renderProfile(d) {
       </div>
       <div>
         <div class="cardx prf-sec"><div class="prf-h">App settings</div>
+          ${pushRowHtml()}
           <div class="prf-set"><div><div class="a">Theme</div><div class="b">Light or dark screen.</div></div><div class="prf-seg"><button class="${dark ? '' : 'on'}" onclick="setTheme('light')">Light</button><button class="${dark ? 'on' : ''}" onclick="setTheme('dark')">Dark</button></div></div>
           <div class="prf-set"><div><div class="a">Refresh data</div><div class="b">${u && !isNaN(u) ? 'Sheet updated ' + u.toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'Gets the latest from your sheet.'}${pl ? '<br>' + pl : ''}</div></div><button class="pill-btn" onclick="loadAllData(true)">↻ Refresh</button></div>
           ${deferredPrompt ? `<div class="prf-set"><div><div class="a">Install the app</div><div class="b">Adds R2R to your home screen.</div></div><button class="pill-btn" onclick="doInstall()">Install</button></div>` : ''}
@@ -3801,7 +3804,8 @@ async function pfRemoveMember(name) {
   PF_MMSG = r.ok ? `✓ ${esc(name)} removed.${r.demo ? ' (Demo: nothing is saved.)' : ''}` : '⚠️ ' + esc(r.error);
   if (r.ok) renderFamily(); else renderProfile(LAST_MODEL);
 }
-function pfSignOut() {
+async function pfSignOut() {
+  try { await pushOff(true); } catch (e) {}
   ['r2r_auth', 'r2r_cache'].forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
   location.replace(location.pathname);
 }
@@ -4068,6 +4072,119 @@ xrLoad();
 
 function doInstall() { if (!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.finally(() => { deferredPrompt = null; document.getElementById('install-btn').style.display = 'none'; if (LAST_MODEL) renderProfile(LAST_MODEL); }); }
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+
+// ═══════════════════════════════════════════════════════
+//  PHONE ALERTS (web push) — Profile → App settings → Phone alerts
+//  The phone's push service gives it a delivery address; we send it to the backend (?act=pushsub, Push.gs).
+//  Alerts arrive as an empty "wake up"; sw.js then collects the words with this client's key (?act=pushpull).
+// ═══════════════════════════════════════════════════════
+let PUSH_ST = { state: 'checking', busy: false, msg: '', err: '' };
+const PUSH_CFG = './__r2r-push-config';
+const pushIOS = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const pushStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+function pushDevice() {
+  const u = navigator.userAgent;
+  const os = /iPhone/.test(u) ? 'iPhone' : /iPad/.test(u) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ? 'iPad' : /Android/.test(u) ? 'Android' : /Windows/.test(u) ? 'Windows' : /Mac/.test(u) ? 'Mac' : 'Computer';
+  const br = /EdgA?\//.test(u) ? 'Edge' : /SamsungBrowser/.test(u) ? 'Samsung Internet' : /Firefox|FxiOS/.test(u) ? 'Firefox' : /Chrome|CriOS/.test(u) ? 'Chrome' : /Safari/.test(u) ? 'Safari' : '';
+  return os + (br ? ' · ' + br : '');
+}
+const swReady = () => Promise.race([navigator.serviceWorker.ready, new Promise((_, no) => setTimeout(() => no(new Error('The app is still installing. Close and reopen R2R, then try again.')), 10000))]);
+function pushB64ToBytes(s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; const b = atob(s), a = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+async function pushApi(qs) {
+  const r = await fetch(`${API_URL}?${qs}&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&n=${Date.now()}`, { redirect: 'follow' });
+  return r.json();
+}
+// what the service worker needs to collect alerts on its own (kept on this device only)
+async function pushSaveCfg() {
+  const c = await caches.open('r2r-push');
+  const old = await c.match(PUSH_CFG).then(r => r && r.json()).catch(() => null);
+  await c.put(PUSH_CFG, new Response(JSON.stringify({ api: API_URL, c: AUTH.c, k: AUTH.k, since: old && old.c === AUTH.c ? old.since || 0 : Date.now() }), { headers: { 'Content-Type': 'application/json' } }));
+}
+async function pushCheck() {
+  let st = 'off';
+  if (DEMO) st = 'demo';
+  else if (!('serviceWorker' in navigator) || !('Notification' in window) || !('PushManager' in window)) st = pushIOS() && !pushStandalone() ? 'ios-install' : 'unsupported';
+  else if (Notification.permission === 'denied') st = 'blocked';
+  else {
+    try {
+      const reg = await swReady(), sub = await reg.pushManager.getSubscription();
+      if (sub && Notification.permission === 'granted') { st = 'on'; if (AUTH) pushSaveCfg().catch(() => {}); }
+    } catch (e) { st = 'off'; }
+  }
+  // the row stays hidden until R2R has switched phone alerts on (Push.gs installed)
+  if (st !== 'on' && st !== 'demo' && AUTH) {
+    let ready = false;
+    try { ready = localStorage.getItem('r2r_push_ready') === '1'; } catch (e) {}
+    if (!ready) { try { const k = await pushApi('act=pushkey'); ready = !!(k && k.ok); if (ready) localStorage.setItem('r2r_push_ready', '1'); } catch (e) {} }
+    if (!ready) st = 'hidden';
+  }
+  PUSH_ST.state = st;
+  if (LAST_MODEL && document.getElementById('profile-body')) renderProfile(LAST_MODEL);
+}
+async function pushOn() {
+  if (PUSH_ST.busy || !AUTH) return;
+  PUSH_ST.busy = true; PUSH_ST.err = ''; PUSH_ST.msg = ''; renderProfile(LAST_MODEL);
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') throw new Error(perm === 'denied' ? 'blocked' : 'Alerts were not allowed. Tap Turn on again and choose Allow.');
+    const key = await pushApi('act=pushkey');
+    if (!key || !key.ok) throw new Error((key && key.error) || 'Could not reach R2R. Please try again.');
+    const reg = await swReady();
+    let sub = await reg.pushManager.getSubscription();
+    if (sub) { try { await sub.unsubscribe(); } catch (e) {} }   // fresh address, signed with the current key
+    sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: pushB64ToBytes(key.key) });
+    await pushSaveCfg();
+    const r = await pushApi(`act=pushsub&d=${encodeURIComponent(pushDevice())}&s=${encodeURIComponent(JSON.stringify(sub))}`);
+    if (!r || !r.ok) { try { await sub.unsubscribe(); } catch (e) {} throw new Error((r && r.error) || 'Could not save. Please try again.'); }
+    PUSH_ST.state = 'on'; PUSH_ST.msg = '✓ Alerts are on for this phone. Tap "Send a test" to check.';
+  } catch (e) {
+    if (e.message === 'blocked') PUSH_ST.state = 'blocked';
+    else PUSH_ST.err = /network|fetch/i.test(e.message) ? 'No connection. Check your internet and try again.' : e.message;
+  }
+  PUSH_ST.busy = false; renderProfile(LAST_MODEL);
+}
+async function pushOff(quiet) {
+  if (PUSH_ST.busy && !quiet) return;
+  PUSH_ST.busy = true; PUSH_ST.err = ''; PUSH_ST.msg = ''; if (!quiet) renderProfile(LAST_MODEL);
+  try {
+    const reg = await swReady(), sub = await reg.pushManager.getSubscription();
+    if (sub) {
+      if (AUTH && !DEMO) await pushApi(`act=pushunsub&e=${encodeURIComponent(sub.endpoint)}`).catch(() => null);
+      await sub.unsubscribe();
+    }
+    await caches.delete('r2r-push');
+    PUSH_ST.state = 'off'; PUSH_ST.msg = 'Alerts are off for this phone. Telegram messages carry on as before.';
+  } catch (e) { PUSH_ST.err = 'Could not turn alerts off. Please try again.'; }
+  PUSH_ST.busy = false; if (!quiet) renderProfile(LAST_MODEL);
+}
+async function pushTest() {
+  if (PUSH_ST.busy) return;
+  PUSH_ST.busy = true; PUSH_ST.err = ''; PUSH_ST.msg = ''; renderProfile(LAST_MODEL);
+  try {
+    const r = await pushApi('act=pushtest');
+    if (r && r.ok) PUSH_ST.msg = '✓ Test sent. It should pop up within a minute, even if you close the app.';
+    else PUSH_ST.err = (r && r.error) || 'Could not send the test.';
+  } catch (e) { PUSH_ST.err = 'No connection. Check your internet and try again.'; }
+  PUSH_ST.busy = false; renderProfile(LAST_MODEL);
+}
+function pushRowHtml() {
+  const st = PUSH_ST.state, b = PUSH_ST.busy ? 'disabled' : '';
+  if (st === 'hidden' || st === 'checking') return '';
+  const what = 'Price trend (40-week) alerts on your shares, watchlist additions and removals, and premium and EMI reminders. Telegram keeps sending the full messages too.';
+  let right = '', note = '';
+  if (st === 'on') right = `<button class="pill-btn" onclick="pushTest()" ${b}>Send a test</button><button class="pill-btn" onclick="pushOff()" ${b}>Turn off</button>`;
+  else if (st === 'off') right = `<button class="pill-btn primary" onclick="pushOn()" ${b}>${PUSH_ST.busy ? 'Turning on…' : 'Turn on'}</button>`;
+  if (st === 'ios-install') note = 'On iPhone, alerts work only from the R2R icon on your home screen: tap <b>Share</b> (the square with an arrow) → <b>Add to Home Screen</b>, open R2R from that icon, then come back here. Needs iOS 16.4 or newer.';
+  else if (st === 'unsupported') note = pushIOS() ? 'This iPhone cannot show web alerts. Please update to iOS 16.4 or newer and open R2R from its home-screen icon.' : 'This browser cannot show alerts. On Android use Chrome; on a computer use Chrome, Edge or Firefox.';
+  else if (st === 'blocked') note = 'Alerts are blocked for R2R on this phone. Turn them on in your phone settings: ' + (pushIOS() ? '<b>Settings → Notifications → R2R</b>' : '<b>Settings → Apps → Chrome (or R2R) → Notifications</b>, or tap the lock icon next to the web address → Notifications → Allow') + '. Then reopen R2R.';
+  else if (st === 'demo') note = 'Demo: alerts are not turned on here.';
+  const status = { on: '🔔 On for this phone', off: 'Off', blocked: 'Blocked', 'ios-install': 'Add to Home Screen first', unsupported: 'Not available here', demo: 'Demo', checking: 'Checking…' }[st] || '';
+  return `<div class="prf-set" style="align-items:flex-start"><div><div class="a">Phone alerts <small style="font-weight:600;color:var(--text2)">· ${status}</small></div><div class="b">${what}</div>
+      ${note ? `<div class="prf-push-n">${note}</div>` : ''}
+      ${PUSH_ST.err ? `<div class="gf-err" style="margin:6px 0 0">${esc(PUSH_ST.err)}</div>` : ''}<div class="prf-ok">${PUSH_ST.msg}</div></div>
+    ${right ? `<div class="prf-push-btns">${right}</div>` : ''}</div>`;
+}
+pushCheck();
 
 try { const t = sessionStorage.getItem('r2r_tab'); if (t && TABS.some(x => x[0] === t)) switchTab(t); } catch (e) {}
 { const pt = params.get('tab'); if (pt && (TABS.some(x => x[0] === pt) || OLD_TO_NEW[pt])) switchTab(pt); }   // e.g. ?tab=xray from the bot's message
