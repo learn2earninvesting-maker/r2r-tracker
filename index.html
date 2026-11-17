@@ -3859,7 +3859,7 @@ function e40HTML(d) {
   return `<div class="e40"><h4>🔻 Your stocks below 40W EMA as of ${day}</h4><div class="e40-sub">${fam ? list.length : list.length + ' of ' + e.checked} stock${(fam ? list.length : e.checked) === 1 ? '' : 's'} closed ${e.cut}% or more below the 40-week average</div>
     ${list.map(x => { const r = rows.find(y => y.sym === x.s), al = r && tot ? pctOf(r.value, tot) : null;
       return `<div class="rowx"><div><div class="a">${esc(x.s)}</div><div class="b">Close ${inr2(x.px)} · 40W EMA ${inr2(x.ema)}</div></div><div class="c">−${Math.abs(x.dist).toFixed(1)}%${al !== null ? `<small>${al.toFixed(1)}% of your stocks</small>` : ''}</div></div>`; }).join('')}
-    <div class="e40-note">⚠️ Reduce risk in these holdings by reducing the allocation.</div>
+    <div class="e40-note">⚠️ Consider reviewing the allocation to these holdings to manage risk. This is not a buy or sell recommendation.</div>
     <div class="e40-foot"><span>Updated after market close · for education only</span><button onclick="switchTab('rebalance')">Plan allocation</button></div></div>`;
 }
 
