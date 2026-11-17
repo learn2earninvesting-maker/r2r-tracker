@@ -775,6 +775,15 @@
   .upc { background:var(--p-butter);border-radius:14px;padding:12px 14px;margin-bottom:14px; }
   .upc h4 { margin:0 0 4px;font-size:12px;font-weight:800;color:var(--butter-ink); }
   .upc .rowx { border-top:0;padding:6px 0; } .upc .b { color:var(--neg);font-weight:700; }
+  .e40 { background:#B3261E;color:#fff;border-radius:14px;padding:12px 14px;margin-bottom:14px; }
+  :root[data-theme="dark"] .e40 { background:#8C1D18; }
+  .e40 h4 { margin:0 0 2px;font-size:13px;font-weight:800;color:#fff; } .e40 .e40-sub { font-size:11px;opacity:.85;margin-bottom:6px; }
+  .e40 .rowx { border-top:1px solid rgba(255,255,255,.22);padding:7px 0; } .e40 .a { color:#fff;font-weight:800; } .e40 .b { color:rgba(255,255,255,.85);font-size:11px; }
+  .e40 .c { color:#fff;font-weight:800;text-align:right; } .e40 .c small { display:block;font-weight:600;font-size:10px;opacity:.85; }
+  .e40-note { margin-top:8px;background:rgba(255,255,255,.16);border-radius:10px;padding:8px 10px;font-size:12px;font-weight:700;line-height:1.4; }
+  .e40-foot { display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:10px;opacity:.85; }
+  .e40-foot button { background:#fff;color:#B3261E;border:0;border-radius:999px;padding:6px 12px;font-weight:800;font-size:11px;cursor:pointer;white-space:nowrap; }
+  .e40.ok { background:var(--p-mint);color:var(--text); } .e40.ok h4 { color:var(--pos); }
   .note { font-size:12px;color:var(--text3);line-height:1.5;margin-top:12px; }
   .stack { display:flex;flex-direction:column;gap:14px; }
 
@@ -3500,7 +3509,7 @@ function renderHome(d) {
     <div class="home-grid"><div class="stack">
       <div class="home-donut"><div style="display:flex;justify-content:center">${donut}</div><div class="cream">${rows}</div></div>
       <div class="note" style="margin-top:0">Tap a row to see what is inside. ${homeVal ? 'Your home (' + fmtCr(homeVal) + ') and loans are not in the chart. ' : ''}Every holding is counted once.${pl ? '<br>' + pl : ''}</div>
-    </div><div class="stack">${upcomingHTML(up, 'No insurance premium or EMI is due this month.')}${liabHTML}${quick}</div></div>`);
+    </div><div class="stack">${e40HTML(d)}${upcomingHTML(up, 'No insurance premium or EMI is due this month.')}${liabHTML}${quick}</div></div>`);
   setHTML('ins-upcoming', upcomingHTML(up.filter(e => !e.emi), 'No premium is due this month.'));
 }
 // ── Mutual funds as four tiles (gold funds live under Other assets → Gold)
@@ -3826,7 +3835,33 @@ async function loadExtras() {
   }
   if (LAST_MODEL) { renderGoals(LAST_MODEL); renderMore(LAST_MODEL); }
 }
-function askExtras() { if (Date.now() - EXTRAS_AT > 60000) { EXTRAS_AT = Date.now(); loadExtras(); } }
+function askExtras() { if (Date.now() - EXTRAS_AT > 60000) { EXTRAS_AT = Date.now(); loadExtras(); loadEma40(); } }
+
+// ── Home tile: the client's shares 4%+ below their 40-week EMA, from the latest daily EMA run (Ema40.gs → ?act=ema40)
+let E40D = null;
+async function loadEma40() {
+  if (DEMO) E40D = { ok: true, asOf: new Date().toISOString().slice(0, 10), checked: 8, cut: 4, list: [{ s: 'ASIANPAINT', px: 2310.5, ema: 2562.4, dist: -9.8 }, { s: 'ITC', px: 402.1, ema: 425.9, dist: -5.6 }] };
+  else {
+    if (!AUTH) return;
+    try { const j = await (await fetch(`${API_URL}?act=ema40&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&t=${Date.now()}`, { redirect: 'follow' })).json(); if (j && j.ok) E40D = j; }
+    catch (e) { /* keep the last one */ }
+  }
+  if (LAST_MODEL) renderHome(LAST_MODEL);
+}
+function e40HTML(d) {
+  const e = E40D;
+  if (!e || !e.ok || !e.checked) return '';
+  const today = new Date(), ymd = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const day = e.asOf === ymd ? 'today' : (() => { const p = String(e.asOf).split('-').map(Number); return p.length === 3 ? p[2] + ' ' + MONTHS[p[1] - 1] : 'the last market day'; })();
+  const fam = !!d.famMember, held = fam ? new Set(tgRowsOf(d).map(r => r.sym)) : null, n = fam ? e.list.filter(x => held.has(x.s)).length : e.list.length;
+  if (!n) return `<div class="e40 ok"><h4>✅ None of your stocks are ${e.cut}% or more below the 40W EMA</h4><div class="e40-sub" style="margin:0">As of ${day}'s close${fam ? '' : ` · ${e.checked} stock${e.checked === 1 ? '' : 's'} checked`}</div></div>`;
+  const rows = tgRowsOf(d), tot = rows.reduce((s, r) => s + r.value, 0), list = d.famMember ? e.list.filter(x => rows.some(y => y.sym === x.s)) : e.list, inr2 = n => '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: n >= 1000 ? 0 : 2 });
+  return `<div class="e40"><h4>🔻 Your stocks below 40W EMA as of ${day}</h4><div class="e40-sub">${fam ? list.length : list.length + ' of ' + e.checked} stock${(fam ? list.length : e.checked) === 1 ? '' : 's'} closed ${e.cut}% or more below the 40-week average</div>
+    ${list.map(x => { const r = rows.find(y => y.sym === x.s), al = r && tot ? pctOf(r.value, tot) : null;
+      return `<div class="rowx"><div><div class="a">${esc(x.s)}</div><div class="b">Close ${inr2(x.px)} · 40W EMA ${inr2(x.ema)}</div></div><div class="c">−${Math.abs(x.dist).toFixed(1)}%${al !== null ? `<small>${al.toFixed(1)}% of your stocks</small>` : ''}</div></div>`; }).join('')}
+    <div class="e40-note">⚠️ Reduce risk in these holdings by reducing the allocation.</div>
+    <div class="e40-foot"><span>Updated after market close · for education only</span><button onclick="switchTab('rebalance')">Plan allocation</button></div></div>`;
+}
 
 // ═══════════════════════════════════════════════════════
 //  STOCKS X-RAY — the client's own stocks against the R2R research for the latest results season.
