@@ -3848,7 +3848,7 @@ function askExtras() { if (Date.now() - EXTRAS_AT > 60000) { EXTRAS_AT = Date.no
 // ── Home tile: the client's shares 4%+ below their 40-week EMA, from the latest daily EMA run (Ema40.gs → ?act=ema40)
 let E40D = null;
 async function loadEma40() {
-  if (DEMO) E40D = { ok: true, asOf: new Date().toISOString().slice(0, 10), checked: 8, cut: 4, list: [{ s: 'ASIANPAINT', px: 2310.5, ema: 2562.4, dist: -9.8 }, { s: 'ITC', px: 402.1, ema: 425.9, dist: -5.6 }] };
+  if (DEMO) E40D = { ok: true, asOf: new Date().toISOString().slice(0, 10), checked: 8, cut: 4, list: [{ s: 'ASIANPAINT', px: 2310.5, ema: 2562.4, dist: -9.8 }, { s: 'ITC', px: 402.1, ema: 425.9, dist: -5.6 }, { s: 'TITAN', px: 3120, ema: 3301, dist: -5.5 }] };
   else {
     if (!AUTH) return;
     try { const j = await (await fetch(`${API_URL}?act=ema40&cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&t=${Date.now()}`, { redirect: 'follow' })).json(); if (j && j.ok) E40D = j; }
@@ -3856,19 +3856,21 @@ async function loadEma40() {
   }
   if (LAST_MODEL) renderHome(LAST_MODEL);
 }
+const E40_MIN_ALLOC = 1.5;   // the Home tile only lists stocks that are at least this % of the client's stocks (Telegram alerts list them all)
 function e40HTML(d) {
   const e = E40D;
   if (!e || !e.ok || !e.checked) return '';
   const today = new Date(), ymd = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
   const day = e.asOf === ymd ? 'today' : (() => { const p = String(e.asOf).split('-').map(Number); return p.length === 3 ? p[2] + ' ' + MONTHS[p[1] - 1] : 'the last market day'; })();
-  const fam = !!d.famMember, held = fam ? new Set(tgRowsOf(d).map(r => r.sym)) : null, n = fam ? e.list.filter(x => held.has(x.s)).length : e.list.length;
-  if (!n) return `<div class="e40 ok"><h4>✅ None of your stocks are ${e.cut}% or more below the 40W EMA</h4><div class="e40-sub" style="margin:0">As of ${day}'s close${fam ? '' : ` · ${e.checked} stock${e.checked === 1 ? '' : 's'} checked`}</div></div>`;
-  const rows = tgRowsOf(d), tot = rows.reduce((s, r) => s + r.value, 0), list = d.famMember ? e.list.filter(x => rows.some(y => y.sym === x.s)) : e.list, inr2 = n => '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: n >= 1000 ? 0 : 2 });
-  return `<div class="e40"><h4>🔻 Your stocks below 40W EMA as of ${day}</h4><div class="e40-sub">${fam ? list.length : list.length + ' of ' + e.checked} stock${(fam ? list.length : e.checked) === 1 ? '' : 's'} closed ${e.cut}% or more below the 40-week average</div>
-    ${list.map(x => { const r = rows.find(y => y.sym === x.s), al = r && tot ? pctOf(r.value, tot) : null;
-      return `<div class="rowx"><div><div class="a">${esc(x.s)}</div><div class="b">Close ${inr2(x.px)} · 40W EMA ${inr2(x.ema)}</div></div><div class="c">−${Math.abs(x.dist).toFixed(1)}%${al !== null ? `<small>${al.toFixed(1)}% of your stocks</small>` : ''}</div></div>`; }).join('')}
+  const rows = tgRowsOf(d), tot = rows.reduce((s, r) => s + r.value, 0), inr2 = n => '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: n >= 1000 ? 0 : 2 });
+  const mine = e.list.map(x => { const r = rows.find(y => y.sym === x.s); return r ? Object.assign({ al: tot ? pctOf(r.value, tot) : 0 }, x) : null; }).filter(Boolean);
+  const list = mine.filter(x => x.al >= E40_MIN_ALLOC), small = mine.length - list.length;
+  const smallTxt = small ? `${small} smaller holding${small === 1 ? '' : 's'} (under ${E40_MIN_ALLOC}% of your stocks) also below, not shown` : '';
+  if (!list.length) return `<div class="e40 ok"><h4>✅ None of your main stocks are ${e.cut}% or more below the 40W EMA</h4><div class="e40-sub" style="margin:0">As of ${day}'s close${smallTxt ? ' · ' + smallTxt : ''}</div></div>`;
+  return `<div class="e40"><h4>🔻 Your stocks below 40W EMA as of ${day}</h4><div class="e40-sub">${list.length} stock${list.length === 1 ? '' : 's'} closed ${e.cut}% or more below the 40-week average · ${E40_MIN_ALLOC}%+ of your stocks</div>
+    ${list.map(x => `<div class="rowx"><div><div class="a">${esc(x.s)}</div><div class="b">Close ${inr2(x.px)} · 40W EMA ${inr2(x.ema)}</div></div><div class="c">−${Math.abs(x.dist).toFixed(1)}%<small>${x.al.toFixed(1)}% of your stocks</small></div></div>`).join('')}
     <div class="e40-note">⚠️ Consider reviewing the allocation to these holdings to manage risk. This is not a buy or sell recommendation.</div>
-    <div class="e40-foot"><span>Updated after market close · for education only</span><button onclick="switchTab('rebalance')">Plan allocation</button></div></div>`;
+    <div class="e40-foot"><span>${smallTxt ? smallTxt + ' · ' : ''}Updated after market close · for education only</span><button onclick="switchTab('rebalance')">Plan allocation</button></div></div>`;
 }
 
 // ═══════════════════════════════════════════════════════
