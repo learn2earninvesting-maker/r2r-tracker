@@ -1,0 +1,217 @@
+{
+ "ticker": "KDDL",
+ "name": "KDDL Ltd",
+ "concall": {
+  "name": "KDDL Ltd",
+  "sector": "Watches",
+  "quarter": "Q2 FY27",
+  "date": "",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Eigen delivered a surprise breakout",
+    "text": "H1 FY27 revenue grew close to 50% YoY as projects in the funnel fructified sooner and larger than expected, pulling forward the capacity expansion timeline."
+   },
+   {
+    "label": "Watch components raised full-year guidance",
+    "text": "H1 FY27 revenue grew ~30% YoY on volume, and management now expects full-year growth higher than the original ~12–14% target."
+   },
+   {
+    "label": "Mix shift compressed gross margin",
+    "text": "Blended gross margin declined slightly as faster-growing Eigen carries lower margins than watch components, and within watch components, lower-margin domestic sales outpaced exports."
+   },
+   {
+    "label": "Packaging turned the corner",
+    "text": "Ornapak achieved positive PBT in Q2 FY27, and management expects the profitability trend to continue through the rest of FY27 and beyond."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether bracelet export demand revives as the expanded customer base begins converting trial orders, and whether Eigen's rack plating line begins commercial supplies on the 1–2 month timeline."
+  },
+  "sections": [
+   {
+    "title": "Eigen: The Surprise Growth Engine",
+    "points": [
+     {
+      "label": "H1 growth near 50% YoY",
+      "text": "Revenue growth was driven by responsiveness from existing and new customers across EV, energy storage systems, electronics, and aerospace & defense, spanning both Americas and Europe, not concentrated in any single segment or geography."
+     },
+     {
+      "label": "Projects fructified early",
+      "text": "Projects already in the funnel converted sooner and at larger scale than management expected, pulling growth forward rather than reflecting a one-time backlog clearance."
+     },
+     {
+      "label": "Capacity expansion accelerated",
+      "text": "Work on expanding manufacturing space at the existing Unit 1 facility began sooner than the originally planned FY28 timeline, and a rack plating line at the new Unit 2A facility has completed trials with commercial supplies expected in the next 1–2 months."
+     },
+     {
+      "label": "Unit 2B secured",
+      "text": "An adjacent plot has been finalized for additional manufacturing space and will become operational in the middle of FY28."
+     },
+     {
+      "label": "Demand environment robust",
+      "text": "Management sees fairly robust demand from both America and Europe expected to continue; US RFQs saw a slight slowdown post tariff issues, compensated by RFQs from the European market, keeping overall RFQ interest more or less stable."
+     },
+     {
+      "label": "Long-term guidance unchanged",
+      "text": "Management is working toward revenue growth in line with the actual continuing growth, while the medium-term goal remains 20–25% CAGR; if current exceptional growth continues, there is upside to expectations."
+     },
+     {
+      "label": "Strategy rests on three pillars",
+      "text": "Increasing share of business with existing customers, adding new customers, and developing additional products and capabilities."
+     }
+    ],
+    "quotes": [
+     {
+      "who": "Yashovardhan Sabu",
+      "text": "This year we have seen exceptional growth. Even, uh, it has taken us, uh, a little bit by surprise, but of course a very pleasant surprise. Um, it's not really a backlog."
+     }
+    ]
+   },
+   {
+    "title": "Watch Components: Volume-Led Upgrade",
+    "points": [
+     {
+      "label": "H1 FY27 revenue grew ~30% YoY",
+      "text": "Growth was led by volume from both domestic and export customers, which management views as healthier than growth driven merely by higher realizations."
+     },
+     {
+      "label": "Full-year guidance raised",
+      "text": "Management now expects FY27 revenue growth higher than the original expectation of ~12–14%, with H2 standalone growth expected to be similar to H1's ~35% YoY pace."
+     },
+     {
+      "label": "Bracelet exports subdued",
+      "text": "H1 performance was impacted by a relatively subdued demand environment in the export segment, with challenges in the Swiss watch industry leading to a slowdown in offtake."
+     },
+     {
+      "label": "Customer-base expansion underway",
+      "text": "The process of adding new bracelet customers started several months ago, but made-to-order parts require time for trial orders, homologation, quality checks, and first samples; results are expected to start showing from next quarter onwards."
+     },
+     {
+      "label": "Geographic headroom",
+      "text": "Management sees room to grow in the Japanese market, rest of Europe, and the Swiss market both directly for KDDL and through Estima."
+     }
+    ]
+   },
+   {
+    "title": "Margins: Mix Shift, Not Erosion",
+    "points": [
+     {
+      "label": "Gross margin declined slightly",
+      "text": "The blended gross margin decline, both sequentially and YoY, was almost completely due to change in product mix: Eigen carries slightly lower gross margin than watch components, and Eigen is growing faster; within watch components, domestic sales, which carry lower gross margin than exports, rose faster than export sales."
+     },
+     {
+      "label": "CapEx stepped up",
+      "text": "FY27 CapEx spending is now expected in the range of ₹70–75 crore, increased from the original plan of ~₹50 crore, to support accelerated expansion; some debt induction is planned for the major CapEx in the current year, with prudent financing."
+     }
+    ]
+   },
+   {
+    "title": "Packaging, Silver City and Estima",
+    "points": [
+     {
+      "label": "Packaging achieved positive PBT",
+      "text": "Ornapak turned profitable at the PBT level in Q2 FY27, supported by premium packaging solutions for international and domestic luxury brands, with H1 revenue growth over 30%."
+     },
+     {
+      "label": "Silver City to break even this year",
+      "text": "Management stated the watch brand will achieve breakeven in this fiscal year, with performance expected to be better than budgeted."
+     },
+     {
+      "label": "Estima losses narrowing",
+      "text": "The loss this year will be significantly lower than last year, though challenging times persist due to volatile Swiss watch markets; management is hoping that if everything goes right, perhaps next year will be the breakeven year."
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Watch components FY27 revenue growth",
+       "Higher than original ~12–14% expectation",
+       "FY27"
+      ],
+      [
+       "Eigen medium-term revenue CAGR",
+       "20–25%",
+       "Medium term (no end date)"
+      ],
+      [
+       "iGen revenue growth",
+       "~25% range",
+       "Ongoing (no end date)"
+      ],
+      [
+       "Eigen rack plating line commercial supplies",
+       "Start commercial supplies",
+       "Next 1–2 months"
+      ],
+      [
+       "Eigen Unit 2B operational",
+       "Additional manufacturing space",
+       "Middle of FY28"
+      ],
+      [
+       "Silver City breakeven",
+       "Achieve breakeven",
+       "This fiscal year (FY27)"
+      ],
+      [
+       "Estima breakeven",
+       "Breakeven if everything goes right",
+       "Perhaps next year (FY28)"
+      ],
+      [
+       "FY27 CapEx",
+       "₹70–75 crore (increased from ~₹50 crore)",
+       "FY27"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "KDDL Ltd",
+  "sector": "Watches",
+  "asof": "Aug 2026",
+  "items": [
+   {
+    "title": "Bracelet capacity expansion",
+    "text": "The Dobbaspet steel bracelet plant, already at 75-80% utilisation, is expanding from ~75,000 to ~110,000-120,000 units over the next 12 months. Management targets ~25% CAGR for bracelets, with a ₹80-100 crore revenue potential over 3-5 years versus ~₹40 crore in FY26."
+   },
+   {
+    "title": "Eigen backward integration",
+    "text": "In-house electroplating capacity, expected operational by end of Q1 FY27, brings a currently outsourced process inside for quality and volume ramp-up. This supports Eigen's 20-25% CAGR target, with the division already contributing ~38% of company revenue and growing >35% in FY26."
+   },
+   {
+    "title": "Favre-Leuba global rollout",
+    "text": "The brand is present in over 20 countries with more than 80 points of sale, with sales \"much better than expected\" and most stores short of stock. Sales are expected to more than double in FY27, with losses set to disappear from FY28 onwards."
+   },
+   {
+    "title": "Ethos boutique doubling",
+    "text": "Ethos crossed 100 boutiques in FY26 and targets doubling its network in the next 3 years, with a new format launching this year at ₹25,000-₹2 lakh price points. The 10x revenue in 10 years goal (25.9-26% CAGR) is reaffirmed, with the company ahead of that vision."
+   },
+   {
+    "title": "Ornapac export push",
+    "text": "The Panchkula packaging unit, at 60-70% utilisation in FY26, is targeting exports to global luxury brands after domestic supplies to international brands commenced with encouraging response. The division is expected to turn profitable in H2 FY27, with a 25% CAGR target and ₹80-100 crore long-term opportunity."
+   },
+   {
+    "title": "Watch components recovery",
+    "text": "Excluding Ethos, watch component revenue grew ~20% YoY to ~₹240 crore in FY26, with H1 FY27 expected stable and growth more visible in H2 FY27. Diversification beyond Switzerland into Japan, USA, UK, Italy and the Middle East, plus premiumisation, supports an 8-10% projected improvement."
+   },
+   {
+    "title": "Pylania precious stone dials",
+    "text": "Infrastructure development and product design for high-end precious stone watch dials targeting premium Swiss brands is underway. This moves KDDL up the value chain into artisanal, higher-margin products, complementing the new Artisan Watch Products subsidiary that commenced commercial operations in late 2025."
+   }
+  ]
+ }
+}

@@ -1,0 +1,44 @@
+{
+ "ticker": "MARINE",
+ "name": "Marine Electricals (India) Ltd",
+ "concall": null,
+ "catalysts": {
+  "name": "Marine Electricals (India) Ltd",
+  "sector": "Shipping Proxy",
+  "asof": "Jul 2026",
+  "items": [
+   {
+    "title": "Data centre power solutions",
+    "text": "The company has booked over ₹1,000 crore in data-centre orders from clients including Equinix, STT Global, Princeton Digital Group, and Digital Edge, with deliveries spanning 1-18 months. These orders, won on the back of repeat relationships with marquee hyperscaler and colocation operators, convert directly into revenue over the next four to six quarters at margins that should lift the Industrial segment’s PBIT, which already improved from 6.7% to 9.7% in the latest year."
+   },
+   {
+    "title": "Naval shipbuilding systems",
+    "text": "The Indian Navy has 16 shipbuilding projects in execution covering 81 vessels and another 6 projects in planning for 45 ships, including P17B frigates, P-18 destroyers, and MCMVs. Marine Electricals supplies integrated bridge systems, navigation radars, main switchboards, and alarm monitoring systems across these platforms, and the multi-year build cycle locks in a long-dated, non-discretionary revenue stream from a client committed to indigenisation."
+   },
+   {
+    "title": "Semiconductor fab electrification",
+    "text": "The company won a ₹115 crore order from L&T for LT boards and branch panels for the Tata Semiconductor manufacturing facility at Dholera, with delivery over 18 months, and additional orders from CG Semi and for the Micron Project. These are large, single-site greenfield packages that establish Marine Electricals inside India’s nascent chip-fab ecosystem, where follow-on phases and new fabs can provide decade-scale demand."
+   },
+   {
+    "title": "Commercial marine exports",
+    "text": "Udupi Cochin Shipyard placed orders for switchboards, electrical equipment, alarm monitoring systems, and diesel generators with delivery timelines stretching to 24 months, as part of aggregate orders exceeding ₹200 crore. India’s shipyards are winning export vessel contracts, and Marine Electricals is positioned as the electrical fit-out partner, turning global shipbuilding policy tailwinds into firm orders."
+   },
+   {
+    "title": "Manufacturing capacity expansion",
+    "text": "A new Goa plant added 20% manufacturing footprint for LV/MV switchboards, and a 51,000 sq ft leased plant in Vadodara added another 25% assembly shopfloor space. The combined floor-space increase removes the physical bottleneck that would otherwise cap order-book conversion as data-centre and industrial orders scale up."
+   },
+   {
+    "title": "Narhari Engineering motor and alternator capability",
+    "text": "The subsidiary (now MEL Heavy Industries) is expanding its Palghar facility to manufacture naval and marine motors up to 1 MW and alternators in the same range, enabling in-house DG set assembly. Bringing motor and alternator production in-house can widen margins on naval and marine electrical packages and reduce dependence on third-party suppliers for a critical bill-of-material item."
+   },
+   {
+    "title": "Maritime domain awareness (Xanatos VTS)",
+    "text": "The Xanatos Marine acquisition brought TITAN-based vessel traffic systems, with a completed VTMS project in the Philippines and bids submitted for ports in Africa, Asia, and Europe. Indian regulations are moving to mandate VTMS at all ports, not just large PSU ones, which opens a domestic upgrade cycle that the company can serve with an already-proven product."
+   },
+   {
+    "title": "Battery electric propulsion",
+    "text": "The company is supplying a complete battery propulsion package for battery-operated ferries and a battery electric tug under the government’s green port programme, with Danfoss India appointing it as official system integrator for marine products. Early system-integration wins in marine electrification position the company for the fleet-wide retrofit and newbuild opportunity as emission rules tighten at Indian ports."
+   }
+  ]
+ }
+}

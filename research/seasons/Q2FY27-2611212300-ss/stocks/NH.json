@@ -1,0 +1,404 @@
+{
+ "ticker": "NH",
+ "name": "Narayana Hrudayalaya Ltd",
+ "concall": {
+  "name": "Narayana Hrudayalaya Ltd",
+  "sector": "Hospitals",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "India margins hit a high-water mark",
+    "text": "India hospital margins crossed 26%, driven by operating leverage, better realizations, and a volume/price mix shift toward high-end procedures."
+   },
+   {
+    "label": "Insurance and clinics losses halved",
+    "text": "The combined quarterly loss fell from INR 33 crores to INR 22 crores QoQ, with Cayman insurance losses dropping from \\$3.7 mn to \\$1.1 mn."
+   },
+   {
+    "label": "U.K. revenue dipped, masking cost progress",
+    "text": "A temporary NHS contracting slowdown and slow private patient acquisition pushed revenue down, hiding on-plan cost synergies that will become visible once the top line recovers."
+   },
+   {
+    "label": "No margin targets, no bed additions, no insurance timeline",
+    "text": "Management declined to set specific margin goals, a breakeven date for insurance, or near-term bed expansion, framing the story around volume growth and long-term integrated care."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the Eastern cluster’s government-scheme transition issue resolves and footfall rebounds as promised, and whether U.K. NHS contracting normalizes after the April reset."
+  },
+  "sections": [
+   {
+    "title": "India Hospital Performance",
+    "points": [
+     {
+      "label": "Margins at a peak",
+      "text": "India margins exceeded 26%, among the best in the industry, reflecting a decade of digitization, process improvement, and supply-chain work rather than a pricing-led strategy."
+     },
+     {
+      "label": "Operating leverage in action",
+      "text": "Doctor and nursing costs declined 1.9% QoQ to 26% of revenue as revenues rose 9% QoQ on a largely fixed clinical and nursing cost base."
+     },
+     {
+      "label": "ARPOB jumped",
+      "text": "Annualized ARPOB rose from INR 1.75 crore to INR 1.95 crore YoY, driven by a focus on high-end procedures and greater use of robotics."
+     },
+     {
+      "label": "Volumes grew across the board",
+      "text": "IP volumes grew 4% YoY and OP footfall grew ~12.5% YoY, with Bangalore and Calcutta clusters driving the majority of revenue."
+     },
+     {
+      "label": "Eastern cluster hit a speed bump",
+      "text": "A transition issue porting certain government-scheme patients in Bengal suppressed footfall; management expects a much stronger Q3 once it settles."
+     },
+     {
+      "label": "Smaller Karnataka units rebalancing",
+      "text": "Management is rationalizing the payer mix to balance volumes and realization, with volumes expected to pick up in coming quarters."
+     },
+     {
+      "label": "Throughput, not occupancy, is the metric",
+      "text": "Occupancy at 60–65% is not the focus; revenue uplift and cost leverage come from higher throughput, not filling beds."
+     },
+     {
+      "label": "Cash conversion dipped slightly",
+      "text": "H1 operating cash flow conversion was ~88% versus a historical ~93%, due to slight collection delays from government and insurance payers in India and Cayman; expected to normalize on a full-year basis."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Viren Shetty: \"Just to clarify, we don't target any specific margins. The margins you see, which are best-in-class despite an ARPOB that is significantly lower than peers, are a reflection of the huge amount of effort we've put in over the past 10 years in digitization, process improvement, supply chain and addressing every single driver of unnecessary cost in the company.\""
+     }
+    ]
+   },
+   {
+    "title": "Insurance & Clinics: Losses Shrinking",
+    "points": [
+     {
+      "label": "Combined loss fell by a third",
+      "text": "The insurance-plus-clinics loss dropped from INR 33 crores to INR 22 crores QoQ, with the insurance loss falling from INR 19 crores to INR 14 crores and the clinics loss from INR 14 crores to INR 8 crores."
+     },
+     {
+      "label": "Cayman insurance improved dramatically",
+      "text": "Losses fell from \\$3.7 mn to \\$1.1 mn QoQ, directionally coming down faster than planned, with some one-off benefit from the summer school holiday months."
+     },
+     {
+      "label": "Claims ratio trending right",
+      "text": "The insurance claims ratio has come down significantly QoQ and continues to move in the right direction."
+     },
+     {
+      "label": "Strategy is to break even at a smaller book",
+      "text": "Management aims to break even at a much smaller book than peers by cutting insurance distribution costs, spending only in moderate amounts."
+     },
+     {
+      "label": "No breakeven timeline offered",
+      "text": "Management said it is too early to give a timeline for breakeven, and declined to provide specific loss limits or thresholds."
+     },
+     {
+      "label": "Clinics merging into hospital reporting",
+      "text": "The clinics business, whose model is now proven successful, will no longer be reported separately; only insurance numbers will be disclosed going forward."
+     },
+     {
+      "label": "Cayman insurance path to zero",
+      "text": "Management expects negligible losses even before the July 2027 big reset, after which it will have exited almost all unprofitable books; a smaller January price reset is also coming."
+     },
+     {
+      "label": "ROCE measured differently",
+      "text": "Standalone ROCE for insurance is not how management measures itself internally; the goal is to stop burning cash in insurance while delivering care, supported by the insurance arm."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Viren Shetty: \"Prithvi, neither we will give up on insurance nor we will pursue this at any cost. There were a set of strategies we had in mind when we first started out, and some did not work as well as expected. We are adapting and pivoting, and we're keeping the amount of money spent as low as possibly we can.\""
+     }
+    ]
+   },
+   {
+    "title": "U.K. Business: Revenue Dip Masks Cost Progress",
+    "points": [
+     {
+      "label": "Revenue dipped quarter-on-quarter",
+      "text": "The slight decline was attributed to NHS revenue commissioning volatility and challenges in external patient acquisition, in a market management is still learning."
+     },
+     {
+      "label": "NHS contracting slowed across the market",
+      "text": "The slowdown affected all providers and is described as temporary, with waiting lists growing; contracts reset annually effective April 1."
+     },
+     {
+      "label": "Cost synergies are on plan",
+      "text": "Efforts on items within direct control (software, automation, a GCC for patient-facing communication) are on plan or slightly ahead, but are not yet flowing into earnings because the revenue dip masks them on a very low margin base."
+     },
+     {
+      "label": "Cost headwinds from separation",
+      "text": "Novating vendor agreements after acquiring the hospitals division from a larger group created diseconomies of scale and vendor price increases, raising day-to-day costs."
+     },
+     {
+      "label": "Private revenue channels being built",
+      "text": "Insurance empanelment and doctor recognition by insurers are in progress but not yet translating into additional revenue; NHS was the predominant channel for decades."
+     },
+     {
+      "label": "Private revenue percentage rising slowly",
+      "text": "Management expects to have a much better idea over the next few quarters about how long private patient acquisition will take."
+     },
+     {
+      "label": "Revenue recovery will unlock visible cost progress",
+      "text": "When revenue returns to where it was a few quarters ago, the cost efficiencies and operational changes already made will become visible; cost changes were made very recently and their annualized effect will flow in over a few quarters."
+     },
+     {
+      "label": "5-to-7-year time horizon",
+      "text": "Management reiterated that a 5-to-7-year horizon is appropriate for evaluating the U.K. business."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Anesh Shetty: \"We are comfortable with our execution pace on the cost synergies. We just need -- we have some homework to do and work to do on the revenue front.\""
+     }
+    ]
+   },
+   {
+    "title": "Cayman Islands: Mature Asset, Integrated Care Working",
+    "points": [
+     {
+      "label": "Hospital growth is maturing",
+      "text": "Management stated the best days of growth for Cayman are behind it, with the island's size acting as a limiting factor and an anchor on growth."
+     },
+     {
+      "label": "Integrated care strategy is working",
+      "text": "The hospital's growth is a result of the integrated care model and holistic cost reduction for the entire system; a new hospital added service lines about 1.5 years ago."
+     },
+     {
+      "label": "International patient draw",
+      "text": "Patients are coming from other Caribbean islands and nearby Latin American countries, driven by the integrated care offering."
+     },
+     {
+      "label": "No revenue run-rate guidance",
+      "text": "Management declined to provide a maximum revenue number for the Cayman hospitals business, calling it tough to say and not something they guide on."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Anesh Shetty: \"We've always maintained the best days of growth for Cayman are behind it. Our size is a limiting factor and an anchor on our growth in that small island.\""
+     }
+    ]
+   },
+   {
+    "title": "Strategy & Capital Allocation",
+    "points": [
+     {
+      "label": "Integrated care is the core thesis",
+      "text": "The model builds comprehensive health profiles of all patients, enabling better service through annual checkups, diagnostics, blood tests, and vaccine camps, increasing lifetime patient interactions."
+     },
+     {
+      "label": "Balanced pricing strategy continues",
+      "text": "Moderate price increases and balanced pricing drove strong growth in both IP and OP volumes; management will continue this balanced growth strategy on volumes and realizations."
+     },
+     {
+      "label": "No bed additions planned",
+      "text": "As of now, no bed additions are planned; guidance on additions will be shared one quarter in advance as facilities become ready."
+     },
+     {
+      "label": "International patients are organic, not targeted",
+      "text": "Growth comes mainly from Bangladesh due to brand and loyalty built over 2.5 decades and easier visa and travel; international patients contribute 6–7% of hospital revenue and are subject to macro fluctuations quarter-to-quarter."
+     },
+     {
+      "label": "U.K. ROCE dilution to be bridged",
+      "text": "The 4–5% ROCE dilution from the U.K. acquisition is expected to be bridged over the next 5 years or so, with the full effect of measures showing as India comes off its capex cycle."
+     },
+     {
+      "label": "Oncology drug price caps",
+      "text": "New caps go live from 9th November, a regulatory change to monitor."
+     },
+     {
+      "label": "Athma platform nearing U.K. deployment",
+      "text": "Regulatory certification for the digital platform is expected in about 4 to 5 months, after which implementation begins in the U.K."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Viren Shetty: \"The advantage of an integrated care model is one in which you don't treat every patient interaction as a one-off. ... We build comprehensive health profiles of all our patients, and we're able to better serve them with annual checkups, with diagnostic scans, with blood tests, with vaccine camps. And this increases the number of interactions our customers will have with us over a lifetime.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Eastern cluster footfall recovery",
+       "Much stronger footfall growth expected after transition issue settles",
+       "Q3 FY27 (implied current fiscal)"
+      ],
+      [
+       "U.K. revenue recovery",
+       "Revenue trajectory expected to return to where it was a few quarters ago, making cost efficiencies visible",
+       "Over the next few quarters (no specific date)"
+      ],
+      [
+       "Cayman insurance losses",
+       "Expect negligible losses even before the big reset; exit almost all unprofitable books from July onwards",
+       "Big reset July 2027"
+      ],
+      [
+       "U.K. ROCE dilution bridged",
+       "4–5% dilution to be bridged as India comes off capex cycle",
+       "Over next 5 years"
+      ],
+      [
+       "India ALOS reduction",
+       "Reduce to closer to 4 or 4.1",
+       "Over next 4 to 6 quarters"
+      ],
+      [
+       "India cash conversion normalization",
+       "Slight collection delays expected to normalize on full-year basis",
+       "Full year (no specific fiscal stated)"
+      ],
+      [
+       "Athma platform U.K. deployment",
+       "Regulatory certification expected, then implementation begins",
+       "Certification about 4 to 5 months away"
+      ],
+      [
+       "India bed addition guidance",
+       "Quarterly additions shared 1 quarter in advance as facilities become ready",
+       "Ongoing, starting 1 quarter ahead"
+      ],
+      [
+       "Oncology drug price caps",
+       "Caps go live",
+       "9th November"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "India hospital revenue",
+       "9% QoQ growth, driven by volume and price mix"
+      ],
+      [
+       "India hospital margins",
+       ">26%, among best in industry despite lower ARPOB"
+      ],
+      [
+       "ARPOB (annualised)",
+       "₹1.95 crore, up from ₹1.75 crore YoY"
+      ],
+      [
+       "IP volumes",
+       "4% increase YoY"
+      ],
+      [
+       "OP footfall",
+       "~12.5% growth YoY"
+      ],
+      [
+       "IP footfalls",
+       "6% QoQ growth, ~4% YoY"
+      ],
+      [
+       "Doctors and nursing costs",
+       "26% of revenue, down 1.9% QoQ on operating leverage"
+      ],
+      [
+       "ALOS",
+       "4.3 to 4.5 days, target closer to 4.0–4.1 over next 4–6 quarters"
+      ],
+      [
+       "Oncology share of India hospital revenue",
+       "~15%"
+      ],
+      [
+       "International patients share of hospital revenue",
+       "~6% to 7%"
+      ],
+      [
+       "Occupancy",
+       "60% to 65%, not a focus metric; throughput model used"
+      ],
+      [
+       "Combined loss of insurance and clinics businesses",
+       "₹22.3 cr, down from ₹33 cr last quarter; insurance ₹14 cr, clinics ₹8 cr"
+      ],
+      [
+       "Group ROCE",
+       "15% to 16%, with ~4–5% dilution from U.K."
+      ],
+      [
+       "Cayman insurance losses",
+       "\\$1.1 million, down from \\$3.7 million last quarter and \\$5.4 million two quarters ago; includes some summer holiday one-off benefit"
+      ],
+      [
+       "U.K. net debt",
+       "~₹1,700 cr"
+      ],
+      [
+       "U.K. EBITDA margin",
+       "~7%, declined from 8.8% sequentially"
+      ],
+      [
+       "India DNB postgraduates in training",
+       "~900 across the network"
+      ],
+      [
+       "Nursing students in training",
+       ">3,000"
+      ],
+      [
+       "Beds being added",
+       "635 beds in FY28"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Narayana Hrudayalaya Ltd",
+  "sector": "Hospitals",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "India ₹3,000 crore bed pipeline",
+    "text": "NH has committed ₹3,000 crores across six hospital projects, with ~1,500+ new beds commissioning FY27-FY29 (Rajarhat, HSR, Raipur, Central Bangalore in FY28-29) and ~635 beds added in FY28, funded from internal cash and debt. Bed capacity rises from 5,879 to a targeted 7,800+ by FY30, removing the main constraint after 7-8 years without bed additions in India."
+   },
+   {
+    "title": "India margin and high-end procedure mix",
+    "text": "India hospital EBITDA margin reached 26.8% in Q2 FY27 (Q2 FY26: 23.8%) on more robotic cardiac surgeries (750+ group-wide in FY26, a third Da Vinci arriving), transplants and TAVI work, with ARPOP up from ₹1.75 to ₹1.95 crore. The Bangalore realization template is being rolled out to Kolkata and other clusters, and management expects like-to-like growth to stay sustainable until new beds open."
+   },
+   {
+    "title": "UK private-pay shift and cost program",
+    "text": "Practice Plus Group (12 hospitals, ~80,000 surgeries/year, acquired Nov 2025 at 9.2x EV/EBITDA) is being rebalanced from ~93% NHS toward self-pay and private insurance, with private revenue at an all-time high and benefits expected over the next 3-6 quarters. Athma deployment starts once software-as-a-medical-device certification completes (~4-5 months away as of Q2 FY27), and UK EBITDA margin has already moved from 7-8% at acquisition to 10% in Q4 FY26."
+   },
+   {
+    "title": "Cayman One Health insurance repricing",
+    "text": "The Cayman insurance book reached ~USD 60 million annualized premium within a year of launch, nearly 3x year-on-year, with quarterly losses down from USD 3.7 million to USD 1.1 million after a 100% renewal rate on repriced policies. The big July 2027 reset lets NH exit most unprofitable books, with losses expected to be negligible even before then - turning a drag into a profit line at the 45%+ margin Cayman campus."
+   },
+   {
+    "title": "India health insurance scale-up",
+    "text": "NH Insurance, the first health insurer promoted by a hospital group, covered 1.2 lakh lives with ₹43.8 crore gross written premium in FY26 and is expanding its SME offering from Bangalore to Kolkata, Raipur and Mysore. Bank of Baroda launched India's first Health Savings Accounts in Dec 2025 following NH's engagement, opening a channel to the underinsured \"missing middle\" in a market where only 21.5% of the population holds voluntary cover."
+   },
+   {
+    "title": "Mumbai SRCC adult conversion",
+    "text": "NH is in advanced discussion with the SRCC trust to add adult programs at its Mumbai hospital in FY27, using existing headroom in the current setup. Management expects the hospital's profitability profile to turn around once the adult program starts, in a Western cluster already growing revenue 12% YoY."
+   }
+  ]
+ }
+}

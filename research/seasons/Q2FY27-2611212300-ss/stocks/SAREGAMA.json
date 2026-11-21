@@ -1,0 +1,351 @@
+{
+ "ticker": "SAREGAMA",
+ "name": "Saregama India Ltd",
+ "concall": {
+  "name": "Saregama India Ltd",
+  "sector": "Music Licensing",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Music margin story delivered",
+    "text": "Music EBIT margin jumped 700 bps YoY to 55.4% as content bought 2–4 years ago now generates revenue far exceeding its charge-off, exactly the trajectory management predicted in FY24."
+   },
+   {
+    "label": "Revenue growth on track, but evaluate on 12-month basis",
+    "text": "Revenue grew 37% YoY to ₹314.3 crore, yet management repeatedly asked investors to ignore quarterly swings and judge performance only on a rolling 12-month view."
+   },
+   {
+    "label": "Content engine is scaling",
+    "text": "FY27 content spend guided at ₹300–350 crore, with ~₹1,200 crore planned over FY28–FY30; the 5-year payback model is now visibly converting into margin expansion."
+   },
+   {
+    "label": "Video and events are deliberate drags",
+    "text": "Video revenue fell 16% as the film business is wound down, and live events posted a loss as the mix shifts from artist concerts to owned IPs, both conscious investments with future payoff promised."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the ~100 hours of AI-generated podcast content lands in Q3, any movement on short-format monetization shifting from fixed-fee to ad-share, and the pace of further music margin expansion as the content portfolio ages."
+  },
+  "sections": [
+   {
+    "title": "Music: The Margin Inflection Arrives",
+    "points": [
+     {
+      "label": "The lagged-content flywheel",
+      "text": "Content investments made in FY24, FY25, and FY26 have reached the stage where the revenue increase from them is far higher than the cost charge-off. In the initial year of investment, the revenue bump was just equal to the charge-off, so the margin benefit is back-end loaded and now compounding."
+     },
+     {
+      "label": "Non-film content driving growth",
+      "text": "H1 saw greater focus on non-film music including I-Pop Star albums in Hindi and Tamil, Haryanvi, Bihari, and Punjabi superstar Nijjar's album, which threw multiple trending songs on YouTube and Instagram. The biggest film hit was the Telugu album \"Paradise,\" whose song 'yeshanagula' hit global #1 on YouTube's daily music video charts."
+     },
+     {
+      "label": "Paid subscription is the structural tailwind",
+      "text": "Paid subscription is growing much faster than ad-based, and paid customers generate a much higher yield per stream than free customers. Spotify is calling India its biggest growth opportunity and is increasing ad load on the free tier to drive conversion to paid."
+     },
+     {
+      "label": "Pricing power is still years away",
+      "text": "Pricing as a second growth engine is expected to start kicking in, hopefully, 2–3 years from now; currently growth comes only from new subscribers. Universal Music has agreed to a windowing concept in India where some content goes first to the paid side, a model Saregama is watching."
+     },
+     {
+      "label": "Short-format monetization stuck",
+      "text": "Short-format apps like Instagram Reels and YouTube Shorts remain on fixed-fee deals. Management wants a shift to share-of-advertising basis but it has not happened yet, and any change will be shared only when it occurs."
+     },
+     {
+      "label": "Non-digital revenue is a slow grind",
+      "text": "On the non-digital side, only brand licensing and public performance are showing decent growth, while TV channels and radio stations are growing at a much slower pace."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Mehra: \"We had stated this in financial year ‘24 itself, that as we started investing heavily in newer content, in the initial year when you invest in content, the bump in revenue was just equal to the charge-off that we were taking on the content cost. Some of those content investments that we made in financial year ‘24, ‘25 or ‘26 have now reached a stage whereby the revenue increase on account of them is far higher than the cost charge that we are taking.\""
+     }
+    ]
+   },
+   {
+    "title": "Content Investment & Pipeline",
+    "points": [
+     {
+      "label": "FY27 spend",
+      "text": "₹300–350 crore guided for new content, with H2 film albums including Sanjay Leela Bhansali's \"Love & War,\" Sivakarthikeyan's \"Seyon,\" Dharma's Kartik Aaryan starrer \"Naagzilla,\" and a Tiger Shroff movie produced by Bhansali."
+     },
+     {
+      "label": "FY28–FY30 trajectory",
+      "text": "~₹1,200 crore over three years, assuming a 10% per annum nominal increase from the FY27 midpoint of ₹325 crore. The 5-year payback period guidance is maintained for all new music, followed by 55–75 years of returns."
+     },
+     {
+      "label": "The math that makes it work",
+      "text": "As content reaches year three or four, the charge-off becomes much smaller than the revenue it generates, contributing directly to margin. Quarter-to-quarter variation depends on timing of big releases and marketing cost booking, which is why management insists on a 12-month rolling view."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "AI: Offense and Defense",
+    "points": [
+     {
+      "label": "AI content team",
+      "text": "A dedicated team is using GenAI tools to create adjacent audio content like podcasts using Saregama songs, and building new-age music videos around older songs. ~100 hours of podcast content is planned for Q3 release."
+     },
+     {
+      "label": "AI process team",
+      "text": "A second AI-dedicated team is optimising internal processes, which has already resulted in marginal savings in manpower cost. Full impact of AI initiatives is expected to be visible over the next few quarters."
+     },
+     {
+      "label": "IP protection is active",
+      "text": "All new digital licensing agreements are building protection against dilution of rights and potential fraud. The company has invested in technology to track AI cover versions on streaming platforms and either buys them out or pulls them down. It is also proactively opening dialogue with AI creators to own and distribute AI versions of its biggest songs."
+     },
+     {
+      "label": "Bullish but vigilant",
+      "text": "Management sees AI as a tool that will help large IP owners, while being wary that nobody should be able to infringe content without a license. The stance is to support licensed innovation and consistently fight against unlicensed exploitation."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Mehra: \"Saregama's position on AI remains that it will be beneficial to the company in the long run, both in terms of cost reduction and speed to market. But while we support licensed innovation, we at Saregama will consistently fight against unlicensed exploitation.\""
+     }
+    ]
+   },
+   {
+    "title": "Video, Events & Other Verticals",
+    "points": [
+     {
+      "label": "Video is shrinking by design",
+      "text": "Revenue declined 16% to ₹18.3 crore because of a conscious decision to wind down the film business and invest in Bhansali Productions instead. Further decline is expected in coming quarters as the transition plays out. The company will continue investing in GenZ-focused short-format content and TV/web shows, most of which are low-ticket items with advertiser or platform commitment before shooting."
+     },
+     {
+      "label": "Bhansali Productions",
+      "text": "Geared up for its biggest release \"Love & War\" in Q4 and actively working on a slate for FY28."
+     },
+     {
+      "label": "Live events loss",
+      "text": "The loss this quarter stems from a conscious shift from artist-based concerts to IP-based events like UN40, HaHaKaar, Krishna, and Carvaan Live, where initial runs require higher investments that are charged off rather than capitalised. H1 events revenue of ₹61 crore was driven partly by a very successful Ilaiyaraaja US tour across 11 cities serving 20,000 audience members."
+     },
+     {
+      "label": "Diljit tour passed",
+      "text": "Saregama is not doing the Diljit Dosanjh India tour this season because the financials were not working out. A Guru Randhawa show, UN40, HaHaKaar, and a tour by an artist described as bigger than mid-level are in the pipeline."
+     },
+     {
+      "label": "Pocket Aces",
+      "text": "Reached break-even in FY26 and is moving towards profitability this year. Management declined to split its contribution within artist management, calling it a combined number."
+     },
+     {
+      "label": "Unallocable expenditure",
+      "text": "The increase was driven by a 55% YoY decline in other income, which is netted against unallocable costs. QIP money that previously earned interest has been invested in Pocket Aces, Haryanvi catalog, and Bhansali. Excluding the other income impact, unallocable cost is flat versus last year."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "The Carvaan Community Bet",
+    "points": [
+     {
+      "label": "A unique B2C asset",
+      "text": "Management positions Saregama as the only music label globally with direct customer relationships, built through Carvaan hardware, live events, and now the Carvaan app. The strategy is to build an engaged community of middle-aged to older people connecting through music and entertainment, while younger audiences are targeted separately under FilterCopy or the Saregama brand."
+     },
+     {
+      "label": "Carvaan Live",
+      "text": "The brand has been extended into smaller sit-down concerts targeting middle-aged and older audiences, with 54 shows produced in Q2. Devotional format shows featuring Manoj Muntashir's Krishna, Backstage Siblings, and Jaya Kishori added 17 shows."
+     },
+     {
+      "label": "Carvaan app",
+      "text": "Still in test phase, with experimentation continuing through this financial year to understand what content works. There is no intention to make it a hardcore music streaming app; the aim is to build a community around older people. Details will be shared once the experimentation phase is over and the app starts being pushed in the market, in \"another four to six months.\""
+     },
+     {
+      "label": "Carvaan Club",
+      "text": "Hardware, live events, and the app are being combined under Carvaan Club. Monetization and engagement details will be shared after testing and customer experimentation conclude, with management asking investors to \"give us until the end of the year.\""
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Mehra: \"We happen to be the only music label, not just in India but globally, which has direct customer relationships. It's the Carvaan part which came out very, very handy for us. So now, we are the only label that has got hardware. We are the only label that is also selling live events. So everybody else has a B2B relationship. We also have a B2C relationship.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Music vertical revenue CAGR",
+       "20% to 23%",
+       "Short-to-medium term (3–5 years)"
+      ],
+      [
+       "Music vertical EBITDA margin",
+       "60% to 65%",
+       "Short-to-medium term"
+      ],
+      [
+       "Content spend FY27",
+       "₹300–350 crore",
+       "FY27"
+      ],
+      [
+       "Content spend FY28–FY30",
+       "~₹1,200 crore (assuming 10% p.a. nominal increase from FY27 midpoint)",
+       "FY28–FY30"
+      ],
+      [
+       "Content payback period",
+       "5 years, followed by 55–75 years of returns",
+       "All new music"
+      ],
+      [
+       "AI podcast content release",
+       "~100 hours",
+       "Q3 FY27"
+      ],
+      [
+       "Bhansali \"Love & War\" release",
+       "Biggest Bhansali release",
+       "Q4 FY27"
+      ],
+      [
+       "Video revenue trajectory",
+       "May decline further as film wind-down and Bhansali transition plays out",
+       "Coming quarters"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Revenue from operations",
+       "₹314.3 crore, 37% YoY growth"
+      ],
+      [
+       "Adjusted EBITDA",
+       "₹118 crore, 39% YoY growth"
+      ],
+      [
+       "Operational PBT",
+       "₹85.8 crore, 43% YoY growth"
+      ],
+      [
+       "Music vertical revenue (licensing, artist management, retail)",
+       "₹251.3 crore, 35% YoY growth"
+      ],
+      [
+       "Music vertical EBITDA",
+       "₹154 crore, 37% YoY growth"
+      ],
+      [
+       "Music vertical net margin",
+       "₹116.5 crore, 46% YoY growth"
+      ],
+      [
+       "Music vertical EBIT margin",
+       "55.4%, up 700 bps YoY from 48.4%"
+      ],
+      [
+       "Music vertical revenue CAGR guidance (short-to-medium term)",
+       "20% to 23%"
+      ],
+      [
+       "Music vertical EBITDA margin guidance (short-to-medium term)",
+       "60% to 65%"
+      ],
+      [
+       "Video vertical revenue",
+       "₹18.3 crore, declined 16% YoY"
+      ],
+      [
+       "Events revenue",
+       "₹45 crore in Q2, ₹61 crore in H1 FY27 (FY26 full year was ₹62 crore)"
+      ],
+      [
+       "New content spend guidance for FY27",
+       "₹300 crore to ₹350 crore"
+      ],
+      [
+       "New content spend guidance for FY28–FY30 combined",
+       "~₹1,200 crore, assuming 10% annual growth from FY27 midpoint of ₹325 crore"
+      ],
+      [
+       "Catalog size",
+       "180,000-plus songs, growing by 4,500 to 5,000 new releases per year"
+      ],
+      [
+       "Artists represented",
+       "340 artists, combined follower base of more than 45 crore on Instagram and YouTube"
+      ],
+      [
+       "Brand deals in Q2",
+       "Over 20 deals with partners including Apple, Airbnb, Google, Cadbury, Tanishq"
+      ],
+      [
+       "Carvaan Live shows in Q2",
+       "54 shows, serving around 10,000 audience members"
+      ],
+      [
+       "Ilaiyaraaja US tour",
+       "11 cities, 20,000 audience members"
+      ],
+      [
+       "Unallocable expenditure",
+       "₹27 crore, versus ₹18 crore in Q2 FY26; increase driven by decline in other income netted against this line"
+      ],
+      [
+       "Other income",
+       "Declined 55% YoY"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Saregama India Ltd",
+  "sector": "Music Licensing",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "Music margin cycle",
+    "text": "Management guides the music vertical to 20-23% revenue CAGR over 3-5 years with 60-65% EBITDA margins; music EBITDA margin already rose 700bps YoY to 55.4% in Q2 FY27 as FY24-FY26 content passes its ~5-year payback. With ₹1,000 crore invested across FY25-FY27 and spend growth slowing to 6-10% from FY28, revenue keeps compounding while content costs flatten - the flagged profit-growth cycle is underway."
+   },
+   {
+    "title": "Bhansali Productions stake",
+    "text": "Saregama completed a ₹325 crore first tranche for 28% of Bhansali Productions in January 2026, with options to reach 49.9% on performance and 51% by 2030 at no further committed cost. BPPL exclusively sells all future film music to Saregama on a pre-agreed formula - 30-40% of future Hindi film acquisitions, securing A and B+ albums for 24-30 months - and the stake turned EPS-accretive, contributing ₹3.99 crore in Q2 FY27."
+   },
+   {
+    "title": "Paid subscription take-off",
+    "text": "India's paid music penetration is under 3% of internet users vs 57% in the US, and platforms like Spotify are pushing paid conversion, with Universal already windowing new content behind paywalls. Management says the 20-23% music growth guidance assumes no subscription take-off - if leading platforms shut free tiers, subscription revenue could \"literally double\" YoY, expected within 1-3 years."
+   },
+   {
+    "title": "Live events scale-up",
+    "text": "Live events revenue doubled YoY to ₹44.7 crore in Q2 FY27 across concerts, devotional, stand-up and experiential formats, with a Dubai subsidiary incorporated for Middle East expansion. The vertical is capital-light - ~₹15 crore of assets rotating in 30-40 days - targeting high single-digit margins over 2-3 years and seen by management as potentially the fastest-growing vertical."
+   },
+   {
+    "title": "Artist management build-out",
+    "text": "The roster reached 340 artists with 45 crore+ combined followers at Q2 FY27, and H1 FY27 artist management revenue grew almost 100%, running at ~₹40 crore per quarter with ~10% EBITDA margins. Pocket Aces reached breakeven in FY26 as promised and is expected to grow at 25% CAGR, while its Finnet acquisition (November 2025) adds influencer marketing capability."
+   },
+   {
+    "title": "AI content and cost levers",
+    "text": "Around 100 hours of AI-created podcast content releases in Q3 FY27, and GenAI music videos for the classic catalogue cut production from 10-12 days to under 3 - heading to 1-1.5 days - at costs as low as ₹70,000 with ~1-year payback. This monetises the 20th-century catalogue's missing music videos, a gap no competitor of similar scale faces."
+   },
+   {
+    "title": "Regional and Punjabi push",
+    "text": "After two failed attempts, a new Punjabi model bundling recorded music with live events is underway, with a performance update expected by end-Q3 FY27. The NAV Records acquisition made Saregama the Haryanvi leader, and FY26's ₹105 crore of catalogue purchases - the highest ever - extend regional depth."
+   }
+  ]
+ }
+}

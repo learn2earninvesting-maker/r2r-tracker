@@ -1,0 +1,375 @@
+{
+ "ticker": "SUNDRMFAST",
+ "name": "Sundram Fasteners Ltd",
+ "concall": {
+  "name": "Sundram Fasteners Ltd",
+  "sector": "Auto Engine Parts",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Strong top-line, RM-hit margins",
+    "text": "Revenue grew ~30% YoY, but a steep raw material price increase carved ~3% from contribution margin, making the reported EBITDA ~1.5% lower than the internal, RM-adjusted view."
+   },
+   {
+    "label": "Export engine is back",
+    "text": "Exports surged 57% YoY and have recovered to ~30% of revenue, a mix shift that management bets will automatically expand margins because export products carry >20% EBITDA."
+   },
+   {
+    "label": "The order book is full, but the timeline is opaque",
+    "text": "Class 8 truck backlogs sit \"much beyond historic level,\" yet ma nagement sidestepped a direct question on when the ₹4,000 crores order book converts to revenue."
+   },
+   {
+    "label": "Non-auto diversification is working, quietly",
+    "text": "Wind energy, aerospace and industrial aftermarket pushed the non-auto share past 35%, moving steadily toward a 50% aspiration without a single large-bang deal."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the RM price indexation lag correction actually flows through to reported margins, the pace of export share's climb toward one-third, and any concrete timeline for the Stellantis EV peak volume."
+  },
+  "sections": [
+   {
+    "title": "Revenue Growth & Demand Visibility",
+    "points": [
+     {
+      "label": "Broad-based domestic pull",
+      "text": "M&HCV grew 21%, LCV 27%, and the combined CV segment 25% in H1; cars and SUVs also propelled growth, though entry-level segments may face rural pressure in H2 from uneven monsoons."
+     },
+     {
+      "label": "Export surge, not just currency",
+      "text": "Of the 57% export growth, ~10% came from rupee depreciation and ~47% from real volume and dollar-term improvement, driven by Cummins and Navistar schedule increases."
+     },
+     {
+      "label": "Near-term visibility is solid",
+      "text": "OEMs are giving 1-month firm schedules plus 2 months indicative; management sees \"only prospective growth\" ahead with no sign of a demand cliff."
+     },
+     {
+      "label": "H2 growth to mirror H1",
+      "text": "Management expects H2 to deliver similar growth levels as H1, with slight improvement across OE, retail and exports."
+     },
+     {
+      "label": "Segment-level H2 outlook",
+      "text": "Cars and SUVs in low double digits, CVs in mid-teens, tractors at less than 10% (with a bias toward 5%) due to softening in Q3 and a moderate Q4 base effect."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "R. Ganesh: \"So that way, the buoyancy still continues. And irrespective of the segment in the domestic or in exports, continued schedules are available. So that way, I think the sustenance of the turnover at this level, we do not see any --it's only prospective growth that we are seeing.\""
+     }
+    ]
+   },
+   {
+    "title": "Raw Material Impact & Margin Mechanics",
+    "points": [
+     {
+      "label": "The RM hit is real but optically amplified",
+      "text": "A steep increase in steel and aluminum prices, plus indirect material inflation from geopolitical disruption, caused a ~3% contribution margin impact versus the corresponding quarter."
+     },
+     {
+      "label": "Reported margin understates reality",
+      "text": "Management states that removing the RM price inflation effect from the revenue line reveals an EBITDA ~1.5% higher than reported, because pass-through revenue inflates the denominator without adding profit."
+     },
+     {
+      "label": "Pass-through is asymmetric in the company's favor",
+      "text": "Domestic OE has pass-through arrangements, aftermarket prices are raised prospectively, and exports are offset by rupee depreciation; crucially, when RM prices fall, the company is not obligated to pass the benefit back."
+     },
+     {
+      "label": "Indexation lag is shrinking",
+      "text": "Some customers had a 3-month pass-through lag, now corrected to ~1 month via indexation; the lag works both ways, so a benefit persists briefly when prices correct."
+     },
+     {
+      "label": "The brunt is already in the P&L",
+      "text": "The bulk of the RM price increase hit Q2; it will not worsen unless RM prices rise further, and some customers' 1-month lag benefit will flow to Q3."
+     },
+     {
+      "label": "Operating leverage provided a partial cushion",
+      "text": "Fixed costs are lower and asset utilization improved substantially, so depreciation as a percentage of revenue declined, partially offsetting the RM drag."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Dilip Kumar: \"So basically, the margin drop is more, I would say, a mathematical expression of the RM prices, which are there in the middle line, and the revenues, which are slightly inflated. If you remove that impact and see the margins, of course, we have the information internally, and it is clearly about 1.5% higher than what has been reported as EBITDA.\""
+     }
+    ]
+   },
+   {
+    "title": "Export Mix & Margin Recovery Path",
+    "points": [
+     {
+      "label": "Export share is climbing back",
+      "text": "Exports fell to ~25% of revenue last year due to tariff and other impacts; they have now recovered to almost 30%, and management expects the trajectory to continue toward the historical one-third level."
+     },
+     {
+      "label": "Mix shift is the margin thesis",
+      "text": "Export products carry EBITDA in excess of 20%, so as the export share rises, margin expansion happens \"automatically\" without needing heroic cost actions."
+     },
+     {
+      "label": "H2 margin expansion is the explicit call",
+      "text": "Management stated margins \"should definitely expand\" in H2, with optimism \"primarily from the higher share of exports in our revenue book.\""
+     },
+     {
+      "label": "RM cooling would add a second tailwind",
+      "text": "Once steel prices cool off, the company benefits directly because it is not obligated to pass the savings back to customers."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Dilip Kumar: \"And also when the raw material prices fall, we are not under an obligation to pass back to our customers.\""
+     }
+    ]
+   },
+   {
+    "title": "Class 8 North America & Export Demand Backdrop",
+    "points": [
+     {
+      "label": "Backlog is extraordinary",
+      "text": "Cumulative preliminary Class 8 orders over the past 12 months summed to 353,000 units, pushing the backlog \"much beyond historic level\" and filling OEM order books completely."
+     },
+     {
+      "label": "EPA '27 norms create a tailwind, not a cliff",
+      "text": "The deferment of the heavy-duty engine life decision by 3 years, combined with ongoing emission parts warranties (5 years/100,000 miles) and a stricter NOx standard (200 mg/bhp to 35 mg) with non-compliance penalties, sustains demand visibility."
+     },
+     {
+      "label": "Full-year retail expectations are modestly positive",
+      "text": "Management hopes Class 8 retail will be plus 3–5% versus last year by year-end, with industry projections ranging from 210,000 to 232,000 trucks."
+     },
+     {
+      "label": "A pre-buy question went unanswered",
+      "text": "An analyst asked about Class 8 demand beyond CY26 considering a potential pre-buy scenario; the marketing chief was disconnected and the answer, though promised later, was not captured in the transcript."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "S. Bharathan: \"The backlog in terms of the Class 8 demand is much beyond the historic level. In fact, in the past 12 months, the cumulative preliminary orders have summed up to 353,000 numbers. And so the order book is full for the OEM.\""
+     }
+    ]
+   },
+   {
+    "title": "EV, Wind & Non-Auto Diversification",
+    "points": [
+     {
+      "label": "Stellantis EV business is gaining traction",
+      "text": "Billing has started on plug-in hybrid and ICE portions of the contract; revenue moved from ~₹50 crores last year to an outlook of ₹150–175 crores this year, though peak volume clarity is not expected until H2 next year."
+     },
+     {
+      "label": "Wind energy is scaling toward a milestone",
+      "text": "The third phase of investment is ongoing, and annual revenue is expected to cross ₹500 crores once complete."
+     },
+     {
+      "label": "Aerospace is a small but deliberate bet",
+      "text": "Investments of ₹30–40 crores in testing and other equipment aim to take revenue to ₹200 crores in coming years."
+     },
+     {
+      "label": "Non-auto share is grinding higher",
+      "text": "The non-auto segment has moved from 30% in earlier years to 35% plus this year, driven by wind, aerospace and industrial fastener aftermarket; the aspiration is 50%, with no fixed timeline."
+     },
+     {
+      "label": "New product development is on metric",
+      "text": "The internal benchmark, that parts developed in a given year plus the next three years should generate 20% of revenue, is being met."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "R. Ganesh: \"While the aspiration is to look at 50%, but I think we have been moving steadily from the earlier years of 30% and this year, we have come to 35% plus.\""
+     }
+    ]
+   },
+   {
+    "title": "Cash Flow, Capex & Balance Sheet",
+    "points": [
+     {
+      "label": "Cash flows look weak for operational reasons",
+      "text": "Longer export cycles (up to 9 months), higher inventories and receivables in line with activity, and a buildup of GST input credit from inflated RM procurement and the capex program are all tying up cash."
+     },
+     {
+      "label": "Management expects normalization",
+      "text": "Sufficient banking limits are available, borrowings are expected to moderate, and cash flows should return to normal levels as the GST credit cycle and export receivables work through."
+     },
+     {
+      "label": "Capex is on track",
+      "text": "₹281 crores of the ~₹400 crores FY27 plan was already incurred in H1; the full-year number may be slightly higher depending on customer requirements."
+     },
+     {
+      "label": "FY28 capex is unguided but range-bound",
+      "text": "Management said it is premature to commit, but indicated the past range of ₹350–450 crores should continue as indicative, with a better answer after Q3 business planning."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "H2 revenue growth",
+       "H2 to mirror H1 growth levels, with slight improvement across OE, retail and exports",
+       "FY27 H2"
+      ],
+      [
+       "H2 margin expansion",
+       "Margins \"should definitely expand,\" driven by higher export share in revenue mix",
+       "FY27 H2"
+      ],
+      [
+       "RM impact on margins",
+       "Brunt already in Q2 P&L; will not worsen unless RM prices rise further",
+       "Ongoing, conditional on RM prices"
+      ],
+      [
+       "RM indexation lag benefit",
+       "Some customers' 1-month lag benefit will flow to Q3",
+       "Q3 FY27"
+      ],
+      [
+       "Stellantis EV peak volume clarity",
+       "Clearer picture expected",
+       "H2 next year (FY28)"
+      ],
+      [
+       "Wind energy revenue milestone",
+       "Annual revenue to cross ₹500 crores after third-phase investment",
+       "Post third-phase investment completion"
+      ],
+      [
+       "Aerospace revenue target",
+       "₹200 crores in coming years with ₹30–40 crores investment",
+       "\"Coming years\""
+      ],
+      [
+       "Cash flow normalization",
+       "Borrowings to moderate, cash flows to return to normal levels",
+       "Going forward"
+      ],
+      [
+       "FY27 capex",
+       "~₹400 crores, may be slightly higher depending on customer requirements",
+       "FY27"
+      ],
+      [
+       "Class 8 retail full-year",
+       "Hope for plus 3–5% versus last year",
+       "CY year-end"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Revenue growth",
+       "~30% YoY"
+      ],
+      [
+       "Export growth",
+       "57% YoY, ~10% from rupee depreciation, ~47% from volume/dollar terms"
+      ],
+      [
+       "PBT",
+       "₹160 crores, vs ₹140 crores YoY"
+      ],
+      [
+       "EBITDA margin",
+       "15.7%"
+      ],
+      [
+       "H1 revenue",
+       "₹3,254 crores, 25% growth YoY"
+      ],
+      [
+       "H1 EBITDA margin",
+       "15.9%"
+      ],
+      [
+       "H1 PBT",
+       "₹311 crores, vs ₹278 crores YoY"
+      ],
+      [
+       "Exports share of total revenue",
+       "~30%, up from ~25% last year"
+      ],
+      [
+       "Export products EBITDA margin",
+       "in excess of 20%"
+      ],
+      [
+       "Tonnage volume growth",
+       "15–16% YoY"
+      ],
+      [
+       "Non-auto share of overall revenue",
+       "35% to 37%"
+      ],
+      [
+       "Forex gain",
+       "~₹7 crores for the quarter"
+      ],
+      [
+       "Raw material price revision given",
+       "~3.7% of revenues, realization from customers ~2.5%, gap of ~1%"
+      ],
+      [
+       "Contribution margin impact from RM price gap",
+       "dip of ~2.5%"
+      ],
+      [
+       "Capex incurred in H1 FY27",
+       "₹281 crores, against full-year outlay of ₹400 crores"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Sundram Fasteners Ltd",
+  "sector": "Auto Engine Parts",
+  "asof": "Oct 2026",
+  "items": [
+   {
+    "title": "GM & Stellantis EV/PHEV ramp",
+    "text": "Sundram has ~₹4,000 crore of North America EV-family orders with capacity already in place; the ICE and PHEV portions are billing now, Stellantis revenue is guided to ₹150-175 crore this year from about ₹50 crore last year, and the EV pickup starts in H2 FY27. Even with customers halving EV plans, the PHEV/ICE uptick plus full EV ramp expected by 2027 converts a sunk investment into a ₹500-600 crore run-rate opportunity by FY29."
+   },
+   {
+    "title": "Exports recovery to one-third of revenue",
+    "text": "Exports grew 57% YoY in Q2 FY27 (about 47% in volume/dollar terms) and 40% in H1, taking the share back to ~30% from 25%, with management guiding 15-20% export growth and a return to one-third of revenues. Export products carry over 20% EBITDA, so the mix shift alone expands margins, and new European wins (Garrett Motion turbocharger parts, ZF hybrid components) de-risk the US concentration."
+   },
+   {
+    "title": "Aerospace fasteners scaling",
+    "text": "Aerospace revenue doubled from ₹50 crore to a ₹100 crore-plus target this year, with investments for taking it to the next level of ₹200 crore in the coming year, backed by NADCAP/AS9100 certifications and ₹30-40 crore of new testing equipment. Customers include GE Aviation, HAL, ISRO and newly signed Skyroot, and the high-margin division is one of three levers toward the 18% EBITDA goal."
+   },
+   {
+    "title": "Wind energy third-phase expansion",
+    "text": "A ~₹80 crore third-phase investment is underway to lift wind fastener revenue from ₹350 crore to ~₹500 crore annualized, with new volumes kicking in from next financial year on a segment already at 100% utilization. The rupee-denominated, profitable business is another of the three margin levers toward 18% EBITDA."
+   },
+   {
+    "title": "Class 8 truck upcycle",
+    "text": "North American Class 8 truck preliminary orders in Q1 were almost double that of the year-ago period and are expected to perform at least 10% to 15% better this year, with backlogs at a 38-month high, and EPA '27 norms confirmed from January 2027 have started a pre-buy; Cummins guides to 15%+ heavy-duty and ~25% high-horsepower growth on data-center demand. As a key Cummins and Navistar supplier, Sundram's export volumes ride this cycle directly."
+   },
+   {
+    "title": "Railway fasteners tenders",
+    "text": "Direct tender participation (current hit rate ~20%) is lifting railway fastener revenue from ₹2-3 crore to a targeted ₹8-10 crore per month, about ₹100 crore a year, expected by Q3-Q4 of this year, on Vande Bharat and track-modernization demand. Orders are serviced from existing capacity, so the revenue comes with no fresh investment."
+   },
+   {
+    "title": "Hyundai/Kia entry and QCO import substitution",
+    "text": "Sundram has started supplying fasteners to Hyundai and Kia, aided by the BIS quality-control order on imports, with the opportunity sized at ₹100 crore plus over 2-3 years. The QCO is pushing OEMs toward domestic sourcing against roughly ₹1,100-1,200 crore of annual fastener imports by MNC OEMs, a longer-dated substitution pool."
+   }
+  ]
+ }
+}

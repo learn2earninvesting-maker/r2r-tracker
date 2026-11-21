@@ -1,0 +1,490 @@
+{
+ "ticker": "ARMANFIN",
+ "name": "Arman Financial Services Ltd",
+ "concall": {
+  "name": "Arman Financial Services Ltd",
+  "sector": "Finance and Investments Microfinance",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Sharp profitability turnaround",
+    "text": "H1 FY27 PAT of ₹97 crores already exceeds full FY26 PAT of ₹57 crores, driven by 51% YoY AUM growth and operating leverage as the cost-to-income ratio fell from 51.7% to 42.6%."
+   },
+   {
+    "label": "Asset quality holding, with early warning signs",
+    "text": "GNPA improved slightly to 2.73%, but Maharashtra and Karnataka drought declarations caused minor fresh delinquency deterioration in October, and the real test of the new underwriting model awaits the next credit cycle."
+   },
+   {
+    "label": "CGFMU coverage halved, strategy unchanged",
+    "text": "The credit guarantee scheme has not been renewed, cutting MFI portfolio coverage from ~90% to 51%, but management insists underwriting and collections are unaffected and the business survived 34 years without it."
+   },
+   {
+    "label": "Operating efficiency improving on plan",
+    "text": "Opex-to-AUM fell to ~8% from a peak of ~9-10%, with a target of ~7% by March 2027; digital collections reached 49% of microfinance repayments, reducing physical dependence."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether October’s drought-driven delinquency uptick in Maharashtra and Karnataka stabilizes or spreads, the pace of borrowing cost improvement beyond the current 11.3%, and any clarity on CGFMU renewal terms and timing."
+  },
+  "sections": [
+   {
+    "title": "Profitability & Operating Leverage",
+    "points": [
+     {
+      "label": "H1 already a record",
+      "text": "Consolidated PAT of ₹97 crores in H1 FY27 versus a loss of ₹7 crores in H1 FY26, surpassing the full FY26 PAT of ₹57 crores, with Q2 alone contributing ₹51 crores."
+     },
+     {
+      "label": "AUM crossed ₹3,000 crores",
+      "text": "Consolidated AUM reached ₹3,209 crores, growing 51% YoY, while Q2 disbursements of ₹818 crores rose 72% YoY and ~19% QoQ."
+     },
+     {
+      "label": "Cost-to-income ratio improving fast",
+      "text": "Fell to ~42.6% in Q2 FY27 from a peak of 51.7% in Q4 FY26 because the portfolio resumed growing while operating expenses no longer rose at the same pace as AUM."
+     },
+     {
+      "label": "Opex-to-AUM trending down",
+      "text": "Currently at ~8% of AUM, down from a peak of ~9-10%, with management on track to reach the ~7% target by March 2027, though the target is a vision rather than a detailed model and actual may land between 6.9% and 7.2%."
+     },
+     {
+      "label": "Digital collections reducing cost pressure",
+      "text": "~49% of microfinance collections now flow through digital channels (UPI and e-NACH) as of September 2026, cutting dependence on physical collections and helping manage operating costs."
+     },
+     {
+      "label": "Borrowing cost easing",
+      "text": "Incremental borrowing cost reduced from 11.7% in Q1 to 11.3% in Q2, with management hopeful of further improvements over coming quarters, though dependent on broader market conditions."
+     },
+     {
+      "label": "No capital raise needed before ₹5,000 crores AUM",
+      "text": "Growing close to ROEs allows indefinite growth without fresh capital, and management sees ₹5,000 crores AUM as definitely achievable within 18 months by compounding current growth."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Asset Quality & Early Stress Signals",
+    "points": [
+     {
+      "label": "Headline GNPA stable",
+      "text": "GNPA improved slightly to 2.73% from 2.76% QoQ, with NNPA at 0.92%, and fresh delinquencies have come down from previous years."
+     },
+     {
+      "label": "Collection efficiency steady at 96.5%",
+      "text": "X bucket collection efficiency at ~99.4%, with only a marginal seasonal decline during the monsoon, consistent with 15 years of historical post-monsoon patterns."
+     },
+     {
+      "label": "Maharashtra drought triggering early stress",
+      "text": "Minor deterioration in fresh delinquency buckets observed in October (not in Q2) after Maharashtra and Karnataka declared drought, though Maharashtra represents only 4% of the portfolio and most customers have multiple income sources, not solely agriculture."
+     },
+     {
+      "label": "PAR 30–90 spike tied to monsoon",
+      "text": "Attributed to the same seasonal reasons, including a 1% dip in zero DPD in Maharashtra and flood impacts in Bihar and U.P. from Nepal floods that affected collections for a week to 10 days but settled faster than expected."
+     },
+     {
+      "label": "New credit team showing results",
+      "text": "Loans originated under the independent credit structure show ~15% lower default rates versus the earlier model, but management cautions the real test will come during the next difficult credit cycle."
+     },
+     {
+      "label": "Rejection rates remain high",
+      "text": "~110,000 applications processed monthly, with only 25,000-30,000 disbursed, reflecting deliberate credit discipline."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Aalok Patel: \"We would much rather turn away some business today than take on customers who may become a problem tomorrow.\""
+     }
+    ]
+   },
+   {
+    "title": "CGFMU: Coverage Halved, Strategy Unchanged",
+    "points": [
+     {
+      "label": "Coverage dropped sharply",
+      "text": "The CGFMU scheme has not been renewed for loans originated from April 1, 2026 onward, cutting MFI portfolio coverage from ~90% to 51% and MSME coverage to 30% as of September 30, though eligible loans originated up to March 31, 2026 remain covered."
+     },
+     {
+      "label": "NCGTC has signaled renewal likely",
+      "text": "The industry continues follow-up with authorities, and NCGTC has indicated a very strong likelihood that the policy will be introduced even with a delay, but timing and final terms remain uncertain."
+     },
+     {
+      "label": "Provisioning impact is complex",
+      "text": "Consolidated provisions rose this quarter because CGFMU insurance expenses were not incurred for the first six months, but if the policy is introduced and covers the full year, the premium payment and provisioning reversals could be P&L neutral, though terms such as retrospective coverage and overdue customer coverage are unknowable."
+     },
+     {
+      "label": "Underwriting discipline unchanged",
+      "text": "Management is explicit that a credit guarantee is an additional layer of protection, not a substitute for good underwriting or strong collections, and whether a loan is covered by CGFMU makes no difference to how a customer is assessed."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Aalok Patel: \"It does not change our strategy... CGFMU was available. It was, no honeymoon lasts forever. I mean, it was something special that was available to take advantage of. It was never expected to last forever.\""
+     }
+    ]
+   },
+   {
+    "title": "Segment Performance",
+    "points": [
+     {
+      "label": "Standalone provisions declined despite portfolio growth",
+      "text": "Provisions fell from ₹5.2 crores to ₹4 crores QoQ because of better asset quality, lower write-offs, CGFMU coverage on ~30% of the standalone book (started Q3 last FY), and the higher LAP weightage, though management initially said they were not sure why it had come down and would get back on it."
+     },
+     {
+      "label": "Average ticket size declining in LAP and MSME",
+      "text": "A function of credit policy, with slightly higher or lower risk tolerances driving the maximum loan eligible offered to customers."
+     },
+     {
+      "label": "Three complementary product lines",
+      "text": "Management sees microfinance, MSME, and LAP as complementary and continues experimenting with pilots, keeping eyes and ears open for new opportunities."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Aalok Patel: \"As an NBFC, you have to be specialist. I think what gives us an edge why are we doing what we do and banks cannot do it, right? I mean, obviously, I am happy that they cannot do it because it allows me to have a nice little business, small as it may be.\""
+     }
+    ],
+    "table": {
+     "cols": [
+      "Segment",
+      "AUM (₹ Cr)",
+      "YoY Growth",
+      "PAT (Q2 FY27)",
+      "Commentary"
+     ],
+     "rows": [
+      [
+       "Namra (Microfinance)",
+       "2,424",
+       "▲ 61%",
+       "₹34 cr (vs loss of ₹1 cr in Q2 FY26)",
+       "Individual lending now ~40% of MFI portfolio, contributing to NIM improvement to 16.6% from 15.37% QoQ; H1 PAT of ₹63 cr vs full FY26 PAT of ₹13 cr."
+      ],
+      [
+       "Standalone (MSME + LAP)",
+       "784",
+       "▲ 26%",
+       "₹17 cr",
+       "MSME is 74% of AUM; LAP weightage rose to 13% from 5% last year, helping reduce GNPA since LAP GNPA is sub-1.5% vs unsecured at ~3%."
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Risk & Monitoring",
+    "points": [
+     {
+      "label": "Drought being monitored closely",
+      "text": "Maharashtra and Karnataka drought declarations are being tracked, and management will adjust lending wherever necessary, though it is not too concerned because most customers have multiple income sources."
+     },
+     {
+      "label": "Maharashtra collections handled with care",
+      "text": "Collection efforts are being approached carefully given sensitivity with the state government, and management is in touch with them."
+     },
+     {
+      "label": "UPI MDR a watch item",
+      "text": "UPI merchant discount rate has been introduced, and the industry has pushed back strongly to reduce cost to MFIs and get an exemption for loan repayments; if MFIs have to bear the cost, the impact would not be very huge, and the industry will strategize collectively once it actually comes in."
+     },
+     {
+      "label": "Opex target does not factor MDR",
+      "text": "The 7% opex-to-AUM vision did not include MDR costs, so actual may land between 6.9% and 7.2%, and reaching around 6% would be fairly good, though management believes the historical low of 4.5%-4.75% is unlikely to be reached again based on the current structure."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Aalok Patel: \"The lessons of the past have to play a factor in our decision-making in the future.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Operating expense ratio",
+       "Bring opex-to-AUM down to ~7% (vision, not detailed model; actual may be 6.9%-7.2%)",
+       "By March 2027"
+      ],
+      [
+       "AUM scale",
+       "Reach ₹5,000 crores AUM without raising capital",
+       "Within 18 months"
+      ],
+      [
+       "Borrowing cost",
+       "Further improvements in incremental borrowing cost",
+       "Over coming quarters, market-dependent"
+      ],
+      [
+       "CGFMU renewal",
+       "Remain optimistic about renewal; NCGTC has indicated strong likelihood",
+       "Timing and terms uncertain"
+      ],
+      [
+       "Maharashtra/Karnataka drought",
+       "Monitor and adjust lending wherever necessary",
+       "Ongoing; October stress being tracked"
+      ],
+      [
+       "UPI MDR impact",
+       "Industry to strategize collectively if cost falls on MFIs",
+       "Wait and watch; no timeline"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Consolidated AUM",
+       "₹3,209 cr, +51% YoY, crossed ₹3,000 cr for the first time"
+      ],
+      [
+       "Consolidated disbursements",
+       "₹818 cr, +72% YoY and ~19% QoQ"
+      ],
+      [
+       "Consolidated gross total income",
+       "₹235 cr, +48% YoY"
+      ],
+      [
+       "Consolidated net total income",
+       "₹161 cr"
+      ],
+      [
+       "Consolidated PPoP",
+       "₹95 cr"
+      ],
+      [
+       "Consolidated profit after tax",
+       "₹51 cr, highest ever quarterly profit, vs ₹8 cr in Q2 FY26"
+      ],
+      [
+       "Consolidated NIM",
+       "18.2%"
+      ],
+      [
+       "Annualized return on AUM",
+       "6.7%, vs 1.5% in Q2 FY26"
+      ],
+      [
+       "Annualized return on equity",
+       "20.5%, vs 3.7% in Q2 FY26"
+      ],
+      [
+       "H1 FY27 consolidated PAT",
+       "₹97 cr, vs loss of ₹7 cr in H1 FY26, already surpassed full FY26 PAT of ₹57 cr"
+      ],
+      [
+       "Cost-to-income ratio",
+       "42.6%, improved from peak of 51.7% in Q4 FY26"
+      ],
+      [
+       "Operating expenses to AUM",
+       "~8%, target of ~7% by March 2027, down from peak of ~9–10%"
+      ],
+      [
+       "Overall collection efficiency",
+       "96.5%, vs 96.9% in Q1; 40 bps QoQ dip, normal post-monsoon seasonal decline (Note: page 11 states 96.2% for September)"
+      ],
+      [
+       "X bucket collection efficiency",
+       "~99.4%"
+      ],
+      [
+       "Consolidated GNPA",
+       "2.73%, vs 2.76% in Q1"
+      ],
+      [
+       "Consolidated NNPA",
+       "~0.92%"
+      ],
+      [
+       "Provisions and write-offs",
+       "~₹26 cr"
+      ],
+      [
+       "Shareholders' equity (consolidated)",
+       "₹1,033 cr as of Sep 30, 2026"
+      ],
+      [
+       "Capital adequacy – Arman standalone",
+       "36.26%"
+      ],
+      [
+       "Capital adequacy – Namra",
+       "37.19%"
+      ],
+      [
+       "Total borrowings (incl. off-balance sheet DA liabilities)",
+       "₹2,659 cr"
+      ],
+      [
+       "Liquidity (cash, bank, liquid investments, undrawn CC limits)",
+       "~₹334 cr, plus another ₹150 cr in undrawn sanctions"
+      ],
+      [
+       "Incremental borrowing cost",
+       "11.3%, down from 11.7% in Q1"
+      ],
+      [
+       "Microfinance digital collections share",
+       "~49% of MFI collections via UPI and e-NACH as of Sep 2026"
+      ],
+      [
+       "Individual lending share of MFI portfolio",
+       "~40%"
+      ],
+      [
+       "CGFMU coverage – MFI portfolio",
+       "~51% as of Sep 30, 2026, down from ~90% in Q1"
+      ],
+      [
+       "CGFMU coverage – MSME portfolio",
+       "30% as of Sep 30, 2026"
+      ],
+      [
+       "Default rate reduction under new credit structure",
+       "~15% lower default rates vs earlier model"
+      ],
+      [
+       "Namra AUM",
+       "₹2,424 cr, +61% YoY and +12% QoQ"
+      ],
+      [
+       "Namra disbursements",
+       "₹654 cr"
+      ],
+      [
+       "Namra PAT",
+       "₹34 cr, vs loss of ₹1 cr in Q2 FY26"
+      ],
+      [
+       "Namra H1 FY27 PAT",
+       "₹63 cr, vs ₹13 cr for full FY26"
+      ],
+      [
+       "Namra NIM",
+       "16.6%, vs 15.37% in Q1"
+      ],
+      [
+       "Namra GNPA",
+       "2.59%, largely unchanged from Q1"
+      ],
+      [
+       "Namra NNPA",
+       "1.01%"
+      ],
+      [
+       "Namra net write-offs",
+       "₹12 cr"
+      ],
+      [
+       "Namra active customers",
+       "~5 lakh as of Sep 2026"
+      ],
+      [
+       "Arman standalone AUM",
+       "₹784 cr, +26% YoY and +3% QoQ"
+      ],
+      [
+       "Arman standalone disbursements",
+       "₹164 cr"
+      ],
+      [
+       "Arman standalone PAT",
+       "₹17 cr"
+      ],
+      [
+       "Arman standalone H1 FY27 PAT",
+       "₹32 cr"
+      ],
+      [
+       "MSME share of standalone AUM",
+       "~74%"
+      ],
+      [
+       "LAP share of standalone AUM",
+       "~13%, up from ~5% in Q2 FY26"
+      ],
+      [
+       "Two-wheeler share of standalone AUM",
+       "12%"
+      ],
+      [
+       "Maharashtra and Karnataka combined AUM share",
+       "7.6% of consolidated AUM"
+      ],
+      [
+       "Maharashtra AUM share",
+       "~4% of portfolio"
+      ],
+      [
+       "Monthly loan applications processed",
+       "~110,000, with ~25,000–30,000 disbursed"
+      ],
+      [
+       "Employees",
+       "5,200 across 11 states"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Arman Financial Services Ltd",
+  "sector": "Finance and Investments Microfinance",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "₹5,000 crore AUM target",
+    "text": "Consolidated AUM crossed ₹3,209 crores in Q2 FY27, up 51% year-on-year, and management said the ₹5,000 crore mark is \"definitely there\" in about 18 months at the current compounding rate. With H1 FY27 PAT of ₹97 crores already above all of FY26's ₹57 crores, each step toward that AUM level flows straight into profit at the current ~6.7% return on average AUM."
+   },
+   {
+    "title": "Microfinance book re-acceleration",
+    "text": "Namra's AUM reached ₹2,424 crores in September 2026, up 61% year-on-year, with H1 FY27 disbursements of ₹1,184 crores nearly double the prior year and average ticket up to ₹80,000. Management guides ~25% growth for FY27 and expects H2 to be stronger given Q4 is historically the peak quarter, while a shrunken industry book means fewer lenders competing for the same borrowers."
+   },
+   {
+    "title": "Individual Business Loans scale-up",
+    "text": "IBL AUM reached ₹712 crores in FY26 and by September 2026 made up 41% of consolidated AUM, overtaking the JLG book, with loans originated only for proven borrowers scoring 700+ on the bureau. Management expects non-JLG products to grow much faster than JLG, and the ~5.5 crore live microfinance borrower pool gives a large graduation pipeline to draw from."
+   },
+   {
+    "title": "MSME lending into Uttar Pradesh",
+    "text": "The MSME book, the company's highest-ROA product at a 35% yield, stood at ₹584 crores in H1 FY27, and stand-alone Arman opened its first Uttar Pradesh branches in Q4 FY26 with more to follow. Management expects these new branches to contribute meaningfully to AUM growth over the next 2-4 quarters, and says the existing book can grow 20-25% without added opex."
+   },
+   {
+    "title": "Micro-LAP expansion",
+    "text": "LAP AUM grew 185% to ₹80 crores in FY26 and reached ₹104 crores by September 2026, turning profitable in FY26 with NPAs around 30 bps, and is being rolled out through the existing MSME branch network into Telangana and MP. Management said it is \"definitely possible\" LAP reaches ₹500 crores - today's MSME book size - within 2-3 years, since larger tickets and long tenures need little extra cost."
+   },
+   {
+    "title": "Opex ratio reduction to 7%",
+    "text": "Management targets opex of about 7% of AUM by March 2027, down from a peak of 9-10%, with cost-to-income already improved from 51.7% in Q4 FY26 to 42.6% in Q2 FY27. The new BCM credit structure is showing roughly 15% lower default rates on comparable customers, and 49% of collections now come digitally, so collections cost should not rise in line with AUM."
+   },
+   {
+    "title": "Funding cost decline",
+    "text": "Acuité revised the outlook to Positive in October 2026 and Namra earned an MFI-1 grading, with management approaching agencies for upgrades that should cut debt cost by at least 20-30 bps; incremental borrowing cost already fell to 11.3% in Q2 FY27 from 12.0%. With leverage under 2x against a comfortable 4.5x headroom and ₹500 crores of NCD board approval in place, cheaper debt can fund growth without new equity."
+   },
+   {
+    "title": "CGFMU guarantee renewal",
+    "text": "About 51% of the microfinance book still carries CGFMU cover, which reduces provisioning on defaults by roughly 75% of the covered amount, and NCGTC sees a very strong likelihood the scheme is renewed for post-March 2026 disbursements, possibly with retroactive eligibility. Renewal would restore the provisioning shield on new lending as the book compounds."
+   }
+  ]
+ }
+}

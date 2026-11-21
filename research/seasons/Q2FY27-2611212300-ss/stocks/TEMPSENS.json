@@ -1,0 +1,489 @@
+{
+ "ticker": "TEMPSENS",
+ "name": "Tempsens Instruments (India) Ltd",
+ "concall": {
+  "name": "Tempsens Instruments (India) Ltd",
+  "sector": "Engineering Light General",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "H1 revenue surged 33.7% YoY, export share doubled",
+    "text": "Consolidated growth was powered by newly acquired European entities and ~45% organic export growth, pushing exports to ~37% of product revenue."
+   },
+   {
+    "label": "Margins dipped on front-loaded costs, recovery promised",
+    "text": "EBITDA margin fell to 21.2% from 25.2% as employee costs jumped 41% to build teams and absorb new entities; management expects progressive H2 improvement as new product dispatches ramp."
+   },
+   {
+    "label": "Five capacity projects on track, ₹500 crores peak potential",
+    "text": "All projects are commissioning between Q4 FY27 and Q3 FY28, with management calling the aggregated peak revenue potential a possibility, not guidance."
+   },
+   {
+    "label": "OEM pivot is materializing with confirmed orders",
+    "text": "Fuel cell sensor supplies have started, life science furnace dispatches began in October, and the Victura JV has a confirmed exhaust heater order; OEM business is expected to hit ~15% of revenue next year."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether H2 margin recovery actually materializes as furnace and harness dispatches ramp, the pace of fuel cell sensor scale-up, and any prototype contract finalization for AdBlue heaters."
+  },
+  "sections": [
+   {
+    "title": "Revenue Growth & Mix Shift",
+    "points": [
+     {
+      "label": "Consolidation plus organic momentum",
+      "text": "H1 FY27 consolidated revenue growth of 33.7% YoY came from the addition of Tempsens Germany, Tempsens Polska, and Tempsens Measurement and Control, which were not in the base period, plus sustained organic growth in key export markets."
+     },
+     {
+      "label": "Export transformation",
+      "text": "Exports more than doubled their share of product revenue to ~37% (vs 25% last year), driven by the new European entities and ~45% organic export growth in Southeast Asia and the Middle East."
+     },
+     {
+      "label": "Domestic resilience",
+      "text": "Domestic revenue grew ~12% to ₹159 crores, even as the export engine accelerated."
+     },
+     {
+      "label": "Segment drivers",
+      "text": "Temperature sensing grew 57% YoY to ₹133 crores (~25% organic), led by thermal power plants, CVD equipment OEMs, and ramping fuel cell sensor dispatches. Electrical heating grew 44% YoY to ₹47 crores on oil and gas dispatches across India, Southeast Asia, and the Middle East. Specialised cable recovered to ~₹74 crores in H1 after a soft Q1, executing orders in thermal power, African oil and gas, and Indian chemical."
+     },
+     {
+      "label": "MRO stability",
+      "text": "MRO contribution remains around 25%, consistent with prior years."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vinay Rathi: \"We are engineered made-to-order, made in India, made for the world.\""
+     }
+    ]
+   },
+   {
+    "title": "Margin Walk & Profitability",
+    "points": [
+     {
+      "label": "Gross margin held near FY26 levels",
+      "text": "H1 FY27 gross margin was 45.7%, broadly in line with the FY26 full-year figure of 46%; management expects the full year to land in the same range, \"maybe a percentage here and there.\""
+     },
+     {
+      "label": "Q2 gross margin pressure was temporary",
+      "text": "Newly acquired entities in Germany and Poland carry lower gross margins than Tempsens India standalone, and H1 FY26 included a large high-margin defense order that made the YoY comparison unfavorable; management expects recovery as heater and furnace dispatches grow."
+     },
+     {
+      "label": "EBITDA margin compressed by front-loaded investment",
+      "text": "EBITDA margin fell to 21.2% from 25.2% YoY because employee cost grew 41% (teams for new capacity, corporate structure, newly consolidated entities, and ₹1.1 crores in ESOP charges vs near-zero last year) and other expenses grew 37%."
+     },
+     {
+      "label": "Finance cost relief incoming",
+      "text": "Finance cost was ₹2.5 crores for H1; ₹55 crores of IPO proceeds were used to repay debt, halving borrowings to ₹40.7 crores and improving debt-to-equity to 0.06x from 0.15x. The full benefit of debt repayment will show from next quarter, with management expecting at least a 1% profitability uplift from reduced finance costs."
+     },
+     {
+      "label": "H2 margin recovery path",
+      "text": "Employee costs have been front-loaded; absorption toward revenue is expected in the next half year, with full absorption from next year. As harness cable and furnace supplies start and OEM sensors ramp, profitability is expected to improve progressively."
+     },
+     {
+      "label": "Blended margin normalization",
+      "text": "Overall consolidated margin is expected to return to previous-year levels; some added entities have higher manpower costs but the blended margin will converge."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vinay Rathi: \"As supplies of harness cables and furnace starts and the OEM sensors ramp up in the second half, we expect the profitability to improve progressively.\""
+     }
+    ]
+   },
+   {
+    "title": "Capacity Build-Out & Capex",
+    "points": [
+     {
+      "label": "Five projects, ₹500 crores peak potential",
+      "text": "All five capacity projects are on their announced timelines, commissioning between Q4 FY27 and Q3 FY28, with aggregated peak revenue potential of ~₹500 crores at full utilization. Management explicitly notes this is potential, not guidance."
+     },
+     {
+      "label": "Project roster",
+      "text": "A brownfield contact sensor plant (Unit 1) completes Q3 FY28 with ₹120 crores peak potential; a new large furnace and mid-voltage heater plant (Unit 6) completes Q1 FY28 with ₹200 crores peak potential; a new cable plant (Unit 8) completes Q2 FY28 with ~₹60 crores peak potential; the Victura JV facility commences Q4 FY27 with ~₹120 crores peak potential."
+     },
+     {
+      "label": "Capex deployed",
+      "text": "₹36.7 crores spent in H1, of which ₹26 crores was for leasehold land for the specialised cables expansion."
+     },
+     {
+      "label": "Global footprint expanding",
+      "text": "A new sales office opened in Ajman, UAE; capacity expansion is also planned in Poland and Mexico."
+     },
+     {
+      "label": "Working capital growing with revenue",
+      "text": "Inventory grew ~₹28 crores to ₹139 crores to support business growth; receivables were slightly lower than March at ₹83.1 crores even as revenue grew. Management expects working capital days to remain constant, in line with last year, while the absolute number grows."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vinay Rathi: \"All 5 are on their announced timeline, and this is a potential and not a guideline.\""
+     }
+    ]
+   },
+   {
+    "title": "OEM Business Ramp & New Products",
+    "points": [
+     {
+      "label": "Fuel cell sensors in motion",
+      "text": "Supplies started in the last two months and are ramping up; orders are confirmed for almost a year from the customer. Cable harnesses for the same customer are also in the approval pipeline."
+     },
+     {
+      "label": "Life science furnaces",
+      "text": "Major certification completed; first supplies made in October, ramping up to potential by March."
+     },
+     {
+      "label": "Victura JV order secured",
+      "text": "The 50-50 JV has signed an agreement to acquire an ~80,000 sq ft facility and has a confirmed order for exhaust heaters."
+     },
+     {
+      "label": "Standard and laboratory furnaces",
+      "text": "Both are now ETL and CE approved; standard furnace supplies are beginning in the second half of this year with ramp to potential by March, while bulk dispatches of laboratory furnaces start Q3 of this year."
+     },
+     {
+      "label": "High-temperature wiring harness",
+      "text": "Now has a firm start for OEM customers; UL-certified supplies begin Q3 FY27."
+     },
+     {
+      "label": "Edge Series pyrometers launched",
+      "text": "Non-contact pyrometers and a combined thermal-and-visual camera for temperature monitoring and surveillance have been introduced."
+     },
+     {
+      "label": "OEM revenue share target",
+      "text": "Management expects OEM business, from fuel cell and emission control work, to reach about 15% of revenue in the next year."
+     },
+     {
+      "label": "Customer blend in 3 years",
+      "text": "Within the next 3 years, management targets ~80% traditional customers and ~20% OEM customers, with 80% made-to-order and 20% standard products."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vinay Rathi: \"W expect this OEM business, either from fuel cell or with this emission control kind of jobs that we are doing, to be about 15% of our revenue in the next year to come.\""
+     }
+    ]
+   },
+   {
+    "title": "Mid-Voltage Heaters & the Next Delta",
+    "points": [
+     {
+      "label": "The big prize",
+      "text": "Mid-voltage heaters have a global TAM of almost US\\$600–US\\$800 million with very limited players; once certified, they could represent a larger delta for the company."
+     },
+     {
+      "label": "Timeline",
+      "text": "Certification is still expected by Q4 FY27, but the product enters the revenue bucket only after the approval cycle is complete, which management expects in the next financial year (FY28)."
+     },
+     {
+      "label": "AdBlue heater prototype",
+      "text": "In final-stage discussions with an automotive manufacturer for a prototype contract to supply AdBlue heaters for commercial vehicle emission control; if finalized, it could become an opportunity almost the same size as the exhaust heater opportunity, though it will take about a year to materialize."
+     },
+     {
+      "label": "Infrared pyrometers and thermal imagers",
+      "text": "Also identified as products that would create a larger delta for the company."
+     },
+     {
+      "label": "Micro-Epsilon JV progress",
+      "text": "Newer products are already developed; the JV is in the final stages of transferring products to be supplied from the entity and in final quality-stage approval by Micro-Epsilon's quality system."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vinay Rathi: \"Th major delta items are this mid-voltage heaters where there are very limited number of players on the world market. And obviously once those are already proven in our lab, and once it is approved with the agency -- with the certification, and then it could have a larger delta for the company.\""
+     }
+    ]
+   },
+   {
+    "title": "Export Markets & the China Plus One Tailwind",
+    "points": [
+     {
+      "label": "Middle East approvals progressing",
+      "text": "Oil and gas approvals in the Middle East are progressing well; management expects these to open newer export markets. Once political disruption in the region resolves, huge potential is seen for additional opportunities in these markets."
+     },
+     {
+      "label": "Supply chain diversification at work",
+      "text": "Management observes that customers are actively diversifying their supply chains and taking India seriously as a serial supplier for engineered products."
+     },
+     {
+      "label": "Export vs domestic mix",
+      "text": "Both India and export markets are expected to grow; the blended export share is expected to remain similar to today's level, or possibly tilt further toward exports."
+     },
+     {
+      "label": "Competition landscape",
+      "text": "The company currently faces no specific competition because its products are specially engineered and low-volume. As the OEM customer base grows, Chinese competition is expected to emerge."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vinay Rathi: \"People are also looking on diversifying their supply chain and taking India very seriously to be a serial supplier for their needs of engineered products.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Full-year revenue growth",
+       "In line with blended growth over the last 3 years; H1 is tracking ahead of this range helped by consolidated entities",
+       "FY27"
+      ],
+      [
+       "Full-year gross margin",
+       "In line with last year's number, \"maybe a percentage here and there\"",
+       "FY27"
+      ],
+      [
+       "H2 profitability",
+       "Improve progressively as harness cables, furnaces, and OEM sensors ramp",
+       "H2 FY27"
+      ],
+      [
+       "Mid-voltage heater certification",
+       "Certification expected",
+       "Q4 FY27"
+      ],
+      [
+       "Mid-voltage heater revenue contribution",
+       "Product enters revenue bucket after approval cycle complete",
+       "FY28"
+      ],
+      [
+       "Brownfield contact sensor plant (Unit 1)",
+       "Completed; peak revenue potential ₹120 crores",
+       "Q3 FY28"
+      ],
+      [
+       "Large furnace and mid-voltage heater plant (Unit 6)",
+       "Completed; peak revenue potential ₹200 crores",
+       "Q1 FY28"
+      ],
+      [
+       "New cable plant (Unit 8)",
+       "Completed; peak revenue potential ~₹60 crores",
+       "Q2 FY28"
+      ],
+      [
+       "Victura JV facility",
+       "Commence operations; peak revenue potential ~₹120 crores",
+       "Q4 FY27"
+      ],
+      [
+       "UL-certified high-temperature wire harness supplies",
+       "Begin",
+       "Q3 FY27"
+      ],
+      [
+       "Standard furnace ramp-up",
+       "Ramp to potential",
+       "By March 2027"
+      ],
+      [
+       "OEM revenue share",
+       "~15% of revenue",
+       "Next year (FY28)"
+      ],
+      [
+       "Customer blend",
+       "~80% traditional, ~20% OEM; 80% made-to-order, 20% standard",
+       "Within 3 years"
+      ],
+      [
+       "Finance cost benefit",
+       "Full benefit of debt repayment visible; at least 1% profitability uplift",
+       "From Q3 FY27"
+      ],
+      [
+       "Employee cost absorption",
+       "Absorption of front-loaded costs toward revenue",
+       "H2 FY27 (partial), full absorption from FY28"
+      ],
+      [
+       "AdBlue heater prototype contract",
+       "Finalization of prototype contract with automotive manufacturer",
+       "Undisclosed; materialization ~1 year from contract"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Revenue",
+       "₹255 cr in H1 FY27, +33.7% YoY"
+      ],
+      [
+       "Total income",
+       "₹259.4 cr in H1 FY27, +33% YoY"
+      ],
+      [
+       "EBITDA",
+       "₹54.9 cr in H1 FY27, +11.9% YoY"
+      ],
+      [
+       "EBITDA margin",
+       "21.2% of total income in H1 FY27, vs 25.2% in H1 FY26"
+      ],
+      [
+       "Gross margin",
+       "45.7% in H1 FY27, broadly in line with FY26 full year level of 46%"
+      ],
+      [
+       "Profit before tax",
+       "₹44.5 cr in H1 FY27, +11.7% YoY"
+      ],
+      [
+       "Profit after tax",
+       "₹35.7 cr in H1 FY27, +18.1% YoY; includes one-time deferred tax credit of ₹1.3 cr; adjusted PAT grew 17% to ₹38 cr"
+      ],
+      [
+       "Export revenue",
+       "₹94 cr in H1 FY27, more than doubled YoY; 37% of product revenue vs 25% last year"
+      ],
+      [
+       "Organic export growth",
+       "~45% in H1 FY27"
+      ],
+      [
+       "Domestic revenue",
+       "₹159 cr in H1 FY27, +12% YoY"
+      ],
+      [
+       "Temperature sensing revenue",
+       "₹133 cr in H1 FY27, +57% YoY; 53% of product revenue; organic growth ~25%"
+      ],
+      [
+       "Electrical heating revenue",
+       "₹47 cr in H1 FY27, +44% YoY"
+      ],
+      [
+       "Specialised cable revenue",
+       "~₹74 cr in H1 FY27, grew in the second half"
+      ],
+      [
+       "Employee cost",
+       "₹42.1 cr in H1 FY27, +41% YoY; includes ESOP charges of ₹1.1 cr"
+      ],
+      [
+       "Finance cost",
+       "₹2.5 cr in H1 FY27; full benefit of debt repayment to show from next quarter"
+      ],
+      [
+       "Total borrowings",
+       "₹40.7 cr as of Sep 30, 2026, vs ₹77.9 cr as of Mar 31, 2026; debt-to-equity 0.06x"
+      ],
+      [
+       "Inventory",
+       "₹139 cr as of Sep 30, 2026, grew by ~₹28 cr in H1"
+      ],
+      [
+       "Receivables",
+       "₹83.1 cr as of Sep 30, 2026, slightly lower than March"
+      ],
+      [
+       "Capex",
+       "₹36.7 cr in H1 FY27, of which ₹26 cr for leasehold land for specialised cables"
+      ],
+      [
+       "Operating cash profit before working capital changes",
+       "₹50.7 cr in H1 FY27, +16.2% YoY"
+      ],
+      [
+       "Capacity utilization",
+       "~80%"
+      ],
+      [
+       "MRO business contribution",
+       "~25% of revenue"
+      ],
+      [
+       "Traditional business order book",
+       "3 to 4 months"
+      ],
+      [
+       "OEM business visibility",
+       "1 to 2 years"
+      ],
+      [
+       "OEM business expected revenue share",
+       "~15% of revenue in the next year"
+      ],
+      [
+       "R&D headcount",
+       "~80 people"
+      ],
+      [
+       "Mid-voltage heater TAM",
+       "~US\\$600–US\\$800 million"
+      ],
+      [
+       "Incremental revenue from Germany and Poland acquisitions",
+       "~₹25–₹26 cr in H1 FY27"
+      ],
+      [
+       "Aggregated peak revenue potential of 5 capacity projects",
+       "~₹500 cr at full utilization"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Tempsens Instruments (India) Ltd",
+  "sector": "Engineering Light General",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "Medium-voltage heaters Unit 6",
+    "text": "A ~50,000 sq ft brownfield plant for medium-voltage heaters and pressure vessels is on track for completion by Q1 FY28, with explosion-proof certification expected Q4 FY27 and peak revenue potential of ~₹200 crore p.a. at full utilisation. Heaters rated up to 15 MW (vs 3 MW today) open a ~$600-800 million market in petrochemicals, carbon capture, electrical boilers and green hydrogen - the largest single addition in the 5-project program."
+   },
+   {
+    "title": "Victura automotive heater JV",
+    "text": "The 50:50 JV with Victura has signed an agreement to acquire an ~80,000 sq ft facility, with production expected to start by Q4 FY27 and peak revenue potential of ~₹120 crore p.a.. A confirmed long-term contract to supply exhaust heaters to a commercial vehicle company is already in hand, and an AdBlue prototype discussion with a European OEM of similar size is in final stages."
+   },
+   {
+    "title": "OEM contact sensor Unit 1 plant",
+    "text": "A 50,000 sq ft brownfield line for OEM contact sensors is on track for completion by Q3 FY28, with ~₹120 crore p.a. peak revenue potential and room to add more in the same facility. It supports the mix shift toward OEM customers, who give 1-2 years of order visibility vs 3-4.5 months in the traditional business."
+   },
+   {
+    "title": "Fuel-cell sensor ramp",
+    "text": "Dispatches of temperature sensors for fuel cells started in the last two months of H1 FY27 with orders covering almost a year from the customer. Management expects OEM and new products to contribute more than 25% of revenue starting FY28, with OEMs reaching ~15% of revenue over time."
+   },
+   {
+    "title": "Life-sciences furnace contract",
+    "text": "A five-year private-label supply contract with a life sciences OEM is signed, ETL and CE certification is complete, and first supplies were made in October 2026 with bulk dispatches starting Q3 FY27. A ~25,000 sq ft custom furnace capacity is already commissioned, and management sees furnaces as a substantial part of revenue next year."
+   },
+   {
+    "title": "EDGE pyrometers with Micro-Epsilon",
+    "text": "The EDGE series of non-contact pyrometers co-developed with Micro-Epsilon and a combined thermal-plus-visual camera start dispatching in Q3 FY27, sold through both partners' channels. Management sizes this market at ~₹3,000 crore, of which Tempsens currently addresses under ~1%."
+   },
+   {
+    "title": "Unit 8 export cable plant",
+    "text": "Construction of the export-focused specialised cable plant is underway, on track for completion in Q2 FY28 with ~₹60 crore p.a. peak revenue potential and ability to ramp quickly. Land worth ~₹25 crore was bought from internal accruals and IPO proceeds are earmarked for cable capex at Units IV and V."
+   },
+   {
+    "title": "Exports and overseas entities",
+    "text": "Exports more than doubled to ₹94 crore in H1 FY27 (~37% of product revenue, ~45% organic growth), with new entities in Germany, Poland, Mexico and South Korea adding ~₹25-26 crore of consolidated revenue in H1. The signed agreement to acquire 50.01% of Tempsens GmbH adds EU manufacturing, and Middle East oil-and-gas approvals in progress should open further export markets."
+   }
+  ]
+ }
+}

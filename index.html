@@ -1014,9 +1014,16 @@ button.xr-row:hover { box-shadow:inset 0 0 0 1px var(--border); }
 .xr-hero .wl a { color:#fff;font-weight:700; }
 .xr-seg { display:flex;gap:4px;background:var(--track);border-radius:14px;padding:4px;overflow-x:auto;scrollbar-width:none; }
 .xr-seg::-webkit-scrollbar { display:none; }
+.xr-res td:not(:first-child), .xr-res th:not(:first-child) { text-align:right;white-space:nowrap; }
+.xr-res td.up { color:var(--pos);font-weight:700; } .xr-res td.dn { color:var(--neg);font-weight:700; }
+.xr-sub { margin:4px 0 0;font-size:15px;font-weight:900; }
+.xr-pro { border:1px solid var(--border);border-radius:16px;padding:12px 14px;background:var(--card); }
+.xr-pro .h { display:flex;justify-content:space-between;gap:10px;align-items:flex-start; } .xr-pro .h b { font-size:14px;line-height:1.35; } .xr-pro .h .xr-tag { flex:0 0 auto; }
+.xr-pro p { margin:6px 0 0;font-size:13.5px;line-height:1.45;color:var(--text2); }
+.xr-dot { display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle;flex:0 0 auto; }
 .xr-seg button { flex:1 0 auto;min-height:44px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:var(--ink);font-size:14px;font-weight:700;white-space:nowrap;cursor:pointer; }
 .xr-seg button.on { background:var(--ink);color:var(--on-ink);font-weight:800; }
-@media (max-width:699px) { .xr-seg button { flex:1 1 auto;padding:0 6px;font-size:13px; } .xr > .xr-pane { background:transparent;padding:0; } }
+@media (max-width:699px) { .xr-seg button { flex:0 0 auto;padding:0 11px;font-size:13px; } .xr > .xr-pane { background:transparent;padding:0; } }
 .xr-ft { display:grid;grid-template-columns:minmax(0,1fr);gap:10px; }
 @media (min-width:700px) { .xr-ft { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 .xr-f { border-radius:18px;padding:16px;background:var(--p-blue);display:flex;flex-direction:column;gap:9px; }
@@ -3897,7 +3904,38 @@ async function xrDetail(t) {
   XR.det[t] = null;   // loading
   try { const r = await fetch(XR_BASE + 'seasons/' + encodeURIComponent(XR.live.folder) + '/stocks/' + encodeURIComponent(t) + '.json'); XR.det[t] = r.ok ? await r.json() : false; }
   catch (e) { XR.det[t] = false; }
-  if (LAST_MODEL) renderXray(LAST_MODEL);
+  if (LAST_MODEL) { renderXray(LAST_MODEL); xrSegFix(); }
+}
+//  Extras (latest result, promises vs delivery, red-flag check) come in the season's stocks/<TICKER>.json
+//  under "extras"; index.json marks those stocks with x:1. Built from StockScans (build_from_stockscan.py).
+const XR_EXT_SUBS = ['res', 'pro', 'flg'];
+function xrResult(x) {
+  const r = x && x.result; if (!r || !r.rows) return '<div class="xr-empty">No latest result yet.</div>';
+  const cls = v => /^\+/.test(v) ? 'up' : /^[-−]/.test(v) ? 'dn' : '';
+  return `<div class="xr-cc"><div class="xr-tags"><span class="xr-tag new">${esc(r.q)} result</span>${r.declared ? `<span class="xr-tag">declared ${esc(r.declared)}</span>` : ''}</div>
+    <div class="xr-cream"><h4>Latest quarter vs last quarter and a year ago</h4><div class="xr-tblw"><table class="xr-tbl xr-res"><thead><tr><th>₹ crore</th>${r.cols.map(c => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${r.rows.map(row => `<tr>${row.map((v, i) => `<td${i >= 4 ? ` class="${cls(v)}"` : ''}>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>
+    <div class="xr-src">Consolidated figures as declared to the exchange. EBITDA is operating profit before other income, depreciation, interest and tax.</div></div>`;
+}
+const XR_PRO = { 'Delivered': 'up', 'On track': 'lo', 'Pending': 'g', 'Partial': 'hi', 'Missed': 'dn' };
+function xrPromises(x) {
+  const p = x && x.promises; if (!p || !p.items) return '<div class="xr-empty">No promise tracking yet.</div>';
+  const c = p.counts || {}, tot = Object.values(c).reduce((a, b) => a + b, 0);
+  const bar = Object.keys(XR_PRO).filter(k => c[k]).map(k => `<span class="xr-tag ${XR_PRO[k]}">${c[k]} ${esc(k.toLowerCase())}</span>`).join('');
+  return `<div class="xr-cc"><div class="xr-cream"><h4>What management promised, and what happened</h4><div class="xr-note">${tot} promises from past concalls and reports, checked against what was later reported.</div><div class="xr-tags" style="margin-top:10px">${bar}</div></div>
+    <h4 class="xr-sub">The most recent ones</h4>
+    ${p.items.map(it => `<div class="xr-pro"><div class="h"><b>${esc(it.t)}</b><span class="xr-tag ${XR_PRO[it.st] || ''}">${esc(it.st)}</span></div><p>${esc(it.txt)}</p></div>`).join('')}
+    <div class="xr-src">Statements management made in the past, compared with reported numbers. Not a forecast.</div></div>`;
+}
+const XR_LVL = { red: ['#A12B1F', 'Serious'], amber: ['#C2611A', 'Look closely'], yellow: ['#B07A00', 'Worth knowing'], green: ['#1E6B45', 'Clean'] };
+function xrFlags(x) {
+  const f = x && x.flags; if (!f || !f.items) return '<div class="xr-empty">No red-flag check yet.</div>';
+  const n = l => f.items.filter(i => i.lvl === l).length;
+  const sum = Object.keys(XR_LVL).filter(l => n(l)).map(l => `<span class="xr-tag" style="color:${XR_LVL[l][0]}"><i class="xr-dot" style="background:${XR_LVL[l][0]}"></i>${n(l)} ${XR_LVL[l][1].toLowerCase()}</span>`).join('');
+  return `<div class="xr-cc"><div class="xr-cream"><h4>Accounts and governance check</h4><p class="xr-note">${esc(f.intro || '')}</p><div class="xr-tags" style="margin-top:10px">${sum}</div></div>
+    ${f.items.map((it, i) => `<details class="xr-acc"${i === 0 ? ' open' : ''}><summary><i class="xr-dot" style="background:${(XR_LVL[it.lvl] || XR_LVL.yellow)[0]}"></i>${esc(it.t)}</summary><div class="in"><div class="pt"><span>${esc(it.txt)}</span></div></div></details>`).join('')}
+    ${f.watch && f.watch.length ? `<div class="xr-box butter"><h4>What to watch</h4><ul>${f.watch.map(w => `<li>${esc(w)}</li>`).join('')}</ul></div>` : ''}
+    ${f.bottom ? `<div class="xr-box"><h4>Bottom line</h4><p>${esc(f.bottom)}</p></div>` : ''}
+    <div class="xr-src">Facts from annual reports, auditor reports and filings. Not a buy or sell call.</div></div>`;
 }
 const xm = (s, k) => { const v = s && s.m ? s.m[k] : null; return typeof v === 'number' && isFinite(v) ? v : null; };
 const xrN = (n, d = 1) => n === null || n === undefined ? '—' : Number(n).toLocaleString('en-IN', { maximumFractionDigits: d });
@@ -4030,10 +4068,19 @@ function xrPane(r, disc) {
       <div class="px"><b>₹${xrN(r.px, 2)}</b>${dist !== null ? `<span class="${dist >= 0 ? 'up' : 'dn'}">${dist >= 0 ? '▲' : '▼'} ${xrN(Math.abs(dist), 1)}% ${dist >= 0 ? 'above' : 'below'} 40W EMA (₹${xrN(ema, 0)})</span>` : ''}</div>
       <div class="you"><div><small>You hold</small><b>${xrN(r.units, 3)}</b></div><div><small>Value</small><b>${fmtCr(r.value)}</b></div><div><small>Of your stocks</small><b>${r.w.toFixed(1)}%</b></div></div>
       <div class="wl">Best value range: see the <a href="${XR_WL_URL}" target="_blank" rel="noopener">R2R Watchlist Universe</a></div></div>`;
-  const seg = `<div class="xr-seg" role="tablist">${[['snap', 'Snapshot'], ['nums', 'Numbers'], ['con', 'Concall'], ['cat', 'Catalysts']].map(([k, l]) => `<button role="tab" class="${XR.sub === k ? 'on' : ''}" aria-selected="${XR.sub === k}" onclick="xrSub('${k}')">${l}</button>`).join('')}</div>`;
+  const ext = !!s.x;
+  if (!ext && XR_EXT_SUBS.includes(XR.sub)) XR.sub = 'snap';
+  if (ext && XR_EXT_SUBS.includes(XR.sub)) xrDetail(t);
+  const subs = [['snap', 'Snapshot'], ['res', 'Result'], ['nums', 'Numbers'], ['con', 'Concall'], ['cat', 'Catalysts'], ['pro', 'Promises'], ['flg', 'Red flags']].filter(([k]) => ext || !XR_EXT_SUBS.includes(k));
+  const seg = `<div class="xr-seg" role="tablist">${subs.map(([k, l]) => `<button role="tab" class="${XR.sub === k ? 'on' : ''}" aria-selected="${XR.sub === k}" onclick="xrSub('${k}')">${l}</button>`).join('')}</div>`;
   let body = '';
   if (XR.sub === 'snap') body = xrSnap(r);
   else if (XR.sub === 'nums') body = xrNums(s);
+  else if (XR_EXT_SUBS.includes(XR.sub)) {
+    const dx = XR.det[t], x = dx && dx.extras;
+    body = dx === undefined || dx === null ? '<div class="xr-empty">Loading…</div>' : dx === false || !x ? '<div class="xr-empty">This could not be loaded. Check your internet and try again.</div>'
+      : (XR.sub === 'res' ? xrResult(x) : XR.sub === 'pro' ? xrPromises(x) : xrFlags(x)) + (x.asOf ? `<div class="xr-src">Updated ${esc(x.asOf)}.</div>` : '');
+  }
   else {
     const det = XR.det[t];
     if (XR.sub === 'con' && !s.cc) body = `<div class="xr-empty">There is no concall summary for ${esc(xrShort(s.n))} this season.</div>`;
@@ -4106,10 +4153,11 @@ function xrCats(g) {
     ${g.items.map((it, i) => `<div class="xr-cat"><span class="n" style="background:${XR_SC[i % XR_SC.length]}">${i + 1}</span><div><b>${esc(it.title)}</b><p>${esc(it.text)}</p></div></div>`).join('')}
     <div class="xr-src">These are possibilities management has described, not forecasts.</div></div>`;
 }
-function xrOpen(t) { XR.sel = t; if (XR.sub === 'con' || XR.sub === 'cat') xrDetail(t); renderXray(LAST_MODEL);
+function xrOpen(t) { XR.sel = t; if (XR.sub !== 'snap' && XR.sub !== 'nums') xrDetail(t); renderXray(LAST_MODEL);
   const p = document.getElementById('xr-pane'); if (p && !window.matchMedia('(min-width:1100px)').matches) window.scrollTo({ top: 0, behavior: 'smooth' }); else if (p) p.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
 function xrBack() { XR.sel = null; renderXray(LAST_MODEL); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-function xrSub(k) { XR.sub = k; renderXray(LAST_MODEL); }
+function xrSegFix() { const b = document.querySelector('.xr-seg button.on'), g = b && b.parentElement; if (g) g.scrollLeft = b.offsetLeft - (g.clientWidth - b.offsetWidth) / 2; }
+function xrSub(k) { XR.sub = k; renderXray(LAST_MODEL); xrSegFix(); }
 function xrSort(k) { XR.sort = k; renderXray(LAST_MODEL); }
 function xrFlag(k) { XR.flag = XR.flag === k ? '' : k; renderXray(LAST_MODEL); }
 window.addEventListener('resize', (() => { let w = window.innerWidth >= 1100, t; return () => { clearTimeout(t); t = setTimeout(() => { const n = window.innerWidth >= 1100; if (n !== w) { w = n; if (LAST_MODEL) renderXray(LAST_MODEL); } }, 150); }; })());

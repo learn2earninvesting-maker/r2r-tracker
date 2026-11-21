@@ -1,0 +1,184 @@
+{
+ "ticker": "INNOVACAP",
+ "name": "Innova Captab Ltd",
+ "concall": {
+  "name": "Innova Captab Ltd",
+  "sector": "Pharma CRAMS",
+  "quarter": "Q2 FY27",
+  "date": "",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Strong top line, margin squeeze",
+    "text": "Consolidated revenue grew 30% YoY to ₹496.3 crores, but EBITDA margin compressed to 14.6% as API cost increases could not be passed through swiftly enough in export markets."
+   },
+   {
+    "label": "Jammu facility is the growth engine",
+    "text": "The plant hit a ₹450 crore annualized run-rate, completed marquee customer audits, and is expected to accelerate to ₹140–150 crores per quarter in the near term."
+   },
+   {
+    "label": "Export pass-through lag is the margin culprit",
+    "text": "A 2.8% consolidated gross margin hit stemmed from longer-duration international purchase orders that delay pricing transfers, while standalone margins saw only a 0.8% impact because shorter cycles allow swifter adjustment."
+   },
+   {
+    "label": "20% volume growth model intact for two years",
+    "text": "Management sees existing efforts sustaining the trajectory through FY29, with a ₹400 crore treasury available for greenfield or inorganic moves to fuel growth beyond that."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether API prices stabilize so margins normalize, the pace of Jammu’s ramp toward the ₹500 crore annual target, and any tangible signal on the acquisition pipeline for post-FY29 growth."
+  },
+  "sections": [
+   {
+    "title": "Jammu Facility Ramp-Up",
+    "points": [
+     {
+      "label": "Production milestone",
+      "text": "The facility started production in January 2025 and has now completed six quarters of operations, reaching an annualized revenue base of ₹450 crores."
+     },
+     {
+      "label": "Customer validation done",
+      "text": "Key marquee customer audits were successfully completed and onboarding of those customers is now finished, setting the stage for accelerated revenue in coming quarters."
+     },
+     {
+      "label": "Near-term trajectory",
+      "text": "Revenue is expected in the ₹140–150 crores per quarter range over the next two quarters, up from ₹105 crores this quarter."
+     },
+     {
+      "label": "Runway",
+      "text": "The facility has roughly two years of room to grow, with a potential to reach ₹1,200–1,300 crores."
+     },
+     {
+      "label": "Margin contribution",
+      "text": "Jammu contributed EBITDA of around ₹2 crores to ₹2.25 crores this quarter, still in early-stage ramp."
+     }
+    ]
+   },
+   {
+    "title": "Margin Dynamics & API Pass-Through",
+    "points": [
+     {
+      "label": "The core problem",
+      "text": "Consolidated gross margin was impacted by 2.8%, while standalone gross margin saw only a 0.8% hit, because domestic purchase order cycles are shorter and pricing transfers happen faster than in export markets."
+     },
+     {
+      "label": "No retrospective relief",
+      "text": "Price adjustments from customers for API increases are always on a prospective, PO-to-PO basis; retrospective adjustments normally do not happen."
+     },
+     {
+      "label": "Contractual protection exists",
+      "text": "API price movements are contractually built to be passed through to customers on a long-term basis, so the margin hit is a timing issue, not a permanent loss."
+     },
+     {
+      "label": "Normalization path",
+      "text": "If API prices stabilize, margins should move back to a normalized position; management reiterated the margin will stay within a plus/minus 2% range and improvement will be organic and gradual."
+     }
+    ]
+   },
+   {
+    "title": "Business Model & Return Profile",
+    "points": [
+     {
+      "label": "Ex-Jammu organic growth",
+      "text": "The ex-Jammu portfolio (Innova, Univentis, Sharon) is growing organically at 10%–12% with margin consolidation and revenue ramp-up."
+     },
+     {
+      "label": "ROE math",
+      "text": "With 3x FATR and 15%–16% EBITDA margin, the business model yields 16%–17% ROE with 90 days of working capital; any improvement in EBITDA margin can lift ROE to 20%."
+     },
+     {
+      "label": "Beyond FY29",
+      "text": "The company is evaluating both greenfield and inorganic acquisition opportunities to trigger growth beyond FY29, with a treasury of around ₹400 crores available for reinvestment and healthy debt equity."
+     },
+     {
+      "label": "CDMO and branded generics",
+      "text": "CDMO revenue grew 30% YoY in Q2 and branded generic revenue grew 32% YoY; exports contributed 29% of Q2 revenue."
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Jammu quarterly revenue",
+       "₹140–150 crores per quarter",
+       "Next two quarters"
+      ],
+      [
+       "Jammu annual revenue",
+       "Cross ₹500 crores",
+       "This fiscal year"
+      ],
+      [
+       "Volume growth",
+       "20% annually",
+       "Next two years (through FY29)"
+      ],
+      [
+       "EBITDA margin range",
+       "Within plus/minus 2% of current levels",
+       "Ongoing"
+      ],
+      [
+       "Jammu facility capacity",
+       "Reach ₹1,200–1,300 crores",
+       "Approximately two years"
+      ],
+      [
+       "Post-FY29 growth trigger",
+       "Deploy ~₹400 crore treasury into greenfield or inorganic acquisition",
+       "When a tangible conclusion is reached"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Innova Captab Ltd",
+  "sector": "Pharma CRAMS",
+  "asof": "Aug 2026",
+  "items": [
+   {
+    "title": "Jammu facility ramp-up",
+    "text": "Kathua's four-block greenfield plant (₹480+ cr capex) exited FY26 at a ₹90 cr quarterly run rate, hit ₹107 cr in Q1 FY27, and turned EBITDA-positive. Management targets ₹1,000 cr+ revenue from this facility in 2-3 years against ~25-30% utilization today - roughly 3x current total revenue if achieved."
+   },
+   {
+    "title": "Baddi general block expansion",
+    "text": "Land acquired August 2025 for a new oral tablet/capsule and liquid facility, with capex estimated at ₹150-170 cr across FY27-FY28. At optimum level this block alone could add ₹450-500 cr revenue, relieving the capacity constraints currently capping the general portfolio."
+   },
+   {
+    "title": "Branded generics scale-up",
+    "text": "Q1 FY27 branded generics revenue grew 39% YoY to ₹142.2 cr, following FY26's 51% jump to ₹497 cr. The business runs at ~70% domestic trade generics with 2,50,000+ touchpoints, and management is pushing into new geographies and products - the fastest-growing segment at roughly double the CDMO growth rate."
+   },
+   {
+    "title": "CDMO wallet-share expansion",
+    "text": "CDMO revenue grew 32% YoY in Q1 FY27 to ₹328.7 cr, driven by new customers and higher wallet share from existing ones. With 350+ clients across 60+ countries and ~80% of revenue from partners served over 5 years, the model compounds through repeat orders and new contract wins without needing new capacity."
+   },
+   {
+    "title": "Sharon Bio-Medicine integration",
+    "text": "Sharon (acquired June 2023) contributed ~₹240 cr revenue in FY26 with margins above company average, and is expected to grow in early teens organically. Its Dehradun and Taloja plants run at 60-70% utilization with room to 70-80%, and it opens regulated markets (Canada, UK, Europe, Australia) that the parent couldn't reach alone."
+   },
+   {
+    "title": "Regulatory approvals opening regulated markets",
+    "text": "UK-MHRA approved the Baddi cephalosporin plant and PIC/S (SMDC Ukraine) certified the Kathua, Jammu facility in FY26. These certifications unlock sales into UK, Canada, and other regulated markets - exports already rose from 25.9% of revenue in FY25 to 31.3% in FY26."
+   },
+   {
+    "title": "Jammu GST incentive",
+    "text": "The facility qualifies for GST-linked incentives totaling 300% of eligible plant and machinery investment over 10 years, plus 6% annual interest subvention on term loans. The GST rate cut on formulations (12% to 5%) means the full ~₹75-80 cr incentive now requires ~₹1,400 cr annual sales - which aligns with the facility's peak revenue potential."
+   },
+   {
+    "title": "Semaglutide and GLP-1 development",
+    "text": "R&D work on semaglutide is underway with positive initial results, targeting a \"wave 2\" launch after the 2026 patent expiry of GLP-1 drugs. This is a high-value CDMO opportunity that could add a new revenue leg if the company captures even a small share of the generic wave."
+   }
+  ]
+ }
+}

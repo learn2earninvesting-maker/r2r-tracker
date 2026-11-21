@@ -1,0 +1,225 @@
+{
+ "ticker": "DEEDEV",
+ "name": "DEE Development Engineers Ltd",
+ "concall": {
+  "name": "DEE Development Engineers Ltd",
+  "sector": "Steel Tubes and Pipes",
+  "quarter": "Q2 FY27",
+  "date": "",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Revenue held back by job work mix, not demand",
+    "text": "Q2 revenue grew 8.5% YoY but ~45% of H1 execution was job work where customers supplied material, suppressing reported topline. Management is \"quite confident\" of hitting the full-year ₹1,500 cr target."
+   },
+   {
+    "label": "Margins jumped on mix and operating leverage",
+    "text": "EBITDA margin expanded from 16.3% to 20.1% YoY, driven by higher utilization at Anjar and the seamless pipe plant, a richer power-sector mix in piping, and improved non-core tariffs."
+   },
+   {
+    "label": "Order book nearly doubled, with private-sector diversification accelerating",
+    "text": "Order book up 94% YoY to ₹2,531 cr; H1 inflow up 97% YoY. Siemens orders are now regular, and very large Adani and JSW orders are in advanced finalization, reducing the historical BHEL/L&T dependency."
+   },
+   {
+    "label": "Nuclear and seamless pipe bets are now under construction, not just on slides",
+    "text": "A dedicated nuclear piping plant is being built, a global JV is targeted for closure by FY27-end, and the 7,000-tonne seamless pipe plant is fully operational and expected to contribute meaningfully in H2."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the promised H2 mix shift to >70% with-material orders materializes and pulls reported revenue sharply higher, whether the Adani/JSW orders convert by January, and whether the GE HRSG purchase order finally arrives."
+  },
+  "sections": [
+   {
+    "title": "Revenue Mix: The Job Work Drag and the H2 Inflection",
+    "points": [
+     {
+      "label": "Job work spike suppressed topline",
+      "text": "H1 job work hit 40–45% of execution because BHEL, L&T and Dow orders were on full focus and had to be completed. Since customers supply material in job work, reported revenue is materially lower than it would be for the same tonnage of with-material work."
+     },
+     {
+      "label": "H2 mix shift expected to unlock reported revenue",
+      "text": "Management expects H2 to shift to more than 70% with-material orders and around 30% job work. When high-value with-material orders hit the shop floor and are dispatched, revenue can run 40–50% higher even though tonnage increases only ~20%."
+     },
+     {
+      "label": "October was lean, December onwards the ramp",
+      "text": "October execution was ~₹80 cr; from December, numbers are expected to move at a much higher pace."
+     },
+     {
+      "label": "Fixed-cost leverage amplifies the PAT story",
+      "text": "Fixed expenses are not expected to increase substantially over the next six months; a 40–50% revenue increase therefore drops fixed-cost allocation sharply in percentage terms, flowing directly to EBITDA and PAT."
+     }
+    ]
+   },
+   {
+    "title": "Order Book & Customer Diversification",
+    "points": [
+     {
+      "label": "Order book nearly doubled, inflow outpacing execution",
+      "text": "Order book stood at ₹2,531 cr, up 94% YoY; H1 order inflow of ₹1,179 cr was roughly twice H1 execution."
+     },
+     {
+      "label": "Siemens now a regular customer",
+      "text": "The company has started getting orders from Siemens on a regular basis, with two orders in the last two to three months and another under discussion. Management expects a minimum of 25–30 million Euros of business."
+     },
+     {
+      "label": "Adani and JSW: very large orders in advanced finalization",
+      "text": "Both are in very advanced stages; things should materialize \"maybe by December end or latest by January or February.\""
+     },
+     {
+      "label": "GE LOI still in the book, no conversion yet",
+      "text": "The ~₹400 cr GE letter of intent remains in the order book but has not converted to a purchase order; execution will happen next year only."
+     }
+    ],
+    "quotes": [
+     {
+      "who": "Bansal",
+      "text": "We just cannot now be 100% dependent upon BHEL or L&T."
+     }
+    ]
+   },
+   {
+    "title": "New Engines: Seamless Pipes, Nuclear, and Data Centers",
+    "points": [
+     {
+      "label": "Seamless pipe plant now fully operational",
+      "text": "The 7,000-tonne plant at Anjar is fully streamlined and is expected to start generating meaningful revenue from H2."
+     },
+     {
+      "label": "Seamless plant FY28 ambition",
+      "text": "Management targets ~₹300 cr revenue in FY28, split roughly between ₹150–200 cr direct and ₹150–200 cr captive, at almost full capacity utilization."
+     },
+     {
+      "label": "Nuclear piping JV targeted for FY27-end closure",
+      "text": "Talks with a global partner are at an advanced stage; a dedicated nuclear piping manufacturing facility at Anjar is already under construction."
+     },
+     {
+      "label": "Nuclear revenue ramp is slow, margins are high",
+      "text": "FY28 nuclear revenue is expected at ~₹50–60 cr, FY29 at ~₹200 cr at most, because material deliveries take a lot of time. Margins may exceed 25%."
+     },
+     {
+      "label": "FY30 ambition of ₹2,500 cr excludes nuclear",
+      "text": "The ₹2,500 cr revenue ambition for FY30 does not include any nuclear contribution."
+     }
+    ]
+   },
+   {
+    "title": "Non-Core & Balance Sheet",
+    "points": [
+     {
+      "label": "Debt repaid, finance costs declining",
+      "text": "₹225 cr of debt was repaid from preferential issue proceeds, bringing finance costs down sequentially from ₹17.2 cr to ₹15.3 cr."
+     },
+     {
+      "label": "Inventory days improving",
+      "text": "Dropped from 223 days in H1 to 188 days; debtor days increased slightly last quarter, causing a small working capital increase."
+     },
+     {
+      "label": "Working capital target",
+      "text": "By year-end, working capital days should reach ~225–240 days, with a target of 200 days."
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "FY27 revenue",
+       "₹1,500 cr; management \"quite confident\" and \"sure\"",
+       "FY27 end"
+      ],
+      [
+       "FY27 EBITDA margin",
+       "19%+; management \"100% stand by that\"",
+       "FY27 end"
+      ],
+      [
+       "H2 execution mix",
+       ">70% with-material, ~30% job work",
+       "H2 FY27"
+      ],
+      [
+       "FY28 revenue",
+       "₹1,800 cr; \"firmly committed\"",
+       "FY28 end"
+      ],
+      [
+       "Seamless plant FY28 revenue",
+       "~₹300 cr",
+       "FY28 end"
+      ],
+      [
+       "Nuclear JV closure",
+       "Closure expected",
+       "FY27 end"
+      ],
+      [
+       "Nuclear revenue FY29",
+       "~₹200 cr at most",
+       "FY29 end"
+      ],
+      [
+       "Working capital days",
+       "~225–240 days by year-end (target 200)",
+       "FY27 end"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "DEE Development Engineers Ltd",
+  "sector": "Steel Tubes and Pipes",
+  "asof": "Aug 2026",
+  "items": [
+   {
+    "title": "Anjar ramp-up to full utilization",
+    "text": "Anjar's 30,000 MTPA facility ran at ~50% in Q1 FY27, with management targeting ~60-65% this year and nearly 100% by end-FY28. Peak revenue potential is ~₹1,500 cr against current total company revenue of ~₹1,213 cr, making this the single largest earnings driver."
+   },
+   {
+    "title": "Seamless pipe commercial production",
+    "text": "The 7,000 MTPA seamless pipe plant commenced commercial production on 19 March 2026, with FY27 utilization guided to 60-70%. At optimal utilization it targets ~₹450 cr revenue at ~20% EBITDA and 30-35% IRR, replacing 100% import-dependent pipes."
+   },
+   {
+    "title": "₹300 cr preferential issue",
+    "text": "Allotment of 59.76 lakh shares at ₹502 each completed 8 July 2026, with net proceeds of ~₹293 cr, of which ~₹225 cr repays borrowings. Net debt should fall from ~₹718 cr to ₹400-425 cr in FY27, cutting interest costs and lifting return ratios."
+   },
+   {
+    "title": "BPCL oil & gas order",
+    "text": "A ₹386.82 cr domestic purchase order from BPCL, one of the largest single orders in recent history, delivers by 18 February 2028. This anchors the oil and gas segment and supports the ₹2,000 cr FY27 order inflow expectation."
+   },
+   {
+    "title": "GE and OEM HRSG piping flow",
+    "text": "A Letter of Intent from a US-headquartered OEM covers HRSG piping for 16 units worth over US$40 million, valid till 18 February 2027, with GE GT orders continuing. Even without further GE orders, DEE is booked for more than 1.5 years, with another ₹1,800-2,000 cr inflow expected this year."
+   },
+   {
+    "title": "Thailand capacity reservation",
+    "text": "An international EPC company reserved 60% of Thailand's HRSG capacity (~8,700 tons) from June 2027 through December 2029 at a minimum of US$15.27 million per annum. This secures ~₹150 cr annual revenue at EBITDA margins \"much higher than 20%\" with no significant capex."
+   },
+   {
+    "title": "Siemens GT piping ramp",
+    "text": "Siemens signed an understanding for continuous GT piping business: 10 units next year, 15 the following, ~25-30 in year three, with each unit valued at ~€1-1.5 million. This builds a multi-year revenue stream as Siemens clears the Anjar facility for more business."
+   },
+   {
+    "title": "BHEL order pipeline",
+    "text": "BHEL awarded ~₹200 cr in Q1 FY27, with more tenders expected this quarter and finalization next; traction is building for value-added headers and vessels. BHEL's ~53 units of 800/660 MW and L&T's ~23 units outpace existing industry capacity, supporting sustained order flow."
+   },
+   {
+    "title": "Malwa Power tariff revision",
+    "text": "PSERC set a new tariff of ₹5.224 per kWh for FY26, up 49.3% from the interim ₹3.50 rate, with 5% annual escalation on the variable component. This adds ~₹5.80 cr in retrospective recovery and lifts FY27 power revenue to ~₹24.31 cr, offsetting the segment's cash burn."
+   },
+   {
+    "title": "Biomass pellet plant contribution",
+    "text": "The 72,000 MTPA Muktsar pellet plant commissioned in Q1 FY27, with FY27 revenue estimated at ~₹80 cr from power and pellets combined. This offsets Malwa Power's impairment and supports margin improvement."
+   }
+  ]
+ }
+}

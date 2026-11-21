@@ -1,0 +1,425 @@
+{
+ "ticker": "ACUTAAS",
+ "name": "Acutaas Chemicals Ltd",
+ "concall": {
+  "name": "Acutaas Chemicals Ltd",
+  "sector": "Pharma CRAMS",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "CDMO target pulled forward by a full year",
+    "text": "The ₹1,000 cr revenue ambition, originally set for FY28, is now expected in FY27, and management has set a new ₹2,000 cr target for FY30."
+   },
+   {
+    "label": "Pharma Intermediate drove a 42.7% YoY revenue surge,",
+    "text": "while Specialty Chemicals contracted 20% YoY due to a planned commodity phase-out and a temporary customer-related shipment pause."
+   },
+   {
+    "label": "Margins expanded dramatically",
+    "text": "Gross margin rose 637 bps YoY to 62.1%, and EBITDA margin jumped 914 bps YoY to 40.3%, prompting an upgrade in full-year EBITDA margin guidance to 38%-40%."
+   },
+   {
+    "label": "Three new growth engines are now in commercial motion",
+    "text": "Battery Chemicals shipped its first commercial volumes, the Semiconductor plant in Korea was inaugurated ahead of schedule, and the legacy BFC business resumed shipments after a customer acquisition pause."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "The pace of the Battery Chemical ramp-up, the revenue contribution from new CDMO contracts starting in H2, and whether the Specialty Chemicals segment stabilizes as legacy products are phased out."
+  },
+  "sections": [
+   {
+    "title": "The CDMO Engine: Pulled Forward and Doubled Down",
+    "points": [
+     {
+      "label": "Target acceleration",
+      "text": "The ₹1,000 cr CDMO revenue target, originally set for FY28, is now expected in FY27, based on existing orders and new contracts already in hand."
+     },
+     {
+      "label": "Next ambition set",
+      "text": "Management has set a new target of ₹2,000 cr in CDMO revenue by FY30, effectively doubling the business in the three financial years following FY27."
+     },
+     {
+      "label": "Pipeline conversion underway",
+      "text": "Validation batches submitted a few quarters ago have now started contributing commercial revenue, and 8-9 products in total are expected to enter the revenue stream over the next 1 to 1.5 years."
+     },
+     {
+      "label": "Pipeline depth expanding",
+      "text": "The number of new CDMO projects in the pipeline has grown from approximately 4 to 7-8, and a couple of products have the potential to become billion-dollar drugs for innovator customers."
+     },
+     {
+      "label": "Diversification thesis",
+      "text": "The second ₹1,000 cr (to reach ₹2,000 cr by FY30) is expected to be a lot more diversified and broad-based in terms of molecules and customers, reducing concentration risk."
+     },
+     {
+      "label": "Margin profile stable",
+      "text": "EBITDA margins for the ₹2,000 cr FY30 CDMO target are expected to be largely in the same range as current CDMO business margins, and no further CAPEX is required to reach that revenue level."
+     },
+     {
+      "label": "Capacity planning",
+      "text": "Ankleshwar Unit 2 utilization is not expected to exceed ~40% by the end of FY27, but the plant may largely fill up by FY28, and land acquisition for the next round of CDMO CAPEX has already started."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Naresh Patel: \"During our Q3 FY '25 Earnings Call, in January 2025, we had set our ambition of achieving Rs 1,000 crores in CDMO revenue by FY '28. Based on the current orders of existing as well as new CDMO contracts, we now believe we will achieve this target one year ahead of schedule. It means in FY '27, we will be achieving this Rs. 1,000 crores.\""
+     }
+    ]
+   },
+   {
+    "title": "Financial Performance: Mix-Driven Margin Leap",
+    "points": [
+     {
+      "label": "Top-line driven by Pharma",
+      "text": "Q2 FY27 revenue of ₹436.9 cr grew 42.7% YoY, with the Pharma Intermediate segment delivering ₹402 cr, a 53.1% YoY increase, while the core pharma business grew more than 25% YoY on new product ramp-ups and strong top-product performance."
+     },
+     {
+      "label": "Specialty Chemicals drag",
+      "text": "Revenue of ₹34.9 cr fell 20% YoY, driven by the planned phasing out of old commodity products and a temporary shipment pause in the BFC business after the U.S. customer was acquired by another company."
+     },
+     {
+      "label": "Gross margin expansion",
+      "text": "Gross margin reached 62.1%, up 637 bps YoY, driven by a higher contribution from the pharma intermediate business; management explicitly stated raw material prices did not soften during the quarter, so the expansion is purely a mix and operating leverage story."
+     },
+     {
+      "label": "EBITDA and PAT follow",
+      "text": "EBITDA margin expanded 914 bps YoY to 40.3%, and PAT margin expanded 472 bps YoY to 28.2%, both benefiting from gross margin expansion and operating leverage."
+     },
+     {
+      "label": "Working capital stretched",
+      "text": "Working capital days increased to 115 from 99 in Q1 FY27, driven by higher debtor days, a metric to monitor as revenue scales."
+     },
+     {
+      "label": "H1 run-rate",
+      "text": "First-half revenue of ₹766.6 cr grew 49.3% YoY, with EBITDA of ₹289 cr up 97.7% YoY and PAT of ₹198.1 cr up 71% YoY, setting a strong base for the upgraded full-year guidance."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "New Growth Engines: Battery, Semiconductor, and BFC",
+    "points": [
+     {
+      "label": "Battery Chemicals commercial launch",
+      "text": "The first quarter of commercial revenue was recorded, with initial shipments of VC, FEC, and a third product dispatched; pilot-scale validation batches of a fourth product have been sent to customers, and a ramp-up is expected in the next 2-3 quarters."
+     },
+     {
+      "label": "Semiconductor Chemicals plant inaugurated",
+      "text": "The South Korea facility was completed ahead of schedule and will manufacture chemicals for photoresist, packaging materials, and etching materials; multiple qualification batches have already been submitted to Korean customers."
+     },
+     {
+      "label": "Semiconductor revenue timeline",
+      "text": "No tall commitment for FY27; from FY28, some revenue will start coming in, but not huge revenue or profitability initially, with a slow ramp-up expected."
+     },
+     {
+      "label": "BFC recovery",
+      "text": "The temporary shipment pause caused by the U.S. customer's ownership change has ended, supplies have resumed, and the company has started receiving orders from Korean and Japanese customers in addition to U.S. customers, keeping the business on target for growth this year."
+     },
+     {
+      "label": "Electronic-grade chemicals CAPEX",
+      "text": "A ~₹100 cr investment is planned in H2 FY27 for electronic-grade chemicals, with production expected to start by H1 FY29; the business is expected to deliver at least 3x asset turnover."
+     },
+     {
+      "label": "Electrolyte pricing philosophy",
+      "text": "Realizations are based on long-term supply contracts with revised pricing tied to key raw material price movement and exchange rate fluctuation, not spot price waves; pricing can be in the early teens dollar value, not \\$30-\\$35."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Abhishek Patel: \"We are not riding on some of the waves wherein price fluctuation, we don't want to get benefits from those price fluctuations or when it gets down. It is more of we look into our plate and we get our good profit wherein we get a timely payback of our investment and then look for a newer project.\""
+     }
+    ]
+   },
+   {
+    "title": "Specialty Chemicals Transition: Phasing Out the Old",
+    "points": [
+     {
+      "label": "Commodity exit underway",
+      "text": "The phasing out of old legacy products like Paraben and MS is proceeding as planned and is visible in the segment's 20% YoY revenue decline, though the decline also reflects a temporary pause in BFC shipments."
+     },
+     {
+      "label": "Timeline for phase-out",
+      "text": "The Paraben and MS scale-down may take 1 to 1.5 years, though MS may continue beyond that timeline due to good customer relationships still in place."
+     },
+     {
+      "label": "Revenue stabilization expected",
+      "text": "Overall Specialty Chemicals revenue is expected to remain in current territory, with the Battery Chemical ramp-up offsetting the legacy product decline, and overall growth is expected versus the last financial year."
+     },
+     {
+      "label": "No split disclosed",
+      "text": "Management declined to provide a split between old traditional Specialty Chemical products and Battery Chemical revenue within the ₹34.9 cr segment total, limiting visibility into the pace of the transition."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Margin Outlook: Upgraded on Mix Confidence",
+    "points": [
+     {
+      "label": "Guidance raised",
+      "text": "Full-year FY27 EBITDA margin guidance was upgraded to 38%-40%, up from prior expectations, because a large portion of revenue is now coming from Pharma Intermediates with growth driven by the high-margin CDMO segment."
+     },
+     {
+      "label": "Operating leverage runway",
+      "text": "With Unit 2 utilization at only 30% and Battery Chemical utilization still very low, operating margin has room to keep adding as production levels scale up, providing a natural tailwind."
+     },
+     {
+      "label": "CAPEX plan",
+      "text": "Full-year FY27 CAPEX is expected around ₹300 cr, with ₹165 cr planned for H2, split across electronic-grade chemicals (~₹100 cr), the second phase of electrolyte additive CAPEX (~₹45 cr), and maintenance."
+     },
+     {
+      "label": "Long-term vision",
+      "text": "Management's stated ambition is for the company to be known in five years as a chemical company with multiple avenues (pharma, battery, semiconductor, electronics), not just a pharma company, a diversification that should structurally support margins. [13-14]"
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Naresh Patel: \"In 5 years, this would be not known as a pharma company, but as a chemical company having multiple avenues, which can be applied, supply a chemical in a different sector.\" [13-14]"
+     }
+    ]
+   },
+   {
+    "title": "Visibility Gaps: What Management Would Not Quantify",
+    "points": [
+     {
+      "label": "CDMO sub-segment split undisclosed",
+      "text": "Management declined to provide the split of Pharma Intermediate revenue between CDMO and the base business, or the CDMO revenue contribution in percentage terms from the ₹695 cr H1 Pharma Intermediate revenue, making it difficult to independently track the CDMO trajectory."
+     },
+     {
+      "label": "Product-level revenue guidance withheld",
+      "text": "Management declined to share revenue expectations for new CDMO products beginning contribution in H2 FY27, or the contribution of these newer products within the ₹2,000 cr FY30 target."
+     },
+     {
+      "label": "Battery Chemical contribution undisclosed",
+      "text": "Revenue contribution from Battery Chemicals in the quarter was not disclosed, obscuring the segment's initial scale."
+     },
+     {
+      "label": "Darolutamide details off-limits",
+      "text": "Management declined to comment on Darolutamide traction, revenue potential, wallet share, or whether doubling supply would require CAPEX, citing that it is an innovator-driven product and not their product to discuss."
+     },
+     {
+      "label": "Gross margin bifurcation withheld",
+      "text": "Management said it could not bifurcate the 637 bps gross margin expansion between raw material softening and product mix, though it did confirm raw material prices had not softened."
+     },
+     {
+      "label": "Commodity exit split undisclosed",
+      "text": "The portion of the ₹34.9 cr Specialty Chemical revenue still attributable to commodity chemicals scheduled for exit was not provided."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Abhishek Patel: \"We are very confident that we will be again able to achieve this second milestone of Rs. 2,000 crores revenue by FY '30 despite of any industry cycle moving up and down, we are confident that we will achieve those kind of revenue targets.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "CDMO revenue",
+       "₹1,000 cr (pulled forward from FY28)",
+       "FY27"
+      ],
+      [
+       "CDMO revenue",
+       "₹2,000 cr (doubling from ₹1,000 cr)",
+       "FY30"
+      ],
+      [
+       "Revenue growth",
+       "Around 30% (revised from 25%)",
+       "FY27"
+      ],
+      [
+       "EBITDA margin",
+       "38%-40% range (upgraded)",
+       "FY27"
+      ],
+      [
+       "CAPEX",
+       "~₹300 cr full-year",
+       "FY27"
+      ],
+      [
+       "Electronic-grade chemicals CAPEX",
+       "~₹100 cr; production start by H1 FY29",
+       "H2 FY27 CAPEX / H1 FY29 production"
+      ],
+      [
+       "Electrolyte additive CAPEX",
+       "~₹45 cr for second phase",
+       "H2 FY27"
+      ],
+      [
+       "Battery Chemical ramp-up",
+       "Scale-up of third product; fourth product validation underway",
+       "Next 2-3 quarters"
+      ],
+      [
+       "Semiconductor Chemicals revenue",
+       "No tall commitment for FY27; some revenue from FY28, slow ramp",
+       "FY28 onward"
+      ],
+      [
+       "Ankleshwar Unit 2 utilization",
+       "Largely filled up",
+       "FY28"
+      ],
+      [
+       "Legacy commodity phase-out (Paraben/MS)",
+       "Scale-down to take 1 to 1.5 years; MS may continue beyond",
+       "1-1.5 years"
+      ],
+      [
+       "CDMO pipeline commercialization",
+       "8-9 products entering revenue stream",
+       "Next 1 to 1.5 years"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Revenue from operations",
+       "₹436.9 cr, +42.7% YoY"
+      ],
+      [
+       "Gross profit",
+       "₹271.5 cr, +59% YoY"
+      ],
+      [
+       "Gross margin",
+       "62.1%, +637 bps YoY"
+      ],
+      [
+       "EBITDA",
+       "₹176 cr, +84.6% YoY"
+      ],
+      [
+       "EBITDA margin",
+       "40.3%, +914 bps YoY"
+      ],
+      [
+       "PAT",
+       "₹123.1 cr, +71.4% YoY"
+      ],
+      [
+       "PAT margin",
+       "28.2%, +472 bps YoY"
+      ],
+      [
+       "Revenue growth guidance for FY27",
+       "~30%, revised from 25%"
+      ],
+      [
+       "EBITDA margin guidance for FY27",
+       "38%–40%, raised from prior range"
+      ],
+      [
+       "CDMO revenue target",
+       "₹1,000 cr in FY27, achieved one year ahead of original FY28 target"
+      ],
+      [
+       "CDMO revenue target by FY30",
+       "₹2,000 cr, doubling in next 3 financial years"
+      ],
+      [
+       "Advanced Pharma Intermediate segment revenue",
+       "₹402 cr, +53.1% YoY"
+      ],
+      [
+       "Core pharmaceutical business growth",
+       ">25% YoY"
+      ],
+      [
+       "Specialty Chemical segment revenue",
+       "₹34.9 cr, −20% YoY"
+      ],
+      [
+       "Ankleshwar unit utilization",
+       "30% in Q2 FY27; expected not more than 40% by end of FY27"
+      ],
+      [
+       "Working capital days",
+       "115 days, vs 99 days in Q1 FY27"
+      ],
+      [
+       "Net cash and cash equivalents",
+       "~₹300.9 cr as of 30 Sep 2026"
+      ],
+      [
+       "H1 FY27 CAPEX",
+       "₹123.9 cr"
+      ],
+      [
+       "Full-year FY27 CAPEX expected",
+       "~₹300 cr"
+      ],
+      [
+       "H2 FY27 planned CAPEX",
+       "₹165 cr, comprising ~₹100 cr for electronic-grade chemicals, ₹45 cr for second phase of electrolyte additive CAPEX, remainder for maintenance"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Acutaas Chemicals Ltd",
+  "sector": "Pharma CRAMS",
+  "asof": "Oct 2026",
+  "items": [
+   {
+    "title": "CDMO ₹2,000 crore by FY30",
+    "text": "The ₹1,000 crore CDMO revenue target set for FY28 will now be hit in FY27, a year early, on contracts already in place with originators, and management has set a new target to double it to ₹2,000 crore by FY30 at margins in the same range as today's. That is roughly ₹1,000 crore of incremental revenue - over half the current ₹1,593 crore group revenue - landing within three years."
+   },
+   {
+    "title": "Four validated CDMO products ramping",
+    "text": "Four CDMO products with regulatory approvals in place start contributing revenue from H2 FY27, each expected to generate ₹50-100 crore peak revenue per year, with eight to nine products entering the revenue stream over the next 12-18 months. This is the concrete order book behind the FY27 beat, and it dilutes concentration in the anchor product."
+   },
+   {
+    "title": "Fermion anchor contract growth",
+    "text": "Acutaas is primary supplier under a 10-year contract with the first CDMO customer, and Bayer/Orion have guided 50% growth in calendar 2026 for the product, with further ramp-up in FY27 and beyond; existing capacity already suffices. A couple of pipeline products could become billion-dollar products for these innovative customers."
+   },
+   {
+    "title": "Jhagadia battery additives ramp-up",
+    "text": "Phase 1 (2,000 MT each of VC and FEC) started commercial supply in Q1 FY27 with demand \"unprecedented, driven by tight global supply\", and the plant is fully covered by customer contracts for all capacity for the next 3 years across 5+ validated customers. Management expects full utilization by end of three years, with realizations guided in the \"early teens\" dollars versus the historical $10-12."
+   },
+   {
+    "title": "Third and fourth electrolyte products",
+    "text": "The third product's capex was completed by end Q2 FY27 with trial runs commissioned and a signed customer contract, ramping in FY28; the fourth product is at final stage of signing a long-term supply contract, with pilot batches sent and orders already in hand. A 10+ product pipeline targets lithium, sodium-ion and solid-state electrolytes."
+   },
+   {
+    "title": "ECMS incentive for Jhagadia",
+    "text": "Engineers India, as MeitY's project agency, approved (17 Aug 2026) an incentive of up to 25% of ₹119.12 crore eligible investment for the electrolyte additives business, with the benefit period running to FY2030-31. That is up to ~₹30 crore of support against a ₹256 crore project, directly improving returns on the battery vertical."
+   },
+   {
+    "title": "Korea semiconductor chemicals JV",
+    "text": "Acutaas completed acquisition of 75% of Indichem Inc. in South Korea on 11 Feb 2026, investing ~₹200 crore (KRW 3,000 crore) in a plant near Korea's semiconductor clusters, with a partner holding 25% who brings 30+ years of Korean, Taiwan and Japan customer relationships. This opens the high-purity semiconductor chemicals market alongside the pharma base."
+   },
+   {
+    "title": "Ankleshwar Unit 2 filling up",
+    "text": "The ₹330 crore Ankleshwar Unit 2 was at 30% utilization in Q2 FY27, expected to reach ~40% by end FY27 and largely filled by FY28, with land for the next CDMO capex already being planned. Filling the unit converts CWIP into revenue, and the follow-on site removes the next capacity bottleneck."
+   }
+  ]
+ }
+}

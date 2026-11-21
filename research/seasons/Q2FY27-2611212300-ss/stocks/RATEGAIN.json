@@ -1,0 +1,466 @@
+{
+ "ticker": "RATEGAIN",
+ "name": "Rategain Travel Technologies Ltd",
+ "concall": {
+  "name": "Rategain Travel Technologies Ltd",
+  "sector": "IT Product Companies",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "H1 organic growth beat the guided range at 15.7%",
+    "text": ", but Q2 revenue fell sequentially on a one-time FIFA comp and seasonal DMO softness; full-year guidance held at the upper end."
+   },
+   {
+    "label": "The two core MarTech engines each grew >20% organically in H1",
+    "text": ", while the acquired Corporate business shrank nearly 20% in constant currency, a drag management now has a plan to stabilize."
+   },
+   {
+    "label": "APAC delivered a record quarter with ~\\$2 million in new sales",
+    "text": ", tripling YoY, as the cross-sell motion gained share across India, Southeast Asia and the Middle East."
+   },
+   {
+    "label": "Middle East revenue run rate halved to ~\\$500k/month",
+    "text": "from pre-conflict levels, a persistent headwind partially offset by share gains in UAE and Saudi Arabia."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the DMO business rebounds sequentially as guided, whether Corporate stabilizes toward flattish under new leadership, and whether Smart Distribution and Agentic ARI begin contributing revenue."
+  },
+  "sections": [
+   {
+    "title": "MarTech: The Growth Engine and the Drag",
+    "points": [
+     {
+      "label": "Properties grew >20% YoY in H1",
+      "text": "because the outcome-based commission model grows as hotels grow, new properties kept joining, and AI-driven bidding models convert travel intent into direct bookings."
+     },
+     {
+      "label": "Destinations grew >20% organically YoY in H1",
+      "text": "because of key account growth in North America and scaling co-op programs; AI-driven bidding helps DMOs identify likely travelers and measure economic impact."
+     },
+     {
+      "label": "Q2 sequential revenue fell ~₹40 crore QoQ",
+      "text": "because Q1 carried a one-time ~\\$2.5 million FIFA World Cup benefit and Q2 is seasonally softer for destination marketing, where DMOs concentrate spend ahead of peak travel seasons and begin new budget cycles in July."
+     },
+     {
+      "label": "Corporate declined ~14% organically YoY in H1",
+      "text": "(dollar degrowth close to 20%) because historically corporate was not a priority within Sojourn and post-acquisition focus went to integrating properties and destinations; new leadership and a clear plan are now in place to stabilize the business in H2."
+     },
+     {
+      "label": "Customer additions picked up sharply",
+      "text": "to 748 in Q2 from 380 in Q1, with most new wins coming from MarTech, specifically properties and hotels."
+     },
+     {
+      "label": "Property churn is a feature of the pay-for-performance model",
+      "text": ": low-performing hotels usually churn out; the company aims to arrest this by offering an integrated stack combining demand generation with a booking engine."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Chopra: \"Historically, corporate was not a priority within Sojourn, and since the acquisition, our focus has been on integrating properties and destinations where we have the most momentum. We're now turning our attention to corporate, changing its leadership, and strengthening the team around it.\""
+     }
+    ]
+   },
+   {
+    "title": "DaaS and Distribution: Steady, with an AI Overlay",
+    "points": [
+     {
+      "label": "DAS grew 14% in H1",
+      "text": "because of volume expansion across key accounts and new contract wins in air, OTA, and car; DaaS grew 7% YoY in Q2 with healthy performance across the same verticals."
+     },
+     {
+      "label": "Distribution was broadly flat YoY in Q2",
+      "text": "; management expects single-digit growth for FY27, with a potential hockey-stick acceleration into double digits in FY28 once the Smart Distribution platform gains traction."
+     },
+     {
+      "label": "Airline margin pressure is a watchpoint",
+      "text": ": prolonged Middle East conflict and sustained high oil prices are squeezing airline margins even as passenger volumes hold up, with industry profits expected to nearly halve this year per SKID's State of Travel 2026 report drawing on IATA's outlook."
+     },
+     {
+      "label": "MCP interfaces now connect all data products to major LLMs",
+      "text": ", letting customers query Rategain data in plain language via Claude or ChatGPT and build custom reports; monetization remains based on data consumed irrespective of channel, and the MCP has been built on the DaaS product."
+     },
+     {
+      "label": "Airgain GEO tracks how airlines, fares and OTAs appear in AI-generated travel answers",
+      "text": ", opening generative engine optimization as a new revenue opportunity."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Geographic and Segment Dynamics",
+    "points": [
+     {
+      "label": "APAC delivered a record quarter",
+      "text": "with ~\\$2 million in new sales, more than 3x YoY, because the cross-sell motion gained share in India, Singapore, UAE, Saudi Arabia, Egypt and Sri Lanka, with early traction in Australia, Japan and Korea; over 50 properties signed on the direct stack."
+     },
+     {
+      "label": "Middle East revenue run rate fell from ~\\$970k/month pre-disruption to ~\\$500k/month in Q2",
+      "text": "(slightly up from \\$425k in Q1) because of continued regional uncertainty and conflict; share gains in UAE and Saudi Arabia position the company for recovery when conditions stabilize."
+     },
+     {
+      "label": "DMO business grew >20% on a YoY like-to-like basis in Q2",
+      "text": "despite the sequential decline, and management expects it to come back sequentially in Q3."
+     },
+     {
+      "label": "Corporate turnaround plan",
+      "text": ": sharpen go-to-market by organizing sales teams by vertical (airlines, cruise, car rental, travel brands), expand channels into TikTok and connected TV, and add more data products; the aspiration is to go from decline to flattish this year and back to growth the following year."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "AI: Cheaper Building, New Products, and an Agentic Risk",
+    "points": [
+     {
+      "label": "AI has dramatically reduced the cost of building",
+      "text": ": what previously cost \\$100 and took months can now produce more in days, shortening development cycles and investment requirements."
+     },
+     {
+      "label": "AI workflows now handle Sojourn campaign management",
+      "text": "that previously needed manual analysts; Agentic ARI and RateIQ launched recently and are expected to start contributing revenue in coming quarters."
+     },
+     {
+      "label": "Commission for Experiences launched in beta",
+      "text": ": a performance-based marketing solution for the attractions industry, modeled on the hotel commission model, opening a large and fast-growing adjacency."
+     },
+     {
+      "label": "Smart Distribution is now live",
+      "text": "with bookings flowing, over 800 directly contracted properties connected, and supply partners being added steadily."
+     },
+     {
+      "label": "Cloudbeds integration completed",
+      "text": "with onboarding readiness achieved during Q2 for a property ramp-up planned for October; Duero partner testing and integration at an advanced stage ahead of commercial ramp-up."
+     },
+     {
+      "label": "Personal AI agents pose a risk",
+      "text": ": if agents book directly with hotels, Rategain's role on discovery platforms could be challenged; the response is to build a platform that powers every booking a hotel gets, whether direct or indirect."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Chopra: \"I do worry about, um, if we have now personal AI agents, uh, and those agents are directly booking with the hotel, uh, what would that do to our, uh, you know, participating on discovery platforms, whether it's AI search or social? I think that could be a challenging situation, but, you know, we try to get ahead of the curve by building out a platform that eventually powers every booking that the hotel gets, whether it's direct or indirect.\""
+     }
+    ]
+   },
+   {
+    "title": "Margins, Cash Flow and the Balance Sheet",
+    "points": [
+     {
+      "label": "H1 EBITDA to FCF conversion was 87%",
+      "text": ", elevated because of one-time acceleration in cash collected from acquired Sojourn businesses and business seasonality."
+     },
+     {
+      "label": "Margin expansion came from cost synergies, not currency",
+      "text": ": consolidating platforms (especially Sojourn and Adara into one) reduced tech and product headcount needs, and shared services consolidation in HR and finance added further leverage."
+     },
+     {
+      "label": "Amortization of acquisition cost rose to ₹35.5 crore from ₹7 crore YoY",
+      "text": "because of additional amortization related to the Sojourn acquisition."
+     },
+     {
+      "label": "43% of the Sojourn acquisition loan has already been repaid",
+      "text": "; the company refinanced \\$40 million of debt at a lower cost of SOFR + 165 bps and expects to be net debt-free by FY28."
+     },
+     {
+      "label": "Sales and marketing costs are expected to continue rising",
+      "text": "as the company invests in commercial teams globally; the stated margin philosophy is that anything north of 20% is satisfactory and will be reinvested in growth."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Chopra: \"The margin expansion that you have seen is not a result of anything to do with currency. It's really the cost synergies that we were able to realized as a result of, you know, taking all the platforms that we had, especially Sojourn and Adara, and make it into one platform.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "FY27 revenue",
+       "Upper end of ₹3,000–₹3,100 crore range, 12–15% YoY organic growth over pro forma FY26",
+       "FY27 full year"
+      ],
+      [
+       "FY27 adjusted EBITDA margin",
+       "22.5% to 23.5%",
+       "FY27 full year"
+      ],
+      [
+       "Corporate stabilization",
+       "Broadly flat in H2 after ~20% dollar basis H1 decline",
+       "H2 FY27"
+      ],
+      [
+       "Corporate return to growth",
+       "Expectation is to get back to growth if strategic bets are right",
+       "FY28"
+      ],
+      [
+       "DMO sequential recovery",
+       "DMO business to come back sequentially",
+       "Q3 FY27"
+      ],
+      [
+       "DaaS growth",
+       "Double-digit growth in rupee terms",
+       "FY27"
+      ],
+      [
+       "Distribution growth",
+       "Single-digit growth; potential double-digit acceleration from Smart Distribution",
+       "FY27; FY28"
+      ],
+      [
+       "Net debt-free",
+       "Net debt positive",
+       "By end of financial year 2028"
+      ],
+      [
+       "New product revenue contribution",
+       "Smart Distribution, Agentic ARI, RateIQ to start contributing",
+       "Coming quarters"
+      ],
+      [
+       "Cloudbeds and Duero ramp",
+       "Commercial scale-up",
+       "Coming quarters"
+      ],
+      [
+       "Medium-term organic growth aspiration",
+       "15% constant currency YoY",
+       "Medium term"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Operating revenue",
+       "₹745.4 crore, up 152.6% YoY; down ₹40 crore QoQ"
+      ],
+      [
+       "Organic revenue growth (combined entity)",
+       "14% YoY (includes Sojourn pre-acquisition revenue)"
+      ],
+      [
+       "H1 organic revenue growth (combined entity)",
+       "15.7% YoY"
+      ],
+      [
+       "Adjusted EBITDA",
+       "₹169.1 crore, up 215% YoY"
+      ],
+      [
+       "Adjusted EBITDA margin",
+       "22.7%, up from H1 adjusted margin of 23.7%"
+      ],
+      [
+       "Reported EBITDA",
+       "₹153 crore, up 185% YoY; margin 20.5%"
+      ],
+      [
+       "Reported PAT",
+       "₹74.7 crore, up 47% YoY; margin 10%"
+      ],
+      [
+       "Adjusted PAT",
+       "₹91 crore, margin 12.2%"
+      ],
+      [
+       "FY27 revenue guidance",
+       "Upper end of ₹3,000–₹3,100 crore range, maintained"
+      ],
+      [
+       "FY27 adjusted EBITDA margin guidance",
+       "22.5% to 23.5%, maintained"
+      ],
+      [
+       "Medium-term organic growth aspiration",
+       "15% constant currency YoY"
+      ],
+      [
+       "MarTech — Properties revenue share",
+       "44.7% of MarTech revenue"
+      ],
+      [
+       "MarTech — Destinations revenue share",
+       "39.7% of MarTech revenue"
+      ],
+      [
+       "MarTech — Corporate revenue share",
+       "15.6% of MarTech revenue"
+      ],
+      [
+       "Properties organic growth (H1)",
+       ">20% YoY"
+      ],
+      [
+       "Destinations organic growth (H1)",
+       ">20% YoY"
+      ],
+      [
+       "Corporate organic growth (H1)",
+       "~14% decline YoY; dollar degrowth close to ~20%"
+      ],
+      [
+       "DAS segment growth (H1)",
+       "14% YoY"
+      ],
+      [
+       "DaaS segment growth (Q2)",
+       "7% YoY"
+      ],
+      [
+       "Distribution business growth (Q2)",
+       "Broadly flat vs last year"
+      ],
+      [
+       "APAC new sales",
+       "~$2 million, more than 3x YoY"
+      ],
+      [
+       "Middle East revenue run rate",
+       "~$500,000 per month, vs ~$970,000 before disruption and $425,000 in Q1"
+      ],
+      [
+       "Outstanding debt",
+       "₹733 crore at quarter close"
+      ],
+      [
+       "Acquisition debt repaid",
+       "43% of original loan ($53.75 million) as of Nov 5 payment"
+      ],
+      [
+       "Net debt",
+       "₹494 crore as of Sep 30"
+      ],
+      [
+       "Free cash flow (H1)",
+       "₹282 crore"
+      ],
+      [
+       "EBITDA to FCF conversion (H1)",
+       "87%"
+      ],
+      [
+       "Smart Distribution connected properties",
+       ">800 directly contracted properties"
+      ],
+      [
+       "Q1 one-time FIFA World Cup benefit",
+       "~$2.5 million, not recurring in Q2"
+      ],
+      [
+       "Deferred consideration add-back (Sojourn)",
+       "₹16.1 crore"
+      ],
+      [
+       "Amortization of acquisition cost",
+       "₹35.5 crore, up from ₹7 crore in Q2 FY26"
+      ],
+      [
+       "Finance cost",
+       "₹16.1 crore"
+      ],
+      [
+       "Tax",
+       "₹22.7 crore"
+      ],
+      [
+       "Cash balance",
+       "₹239 crore as of Sep 30"
+      ],
+      [
+       "Net worth",
+       "₹2,218 crore as of Sep 30"
+      ],
+      [
+       "Debt refinanced at lower cost",
+       "$40 million at SOFR + 165 bps"
+      ],
+      [
+       "DMO sequential decline (Q1 to Q2)",
+       "21% (per an analyst's math)"
+      ],
+      [
+       "Q2 constant currency organic growth estimate",
+       "6–8%; ~9–10% adding back Middle East impact (per an analyst's math)"
+      ],
+      [
+       "Corporate degrowth impact on constant currency growth",
+       "200–300 bps headwind (per an analyst's math)"
+      ],
+      [
+       "Customer additions (Q2)",
+       "748 (per an analyst's math)"
+      ],
+      [
+       "Customer additions (Q3)",
+       "380 (per an analyst's math)"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Rategain Travel Technologies Ltd",
+  "sector": "IT Product Companies",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "FY27 group guidance upgrade",
+    "text": "Management guides FY27 revenue to ~₹3,100 crore (~70% YoY, the upper end of the original ₹3,000-3,100 crore range, \"the number we should definitely beat\") and has raised adjusted EBITDA margin guidance by ~100bps to 22.5%-23.5%. With H1 organic growth already at 15.7% versus the 12-15% guide and growth expected to build through H2, the raise flows straight into FY27 earnings."
+   },
+   {
+    "title": "Sojern margin lift from cost synergies",
+    "text": "The Sojern acquisition (₹586 crore QIP-funded, consolidated from Q3 FY26) delivered ~$15 million annualized cost savings, raised above the original Phase I target, lifting Sojern towards 19-20% EBITDA margins on a $24 million EBITDA base with full quarterly impact from Q1 FY27. Phase two revenue synergies are now underway, most visible in Adara and in APMEA, where Q1 FY27 new customer wins rose 200% YoY."
+   },
+   {
+    "title": "MarTech cross-sell on one platform",
+    "text": "MarTech, over 80% of revenue, was reorganized in Q2 FY27 into Properties, Destinations and Corporate on the unified UNO platform, with a global key-accounts team for the top 10 accounts and Sojern Commission used as an outcome-based entry product for cross-selling the full stack. New contract wins of ₹277.7 crore in H1 FY27 against a ₹660 crore total pipeline, plus a very large India deal in signing with higher outcome-based fees, show the motion converting into bookings."
+   },
+   {
+    "title": "Properties customer surge",
+    "text": "Properties, 44.7% of MarTech revenue, grew over 20% YoY organically in H1 FY27, with customer additions jumping from 30-40 a quarter to 748 in Q2 FY27 on the commission model, and management targeting growth beyond 20% by using the integrated stack to retain low-performing hotels. Pricing power post-unification means less discounting, so the volume surge lands at better per-customer economics."
+   },
+   {
+    "title": "APAC go-to-market buildout",
+    "text": "RateGain invested ~$5 million building the APAC sales team from ~15 people in early FY26 to ~100 by Q2 FY27; APAC delivered a record Q2 with new sales of about $2 million, more than 3x a year ago, and share gains across India, UAE, Saudi Arabia and Southeast Asia. Europe and LATAM investments follow the same playbook, with management expecting APAC and Europe to exceed consolidated growth rates."
+   },
+   {
+    "title": "AI product monetization",
+    "text": "Agentic ARI and RateIQ launched in Q4 FY26 are expected to start contributing revenue in coming quarters, with RateIQ delivering 10-100% booking uplifts in pilots at big chains, and UNO VIVA voice agent showing up to 40% revenue increases at hotels and 15+ AI-native products now live. Early conversations with OpenAI on self-serve travel ads and Google on AI-surface inventory open new monetization channels as discovery shifts to AI."
+   },
+   {
+    "title": "Direct stack and Smart Distribution recovery",
+    "text": "Smart Distribution is live with bookings flowing and more than 800 directly contracted properties connected, with management seeing a \"hockey stick\" a couple of quarters away and distribution entering double-digit growth in FY28 after declining 12.4% in FY26. Signed deployments like Citrus Leisure on the UNO Direct Stack across Sri Lanka anchor the APMEA-first rollout."
+   },
+   {
+    "title": "Corporate segment turnaround",
+    "text": "Corporate (15.6% of MarTech revenue) declined ~14% organically in H1 FY27; the fix - verticalized go-to-market, a signed TikTok advertiser agreement, and connected TV - produced early Q2 wins including a leading cruise line and a large vacation rental marketplace. Arresting the decline alone adds ~200-300 basis points to the path to 15% constant-currency growth."
+   }
+  ]
+ }
+}

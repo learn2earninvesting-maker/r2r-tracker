@@ -1,0 +1,33 @@
+{
+ "season": "Q2FY27",
+ "label": "Q2 FY27",
+ "folder": "Q2FY27-2611212300-ss",
+ "built": "2026-11-21T17:10:59Z",
+ "source": "StockScans",
+ "csvStocks": 47,
+ "concall": 46,
+ "concallLatest": 46,
+ "catalysts": 47,
+ "noConcall": [
+  "Marine Electricals (India) Ltd"
+ ],
+ "olderConcall": [],
+ "noCatalysts": [],
+ "refreshed": {
+  "concall": [
+   "DEEDEV",
+   "INNOVACAP",
+   "KDDL"
+  ],
+  "catalysts": []
+ },
+ "unmatched": {
+  "concall": [],
+  "catalysts": []
+ },
+ "extras": [
+  "COFORGE",
+  "DIVISLAB",
+  "MCX"
+ ]
+}

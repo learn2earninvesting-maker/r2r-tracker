@@ -1,0 +1,410 @@
+{
+ "ticker": "PAYTM",
+ "name": "One 97 Communications Ltd",
+ "concall": {
+  "name": "One 97 Communications Ltd",
+  "sector": "E Commerce Platform Utility",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Profitability milestone reached",
+    "text": "The company has \"clearly come out of this question of whether Paytm can make profit or not\"; the business model is now compounding, with absolute EBITDA expected to keep rising quarter-on-quarter despite DLG drag."
+   },
+   {
+    "label": "Consumer market share is the primary KPI",
+    "text": "Management is going \"all in on market share,\" calling it \"ours to win,\" and added 0.5 crore MTUs this quarter vs. 0.1-0.2 crore previously, driven by product and technology unlocks."
+   },
+   {
+    "label": "GMV quality over quantity",
+    "text": "The company deliberately shed large, negative-margin enterprise customers, including one materially large contract, which was a drag on GMV but positive for profitability; net payment margin improved from 8.5 bps to 9 bps."
+   },
+   {
+    "label": "Lending pivot is working",
+    "text": "The consumer loan distribution model was completely switched to pure distribution without DLG or upside requirements, and the team has done \"phenomenally well\"; merchant lending continues to scale with strong partner confidence."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the 5-million-MTU run rate sustains, the pace of Soundbox merchant additions as new sales executives mature, and the actual competitive dynamics once MDR on UPI goes live post-Diwali."
+  },
+  "sections": [
+   {
+    "title": "The Profitability Inflection",
+    "points": [
+     {
+      "label": "Model now compounding",
+      "text": "The company has moved past the existential question of whether it can generate profit; the business model is now demonstrably self-reinforcing, with revenue tailwinds across consumer and merchant, payments and financial services."
+     },
+     {
+      "label": "EBITDA trajectory",
+      "text": "Absolute EBITDA is expected to continue rising next quarter even with the isolated DLG drag; EBITDA margin is not going down. The DLG charge hits the immediate month because the company wants to remain a credit distribution platform without forward-discounting any revenue."
+     },
+     {
+      "label": "Operating leverage kicking in",
+      "text": "Indirect expenses, including marketing, sales, service, and cloud, are expected to grow at less than half the rate of revenue or contribution margin growth over the next 3–4 quarters; accelerating revenue growth yields accelerated operating leverage."
+     },
+     {
+      "label": "Free cash flow",
+      "text": "Broadly expected to work in EBITDA terms; more capex guidance promised next quarter. Depreciation will increase in FY28 and beyond due to higher device capex in H1, but all done for specific engagement, retention, and financial services revenue purposes with strong payback."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vijay Shekhar Sharma: \"we want to be a distributor technology company. We don't want to be the book owner company. ... I like the financial services business, but not so much that we end up taking the weight of the book on our shoulders.\""
+     }
+    ]
+   },
+   {
+    "title": "Consumer Market Share: The Primary Battle",
+    "points": [
+     {
+      "label": "MTU acceleration",
+      "text": "The company added 0.5 crore MTUs this quarter vs. 0.1-0.2 crore in prior quarters, attributed to good product and technology, solving previously blocked optimizations, and top-of-mind recall. Management hopes the 5-million-per-quarter run rate sustains for several more quarters."
+     },
+     {
+      "label": "CAC falling substantially",
+      "text": "Customer acquisition cost fell because of a shift from spray-and-pray to precision targeting using in-house AI models that identify valuable customers."
+     },
+     {
+      "label": "Market share target",
+      "text": "Management has set an internal target of one-third market share; \"nothing less than that we must settle for.\" Confidence is higher than last year and the year before, driven by product and technology superiority."
+     },
+     {
+      "label": "External factors undisclosed",
+      "text": "When an analyst asked what external factors caused low UPI consumer market share, management declined to answer on the call, saying \"you can take it offline.\" The question went unanswered."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vijay Shekhar Sharma: \"Consumer businesses are ours to win. ... We rather want to tell you that we will change the result with our hard work and perseverance and pushing as much as possible, even on the consumer side. You said it already that the merchant side will get the win, but the consumer side is for sure ours to win.\""
+     }
+    ]
+   },
+   {
+    "title": "GMV Quality & Payment Margins",
+    "points": [
+     {
+      "label": "Net payment margin improved",
+      "text": "The move from 8.5 bps to 9 bps was driven by additional pricing discipline for certain merchant types, and gaining good share in EMI, DCC, and the enterprise side."
+     },
+     {
+      "label": "Deliberate GMV shedding",
+      "text": "The company gave up large online merchants negotiating below source price, especially during the festive season. One large insurance company contract concluded, removing a materially large, negative contribution margin customer. The removal was a drag on GMV but bottom-line positive."
+     },
+     {
+      "label": "Festive timing shift",
+      "text": "Q2 vs. Q1 GMV is usually subdued depending on festive timing; this year Diwali is late, so the festive season falls almost entirely in Q3, making Q2 a seasonally softer quarter."
+     },
+     {
+      "label": "Eligible GMV mix",
+      "text": "Not changing dramatically; small merchant business growing very fast, online business growing after being under embargo until August last year, and enterprise improving due to EMI and DCC offerings."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vijay Shekhar Sharma: \"We have gone to now looking at strictly high-quality merchants. Strictly high quality stands for, you give up on large online merchants who are negotiating dollars for 90 cents. They are discounting something which is lesser than the source price.\""
+     }
+    ]
+   },
+   {
+    "title": "Lending: Distribution Model Scaling",
+    "points": [
+     {
+      "label": "Consumer loan pivot complete",
+      "text": "The business model was switched entirely to distribution without requiring any upside or DLG in consumer business; this has shown results and the team has done \"phenomenally well.\" The company plans to \"go double all in\" on consumer loan distribution."
+     },
+     {
+      "label": "Merchant lending momentum",
+      "text": "The business continues to do very well, including TAM expansion opportunities on smaller and larger ticket sizes. Management aims to scale linearly and at a fast pace for the next 5–10 years, seeing potential for huge impact on financial inclusion for small merchants in India and potential to take the model to other countries."
+     },
+     {
+      "label": "Postpaid accelerating",
+      "text": "The product is ramping faster than the first time around; it is EBITDA-positive and contribution-margin-positive. The number of merchants accepting it in months six, nine, and twelve has grown further ahead of the first launch. Spend per active customer started at a very solid number, and learnings from previous collection work are directly being reused."
+     },
+     {
+      "label": "Lender confidence rising",
+      "text": "Scaling up reflects increased confidence in Paytm's insights and collection capability; partners collaborate on early warning signals, repeat business, top-ups, new segments, new pin codes, and technology bottlenecks."
+     },
+     {
+      "label": "DLG resumption flagged",
+      "text": "One large lender that used to do DLGs in FY25, paused for six quarters at Paytm's request while scaling up, is now returning to DLG from next quarter onwards. Management flagged this at the beginning of the quarter rather than at the end."
+     },
+     {
+      "label": "DLG indifference",
+      "text": "The company does not say no to a lender just because they want DLG, nor does it route more to a lender with less or no DLG; the idea is to find the right lender for the borrower and do as much business as possible. DLG is \"way lower on our list\" of priorities in partner conversations."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Madhur Deora: \"you cannot afford to have six good quarters and then two bad quarters, right? That kind of sets you back; not two quarters, it sets you back many more quarters. So you have to kind of recognize it for what it is and be as cautious as you can be.\""
+     }
+    ]
+   },
+   {
+    "title": "MDR on UPI: Ready, Waiting on a Date",
+    "points": [
+     {
+      "label": "Framework final, implementation delayed",
+      "text": "The MDR implementation on UPI was pushed from October 15 to post-Diwali; management believes the framework is final and not being revisited, and \"it just needs a decision on the date.\""
+     },
+     {
+      "label": "Operational readiness",
+      "text": "The company is ready for day-one implementation; for small merchants, it is a \"flip of a switch\" with no negotiation needed. The industry and the system are ready."
+     },
+     {
+      "label": "Margin confidence",
+      "text": "Management is confident of delivering the 2.5 bps payment processing margin improvement estimate, calling it a haircut for various scenarios; there are scenarios under which the company will do better. Specific competitive dynamics on the consumer vs. merchant side will only become clear in Q2 and Q3 after implementation."
+     },
+     {
+      "label": "Majority of GMV near cap",
+      "text": "Management expects the majority of GMV transactions to be closer to the 40 bps cap for transactions above ₹2,000, conditional on MDR implementation."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vijay Shekhar Sharma: \"There's no negotiation. We work with small businesses. Big business owners have big tantrums; we don't. Our business is very straightforward. Small merchant, small job, switch it on, done.\""
+     }
+    ]
+   },
+   {
+    "title": "AI: Spending More, Earning More",
+    "points": [
+     {
+      "label": "AI-driven execution",
+      "text": "Sharper execution is possible because of AI; large cost structures on sales, collection, and service are all becoming better RoI. Some benefit shows up in better costs, some in faster revenue, for example, better collections show up as higher revenue."
+     },
+     {
+      "label": "No drag on P&L",
+      "text": "Every dollar spent on AI has generated more dollars in either cost savings or revenue; benefits show up almost immediately because the business is already data-rich and data-led. The company claims to be one of the most efficient users and does not track vanity metrics like token count."
+     },
+     {
+      "label": "Cloud cost increase explained",
+      "text": "The majority of the incremental software and cloud expense was attributable to the migration of online and offline businesses into a single entity, requiring platform consolidation and merger, which caused duplication. A little bit will continue next quarter and then normalize. AI spending is the secondary driver."
+     },
+     {
+      "label": "AI monetization timeline",
+      "text": "For the AI platform aimed at small businesses, monetization via subscription plus transaction fees is expected to start picking up in about one year, roughly nine months from now. For large businesses, \"something more brewing up\" will be announced later. Meaningful AI revenue numbers are at least 2–3 quarters away; management suggests looking at the same quarter next year for a milestone."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Vijay Shekhar Sharma: \"every dollar that we spend on AI has more dollars made than ever. I mean, absolutely no drag. ... We are not bullshitting on random KPI call. How many tokens do you spend? We don't even talk about that. We are rather one of the most efficient users.\""
+     }
+    ]
+   },
+   {
+    "title": "Device & Merchant Ecosystem",
+    "points": [
+     {
+      "label": "Device capex steady",
+      "text": "H2 capex on devices is expected to be the same as H1, around ₹400 crores. The number is slightly higher than before because the company is focusing heavily on engagement and retention of high-quality, high-potential merchants, as payback periods are working well."
+     },
+     {
+      "label": "Sales team additions",
+      "text": "Newly recruited sales executives take time to mature; they are first given retention jobs and revisits, then deployment jobs. The company was able to recruit because it had been waiting to do so for long enough, though quick commerce has been absorbing a large number of such people. Management expects more Soundbox merchant additions as these executives mature."
+     },
+     {
+      "label": "Net active merchants",
+      "text": "Expected to grow from the 1.6 crore base; upwards of 1 crore of these are definitely good-quality for lending purposes. The threshold for lending is based on aging and GMV, not GMV alone. Merchants who are not active or transacting are removed, so net active numbers look lower while gross actives are bigger."
+     },
+     {
+      "label": "Postpaid scale ambition",
+      "text": "The target is to reach the previous scale of roughly ₹9,000 crore quarterly disbursements and approximately 1 crore customers, though the timeline is uncertain: \"I don't know whether it will be a dash amount of quarters or a dash dash amount of quarters.\""
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Consumer acquisition intensity",
+       "Stay as aggressive as current levels; acquire more consumers",
+       "Ongoing"
+      ],
+      [
+       "GMV growth",
+       "Grow faster than the market, both consumer and merchant side",
+       "Ongoing"
+      ],
+      [
+       "Payment processing margin",
+       "Deliver 2.5 bps improvement; confident of this as a haircut estimate",
+       "Post MDR implementation (post-Diwali)"
+      ],
+      [
+       "Device capex",
+       "H2 capex ~₹400 crores, same as H1",
+       "H2 FY27"
+      ],
+      [
+       "Software & cloud cost normalization",
+       "Migration-related duplication cost to largely resolve",
+       "By end of next quarter"
+      ],
+      [
+       "Absolute EBITDA",
+       "Continue rising quarter-on-quarter despite DLG drag",
+       "Next quarter onwards"
+      ],
+      [
+       "Indirect expense growth",
+       "Grow at less than half of revenue/CM growth rate",
+       "Over next 3–4 quarters"
+      ],
+      [
+       "AI monetization (small business)",
+       "Subscription plus transaction fee revenue to start picking up",
+       "~9 months from now"
+      ],
+      [
+       "Net active merchants",
+       "Grow from the 1.6 crore base",
+       "Ongoing"
+      ],
+      [
+       "MTU run rate",
+       "Hope 5-million-per-quarter sustains",
+       "Next few quarters and beyond"
+      ],
+      [
+       "PCTL investment",
+       "Up to ₹500 crores in Paytm Cloud Technologies Limited and/or international subsidiaries; actual amount likely lower",
+       "Over 12 months in multiple tranches"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Revenue growth",
+       "28% YoY, second consecutive quarter; ex-PIDF growth in the 30s"
+      ],
+      [
+       "Net payment margin (ex-UPI)",
+       "9 bps, up from 8.5 bps QoQ"
+      ],
+      [
+       "Contribution margin",
+       "DLG mix shift to 2% for a partner creates a direct-expense drag in the quarter, with most offsetting revenue spread over the loan duration"
+      ],
+      [
+       "EBITDA",
+       "Absolute EBITDA expected to increase QoQ in Q3 despite the DLG drag"
+      ],
+      [
+       "EBITDA reporting basis",
+       "Reported after ESOP costs; no adjusted EBITDA, no ESOP add-back"
+      ],
+      [
+       "Indirect expenses target",
+       "Grow at less than half of revenue growth or contribution margin growth over a 3–4 quarter period"
+      ],
+      [
+       "Devices deployed",
+       "~700,000 in the quarter"
+      ],
+      [
+       "Device merchant base",
+       "1.6 crore total; upwards of 1 crore are good-quality merchants"
+      ],
+      [
+       "Monthly transacting users (MTU)",
+       "+0.5 crore QoQ, versus 0.1-0.2 crore per quarter previously"
+      ],
+      [
+       "P2P GMV growth",
+       "~1% QoQ, reflecting disciplined exit from low-margin enterprise volumes"
+      ],
+      [
+       "H1 device capex",
+       "~₹400 cr on an inward devices count basis; similar run rate expected"
+      ],
+      [
+       "Postpaid disbursements (prior peak)",
+       "~₹9,000 cr per quarter, with a customer base of almost 1 crore"
+      ],
+      [
+       "UPI MDR estimate",
+       "2.5 bps additional revenue pool expected over two to three quarters, not yet implemented; management noted this does not factor in any potential additional platform fee revenue"
+      ],
+      [
+       "UPI MDR cap",
+       "40 bps for transactions above ₹2,000"
+      ],
+      [
+       "Paytm Cloud Technologies investment",
+       "Enabling resolution for up to ₹500 cr over 12 months in multiple tranches"
+      ],
+      [
+       "Lending partners",
+       "Over a dozen, many for 3–5 years"
+      ],
+      [
+       "AI revenue milestone",
+       "Meaningful contribution expected in at least 2–3 more quarters; management suggests looking at same quarter next year"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "One 97 Communications Ltd",
+  "sector": "E Commerce Platform Utility",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "Group EBITDA margin path",
+    "text": "Management has raised confidence in reaching a 15-20% EBITDA margin within two to three years, alongside revenue growth guidance of \"more than 22%\" for FY27, with two consecutive quarters of 28% growth already delivered and indirect expenses held to 14% YoY against 28% revenue growth. On FY26 revenue of ₹9,554 cr, each margin point is roughly ₹95 cr of EBITDA, and FY26's ~₹500 cr EBITDA is expected to turn free-cash-flow positive as EBITDA exceeds capex from FY27."
+   },
+   {
+    "title": "UPI MDR monetisation",
+    "text": "NPCI has notified an MDR framework for UPI, to be implemented immediately after Diwali on a date to be notified, with a 0.4% cap on select payments above ₹2,000; Paytm estimates a conservative ~2.5 bps uplift on its payment processing margin, worth slightly more than ₹700 cr on current GMV of 28 lakh crore. Rollout needs no per-merchant negotiation - management calls it \"a flip of a switch on day one\" - with the benefit stabilising over 2-3 quarters and excluding acquiring-side fees on large merchants."
+   },
+   {
+    "title": "Merchant loan distribution",
+    "text": "Financial services distribution revenue reached ₹912 cr in Q2 FY27 (▲49% YoY) with merchant lending compounding for seven-eight quarters, while penetration of the 1.6 crore device-merchant base is only ~7% against a whitelist of 40-50% and a path management sees to 20%. Lender capital available is four to six times current disbursement levels, and partnerships for larger-ticket loans to EDC merchants should lift ticket sizes that have already compounded ~15% a year."
+   },
+   {
+    "title": "Postpaid relaunch on UPI rails",
+    "text": "Postpaid, relaunched around September 2025, crossed 1 lakh customers in ~3 months and is tracking roughly twice as fast as the first iteration, with management expecting \"meaningful revenue and EBITDA from FY 2028 onwards\". Management sees potential to return to the prior peak of ~₹9,000 cr quarterly disbursements and ~1 crore customers, with the product already EBITDA-positive and adding to payment processing margin as a credit instrument on UPI."
+   },
+   {
+    "title": "Soundbox and device subscriptions",
+    "text": "Subscription Paying Merchants reached 1.64 Cr (▲19% YoY) with ~700,000 devices rolled out in Q2 FY27 and additions running at 25-30 lakh a year, funded by a steady ~₹400 cr half-yearly device capex with payback periods intact. Devices are the funnel to merchant lending - upwards of 1 crore merchants are lendable by management's own thresholds - and merchants increasingly take higher-end tap, swipe and AI soundboxes, lifting revenue per merchant."
+   },
+   {
+    "title": "Online payments relaunch under PPSL",
+    "text": "RBI granted PPSL a Payment Aggregator licence for online payments effective November 26, 2025, with offline and cross-border authorisation granted on December 17, 2025, allowing the online business paused since 2021 to restart as a \"new line of business\" with enterprise sales hiring underway. Online merchant GMV is already a \"very meaningful double digits\" share of merchant GMV and growing fast via EMI and DCC offerings, with the enterprise business independently profitable."
+   },
+   {
+    "title": "Personal loan distribution turnaround",
+    "text": "The consumer loan model has switched fully to pure distribution with no DLG, and after 8-10 challenging quarters lenders are scaling unsecured disbursements again, with results that \"pleasantly surprised\" management prompting a \"double all in\" stance. Consumer credit has crossed its January-2024 levels, and improved LTV-to-CAC is funding higher consumer-side marketing spend."
+   },
+   {
+    "title": "Paytm Money wealth push",
+    "text": "Management targets Paytm Money becoming a top-five broking/wealth player in under three years, with equity broking share rising and monetisation lifted by the MTF book, and injected an additional ₹100 cr via rights issue completed September 2026. Wealth is currently low-to-mid single digit % of revenue, so share gains compound off a small base as the \"third pillar\" of revenue growth."
+   }
+  ]
+ }
+}

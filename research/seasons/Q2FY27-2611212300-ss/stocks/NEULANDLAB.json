@@ -1,0 +1,376 @@
+{
+ "ticker": "NEULANDLAB",
+ "name": "Neuland Laboratories Ltd",
+ "concall": {
+  "name": "Neuland Laboratories Ltd",
+  "sector": "Pharma CRAMS",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Lumpy quarter, H2 confidence intact",
+    "text": "Q2 FY27 revenue fell below the recent trend as only 5–6 of 9 commercial CMS molecules shipped, but management kept H2 and FY28 growth expectations unchanged, citing the strongest RFP pipeline to date."
+   },
+   {
+    "label": "Peptide block commissioned, revenue still 1.5–2 years out",
+    "text": "The new peptide facility at Unit One is operational and seeing traction, but PPQ-related revenues are 6–9 months away and first commercial shipments are 1.5–2 years out; idle-time costs will be borne by Neuland in the interim."
+   },
+   {
+    "label": "Gross margin slipped on input costs",
+    "text": "Gross margin declined to 59.4% from 60.1% YoY as geopolitical conflicts drove raw material price volatility and higher freight and logistics costs."
+   },
+   {
+    "label": "Land bank expanded for the long term",
+    "text": "The company acquired ~134 acres at Kakinada with first right of refusal on another ~60 acres, and the board approved additional land around Unit I; management flagged Kakinada as a long-duration investment with no near-term returns."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the specialty segment normalizes by Q4 as guided, the pace of peptide project progression toward PPQ, and any further input-cost escalation."
+  },
+  "sections": [
+   {
+    "title": "Quarterly Performance & Lumpiness",
+    "points": [
+     {
+      "label": "Revenue composition",
+      "text": "Q2 revenues were driven predominantly by commercial CMS molecules and Prime portfolio products within GDS; only 5 or 6 of the 9 commercial molecules contributed, with some smaller intermediates shipping just once every 2–3 years."
+     },
+     {
+      "label": "No launch drop-off",
+      "text": "The unevenness is attributed to timing and product-mix variability in commercial CMS shipments, not to any reduction in launch quantities; the last launch was about a year ago and no new launches occurred in the last 2–3 quarters."
+     },
+     {
+      "label": "H1 in line",
+      "text": "Despite the Q2 softness, H1 FY27 was largely consistent with expectations, and management reiterated that the business must be assessed over longer periods."
+     },
+     {
+      "label": "Specialty segment drag",
+      "text": "A few molecules that contributed significantly in the past saw customers struggle with manufacturing, which hit revenues; normalization is expected by Q4 based on customer feedback."
+     },
+     {
+      "label": "Working capital stretched",
+      "text": "Working capital days rose to 104 from 84 QoQ, driven by the changing scale and composition of the business; management is focused on inventory, collections, and aligning working capital requirements."
+     },
+     {
+      "label": "Input cost pressure",
+      "text": "Geopolitical conflicts drove volatility in certain raw material prices and escalation in freight and logistics costs through H1."
+     },
+     {
+      "label": "Staff cost step-up",
+      "text": "Q2 staff costs moved up substantially, partly for the peptide unit, with further additions expected in regular R&D and at manufacturing sites for peptides and other APIs."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Davuluri: \"As individual commercial shipments become larger, a shift in timing can have a greater impact on quarterly revenues, and that is why we keep saying lumpiness, quite often in our earnings calls and conversations. This makes growth uneven from a quarter-to-quarter basis, and that is why we keep saying that we need to assess our business over longer periods.\""
+     }
+    ]
+   },
+   {
+    "title": "Peptide Build-Out",
+    "points": [
+     {
+      "label": "Module 1 commissioned",
+      "text": "The new peptide block at Unit One is operational, configured with 3 DAC columns (2 of 60 cm) and a lyophilizer sized to match the current portfolio of peptide projects."
+     },
+     {
+      "label": "Revenue timeline",
+      "text": "Development-related peptide revenues are already being billed but are not substantial; PPQ-related revenues are expected in 6–9 months, with MSA and first commercial batch shipping in another 6–9 months after PPQ, putting actual commercial revenues roughly 1.5–2 years out."
+     },
+     {
+      "label": "Idle-time costs",
+      "text": "The facility was built for a portfolio of projects; a couple are moving forward and expected to use it, but idle time is anticipated over the next 1–1.5 years and Neuland will bear those costs."
+     },
+     {
+      "label": "Module 2 planning",
+      "text": "Configuration and investment for Module 2 are not yet crystallized; the goal is to finalize and move forward in the next 3–6 months."
+     },
+     {
+      "label": "Investment resilience",
+      "text": "Management stated that Modules 2, 3, and 4 will be triggered if Module 1 gets occupied, and even a negative impact on the current CMS business would not halt peptide investments because of sustained demand for peptide API."
+     },
+     {
+      "label": "Full API capability",
+      "text": "Neuland intends to make the complete peptide API, including fragments, crude, purification, and final isolation; fragment-making is a core capability the company plans to capitalize on."
+     },
+     {
+      "label": "Manufacturing complexity",
+      "text": "Peptide synthesis is irreversible: unlike small molecules where you can reprocess to remove an impurity, in peptides you may have to junk the entire reactor, so precision is critical at large scale and in downstream manufacturing."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Davuluri: \"The Module 2, Module 3, Module 4, which is the peptide investment, will get triggered if Module 1 gets occupied and if we have some kind of negative impact in our current CMS business or commercial business, we would still continue with those investments because we believe that there is a sustained demand for peptide API.\""
+     }
+    ]
+   },
+   {
+    "title": "Pipeline & Customer Evolution",
+    "points": [
+     {
+      "label": "RFP activity at a high",
+      "text": "The level of RFP activity in FY27 has been the strongest to date, stemming from relationships built over several years."
+     },
+     {
+      "label": "Big pharma penetration",
+      "text": "Meaningful headway has been made in establishing relationships with big pharma; several proposals are the result of sustained efforts to build new customer relations."
+     },
+     {
+      "label": "Molecule selectivity",
+      "text": "The company is far more selective than a decade ago; it used to do generic CDMO work such as exclusive generic API for a client but no longer enters those discussions, and the pedigree of clients has shifted toward big pharma."
+     },
+     {
+      "label": "Molecule size growth",
+      "text": "Management hardly used to see a ₹100 cr molecule until five years ago; today they see numerous ₹100 cr molecules and have even seen ₹1,000 cr molecules."
+     },
+     {
+      "label": "DMF filings",
+      "text": "Two DMFs were filed in Q2: Fezolinetant and Ivacaftor, strengthening the GDS portfolio."
+     },
+     {
+      "label": "NDA and IND support",
+      "text": "The company supported 1 additional NDA filing and has 9 IND filings in the pipeline."
+     },
+     {
+      "label": "Patent cliff insulation",
+      "text": "The three large CMS/CDMO products have no patent expiries in meaningful markets before 2030, and management is fairly certain the post-2030 dip will have no impact on the growth trajectory, which will come from peptides, complex small molecules, and other products."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Davuluri: \"I think we are fairly certain that there will be no impact because of the dip from these molecules on the growth that is going to come, which... will not just be from peptides, there will also be complex small molecules, there will be other products as well.\""
+     }
+    ]
+   },
+   {
+    "title": "Infrastructure & Capacity Expansion",
+    "points": [
+     {
+      "label": "Kakinada land acquisition",
+      "text": "Approximately 134 acres were acquired at Kakinada, Andhra Pradesh, for future expansion, with first right of refusal on an additional ~60 acres that could take the total to ~200 acres over the next two years."
+     },
+     {
+      "label": "Long-term return profile",
+      "text": "Management urged investors to view Kakinada as a long-duration investment with no returns in the immediate timeframe; if there were an impact on commercial products, Kakinada would likely be slowed before peptides."
+     },
+     {
+      "label": "Unit I expansion",
+      "text": "The board approved investment to add more land around Unit I, expanding its footprint."
+     },
+     {
+      "label": "Process R&D center",
+      "text": "A new center at Genome Valley, Hyderabad, is expected to be fully operational by early next year; it is a process development center for small molecules and peptides, not new modalities like oligonucleotides, ADCs, or HPAPIs."
+     },
+     {
+      "label": "Integrated development model",
+      "text": "The R&D center will combine process design, process engineering, quality by design, flow chemistry, and integrated development capable of generating small volumes of API in one paperless, highly automated location, replacing the prior model where process design happened in R&D and then moved to a pilot plant at a manufacturing site."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Davuluri: \"I would probably urge investors to look at the investment in Kakinada more from a long-term return perspective rather than something that will give us returns in the immediate timeframe.\""
+     }
+    ]
+   },
+   {
+    "title": "Peptide Industry Context & Competitive Positioning",
+    "points": [
+     {
+      "label": "Overcapacity cycle expected",
+      "text": "Management expects the GLP-1 euphoria to drive overcapacity, then testing, then correction, which it views as normal for any thriving industry."
+     },
+     {
+      "label": "Capabilities over reactors",
+      "text": "Players who merely install reactors and expect customers to do technology transfer may face challenges when those customers leave; those with strong R&D capabilities in peptides can cater to the roughly 1,000 synthetic peptide drugs beyond any single weight-loss molecule."
+     },
+     {
+      "label": "India capacity gap",
+      "text": "There is still very little peptide CDMO capacity in India relative to small molecules; no overcapacity exists in India, though there may be in China."
+     },
+     {
+      "label": "Talent scarcity",
+      "text": "India does not have enough CDMO peptide talent; there is talent for generics but not for CDMO, and this is a challenge."
+     },
+     {
+      "label": "Lumpiness as a scaling artifact",
+      "text": "As the business has scaled, the size of large opportunities has increased almost in proportion, so lumpiness persists; management’s intent is to break away by adding more projects, but if even larger opportunities are attracted, lumpiness may remain and is not necessarily a bad thing."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Davuluri: \"Lot of players who are just putting in reactors and expecting customers to come and do the technology transfer, I believe that they may face more challenges because the moment that customer goes away they only are sitting with equipment and not necessarily capabilities, but if you have strong R&D capabilities in peptides, then you are also able to cater to these other 1000 molecules.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "H2 FY27 growth",
+       "Growth expectations remain intact for H2 FY27 and the following financial year",
+       "H2 FY27 and FY28"
+      ],
+      [
+       "Peptide PPQ revenues",
+       "PPQ-related revenues from peptides to begin",
+       "6–9 months"
+      ],
+      [
+       "Peptide first commercial revenues",
+       "MSA and first commercial batch shipping after PPQ completion",
+       "~1.5–2 years"
+      ],
+      [
+       "Specialty segment normalization",
+       "Business to normalize based on customer feedback",
+       "By Q4 FY27"
+      ],
+      [
+       "Peptide Module 2 configuration",
+       "Finalize configuration and investment plan",
+       "Next 3–6 months"
+      ],
+      [
+       "Process R&D center",
+       "Fully operational",
+       "Early next year"
+      ],
+      [
+       "More CMS launches",
+       "Additional launches expected",
+       "Next 1–2 years"
+      ],
+      [
+       "Peptide Modules 2–4 trigger",
+       "Investment triggered if Module 1 gets occupied; will proceed even if CMS business faces headwinds",
+       "Conditional on Module 1 occupancy"
+      ],
+      [
+       "Kakinada expansion",
+       "Could reach ~200 acres depending on business growth plans",
+       "Over the next two years"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Total income",
+       "₹457.2 cr, vs ₹516.1 cr in Q2 FY26"
+      ],
+      [
+       "Total income (H1 FY27)",
+       "₹1,107.2 cr, vs ₹816.7 cr in H1 FY26"
+      ],
+      [
+       "Gross margin",
+       "59.4%, vs 60.1% in Q2 FY26"
+      ],
+      [
+       "EBITDA",
+       "₹104.6 cr, margin 22.9% vs ₹156.9 cr and 30.4% in Q2 FY26"
+      ],
+      [
+       "Profit after tax",
+       "₹51.1 cr, vs ₹96.5 cr in Q2 FY26"
+      ],
+      [
+       "EPS",
+       "₹39.85 per share"
+      ],
+      [
+       "CMS revenue",
+       "₹214 cr, recognized from 5 or 6 molecules this quarter"
+      ],
+      [
+       "Working capital",
+       "104 days of sale, vs 84 days in Q1 FY27"
+      ],
+      [
+       "Capex outflow (H1 FY27)",
+       "₹261 cr"
+      ],
+      [
+       "Free cash flows (H1 FY27)",
+       "₹99 cr"
+      ],
+      [
+       "Net debt",
+       "negative ₹208 cr"
+      ],
+      [
+       "Top 5 customer concentration",
+       "68% of revenues"
+      ],
+      [
+       "DMFs filed during the period",
+       "2, Fezolinetant and Ivacaftor"
+      ],
+      [
+       "Phase 3 projects",
+       "13, up from 8 (per an analyst's math)"
+      ],
+      [
+       "Land acquired at Kakinada",
+       "~134 acres, with first right of refusal on additional ~60 acres"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Neuland Laboratories Ltd",
+  "sector": "Pharma CRAMS",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "Group growth guide",
+    "text": "Management has \"always aspired to grow at about 20%\" and expects FY27 and FY28 to grow at that rate, with the 18-20% CAGR called \"a fair assumption\" over five years. At ~₹2,307 cr TTM revenue, that implies adding roughly ₹400-450 cr of revenue a year, supported by a 25%+ EBITDA margin plan."
+   },
+   {
+    "title": "Peptide facility module 1",
+    "text": "Module 1 of the new commercial peptide facility at Unit 1 (7,000 L reactor capacity, three DAC columns, two lyophilisers) went operational in September 2026, part of a ~₹250 cr peptide investment lifting peptide capacity from 0.5 KL to 6.37 KL. PPQ revenues are expected within six to nine months and commercial peptide revenues in roughly 1.5-2 years, with modules two to four (module two up to 18,000 L) triggered once module one fills."
+   },
+   {
+    "title": "CMS commercial molecule ramp",
+    "text": "Commercial CMS is the primary near-term driver: H1 FY27 commercial CMS revenue was ₹639 cr vs ₹411 cr a year earlier, with growth anchored on about three active molecules, no meaningful patent expiries before 2030, and one more commercialization expected in FY27. Unit 3, running at only 30-40% utilization, added 215 KL in FY25 enabling scale-up of a key product from 50 MT to 150 MT, leaving substantial volume headroom as ramps continue."
+   },
+   {
+    "title": "Gland Pharma sterile API partnership",
+    "text": "Announced 5 August 2026, a long-term CDMO partnership under which Gland Pharma will build a dedicated sterile API suite at Visakhapatnam for microparticle depot products, adding ~1,400 kg of annual capacity to USFDA/EU standards. The asset-light arrangement pairs Neuland's complex API chemistry with sterile manufacturing it does not own, opening a differentiated product category with management seeing scope beyond the initial few products."
+   },
+   {
+    "title": "Unit 1 capacity additions",
+    "text": "The Board approved adding 120.5 KL to Unit 1 (91% utilized) for ₹143.4 cr over 12-18 months, plus a further 18 KL for ₹39.8 cr within 6-7 months, and commercial production of earlier Unit 1 and Unit 3 expansions commenced 31 July 2026. Six to seven acres of adjacent land have also been acquired, letting Neuland add capacity faster than greenfield approval cycles would allow."
+   },
+   {
+    "title": "Genome Valley R&D center",
+    "text": "A ₹189 cr, 140,000 sq ft process R&D center at Genome Valley is set for inauguration, with full operation expected by early next year, tripling current R&D space and adding integrated process engineering, flow chemistry and dedicated peptide labs. Combined with the new peptide plant, management says this lab-to-commercial chain \"would probably not be matched by many Indian CDMOs,\" supporting conversion of the 99-project CMS pipeline."
+   },
+   {
+    "title": "GDS specialty filings",
+    "text": "Two US DMFs were filed in H1 FY27 (fezolinetant, ivacaftor) after six filings in FY25 including Difelikefalin, Neuland's first peptide DMF, alongside a GLP-1 molecule in development. Each filing feeds the shift from low-margin Prime toward higher-margin Specialty products, while FY26 revenue grew 37% to ₹2,053 cr at a 29.4% EBITDA margin, driven by commercial CMS projects."
+   }
+  ]
+ }
+}

@@ -1,0 +1,368 @@
+{
+ "ticker": "RKFORGE",
+ "name": "Ramkrishna Forgings Ltd",
+ "concall": {
+  "name": "Ramkrishna Forgings Ltd",
+  "sector": "Castings Forgings and Fasteners",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Broad-based surge, 55% YoY revenue growth",
+    "text": "Consolidated revenue jumped 54.9% YoY and 15.5% QoQ, driven by a V-curve recovery in North America, sustained domestic auto demand, and a breakthrough casting export order."
+   },
+   {
+    "label": "Margins expanded sharply, but headwinds persist",
+    "text": "EBITDA margin rose to 18.23% from 13.5% YoY, yet a \"crazy\" domestic steel price environment and elevated shipping costs created a combined ~₹15 crores headwind that partially offset operating leverage gains."
+   },
+   {
+    "label": "The order book is diversifying fast",
+    "text": "New wins of ₹673 crores include a landmark ₹272 crores North American light-vehicle casting order from a new customer, opening an export channel for a business that was previously domestic-focused."
+   },
+   {
+    "label": "Capex is rising to capture a \"floodgate of opportunities\"",
+    "text": "Full-year capex guidance was raised to ~₹550 crores from ₹350 crores as management invests in machining and value-add capability to meet demand, while still targeting ₹500 crores in debt reduction."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "The pace of validation for the new North American casting order, the trajectory of steel and shipping costs, and whether the wheels JV clears railway inspection and begins commercial ramp-up."
+  },
+  "sections": [
+   {
+    "title": "Demand Environment",
+    "points": [
+     {
+      "label": "North America snapped back",
+      "text": "After a lull last year due to tariff issues, the U.S. business saw a V-curve recovery, with management describing the growth as sustainable and driven by order wins and capacity additions already made."
+     },
+     {
+      "label": "Domestic auto remains a pillar",
+      "text": "CV and PV sales grew 28.7% and 30.7% respectively during Q2, while industrial activity strengthened with IIP growth of 7.4% in July and 8% in August."
+     },
+     {
+      "label": "Export growth is structural, not opportunistic",
+      "text": "New export business is coming from new product launches by clients, not vendor replacement, requiring 8 to 9 months of development and testing before revenue conversion."
+     },
+     {
+      "label": "Europe is not weak",
+      "text": "Absolute revenue increased, and Europe's share of total exports rose from 28% to 41% over two years; a marginal QoQ dip was due to capacity allocation favoring North America's sudden demand surge and can be covered next quarter."
+     },
+     {
+      "label": "The next six months look strong",
+      "text": "Management sees strong visibility and a very strong market, with H2 expected to be even better than H1."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Milesh Gandhi: \"North America suddenly went for a V-curve recovery after they were lull for the last year.\""
+     }
+    ]
+   },
+   {
+    "title": "Order Wins & Diversification",
+    "points": [
+     {
+      "label": "Casting business breaks into exports",
+      "text": "A ₹272 crores order from a new North American customer for a new light-vehicle product line opens the door to export markets from a business that was previously domestic-focused; validation takes 6 to 9 months before regular supplies start."
+     },
+     {
+      "label": "Farm equipment gains traction",
+      "text": "Orders worth ₹90 crores from the farm equipment segment reflect growing presence in off-highway applications."
+     },
+     {
+      "label": "Railway revenue is capacity-linked, not demand-linked",
+      "text": "Revenue was flat QoQ at ~₹64–65 crores because output is tied to available capacity; absolute flow is continuous with good order booking, but the percentage appears flat as total revenue grows."
+     },
+     {
+      "label": "Passenger vehicles seen as the next growth lever",
+      "text": "Management expects almost 10%+ growth to come from passenger vehicles by CY28 or FY29."
+     }
+    ],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Order",
+      "Details"
+     ],
+     "rows": [
+      [
+       "North American LV casting (₹272 cr)",
+       "New customer, new product line, passenger vehicle application; 6–9 months validation before regular supplies."
+      ],
+      [
+       "Domestic casting (₹175 cr)",
+       "Development period of 12–14 weeks before bulk starts."
+      ],
+      [
+       "Farm equipment (₹90 cr)",
+       "Growing presence in off-highway applications."
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Margins: Expansion with Headwinds",
+    "points": [
+     {
+      "label": "The expansion story",
+      "text": "EBITDA margin improved to 18.23% from 13.5% YoY, reflecting operating leverage through improved capacity utilization, better product mix, and operating efficiencies; gross margins were materially higher in Q1 and Q2 vs. historical run-rates because the company has been able to choose products diligently based on capacity utilization."
+     },
+     {
+      "label": "Steel prices bit hard",
+      "text": "Domestic steel prices, described as \"crazy,\" rose more than the price increases obtained from export customers, creating a negative carry of ₹6–7 crores; domestic pass-through was full, but North American and European local steel prices did not rise as much as Indian steel prices."
+     },
+     {
+      "label": "Shipping costs added pressure",
+      "text": "A net hit of ₹8–9 crores in Q2 after partially passing on the increase to customers; the unpassed portion had to be borne by the company, and elevated shipping costs are likely to remain for some time."
+     },
+     {
+      "label": "Casting mix is a margin drag",
+      "text": "Management noted that spending in the casting business, where margins are lower than forging, means consolidated margins may remain \"little muted.\""
+     },
+     {
+      "label": "The trajectory",
+      "text": "30–50 bps expansion every quarter in the past couple of quarters; aspiration is to cross the previous peak margin, but management declined to put a timeline on it, saying \"it can happen much before it also.\""
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Naresh Jalan: \"I think domestic steel prices are right now crazy.\""
+     }
+    ]
+   },
+   {
+    "title": "Capex, Debt & Balance Sheet",
+    "points": [
+     {
+      "label": "Capex guidance raised",
+      "text": "Full-year FY27 capex now expected at ~₹550 crores for the entire group, up from an earlier ₹350 crores, driven by a buoyant market and the need to invest in machining and value-add capability."
+     },
+     {
+      "label": "Debt reduction on track",
+      "text": "Debt reduced by ₹126 crores in H1; FY27 guidance of ₹500 crores reduction maintained, targeting gross debt of ₹1,670–1,700 crores and net debt of ₹1,500 crores; if achieved, annual finance cost will drop by ~₹40 crores."
+     },
+     {
+      "label": "FY28 debt reduction aim",
+      "text": "₹300–400 crores further reduction targeted."
+     },
+     {
+      "label": "Working capital rose on volume, not inefficiency",
+      "text": "Net working capital increased ~₹140 crores due to volume growth; shipping delays caused shipments to build in inventory rather than converting to debtors, while payable days increased, partially offsetting the other two."
+     },
+     {
+      "label": "ROCE trajectory",
+      "text": "12% to 15% range maintained for FY27 exit; next-year aspiration is 20%, described as \"an aspiration.\""
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Naresh Jalan: \"With the market currently so buoyant and opportunity coming full scale from all nooks and corners, so we will need to continue to invest in terms of our machining capability and value-add capability.\""
+     }
+    ]
+   },
+   {
+    "title": "New Ventures: Wheels JV, Aerospace & Non-Ferrous",
+    "points": [
+     {
+      "label": "Wheels JV nears commercial start",
+      "text": "The first batch of 300 wheels is ready and under inspection by railways; inspection expected to be completed in a couple of weeks; production ramp targets 2,000–3,000 wheels in December, 4,000–5,000 per month in Q4 (80% capacity), and 20,000–25,000 wheels for full-year FY27."
+     },
+     {
+      "label": "Phase 2 approved",
+      "text": "₹56 crores investment approved for the second phase, adding machining capability for an additional 140,000 wheels; first phase already completed."
+     },
+     {
+      "label": "Non-ferrous and advanced materials progressing",
+      "text": "Continuous efforts in aluminum, titanium, Inconel and Niobium grades for aerospace, robotics and semiconductors are progressing well."
+     },
+     {
+      "label": "Aluminum and cold forging utilization",
+      "text": "Currently above 50%+, with efforts underway to add more customers to increase utilization."
+     },
+     {
+      "label": "Aerospace timeline may be shorter than industry norm",
+      "text": "Management indicated that the aerospace business they are aiming at could see a much faster ramp than the typical 4-to-5-year industry expectation, with meaningful news for investors expected \"very soon.\""
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Milesh Gandhi: \"So tomorrow, if we get into the aerospace, the business what we are aiming at, that can always see a much faster as compared to your expectation of 4 to 5 years.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Debt reduction",
+       "Reduce total debt by ₹500 crores to net debt of ₹1,500 crores",
+       "FY27"
+      ],
+      [
+       "Capex",
+       "Full-year group capex of ~₹550 crores",
+       "FY27"
+      ],
+      [
+       "Wheels JV production",
+       "20,000–25,000 wheels supplied",
+       "FY27"
+      ],
+      [
+       "Wheels JV monthly ramp",
+       "4,000–5,000 wheels per month (80% capacity)",
+       "Q4 FY27"
+      ],
+      [
+       "Margin expansion",
+       "30–40 bps improvement quarter-on-quarter",
+       "Ongoing"
+      ],
+      [
+       "ROCE",
+       "12% to 15% range",
+       "FY27 exit"
+      ],
+      [
+       "Casting order validation",
+       "North American LV order: 6–9 months; domestic: 12–14 weeks",
+       "From Q2 FY27"
+      ],
+      [
+       "JV pending investment",
+       "₹15–20 crores in H2 FY27, balance in FY28",
+       "H2 FY27 / FY28"
+      ],
+      [
+       "FY28 debt reduction",
+       "Reduce debt by ₹300–400 crores",
+       "FY28"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Consolidated revenue from operations",
+       "₹1,405 cr, +54.9% YoY and +15.5% QoQ"
+      ],
+      [
+       "Consolidated EBITDA (excl. other income)",
+       "₹256 cr, vs ₹123 cr in Q2 FY26 and ₹218 cr in Q1 FY27"
+      ],
+      [
+       "EBITDA margin",
+       "18.23%, vs 13.5% in Q2 FY26 and 17.96% in Q1 FY27"
+      ],
+      [
+       "Profit before tax",
+       "₹95 cr, vs loss of ₹10 cr in Q2 FY26 and profit of ₹65 cr in Q1 FY27"
+      ],
+      [
+       "Profit after tax",
+       "₹71 cr, +47% QoQ"
+      ],
+      [
+       "Total debt reduction in H1 FY27",
+       "₹126 cr reduced; FY27 guidance of ₹500 cr reduction maintained"
+      ],
+      [
+       "New order wins",
+       "₹673 cr across CV, EV, LV and Farm Equipment segments, ~4-year program life"
+      ],
+      [
+       "Order win split",
+       "48% domestic, 52% export"
+      ],
+      [
+       "Casting segment orders",
+       "₹447 cr, of which ₹272 cr for North American LV export market"
+      ],
+      [
+       "Export revenue",
+       "₹424 cr, vs ₹277 cr in Q2 FY26"
+      ],
+      [
+       "Europe share of geographical breakup",
+       "41%, vs 28% previously; North America at around 58%"
+      ],
+      [
+       "Casting segment capacity utilization",
+       "88%"
+      ],
+      [
+       "Aluminum forging capacity utilization",
+       "More than 50%"
+      ],
+      [
+       "FY27 capex guidance (revised)",
+       "~₹550 cr for entire group, vs earlier guidance of ₹350 cr"
+      ],
+      [
+       "Net working capital increase",
+       "~₹140 cr in value terms, net of creditors; days stable vs March"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Ramkrishna Forgings Ltd",
+  "sector": "Castings Forgings and Fasteners",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "₹8,000 cr FY29 revenue target",
+    "text": "Management reaffirmed the consolidated revenue target of ₹8,000 crore by FY29 (moved from FY28), implying roughly 22-25% CAGR from FY26's ~₹4,200 cr base, driven by passenger vehicles, the order book and new verticals. Against FY26 revenue of ₹4,200 cr, that is close to a doubling of the business in three years."
+   },
+   {
+    "title": "Rail wheel JV start-up",
+    "text": "The 2,28,000-wheel Chennai JV (RKFL 51%) has begun trial production, with the first 300 wheels under Railways inspection, partial output of 2,000-3,000 wheels/month from December 2026 and a ramp to 4,000-5,000/month by Q4 FY27; ~25,000 wheels are targeted for supply this year. An 80,000-wheel confirmed Railways order plus ~25,000 from JV partners keeps utilization running to end-FY28, with wheel revenue of ₹400-450 cr and ~18-20% EBITDA margins at optimal capacity."
+   },
+   {
+    "title": "Castings ramp-up and export win",
+    "text": "The ₹249 cr casting line commissioned 31 March 2026 is already at 88% utilization (Q2 FY27 volumes +126.5% YoY), with management targeting ₹400-500 cr of revenue at 15-16% margins. Of Q2 FY27 order wins, ₹447 cr is castings, including ₹272 cr from a new North American light-vehicle customer that opens the passenger-car export market after 6-9 months of validation."
+   },
+   {
+    "title": "Passenger vehicle and EV foray",
+    "text": "The board approved ₹170.52 cr capex on 24 July 2026 for a passenger-vehicle project with an 8,800 MT press line by September 2027, targeting 10% of revenue from PV (mainly EV) by FY28-FY29. Order proof is already in hand: ₹278 cr of Q1 FY27 wins, ~82% PV and entirely EV for domestic makers, plus ₹307 cr of North America PV orders booked in H1 FY26."
+   },
+   {
+    "title": "Aluminium forgings for EVs",
+    "text": "The first aluminium forging line (3,000 TPA, ₹57.5 cr) was commissioned 20 January 2026 and bulk supplies to global EV equipment makers have started, with capacity now 6,000 tons and utilization above 50%. Realizations near ₹400/kg of raw material alone give margins of 14-15% on a much higher revenue-per-ton base than steel forgings."
+   },
+   {
+    "title": "Railway bogie assemblies",
+    "text": "Bulk supplies of fully assembled bogie frames to Indian Railways began in FY26, qualifying the company for roughly 60% of an addressable opportunity of over ₹2,000 cr per annum, described as highly accretive to margins. Railways' revenue share has grown from 1.7% in FY22 to 7.5% in FY26, with a double-digit share targeted within two years."
+   },
+   {
+    "title": "North America export recovery",
+    "text": "Management guides ~35% of consolidated revenue from exports in FY27, the highest ever, with 20%+ growth from both North America and Europe. North America revenue had fallen over 40% YoY in 9M FY26 on destocking, and management expects a return to normal from FY27 as new customer samples convert to full sales from Q1 FY27, with Class 8 strength seen lasting to Q3 CY2027."
+   },
+   {
+    "title": "Mexico machining ramp",
+    "text": "The Mexico plant (acquired August 2024) started production with ~₹6 cr revenue in Q1 FY27 and significant revenues are expected from Q3 FY27, placing output inside the USMCA framework. If US tariffs persist, management says Mexico operations could ramp sooner than planned, since supplies are on a DAP basis."
+   }
+  ]
+ }
+}

@@ -1,0 +1,489 @@
+{
+ "ticker": "NAVINFLUOR",
+ "name": "Navin Fluorine International Ltd",
+ "concall": {
+  "name": "Navin Fluorine International Ltd",
+  "sector": "Chemicals Fluorine",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "All cylinders firing, broad-based strength",
+    "text": "Every business vertical delivered strong performance, with HPP, Specialty and CDMO all posting sequential growth driven by volumes, pricing and operational efficiency."
+   },
+   {
+    "label": "HFO contract extended, base protected",
+    "text": "The Solstice supply contract was extended 4 years to December 2032, turning a 7-year deal into an 11-year deal with larger volumes on the same asset base, providing visibility beyond FY28."
+   },
+   {
+    "label": "CDMO pipeline is breaking through",
+    "text": "One molecule won China approval with US FDA fast-track, another targets darolutamide label expansion; management says a revenue trajectory into the ₹1,200–1,300 crore range is \"not sort of unimaginable\" beyond FY27."
+   },
+   {
+    "label": "Margins held despite cost headwinds",
+    "text": "Forex tailwinds and pricing actions largely offset sourcing cost increases, while operating leverage and efficiency efforts protected EBITDA; management is working towards full-year margins in the same range as H1."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "R32 plant commissioning and ramp, Chemours project commissioning in Q3, and whether the debottlenecking recently commissioned at Dahej starts feeding into Specialty numbers."
+  },
+  "sections": [
+   {
+    "title": "HFO Contract Extension & the Solstice Business",
+    "points": [
+     {
+      "label": "Contract now 11 years",
+      "text": "The existing supply contract with Solstice Advanced Materials was extended by 4 years, taking it from a 7-year to an 11-year contract through December 2032."
+     },
+     {
+      "label": "Larger volumes, same assets",
+      "text": "The extension is not just a time extension; management expects volumes to be larger on the same asset base, meaning revenue and period both expand without incremental capex."
+     },
+     {
+      "label": "Base protected through FY30",
+      "text": "The extension provides visibility beyond FY28, with the base protected through FY30."
+     },
+     {
+      "label": "Pricing mechanism is pass-through",
+      "text": "When pressed on whether the implied annual run rate moderates beyond FY29, management declined to confirm simplistic math, citing complex commercial structures and pass-through pricing where capex recovery changes the rate."
+     },
+     {
+      "label": "Own HFO commercialization not in conflict",
+      "text": "Management stated own HFO commercialization will not conflict with the Solstice contract because there are 40+ varieties of HFOs serving different applications; the company is exploring both partnership and product models."
+     },
+     {
+      "label": "HFO is a premium product",
+      "text": "HFO serves greener, cleaner end applications and commands a premium; global HFO capacity is only 10% of global ref gas demand in tonnage terms, so there is not enough volume to play on pricing alone."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Ganatra: \"The way to look at this is that on a same asset base, you're going to extend both the volumes, the revenues and also the period. This was a 7-year contract. This now becomes an 11-year contract.\""
+     }
+    ]
+   },
+   {
+    "title": "CDMO: Pipeline Breakthroughs and Capacity Build",
+    "points": [
+     {
+      "label": "Two molecules advancing fast",
+      "text": "One molecule has already received approval in China and is on fast track for FDA approval in the US market; the other relates to potential label expansion of darolutamide, an existing commercial molecule."
+     },
+     {
+      "label": "USD 10 crore target within reach",
+      "text": "Management says the CDMO business is at striking distance of the USD 10 crore run rate target in terms of order book visibility, with growth expected by end of this year."
+     },
+     {
+      "label": "Beyond FY27, the numbers get large",
+      "text": "cGMP-4 Phase 1+2 carries peak annual revenue potential of ~₹900–1,000 crores by FY28/FY29; management said envisaging growth into the ₹1,200–1,300 crore range is \"not sort of unimaginable\" given the label expansion and China approval developments."
+     },
+     {
+      "label": "cGMP-5 trigger is clear",
+      "text": "Phase 5 will be triggered when GMP plant utilization reaches 70–80%, with \"absolutely no doubt\"; infrastructure (warehouse up to Phase 6, ETP up to Phase 5) is already in place, enabling a quick move."
+     },
+     {
+      "label": "cGMP-4 Phase 2 on track",
+      "text": "Expected to become operational by end of Q4 FY27."
+     },
+     {
+      "label": "European CDMO engagement deepening",
+      "text": "Engagement with a leading European CDMO major is deepening, driven by increasing demand for an existing molecule and an expanding role in the customer's supply chain."
+     },
+     {
+      "label": "Balanced portfolio build",
+      "text": "The strategic focus is a balanced portfolio of late-stage and commercial molecules complemented by early-stage programs, expanding across oncology, cardiovascular, neurology and animal health."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Ganatra: \"Envisaging a growth beyond FY27 in the numbers that you talked about is not sort of unimaginable.\""
+     }
+    ]
+   },
+   {
+    "title": "Specialty Chemicals: Extracting More from Existing Assets",
+    "points": [
+     {
+      "label": "Strong order visibility",
+      "text": "The Specialty Chemicals business has strong order visibility for H2 FY27 and beyond, with a product pipeline expanding across existing and new molecules."
+     },
+     {
+      "label": "Growth from operational efficiency, not new capex",
+      "text": "Sequential growth was driven by extracting more from current assets: more campaigns in the same plants through product mapping and step minimization, supported by R&D and innovation."
+     },
+     {
+      "label": "Five new molecules contributing",
+      "text": "Part of the growth seen in the quarter came from 5 new molecules being worked on; campaign orders for those molecules extend through the end of this year and beyond."
+     },
+     {
+      "label": "MPP-1 and MPP-2 exceeding PAR",
+      "text": "By the end of FY27, the PAR of MPP-1 and MPP-2 will have been \"far exceeded\" due to work mapping more products into those plants and debottlenecking."
+     },
+     {
+      "label": "Debottlenecking not yet in numbers",
+      "text": "The recently commissioned debottlenecking of MPP capacity at Dahej (September 2026) is not yet factored into reported numbers and should drive growth beyond current levels."
+     },
+     {
+      "label": "₹350 crore run rate going higher",
+      "text": "Management confirmed the Specialty chemicals run rate will go up from current levels due to the factors above."
+     },
+     {
+      "label": "Agri-specialty approach is asset-light",
+      "text": "The approach is to utilize current assets and extract more from them rather than build new dedicated capacity."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "HPP: Pricing, Volumes and the Ref Gas Advantage",
+    "points": [
+     {
+      "label": "Revenue growth from volumes and realization",
+      "text": "HPP revenue growth was driven by higher volumes and improved realization, with the pricing environment for HFC remaining firm and realization improving sequentially."
+     },
+     {
+      "label": "AHF plant utilization improved",
+      "text": "AHF plant utilization improvement contributed to growth momentum, though the plant is not yet at full capacity given its large size."
+     },
+     {
+      "label": "AHF merchant sales larger than planned",
+      "text": "Merchant sales volumes are far larger than originally planned; some material was placed in international markets and is also serving high-purity HF."
+     },
+     {
+      "label": "Ref gas pricing beats averages",
+      "text": "Management emphasized that teams placed product at better pricing than averages suggest, calling reliance on averages a \"danger\" that understates the upside captured."
+     },
+     {
+      "label": "HFO business contributed sequentially",
+      "text": "QoQ growth in the Orchid/Solstice HFO business contributed to sequential growth."
+     },
+     {
+      "label": "R32 plant commissioning shortly",
+      "text": "The R32 plant will commission shortly and ramp up towards the end of Q3 FY27, with full ramp-up possibly in Q4 FY27."
+     },
+     {
+      "label": "HFC capacity expansion on track",
+      "text": "Progressing as planned, remains on track for commissioning \"shortly.\""
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Ganatra: \"This is the danger of relying on averages, right? I mean averages don't tell you what we kind of -- our teams managed to place the product at better pricing.\""
+     }
+    ]
+   },
+   {
+    "title": "New Engines: Chemours, Advanced Materials, TDF",
+    "points": [
+     {
+      "label": "Chemours commissioning in Q3 FY27",
+      "text": "The project is progressing towards commissioning in Q3 FY27; the delay was a \"conscious choice\" between partners, evidenced by purchase orders already in hand as the asset nears commissioning."
+     },
+     {
+      "label": "Chemours product qualified for hypercomputing",
+      "text": "Earlier in the year, Chemours qualified its product with French company 2CRSi (an OEM manufacturer of high-compute kits) via a joint development agreement, accelerating adoption in hypercomputing."
+     },
+     {
+      "label": "Scale-up timeline is 15 months post-commissioning",
+      "text": "Management said it will take about 15 months once the project is commissioned to know adoption rate, market size, and hence final capex; premature to talk about eventual capex."
+     },
+     {
+      "label": "Advanced Materials as a new vertical",
+      "text": "The company is incubating Advanced Materials as a new business vertical, focusing on specialized applications across data centers, electronics, semiconductors and defense; expected to be ~10–15% of the expanded pie by 2030 and positioned as a growth business for the next decade."
+     },
+     {
+      "label": "Advanced Materials capacity by Q2 FY28",
+      "text": "Adoption capacity is progressing as per schedule, expected to commission by Q2 FY28."
+     },
+     {
+      "label": "TDF project with DRDO progressing well",
+      "text": "The project is on schedule; management noted that as the product is developed, the pharma application will be accelerated sooner than the defense timeline since defense qualification takes longer."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Ganatra: \"In fact, the delay is a conscious choice rather than anything else between the partners. And this is evidenced by the fact that as we are coming to commission that asset, we already have orders in place coming in for the future quarters.\""
+     }
+    ]
+   },
+   {
+    "title": "Margins, Capex and the Cost Equation",
+    "points": [
+     {
+      "label": "EBITDA protected on multiple fronts",
+      "text": "Forex tailwind and pricing actions largely offset sourcing cost impacts; operating leverage and operating efficiency efforts also helped protect EBITDA."
+     },
+     {
+      "label": "34% HF EBITDA from efficiency, not just pricing",
+      "text": "Management attributed the 34% EBITDA in the current environment not only to pricing but continuously to efficiencies and improvements, even as raw material costs (sulfur, gas, fluorspar) rise."
+     },
+     {
+      "label": "FY27 full-year margins in H1 range",
+      "text": "The company is working towards margins in the same sort of range as H1."
+     },
+     {
+      "label": "Long-term 30% EBITDA guidance unchanged",
+      "text": "Management maintained the 30% long-term EBITDA margin guidance but cautioned against predicting 5–6 year margins given geopolitical volatility."
+     },
+     {
+      "label": "Capex frame ₹700–1,000 crores annually",
+      "text": "FY27 is at the lower end (~₹700 crores); growth to FY28 is \"pretty much baked in\" with capexes in place, with some part going to FY29 (e.g., cGMP-4). Several projects are in the hopper and will be announced as they mature through stage gates."
+     },
+     {
+      "label": "Renewable energy investment",
+      "text": "The company is investing to meet more than 60% of energy requirements through renewable resources."
+     },
+     {
+      "label": "Nectar ramp on track",
+      "text": "FY27 utilization expected at 60–65% of PAR, with balance PAR in FY28."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Ganatra: \"I will not sit here and let you believe that I have full knowledge of the future. In fact, if at all, our cognitive ability does not allow us to predict the numbers for 5 years and 6 years on EBITDA margins. The geopolitics are massively volatile, as you all know.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Chemours project commissioning",
+       "Project progressing towards commissioning",
+       "Q3 FY27"
+      ],
+      [
+       "R32 plant ramp",
+       "Commissioning shortly; ramp towards end of Q3, full ramp possibly Q4",
+       "Q3/Q4 FY27"
+      ],
+      [
+       "cGMP-4 Phase 2 operational",
+       "Phase 2 to become operational",
+       "End of Q4 FY27"
+      ],
+      [
+       "Advanced Materials capacity",
+       "Adoption capacity commissioning",
+       "Q2 FY28"
+      ],
+      [
+       "Nectar ramp",
+       "60–65% of PAR in FY27, balance PAR in FY28",
+       "FY27 / FY28"
+      ],
+      [
+       "CDMO revenue target",
+       "USD 10 crore run rate",
+       "FY27"
+      ],
+      [
+       "cGMP-5 trigger",
+       "Triggered when GMP plant utilization reaches 70–80%",
+       "No date (utilization-driven)"
+      ],
+      [
+       "FY27 full-year margins",
+       "Working towards margins in same range as H1",
+       "FY27"
+      ],
+      [
+       "Long-term EBITDA margin",
+       "Guidance unchanged at 30%",
+       "Long-term"
+      ],
+      [
+       "HFO contract extension",
+       "Extended 4 years to December 2032, larger volumes on same asset base",
+       "Through Dec 2032"
+      ],
+      [
+       "Advanced Materials revenue share",
+       "Expected ~10–15% of expanded pie",
+       "By 2030"
+      ],
+      [
+       "Capex frame",
+       "₹700–1,000 crores annually; FY27 at lower end (~₹700 crores)",
+       "Annual"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Operating revenue",
+       "₹1,191 cr, +57% YoY"
+      ],
+      [
+       "Operating EBITDA",
+       "₹407 cr, +66% YoY"
+      ],
+      [
+       "EBITDA margin",
+       "34.2%, expanded 367 bps YoY for H1"
+      ],
+      [
+       "Operating PBT",
+       "₹336 cr, +87% YoY"
+      ],
+      [
+       "Profit after tax",
+       "₹269 cr, +81% YoY"
+      ],
+      [
+       "H1 FY27 PAT",
+       "₹513 cr, +93% YoY"
+      ],
+      [
+       "H1 FY27 EPS",
+       "₹100"
+      ],
+      [
+       "Interim dividend",
+       "₹8 per share (face value ₹2)"
+      ],
+      [
+       "Net operating working capital days",
+       "72 days"
+      ],
+      [
+       "H1 FY27 operating revenue",
+       "₹2,236 cr, +51% YoY"
+      ],
+      [
+       "H1 FY27 operating EBITDA",
+       "₹765 cr, +69% YoY"
+      ],
+      [
+       "H1 FY27 operating PBT",
+       "₹619 cr, +93% YoY"
+      ],
+      [
+       "CDMO order book visibility",
+       "USD 10 cr target within striking distance"
+      ],
+      [
+       "Specialty chemicals run rate",
+       "~₹350 cr quarterly run rate"
+      ],
+      [
+       "HFO contract extension additional revenue potential",
+       "~USD 18 cr over 4 years"
+      ],
+      [
+       "cGMP-4 Phase 2 capex",
+       "~₹125 cr, commissioning by end of Q4 FY27"
+      ],
+      [
+       "FY27 capex outlook",
+       "₹700 cr, lower end of ₹700–1,000 cr annual frame"
+      ],
+      [
+       "H1 FY27 capex",
+       "~₹300–310 cr"
+      ],
+      [
+       "Nectar Life Sciences FY27 utilization",
+       "~60–65% of PAR, balance in FY28"
+      ],
+      [
+       "cGMP-4 Phase 1 and 2 combined peak revenue potential",
+       "~₹900–1,000 cr by FY28/FY29"
+      ],
+      [
+       "Advanced Materials target by 2030",
+       "10–15% of expanded revenue pie"
+      ],
+      [
+       "Long-term EBITDA margin guidance",
+       "30%"
+      ],
+      [
+       "FY27 full-year margin outlook",
+       "same sort of range as H1"
+      ],
+      [
+       "HFO plant utilization end of FY26",
+       "~80%"
+      ],
+      [
+       "Global HFO capacity",
+       "10% of global ref gas demand in tonnage terms"
+      ],
+      [
+       "DRDO molecule pharma-side potential",
+       "~₹400 cr Indian market at 50% share"
+      ],
+      [
+       "EBITDA conversion rate",
+       "60–65% on a sustainable basis"
+      ],
+      [
+       "Annual growth rate",
+       "20–25%"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Navin Fluorine International Ltd",
+  "sector": "Chemicals Fluorine",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "Group growth target to 2030",
+    "text": "Management targets 20-25% overall revenue growth to 2030, with advanced materials expected to contribute 10-15% of the expanded revenue pie by then. Against FY26 revenue of ₹4,066 cr growing 45.68%, that implies the company is compounding from a base already running at ~34% EBITDA margins."
+   },
+   {
+    "title": "R32 capacity expansion",
+    "text": "The ₹236.5 cr, 15,000 MTPA R32 plant is commissioning in Q3 FY27 with full ramp-up expected the following quarter, on top of current 9,000-10,000 tonnes capacity. Peak revenue potential is ₹600-825 cr per annum, and customers are signing five-year contracts covering a targeted 35-45% of capacity."
+   },
+   {
+    "title": "CDMO cGMP4 Phase 2",
+    "text": "Phase 2 of the cGMP-4 plant (₹125 cr, fully dedicated to the European partner Fermion) is expected operational by end of Q4 FY27, with Phases 1 and 2 together carrying peak revenue potential of ₹900-1,000 cr by FY28-29. Management reaffirmed the ₹1,000 cr CDMO revenue target for FY27, with segment revenue already up 78% YoY in Q2 FY27."
+   },
+   {
+    "title": "Chemours liquid cooling plant",
+    "text": "The Opteon two-phase immersion cooling plant (₹120 cr capex, 35% funded by Chemours) is commissioning in Q3 FY27 with purchase orders in place for Q4 FY27 deliveries; Navin is the sole manufacturer of this fluid globally. A ~10x scale-up capex decision is expected within ~15 months of commissioning against a global liquid cooling market management sizes near $3 billion."
+   },
+   {
+    "title": "Solstice HFO contract extension",
+    "text": "The HFO supply contract with Solstice Advanced Materials was extended by four years to December 2032, adding ~US$180 mn of revenue potential and taking total contract value to ~$590 mn over 11 years. Volumes under the extension are expected to be larger than before with pass-through pricing, protecting the revenue base beyond FY28-29."
+   },
+   {
+    "title": "Dahej MPP debottlenecking",
+    "text": "The ₹75 cr debottlenecked MPP capacity at Dahej was commissioned on 29 Sep 2026, serving a purchase order from a global crop-protection innovator for CY26. Peak revenue potential is ₹140-160 cr per annum at a 2x asset turn, and this growth is not yet in reported numbers."
+   },
+   {
+    "title": "Advanced materials adoption capex",
+    "text": "The ₹90 cr adoption-capacity build at Surat for data-centre, electronics, semiconductor and defence applications is on schedule, with the first phase complete around end-Q4 FY27 and full completion by Q2 FY28. Four to five products are already customer-approved at lab scale, and the DRDO sodium borohydride TDF project targets a pharma market of roughly ₹400 cr in India."
+   },
+   {
+    "title": "Dahej AHF plant ramp",
+    "text": "The 40,000 TPA anhydrous HF plant at Dahej (₹450 cr) commenced commercial production on 6 Feb 2026, with its revenues kicking into FY28 as it ramps toward full capacity. The capacity underpins the R32 expansion and merchant HF sales, and opens the path to high-purity and electronic-grade HF."
+   }
+  ]
+ }
+}

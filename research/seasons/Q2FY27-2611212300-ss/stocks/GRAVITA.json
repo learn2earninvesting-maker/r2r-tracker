@@ -1,0 +1,422 @@
+{
+ "ticker": "GRAVITA",
+ "name": "Gravita India Ltd",
+ "concall": {
+  "name": "Gravita India Ltd",
+  "sector": "Recycling",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Lead volumes fell on sourcing, not demand",
+    "text": "Raw material availability from the Gulf dried up due to geopolitical disruption, and management says the \"worst is over\" with improvement expected from next quarter as new sourcing geographies develop."
+   },
+   {
+    "label": "Copper is the new profit engine",
+    "text": "RMIL delivered a substantial EBITDA per ton spike to ~₹84,671 in Q2, and management guides ₹65–70 per kg as sustainable near-term, rising to ₹80–90 once backward integration completes in 2–3 years."
+   },
+   {
+    "label": "Sourcing moat is the strategic priority",
+    "text": "A new U.S. subsidiary, direct-from-yard procurement, and the reverse charge mechanism on battery scrap are all aimed at bypassing aggregators and capturing a 2–3% margin delta."
+   },
+   {
+    "label": "Capex stays aggressive despite lead softness",
+    "text": "Management will not slow the ₹1,680 crore FY29 plan as long as scrap import visibility exists, and sees enough scrap availability for the next 3–4 years."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether lead volumes actually recover as guided, whether copper EBITDA per kg holds at ₹65–70, and whether the U.S. subsidiary begins sourcing operations this quarter."
+  },
+  "sections": [
+   {
+    "title": "Lead: The Sourcing Shock and Recovery Bet",
+    "points": [
+     {
+      "label": "What broke",
+      "text": "Lead volumes declined in Q1 and Q2 primarily due to raw material availability, not demand. Geopolitical developments and logistic disruptions impacted the movement of recyclable materials, and the Gulf region, a key sourcing area, stopped supplying scrap."
+     },
+     {
+      "label": "Why it cannot be fixed quickly",
+      "text": "The lead working capital cycle is 80–90 days, so booked material takes roughly 90 days to reach plants. New sourcing geographies take time to develop, and management is explicit that this cannot be turned around in a couple of quarters."
+     },
+     {
+      "label": "The domestic offset",
+      "text": "The reverse charge mechanism for battery scrap, though not yet formally notified, has already produced a positive reaction in the domestic market. The disparity between unorganized and organized sector players has effectively disappeared, and on-ground suppliers have started offering scrap that was earlier not offered."
+     },
+     {
+      "label": "What management did with limited material",
+      "text": "With whatever raw material was available, the company tried to maximize value through value-added products rather than chase volume."
+     },
+     {
+      "label": "The recovery claim",
+      "text": "Management expects improvement in lead volumes from next quarter onwards as new geographies develop, and guides ~18–20% volume growth for the next three years, though some quarters may fall below 18%."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Yogesh Malhotra: \"So we are very confident that we'll turn around this issue in the next couple of quarters. So -- but what I can say is that the worst is over.\""
+     }
+    ]
+   },
+   {
+    "title": "Copper: The Margin Inflection",
+    "points": [
+     {
+      "label": "The Q2 spike",
+      "text": "Copper EBITDA per ton rose substantially to ~₹84,671, driven by a changed raw material mix, changed sales mix, economies of scale from improved capacity utilization, and some high-value product orders in the quarter."
+     },
+     {
+      "label": "The sustainability question",
+      "text": "Management expects a sustainable ₹65–70 per kg for the next few quarters. The Q2 spike included good orders for higher-margin value-added and specialized products, while Q1 margins were lower because raw material utilization was not there."
+     },
+     {
+      "label": "The long-term path",
+      "text": "In the next 2–3 years, once the recycling facility provides backward integration to RMIL, EBITDA is expected to grow to around ₹80–90 per kg."
+     },
+     {
+      "label": "The utilization bottleneck",
+      "text": "Sequential utilization at RMIL was stagnant due to bottlenecks within the manufacturing system. Overall capacity is based on capacities of all finished goods, but certain bottlenecks require additional capex and new plant/machinery. Management has already ordered some machines to improve operational utilization."
+     },
+     {
+      "label": "The ramp timeline",
+      "text": "Utilization is expected to improve to around 65–70% in 2–3 quarters. Beyond that requires capex to increase overall system capacity, taking probably around 3 years."
+     },
+     {
+      "label": "The sourcing rejig",
+      "text": "Most copper scrap comes to India from the U.S. via aggregators. The company wants to bypass aggregators and source directly from small scrap yard owners for a pricing advantage."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Yogesh Malhotra: \"In copper, we expect that for the next few quarters, you will have a sustainable number of around INR65 to INR70 per kg. But going forward in the next 2 to 3 years, once our recycling facility is there as backward integration to the RMIL business, the EBITDA would grow to around INR80 to INR90.\""
+     }
+    ]
+   },
+   {
+    "title": "Sourcing Strategy: Building the Moat",
+    "points": [
+     {
+      "label": "The core thesis",
+      "text": "Management frames sourcing strength as the biggest contributor to profitability in recycling, describing it as a \"reverse FMCG kind of a process.\" The strategy is to own scrap collection infrastructure rather than buy from aggregators."
+     },
+     {
+      "label": "U.S. subsidiary",
+      "text": "The board approved incorporation of Gravita Recyclers USA, Inc. with initial capital of US\\$50,000. It will act as a sourcing arm for copper and battery scrap, shipping to Indian plants. It is not expected to generate revenue directly but will reduce scrap collection costs."
+     },
+     {
+      "label": "U.S. yard model",
+      "text": "The company will set up consolidating yards in major U.S. cities on a lease model, collecting from Tier 3/Tier 4 yards with long-term contracts and financial support. Capex is not substantial; only working capital is needed. The expected yield is 2–3% additional margins."
+     },
+     {
+      "label": "U.S. timeline",
+      "text": "The company expects to start the U.S. subsidiary this quarter, with own yards fully operational in the next 1–2 years."
+     },
+     {
+      "label": "The economics tradeoff",
+      "text": "Battery sourcing from the U.S. may be costlier than Africa, but management says it will still meet internal ROCE targets. Consolidating copper, aluminum and battery scrap will increase overall profitability."
+     },
+     {
+      "label": "Domestic sourcing shift",
+      "text": "The reverse charge mechanism removes the 18% unorganized sector advantage, and management expects the shift from unorganized to organized sector to start this year itself. Going forward, the India sourcing mix is expected to be 40–50% domestic and 50–60% overseas."
+     },
+     {
+      "label": "Regulatory tailwind",
+      "text": "More countries are stopping scrap imports, so scrap availability has gone up and will continue to go up. Management sees the regulatory environment as a tailwind, not a risk."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Yogesh Malhotra: \"In a recycling business where scrap is concerned, I think the biggest contributor to profitability is your strength in sourcing itself... you can consider this like a reverse FMCG kind of a process.\""
+     }
+    ]
+   },
+   {
+    "title": "Capex and Capacity Expansion",
+    "points": [
+     {
+      "label": "The plan",
+      "text": "Capex of ₹1,680 crores till FY29 is on track, with capacity being increased from ~480,000 tons to 800,000 tons."
+     },
+     {
+      "label": "Mundra expansion",
+      "text": "Announced plans to add 59,200 MTPA copper recycling capacity with ~₹64 crores investment, funded through internal accruals, commissioning in phases by March 2029."
+     },
+     {
+      "label": "Mandvi commissioning",
+      "text": "The project remains on track for commissioning within the next 12 months, as previously guided. Scrap is not an issue; the company can source from developed nations through aggregators and will start procuring once the Mandvi plant gets its license to start operations."
+     },
+     {
+      "label": "The discipline question",
+      "text": "An analyst asked if lead capex would be postponed given lower utilization. Management said they would not slow capex as long as scrap visibility exists, and sees enough scrap availability for the next 3–4 years both domestically and overseas."
+     },
+     {
+      "label": "RMIL rights issue",
+      "text": "The board approved an additional investment of ~₹94.42 crores to subscribe to the RMIL rights issue, with proceeds to support RMIL strategic initiatives and general corporate purposes."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Yogesh Malhotra: \"We will not delay the capacity increase till the time we have a sight on the import of scrap. Only when we see that there is no scrap availability in future, would we kind of delay or stop capex in future.\""
+     }
+    ]
+   },
+   {
+    "title": "Regulatory Environment and Structural Tailwinds",
+    "points": [
+     {
+      "label": "Reverse charge mechanism",
+      "text": "The 57th GST Council recommended bringing electrical and electronic waste scrap under reverse charge mechanism for procurement from unregistered suppliers. The notification is yet to come, but on-ground behavior has already shifted."
+     },
+     {
+      "label": "The BWMR demand surge",
+      "text": "Once the 7-year BWMR window closes in FY29, a surge in EPR credit demand is expected as deferred purchasers will need to comply. Management first answered a question about this by discussing RCM-driven shift from this year, then addressed the FY29 surge directly."
+     },
+     {
+      "label": "EPR credit platform",
+      "text": "The Central Pollution Control Board is planning an electronic credit platform traded under MSTC guidance. Credit generation audits will be done, and the EPR portal will monitor purchases, GST, e-way bills and sales."
+     },
+     {
+      "label": "Copper scrap import duty",
+      "text": "The government stopped charging import duty on copper scrap to promote imports into India."
+     },
+     {
+      "label": "EU WSR guidelines",
+      "text": "India has written to the EU to be part of the scrap chain. Negotiations are ongoing with the Ministry of Commerce and Ministry of Environment, Forests. Management is confident material will keep coming because European scrap yards need India as an outlet."
+     },
+     {
+      "label": "India import ban risk",
+      "text": "Management sees it as very unlikely that India stops scrap imports because government policy promotes Make in India. If it happened, the company has overseas operations to mitigate."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Other Verticals and Strategic Optionality",
+    "points": [
+     {
+      "label": "Aluminum",
+      "text": "Most aluminum processing happens in Africa across four locations using local scrap. The India Jaipur unit has shifted to Mundra and will start soon. TPO internal usage is already happening at all African plants."
+     },
+     {
+      "label": "Lithium-ion battery",
+      "text": "Management remains very optimistic. As battery feedstock availability increases, the company will scale towards higher value recovery and processing. Volumes are expected in the next 4–5 years on a conservative outlook, and lithium-ion is not included in Vision 2030 revenue targets."
+     },
+     {
+      "label": "Tire recycling in India",
+      "text": "Put on the back burner. Management says a tire recycling plant will definitely be set up in India within the next three years, but current focus is on lithium, battery, copper business, U.S. yards, and consolidating lead, aluminum, plastics verticals."
+     },
+     {
+      "label": "Gasification plants",
+      "text": "Planning to set up own gasification plants running on all kinds of coals and other materials, which will lower fuel cost and carbon emissions."
+     },
+     {
+      "label": "Vision 2030",
+      "text": "Target of deriving approximately 60%+ of revenue from value-added offerings; currently at 64% in H1 FY27."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Yogesh Malhotra: \"In our Vision 2030, we've not taken any revenue or any inputs from lithium-ion battery revenue for our target for 2030. If it comes, it will be only additional to whatever is the target right now.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Lead volume recovery",
+       "Improvement expected as new sourcing geographies develop; ~18–20% volume growth for next three years",
+       "From next quarter; 3-year CAGR"
+      ],
+      [
+       "Copper EBITDA per kg",
+       "Sustainable at ₹65–70 per kg",
+       "Next few quarters"
+      ],
+      [
+       "Copper EBITDA per kg",
+       "Grow to ₹80–90 per kg once recycling facility provides backward integration",
+       "Next 2–3 years"
+      ],
+      [
+       "RMIL utilization",
+       "Improve to 65–70%",
+       "2–3 quarters"
+      ],
+      [
+       "RMIL utilization",
+       "Increase beyond 65–70% requires capex to expand system capacity",
+       "~3 years"
+      ],
+      [
+       "Mundra copper recycling capacity",
+       "59,200 MTPA added, ~₹64 crores investment, funded internally",
+       "Phased commissioning by March 2029"
+      ],
+      [
+       "Mandvi project",
+       "Commissioning on track",
+       "Within next 12 months"
+      ],
+      [
+       "U.S. subsidiary",
+       "Start operations; own yards fully operational",
+       "This quarter; 1–2 years for yards"
+      ],
+      [
+       "U.S. sourcing margin delta",
+       "2–3% additional margins from own yard consolidation",
+       "As yards become operational"
+      ],
+      [
+       "Capex plan",
+       "₹1,680 crores till FY29; capacity from ~480,000 to 800,000 tons",
+       "On track through FY29"
+      ],
+      [
+       "Domestic vs overseas sourcing mix",
+       "40–50% domestic, 50–60% overseas for India",
+       "Going forward"
+      ],
+      [
+       "Tire recycling plant in India",
+       "Will set up plant",
+       "Within next 3 years"
+      ],
+      [
+       "Lithium-ion volumes",
+       "Expected on conservative outlook",
+       "Next 4–5 years"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Consolidated revenue",
+       "₹1,427 cr, +38% YoY"
+      ],
+      [
+       "Adjusted EBITDA",
+       "₹143.37 cr, +28% YoY; margin over 10%"
+      ],
+      [
+       "Consolidated PAT",
+       "₹102 cr, +6% YoY; margin over 7%"
+      ],
+      [
+       "RMIL revenue contribution",
+       "₹420 cr, with EBITDA margin of 8.5%"
+      ],
+      [
+       "Total volumes",
+       "52,199 metric tons, +3% YoY"
+      ],
+      [
+       "Value-added products share",
+       "64% of consolidated revenue in Q2 FY27"
+      ],
+      [
+       "Lead EBITDA per ton",
+       "₹22,620"
+      ],
+      [
+       "Aluminum EBITDA per ton",
+       "₹22,664"
+      ],
+      [
+       "Plastic EBITDA per ton",
+       "₹10,334"
+      ],
+      [
+       "Copper EBITDA per ton",
+       "₹84,671"
+      ],
+      [
+       "Copper segment capacity utilization",
+       "50% during H1 FY27, sales +12%"
+      ],
+      [
+       "Lead volume growth expectation",
+       "~18%–20% CAGR for next three years"
+      ],
+      [
+       "Copper sustainable EBITDA per kg (short-term)",
+       "~₹65–₹70"
+      ],
+      [
+       "Copper sustainable EBITDA per kg (long-term, ~3 years)",
+       "~₹90"
+      ],
+      [
+       "Domestic vs imported scrap mix",
+       "26% domestic battery scrap, 74% imported scrap in Q2"
+      ],
+      [
+       "Other income",
+       "₹18 cr total; ₹9.39 cr operational, ₹8.61 cr non-operational"
+      ],
+      [
+       "Total capex plan through FY29",
+       "₹1,680 cr; ~₹600 cr spent so far; current capacity ~480,000 tons, target 800,000 tons"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Gravita India Ltd",
+  "sector": "Recycling",
+  "asof": "Oct 2026",
+  "items": [
+   {
+    "title": "Vision 2030 group targets",
+    "text": "Management guides to 20-25% volume CAGR and 30-35% profitability growth through FY29, backed by a ₹1,680 crore capex plan funded from internal accruals, of which ~₹600 crores is already spent. Against FY26 EBITDA of ₹476 crores, 30-35% profit growth compounds to roughly ₹1,100+ crores by FY29 if delivered."
+   },
+   {
+    "title": "Copper backward integration at Mandvi",
+    "text": "The 29,400 MTPA copper recycling plant at Mandvi (~₹160 crores, internal accruals) is on track for commissioning within 12 months as of Sep 2026, with another 59,200 MTPA at Mundra (~₹64 crores) phasing in by March 2029. Management guides copper EBITDA per ton rising from ~₹84,671 in Q2 FY27 to a sustainable ₹80-90 per kg once recycling feedstock is integrated."
+   },
+   {
+    "title": "RMIL ramp-up and capacity doubling",
+    "text": "RMIL (₹561.84 crore acquisition, 99.59% held) contributed ₹420 crores to Q2 FY27 revenue at 8.5% EBITDA margin, with debottlenecking capex expected to lift utilization from ~50% to 65-70% over two to three quarters. Capacity is planned to double to ~60,000 tons in three years and ~100,000 tons by FY29, with RMIL margins targeted at 9-10% from ~8%."
+   },
+   {
+    "title": "US scrap yard network",
+    "text": "Gravita Recyclers USA Inc. was incorporated 16 Oct 2026 to build a direct scrap procurement network, with yard setup underway and full operation expected in one to two years. Own yards typically add ~2-3% margin after operating costs on both lead and copper, and copper volumes now justify the fixed cost."
+   },
+   {
+    "title": "Lead expansion to 800,000 tons",
+    "text": "Mundra added 80,300 MTPA (completed 25 Feb 2026, ~₹49 crores) and Phagi commissioned 40,500 MTPA in Q1 FY27, taking installed capacity to 4.97 lakh tons with a raised plan of 800,000 tons by FY29. Phagi alone should add ~₹50 crores per month of revenue at ramp-up, and management guides 18-20% lead volume CAGR over three years."
+   },
+   {
+    "title": "LME listing of Mundra lead",
+    "text": "Mundra lead achieved LME brand listing as \"GRAVITA M\" (certificate 17 Jun 2026), making it deliverable at all LME-approved warehouses worldwide alongside existing MCX deliverability. This widens the export customer set and supports the 70% direct-OEM sales mix target with tie-ups like Trafigura, Glencore and Thyssen."
+   },
+   {
+    "title": "Lithium-ion recycling pilot",
+    "text": "A 6,000 MTPA lithium-ion battery recycling pilot was commissioned at Mundra in Jan 2026 (~₹14 crores), with R&D underway on own black mass processing and a future lithium refining unit. Management excludes lithium from the Vision 2030 target, so any revenue as EV battery scrap builds over the next 4-5 years would be additional."
+   }
+  ]
+ }
+}
