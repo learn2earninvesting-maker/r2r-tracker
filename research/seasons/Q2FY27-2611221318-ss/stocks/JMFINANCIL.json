@@ -1,0 +1,531 @@
+{
+ "ticker": "JMFINANCIL",
+ "name": "JM Financial Ltd",
+ "concall": {
+  "name": "JM Financial Ltd",
+  "sector": "Finance Investment Bankers",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Two engines, not one",
+    "text": "Corporate advisory and capital markets rebounded sharply from a near-dead April–May, while private markets disbursements doubled to ₹977 crores as equity choppiness pushed activity toward credit."
+   },
+   {
+    "label": "The pipeline is the story: ₹130,000 crores",
+    "text": "of transactions already filed with the regulator for execution over the next 12 months, with more filings expected this quarter and next."
+   },
+   {
+    "label": "Leverage has bottomed",
+    "text": "Management \"confidently\" called the bottom on private markets debt-equity at 0.8x and expects to start borrowing from next quarter itself."
+   },
+   {
+    "label": "Wealth profitability slips a year",
+    "text": "Full-year break-even now expected in FY28, a delay of three to four quarters, because transactional income volatility slowed revenue growth."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the ₹130,000 crore pipeline converts at the promised pace, the first drawdown of the Pre-IPO Fund, and any buyback signal once the NSE lockup expires in March 2027."
+  },
+  "sections": [
+   {
+    "title": "Corporate Advisory & Capital Markets",
+    "points": [
+     {
+      "label": "Sharp revival from a dead start",
+      "text": "April and May were \"really horrible months\" with literally no deals going through; activity started in June and July, August, September were very good."
+     },
+     {
+      "label": "Ranked #1 across IPOs and QIPs",
+      "text": "Closed transactions of ₹83,000 crores in Q2, with a significant portion of deals trading up post-listing."
+     },
+     {
+      "label": "Revenue left on the table",
+      "text": "Approximately ₹45–50 crores of revenue was lost because deal sizes were reduced in the difficult environment; ₹10,000 crores reduction in deal size last quarter versus what was filed with the regulator."
+     },
+     {
+      "label": "ROE is structurally extreme",
+      "text": "The segment operates \"almost an infinite ROE\" because capital is just profit ploughed back and kept as cash; it needs no incremental capital to grow."
+     },
+     {
+      "label": "Growth is compounding, not linear",
+      "text": "Profitability is expected to grow at 15%–20% from a peak-to-peak perspective, with a new peak every four to five years."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Kampani: \"April, May were really horrible months because we literally had no deals going through. The activity really started in June. I would think 15% is a very reasonable number to assume for the rest of the year, especially after the kind of the market lift that we have seen today and the results of the U.S. election.\""
+     }
+    ]
+   },
+   {
+    "title": "Private Markets & Credit",
+    "points": [
+     {
+      "label": "Disbursements doubled to ₹977 crores",
+      "text": "in Q2, primarily in the bespoke category, because equity market choppiness drove more action on the credit side."
+     },
+     {
+      "label": "Bespoke book grew ₹800 crores to ₹3,800 crores",
+      "text": ", with a significant portion in the two-to-three-year maturity bucket, not short-term."
+     },
+     {
+      "label": "Cash fell from ₹3,077 crores to ₹1,691 crores",
+      "text": ", largely because of disbursements and repayment of some borrowings without needing to borrow significantly."
+     },
+     {
+      "label": "Debt-equity has bottomed at 0.8x",
+      "text": "Management will need to start borrowing from next quarter itself due to planned disbursements and potential prepayments on the wholesale side."
+     },
+     {
+      "label": "Cash floor is explicit",
+      "text": "Management will always maintain at least ₹1,000 crores of pure cash for ALM structure and opportunities."
+     },
+     {
+      "label": "Real estate book is stable, not growing",
+      "text": ", because pricing is a challenge; management requires at least 200–300 bps pricing above corporate, which the market resists."
+     },
+     {
+      "label": "Yield drop explained",
+      "text": "The drop in yield is absolutely because the LAS book went up, real estate stayed stable, and the overall book fell."
+     },
+     {
+      "label": "Discipline over volume",
+      "text": "Management will not do deals where risk-adjusted returns are not liked; lumpy quarters are acceptable."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Kampani: \"If we feel we cannot syndicate, then we will not do it here.\""
+     }
+    ]
+   },
+   {
+    "title": "ARC & Distressed Credit",
+    "points": [
+     {
+      "label": "One very large account resolved",
+      "text": "Final NCLT approval came through in October, giving over almost ₹330–340 crores of liquidity before close of this quarter."
+     },
+     {
+      "label": "SR investments came down to almost ₹2,825 crores",
+      "text": ", with ₹350 crores of cash resolution to JM, totaling almost ₹ 800 crores of resolution this quarter."
+     },
+     {
+      "label": "Gain timing is split",
+      "text": "Some of the gain from the October resolution is already factored into fair value changes reported quarter-on-quarter, but some will come this quarter."
+     },
+     {
+      "label": "More SR deployment ahead",
+      "text": "Management sees a lot of interesting retail portfolios from a number of NBFCs and will look to invest more on the SR side."
+     },
+     {
+      "label": "Resolution pipeline is quantified",
+      "text": "ARC will look to resolve over ₹2,000 crores in SR investments and get cash back over the next 18 months to two years, with returns modeled at around 16%–18%."
+     },
+     {
+      "label": "Volatility will reduce structurally",
+      "text": "As ARC adds more retail granular assets, earnings volatility will reduce considerably over the next few years."
+     },
+     {
+      "label": "Gokaldas Exports is a deliberate hold",
+      "text": "The merged ARC asset suffered due to U.S. tariffs, but management wants to stay invested long-term despite quarterly mark-to-market volatility."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Wealth & Asset Management",
+    "points": [
+     {
+      "label": "Recurring AUM and loans grew ~17% to almost ₹40,000 crores",
+      "text": ", with focus on improving productivity."
+     },
+     {
+      "label": "Wealth business broke even in September",
+      "text": ", driven by both recurring revenues and some transaction revenues."
+     },
+     {
+      "label": "Headcount rationalization was internal",
+      "text": "Loss in RMs is purely on productivity basis, planned to create a sharper sales franchise; \"not stuff that we have lost to the market or competition.\""
+     },
+     {
+      "label": "Recruitment cycle is deliberate",
+      "text": "Over the last 36 months there was a lot of recruitment; the last six months focused on productivity. The cycle is 18 months to two years of strong recruitment, then one to one-and-a-half years of making it productive."
+     },
+     {
+      "label": "Full-year profitability delayed to FY28",
+      "text": ", roughly three to four quarters from original plan, because transactional income volatility in the last six to nine months reduced revenue growth."
+     },
+     {
+      "label": "Pre-IPO Fund first close at ₹700+ crores",
+      "text": ", with first investment expected to be announced very shortly."
+     },
+     {
+      "label": "Singapore VCC scaled from zero to over \\$225 million",
+      "text": "in 18 months, primarily driven by internal distribution."
+     },
+     {
+      "label": "AMC AUM largely flat sequentially",
+      "text": "SIP book came down from ₹90 crores to ₹87 crores because small-cap, mid-cap, and flexi-cap schemes saw volatility from macro and concentrated calls."
+     },
+     {
+      "label": "Performing credit fund fully drawn down",
+      "text": ", with roadshows on for the second performing credit fund; first close expected this quarter."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Kampani: \"The magic of a strong distribution and the flywheel pushing hard into the manufactured products is working pretty well.\""
+     }
+    ]
+   },
+   {
+    "title": "Financials & Capital Allocation",
+    "points": [
+     {
+      "label": "H1 private markets revenue up 63% YoY",
+      "text": "to ₹582 crores, driven by strong underlying growth excluding write-backs."
+     },
+     {
+      "label": "Operating PBT roughly flat H1 vs H1",
+      "text": ", because last year had ₹231 crores write-back versus only ₹15 crores this year so far; excluding write-backs, operating PBT grew ~60%."
+     },
+     {
+      "label": "Write-backs are targeted at ₹250 crores this year",
+      "text": ", on track to close by March 31, with more expected in the next six to nine months."
+     },
+     {
+      "label": "Interim dividend increased 10%",
+      "text": "from ₹1.5 to ₹1.65 per share; total payout ₹7.6 per share over last six quarters, representing ₹727 crores."
+     },
+     {
+      "label": "Buyback is constrained, not ruled out",
+      "text": "A significant portion of liquidity is in NBFCs, and taking it out would incur a tax hit at the holding company level before a buyback. NSE stock is subject to a six-month lockup expiring March 2027. Management will take the call in April/May next year."
+     },
+     {
+      "label": "ROE target is mid-teens",
+      "text": "toward the end of the investment cycle of many businesses."
+     },
+     {
+      "label": "Profit growth should outpace revenue",
+      "text": "If revenue growth is 15–20%, profit growth should be 20–25% as more operating scale is achieved."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Kampani: \"Fundamentally, one issue we have is that a significant portion of the liquidity that we have is in the NBFCs, and we've chosen to deploy that into business over the last one year because there is no method of taking out this liquidity from the NBFCs without having a tax hit first at a holding company level before we implement a buyback.\""
+     }
+    ]
+   },
+   {
+    "title": "Demerger & Structure",
+    "points": [
+     {
+      "label": "Demerger is on the table, not on the clock",
+      "text": "Management has thought about spinning off wealth management, asset management, or wealth management and corporate advisory together \"many times\" but wants to focus on execution and scale before any restructuring."
+     },
+     {
+      "label": "The trigger is size",
+      "text": "Wealth management and asset management need to become larger before a demerger makes sense; decision deferred to \"the right time\" without a timeline."
+     },
+     {
+      "label": "Capital markets ROE argues for separation",
+      "text": ", but management is not moving yet."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Kampani: \"We have thought about this many times in the last few years. We just want to focus on execution and scale these businesses before going into any restructuring, which could be something earlier than we need to do it.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Pipeline execution",
+       "₹130,000 crores of transactions already filed with regulator",
+       "Next 12 months"
+      ],
+      [
+       "Private markets growth",
+       "20% YoY loan book growth, 15% investment side growth",
+       "Next one year"
+      ],
+      [
+       "Borrowing resumption",
+       "Start borrowing due to planned disbursements",
+       "Next quarter itself"
+      ],
+      [
+       "Second performing credit fund",
+       "First close expected",
+       "This quarter"
+      ],
+      [
+       "Pre-IPO Fund first investment",
+       "Announcement expected",
+       "Very shortly"
+      ],
+      [
+       "ARC SR resolution",
+       "Over ₹2,000 crores resolved at 16–18% returns",
+       "Next 18 months to 2 years"
+      ],
+      [
+       "Write-backs",
+       "₹250 crores targeted",
+       "By March 31"
+      ],
+      [
+       "Wealth management profitability",
+       "Full-year break-even",
+       "FY28"
+      ],
+      [
+       "Wealth management recruitment",
+       "Resume recruiting",
+       "End of FY27 / early FY28"
+      ],
+      [
+       "Home loan AUM growth",
+       "25–30% growth",
+       "Guided, no end date"
+      ],
+      [
+       "Overall growth",
+       "Weighted average 20% YoY",
+       "At least next five years"
+      ],
+      [
+       "ROE",
+       "Mid-teens",
+       "End of investment cycle"
+      ],
+      [
+       "Buyback decision",
+       "Take call after NSE lockup expires",
+       "April/May next year"
+      ],
+      [
+       "Final dividend",
+       "Decide based on next two quarters' results",
+       "After Q4 FY27"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Consolidated net revenue",
+       "₹712 cr"
+      ],
+      [
+       "Consolidated PAT (after NCI)",
+       "₹240 cr"
+      ],
+      [
+       "Consolidated net worth (ex-NCI)",
+       "~₹11,000 cr, book value ₹115 per share"
+      ],
+      [
+       "Consolidated gross leverage",
+       "1x"
+      ],
+      [
+       "Interim dividend per share",
+       "₹1.65, total payout ₹7.6 per share over last six quarters, ₹727 cr"
+      ],
+      [
+       "Corporate Advisory & Capital Markets net revenue",
+       "₹286 cr, 2.5x QoQ"
+      ],
+      [
+       "Corporate Advisory & Capital Markets PAT",
+       "₹127 cr, 4x QoQ; annualized ROE ~36%"
+      ],
+      [
+       "Investment banking transaction value closed in Q2",
+       "₹83,000 cr, ranked #1 across IPOs and QIPs"
+      ],
+      [
+       "Investment banking pipeline filed with regulator",
+       "₹130,000 cr for execution over next 12 months"
+      ],
+      [
+       "Revenue lost due to deal-size reductions in the quarter",
+       "₹40–50 cr, from ~₹10,000 cr reduction in deal size vs filed (per management)"
+      ],
+      [
+       "Private Markets standard loans",
+       "₹4,748 cr, +22% YoY"
+      ],
+      [
+       "Private Markets disbursements",
+       "₹977 cr, doubled QoQ, primarily bespoke"
+      ],
+      [
+       "Private Markets net revenue",
+       "₹120 cr"
+      ],
+      [
+       "Private Markets PAT (after NCI)",
+       "₹77 cr"
+      ],
+      [
+       "Private Markets cash and cash equivalents",
+       "₹1,691 cr, down from ₹3,077 cr in Jun 2026"
+      ],
+      [
+       "Private Markets debt-equity",
+       "0.8x, bottomed; limits up to 4x"
+      ],
+      [
+       "Bespoke loan book",
+       "₹3,800 cr, up from ₹3,000 cr QoQ; ~₹800 cr increase in 2–3 year maturity bucket"
+      ],
+      [
+       "Distressed credit SR investments",
+       "₹2,825 cr, with ~₹800 cr total resolution this quarter including ~₹350 cr cash to JM"
+      ],
+      [
+       "Wealth Management recurring AUM",
+       "₹37,000 cr, +16% YoY"
+      ],
+      [
+       "Wealth Management overall recurring AUM incl. loans",
+       "~₹40,000 cr, +17% YoY"
+      ],
+      [
+       "Wealth loan book",
+       "~₹2,600 cr, +30% YoY"
+      ],
+      [
+       "Wealth Management recurring revenues",
+       "₹216 cr, +20% YoY"
+      ],
+      [
+       "Wealth Management PAT",
+       "₹30 cr, +57% QoQ; business broke even in September"
+      ],
+      [
+       "Wealth Management sales and RM strength",
+       "948 professionals, 71 branches, 898 franchisees"
+      ],
+      [
+       "Wealth Management gross yield on recurring AUM",
+       "~51 bps; net yield ~35 bps; new assets added at north of 60 bps"
+      ],
+      [
+       "Asset Management avg AUM (non-liquid funds)",
+       "~₹11,200 cr, +7% QoQ"
+      ],
+      [
+       "Asset Management MF management fees",
+       "₹12 cr, +24% YoY"
+      ],
+      [
+       "Asset Management loss after minority interest",
+       "₹10 cr"
+      ],
+      [
+       "AIF AUM incl. commitments (performing credit & Pre-IPO)",
+       "₹1,063 cr"
+      ],
+      [
+       "Pre-IPO Fund first close commitments",
+       "~₹700 cr"
+      ],
+      [
+       "Singapore VCC AUM",
+       "\\$225 mn, up from zero 18 months ago; quarterly net additions \\$30–40 mn"
+      ],
+      [
+       "Affordable Home Loans AUM",
+       "~₹3,900 cr, +30% YoY; disbursements +48% YoY"
+      ],
+      [
+       "Affordable Home Loans revenue",
+       "₹133 cr, +22% YoY"
+      ],
+      [
+       "Affordable Home Loans PAT (after NCI)",
+       "₹18 cr, +41% YoY"
+      ],
+      [
+       "Affordable Home Loans branch network",
+       "152 branches, ~37,500 customers"
+      ],
+      [
+       "Proportion of total revenues from recurring sources",
+       "~50%; ~62–65% including institutional and non-institutional brokerage"
+      ],
+      [
+       "Expected impairment write-backs for FY27",
+       "₹250 cr, on track for completion by Mar 31"
+      ],
+      [
+       "Promoter family share purchase",
+       "Creeped 1% last quarter"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "JM Financial Ltd",
+  "sector": "Finance Investment Bankers",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "IPO/ECM pipeline monetisation",
+    "text": "JM ranked #1 in IPOs and QIPs in Q2 FY27, closing 26 transactions worth over ₹83,000 crore, with ₹1,30,000 crore of deals already filed with SEBI for execution over the next 12 months and more being filed. Advisory revenue jumped 2.5x QoQ to ₹286 crore in Q2 with ~36% annualised ROE, and management expects a 12-18 month execution window with 15-20% profit growth over the next couple of years."
+   },
+   {
+    "title": "Private Markets re-leveraging",
+    "text": "Standard loans grew 22% YoY to ₹4,748 crore with Q2 disbursements doubling YoY to ₹977 crore at ~13% yields, and management targets 15-20% annual book growth toward ₹7,000-8,000 crore in three years. Debt-equity bottomed at 0.8x and borrowing restarts from next quarter, climbing back to ~2x within three years to lift segment ROE from 10.7% toward the 12-13% target."
+   },
+   {
+    "title": "ARC resolution cash waterfall",
+    "text": "Roughly ₹2,000 crore of security receipt investments remain to be resolved and converted to cash over the next 18 months to two years at 16-18% returns, after gross resolutions crossed ₹2,000 crore in Q1 FY27 and ~₹800 crore in Q2. The ARC expects to be debt-free within six months, after which its cash safely compounds at 16-18% IRR, and retail NPA portfolios from NBFCs offer granular new acquisition growth."
+   },
+   {
+    "title": "Wealth Management breakeven and productivity",
+    "text": "The wealth business broke even in September FY27, with standalone full-year profitability targeted in FY28 and 20-25% business growth guided for FY27. Recurring AUM of ₹37,000 crore is up 16% YoY and recurring revenue up 20%, while the completed 100+ RM recruitment cycle shifts to productivity - new recurring assets yield over 60 bps versus the ~35 bps book average, driving operating leverage."
+   },
+   {
+    "title": "Affordable home loans scale-up",
+    "text": "AUM grew 30% YoY to ₹4,000 crore with 48% disbursement growth in Q2 FY27 across 152 branches, spreads widened to 4.8% and GNPA fell to 1.1%, with 25-30% AUM growth guided for the next three years. A separate listing is targeted by 2028-29, and Bajaj Life Insurance's ₹65 crore stake purchase at ~₹3,100 crore valuation benchmarks the business ahead of that."
+   },
+   {
+    "title": "Alternatives fund raises",
+    "text": "The maiden pre-IPO fund achieved a first close of over ₹700 crore toward a ₹1,000+ crore target, with a PE fund to launch immediately after at a similar size; the second performing credit fund's first close is expected within FY27. AIF AUM has already grown 3.2x YoY to ₹1,063 crore, and a ₹150 crore AMC investment over two years aims to take mutual fund AUM toward ₹25,000 crore from ~₹14,000 crore average."
+   },
+   {
+    "title": "Singapore VCC and Abu Dhabi entry",
+    "text": "The Singapore variable capital company scaled from zero 18 months ago to over $225 million AUM, adding $30-40 million of net assets a quarter through internal distribution. JM Financial (Middle East) was incorporated in ADGM on 12 October 2026 to arrange deals, advise and manage assets, extending the offshore wealth platform to Gulf clients."
+   }
+  ]
+ }
+}

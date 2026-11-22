@@ -1,0 +1,373 @@
+{
+ "ticker": "NRBBEARING",
+ "name": "NRB Bearings Ltd",
+ "concall": {
+  "name": "NRB Bearings Ltd",
+  "sector": "Bearings",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "19% growth, structurally higher baseline",
+    "text": "Revenue growth hit 19%, driven by a deliberate margin-accretive product mix shift and broad-based traction across every segment; management calls it \"clear empirical proof\" of a transition beyond cyclical automotive demand."
+   },
+   {
+    "label": "Industrial and CV segments surged",
+    "text": "The commercial vehicle segment grew 47% and the industrial segment grew 48%, both powered by new technologies, new product launches, and deeper co-engineering partnerships with global tier one OEMs."
+   },
+   {
+    "label": "Margins protected, PAT optics dismissed",
+    "text": "EBITDA grew much faster than revenues in H1, and management explicitly urged investors to ignore profit after tax because depreciation is rising as new capacities come online; the focus must be on operating EBITDA and EBITDA margin."
+   },
+   {
+    "label": "Aerospace and Unitec JV are the next legs",
+    "text": "The Mahant Tool Room acquisition added AS9100D certification and mission-critical defense supply; the Unitec JV is on track for April 2027 commissioning, though management declined to provide any FY28 revenue breakup."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the promised six-month capacity-driven growth upswing materializes, any aerospace customer announcements, and whether the 17–18% EBITDA margin floor holds as depreciation continues to climb."
+  },
+  "sections": [
+   {
+    "title": "Growth Engine & Structural Shift",
+    "points": [
+     {
+      "label": "Broad-based expansion",
+      "text": "Growth occurred in every segment: two-and-three wheelers, passenger cars, commercial vehicles, farm equipment (including LCV, MCV, HCV), industrial, and exports, which returned to a 16%+ growth trajectory."
+     },
+     {
+      "label": "Mix-driven, not volume-chasing",
+      "text": "The company deliberately pivots away from commoditized products (e.g., in two-wheelers) toward differentiated high-margin products and does not grow at the expense of margin."
+     },
+     {
+      "label": "Capacity-led upswing ahead",
+      "text": "Within the next six months, the company expects to move to a higher growth trajectory as new capacities start coming online; management framed this as a visible step-change every six months, not a quarterly blip."
+     },
+     {
+      "label": "Export momentum building",
+      "text": "Export growth will keep moving up, supported by expanding pipelines and deeper engagements with global tier one OEMs."
+     },
+     {
+      "label": "COGS discipline",
+      "text": "Cost of goods sold rose only ~1% due to extremely efficient cost management, waste elimination, and product mix response, even as other expenses rose 19% on power, fuel, logistics, and input costs."
+     },
+     {
+      "label": "Receivables health",
+      "text": "Customer receivables DSO remained flat despite high growth, which management considers \"extremely healthy\" because DSO typically rises in high-growth periods."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Harshbeena Zaveri: \"Is 19% growth sustainable? Definitely. Once we reach a new threshold of growth, we definitely intend to sustain and surpass it.\""
+     }
+    ]
+   },
+   {
+    "title": "Segment Performance",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Segment",
+      "Trend",
+      "Commentary"
+     ],
+     "rows": [
+      [
+       "Commercial Vehicles",
+       "▲ Strong",
+       "Grew 47%, focused on highest value additions, enabled by new technologies and product launches."
+      ],
+      [
+       "Industrial",
+       "▲ Strong",
+       "Grew 48% vs. 34% promised, driven by high-value engineering-led solutions and deeper customer engagement."
+      ],
+      [
+       "Exports",
+       "▲ Recovering",
+       "Returned to 16%+ growth trajectory; expanding pipelines with global tier one OEMs."
+      ],
+      [
+       "Two-and-three wheelers",
+       "Selective",
+       "Company deliberately pivots away from commoditized products toward differentiated high-margin offerings."
+      ],
+      [
+       "Passenger cars",
+       "▲ Growing",
+       "BMW steering business begins January; new BMW releases will carry NRB bearings."
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Aerospace & Defense: Access, Not Capacity",
+    "points": [
+     {
+      "label": "Mahant Tool Room traction",
+      "text": "Q2 actual sales of ₹55 lakh exceeded targets; the business is moving toward a turnover of ₹1 crore per quarter, which will take another 9 months to a year, but when target customers come in, \"it will jump at ₹10 crores at a time.\""
+     },
+     {
+      "label": "Certification base complete",
+      "text": "MTR holds all required certifications, including AS9100D, and has additionally received certification for bearings that go into aerospace applications."
+     },
+     {
+      "label": "Current defense supply",
+      "text": "MTR already supplies the most critical applications (landing gears, doors) for prestigious defense aircraft like Sukhoi."
+     },
+     {
+      "label": "Long gestation, sticky wins",
+      "text": "Aerospace and defense business has a long acquisition period, minimum 18 months for bearings, but \"once you get it, you have the business forever.\""
+     },
+     {
+      "label": "Partnerships-driven model",
+      "text": "The company buys \"access and speed, not capacity\" and only acquires capabilities, not customers and capacities; global clients who had reached out to build aerospace capabilities will be announced as engagements materialize."
+     },
+     {
+      "label": "Competitive moat in customization",
+      "text": "Peers have traditionally been strong in high-volume manufacturing, while NRB is strong in customized manufacturing solutions, a structural advantage as the world needs more customized bearing solutions, including in aerospace."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Harshbeena Zaveri: \"We buy access and speed, not capacity. We firmly believe that the kind of capacities that we create, which is why we are partnerships-driven and not, in the real sense, M&A-driven, where you actually go and acquire customers and you acquire capacities. We only acquire capabilities.\""
+     }
+    ]
+   },
+   {
+    "title": "Unitec JV & Capacity Build-Out",
+    "points": [
+     {
+      "label": "Commissioning on track",
+      "text": "The Unitec JV at Aurangabad is on track for commissioning by April 2027, focused on broad industrial applications with a heavy focus on industrial gearboxes."
+     },
+     {
+      "label": "Customer anchor",
+      "text": "One customer for whom capacity is being put in place has recently listed on the stock exchanges."
+     },
+     {
+      "label": "Ramp will be gradual",
+      "text": "Full capacity utilization of the ₹130 crores revenue potential will not happen in FY28 itself; management stated \"that's not the way capacities for an entirely new business division are led.\""
+     },
+     {
+      "label": "Revenue breakup withheld",
+      "text": "Management declined to provide any FY28 revenue breakup for the JV, stating that all breakups are given only at the consolidated level."
+     },
+     {
+      "label": "Capacity philosophy",
+      "text": "The company adds capacity only on orders that are already firmly in place, establishing a higher operational baseline with each expansion."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Margins & Profitability",
+    "points": [
+     {
+      "label": "EBITDA outperformance",
+      "text": "EBITDA grew much faster than revenues for H1, per an analyst's math that management did not dispute."
+     },
+     {
+      "label": "Margin floor commitment",
+      "text": "The company \"definitely like[s] to maintain our EBITDA as a percentage of sales,\" previously stated as a 17–18% ratio."
+     },
+     {
+      "label": "Depreciation distortion",
+      "text": "Management urged investors to stop looking at profit after tax because depreciation is kicking in as new capacities come online; the correct comparison is operating EBITDA and EBITDA as a percentage of sales."
+     },
+     {
+      "label": "Other expenses pressure",
+      "text": "Other expenses rose 19% YoY driven by power, fuel, logistics, and input cost impacts; management expects to offset these with higher growth as capacity builds."
+     },
+     {
+      "label": "Annual performance floor",
+      "text": "Once the company achieves something, \"it does not fall below it, at least on an annual basis.\""
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Harshbeena Zaveri: \"That is the reason why our profit after tax is not a correct measure. Because the depreciation is kicking in. You have to compare us for apples to apples with other companies, which is both actually operating EBITDA and EBITDA as a percentage of sales, which is where we are shining and outperforming.\""
+     }
+    ]
+   },
+   {
+    "title": "Strategic Vision: Five Verticals, One Decade",
+    "points": [
+     {
+      "label": "Five verticals reiterated",
+      "text": "Aerospace (buying speed, not scale); Automotive adjacency (moving beyond legacy products into tapered and ball bearings, wheel hubs, spherical roller bearings); EV beyond electrification (high-frequency drives, commercial EV fleets, e-two-wheelers, off-highway e-mobility); Mobility beyond vehicles (robotics, AGVs, urban air mobility, advanced automated transit systems); Mission-critical friction solutions (stationary and mobile)."
+     },
+     {
+      "label": "Decade-shaping decisions",
+      "text": "Decisions being taken today are designed to shape NRB over the next decade; the substantial pivot will lead to \"an entirely different NRB.\""
+     },
+     {
+      "label": "Five-year vision",
+      "text": "Build a differentiated business vertical in segments where technical complexity, customer stickiness, and credibility matter."
+     },
+     {
+      "label": "Talent strategy",
+      "text": "The company gives 20–30% salary jumps to internal people filling vacancies rather than losing its best people to competitors at 30–40% higher salaries."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Harshbeena Zaveri: \"I am a conservative person when it comes to commitment. You have to always take everything I say with a pinch of salt. We like to over-perform and under-promise. It is part of our company conservative financial approach.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Top-line growth",
+       "Sustain and surpass 19% growth; move beyond 19%",
+       "Annual basis; \"Yes\" to moving beyond 19%"
+      ],
+      [
+       "EBITDA margin",
+       "Maintain EBITDA as a percentage of sales at 17–18%",
+       "Ongoing"
+      ],
+      [
+       "Capacity-driven growth upswing",
+       "Visible step-change every six months as new capacities come online",
+       "Within next six months, and every six months thereafter"
+      ],
+      [
+       "Unitec JV commissioning",
+       "On track for commissioning at Aurangabad",
+       "April 2027"
+      ],
+      [
+       "MTR revenue ramp",
+       "Reach ₹1 crore per quarter turnover",
+       "9 months to a year"
+      ],
+      [
+       "Aerospace customer announcements",
+       "Announce global client engagements as they materialize",
+       "Six months for announcements; minimum 18 months to get the business for bearings"
+      ],
+      [
+       "Annual performance floor",
+       "Once achieved, metrics do not fall below that level on an annual basis",
+       "Annual basis"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Revenue from operations",
+       "₹386 cr, +18.8% YoY; +19% for H1 FY27"
+      ],
+      [
+       "Adjusted EBITDA",
+       "₹71 cr, margin of 18.2%"
+      ],
+      [
+       "Profit after tax",
+       "₹36 cr"
+      ],
+      [
+       "H1 FY27 revenue growth",
+       "19%, ahead of earlier ~15% guidance"
+      ],
+      [
+       "CV segment growth",
+       "47% YoY, focused on highest value additions"
+      ],
+      [
+       "Industrial segment growth",
+       "48% YoY, versus 34% promised earlier"
+      ],
+      [
+       "Export growth",
+       "16%+ YoY, on a constant-currency basis"
+      ],
+      [
+       "Aftermarket share of sales",
+       "9%–12% typically"
+      ],
+      [
+       "COGS increase",
+       "~1% YoY"
+      ],
+      [
+       "Other expenses increase",
+       "19% YoY"
+      ],
+      [
+       "Global market share, truck bearings",
+       "30%"
+      ],
+      [
+       "Global market share, two-wheeler bearings",
+       "30%"
+      ],
+      [
+       "Mahant Tool Room quarterly sales",
+       "₹55 lakh, significantly above targets"
+      ],
+      [
+       "Unitec JV revenue potential",
+       "₹130 cr, commissioning targeted April 2027"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "NRB Bearings Ltd",
+  "sector": "Bearings",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "₹2,500 crore FY31 revenue goal",
+    "text": "Management targets ₹2,500 crore revenue by FY31 (12-13% CAGR), and as of Q1 FY27 said the target \"looks like lower than we're going to achieve,\" with the aspirational vision at ₹3,000 crore as new verticals add in. That implies roughly doubling today's ~₹1,456 crore revenue base, with aerospace and industrial bearings carrying the incremental growth."
+   },
+   {
+    "title": "Aerospace via Mahant Tool Room",
+    "text": "NRB completed the ₹27.5 crore acquisition of Mahant Tool Room on 17 Jul 2026, gaining AS9100D certification, a ₹30 crore order book that is 100% HAL, and a designed-with-HAL-Nashik Sukhoi-30 plain spherical bearing fewer than five companies worldwide can make. Management targets ₹300 crore aerospace revenue by 2031 with ~30% EBITDA margins at that scale, with the current ₹20 crore trajectory potentially reaching ₹100 crore next year."
+   },
+   {
+    "title": "Unitec JV cylindrical roller bearings",
+    "text": "The JV with Unitec S.r.L./Mondial (NRB ≥75%, ₹67 crore NRB investment) is on track to commission at Aurangabad by April 2027, with Unitec committed to buying back 20% of annual output and its customers including Bonfiglioli, SAME and Leonardo. The ₹110 crore capex supports ₹130 crore of turnover, opening industrial gearbox and European OEM business NRB does not have today."
+   },
+   {
+    "title": "₹270 crore brownfield capacity expansion",
+    "text": "The Board-sanctioned ₹270 crore programme (₹200 crore Apr 2025, ₹70 crore Feb 2026, ₹40 crore land May 2026) lifts capacity 15-25%, with ₹60 crore spent and ₹100 crore ordered as of Q1 FY27; commissioning runs from June-July 2026 through Q1 2028. With effective utilisation near full across plants, management's rule of thumb - ₹100 crore capex yields ₹130 crore of sales - points to roughly ₹350 crore of added revenue potential."
+   },
+   {
+    "title": "Industrial bearings scale-up",
+    "text": "Industrial friction solutions grew 48% YoY in Q2 FY27 and now stand at 14-15% of revenue, with a new Siemens win and a target of 20-25% of revenue in about three years at margins in line with the 18-21% goal. Import-substitution JVs with global players, backed by the BIS push, could take the company beyond ₹2,500 crore."
+   },
+   {
+    "title": "Make-in-USA and global nominations",
+    "text": "Lifetime nominated business rose from ₹800 crore to ₹1,100 crore after the Q1 FY27 General Motors Corvette planet-pins win - the first for the Columbia, South Carolina plant, on a program open only to US manufacturers. FY27 international growth is guided at 10-14% versus 4% in FY26, with new BMW steering business starting from January."
+   }
+  ]
+ }
+}

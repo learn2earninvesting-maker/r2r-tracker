@@ -1,0 +1,369 @@
+{
+ "ticker": "ENTERO",
+ "name": "Entero Healthcare Solutions Ltd",
+ "concall": {
+  "name": "Entero Healthcare Solutions Ltd",
+  "sector": "Pharma Distribution",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Strong H1, guidance raised implicitly",
+    "text": "Revenue grew 32.9% YoY (18.2% organic), and management is confident of beating its full-year guidance on both growth and margin, though it stopped short of issuing a formal revision."
+   },
+   {
+    "label": "Margins expanded on operating leverage",
+    "text": "Gross margin rose 126 bps and EBITDA margin 135 bps YoY, driven by procurement scale, a richer MedTech mix, and the deliberate exit of low-margin accounts."
+   },
+   {
+    "label": "Working capital hit by a one-off",
+    "text": "A drought-related delay in Maharashtra government payments pushed NWC days to 64; the ~₹55 crore was collected in November, and adjusted NWC days were flat QoQ at 61."
+   },
+   {
+    "label": "M&A appetite is large and product-focused",
+    "text": "Management is evaluating deals above ₹100 crore, prefers product over geography expansion, and is hopeful of closing something this year."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the debt repayment cycle starting in Q3 meaningfully lowers interest costs, any concrete M&A announcement, and the sustainability of the IPM volume surge that management itself cannot explain."
+  },
+  "sections": [
+   {
+    "title": "Growth Drivers & Organic Engine",
+    "points": [
+     {
+      "label": "Organic momentum broad-based",
+      "text": "17–18% organic growth came from customer base expansion, higher wallet share, and new product categories, not a single tailwind."
+     },
+     {
+      "label": "MedTech scaling fast",
+      "text": "Full-year MedTech revenue is guided to exceed ₹1,000 crore, with growth coming from new categories, deeper existing-market penetration, and stronger manufacturer partnerships."
+     },
+     {
+      "label": "IPM volume surge unexplained",
+      "text": "Industry growth has spiked to 15%, mostly from volume rather than pricing or new launches; management candidly admits it cannot identify the root cause or predict sustainability."
+     },
+     {
+      "label": "Inorganic contribution tapering",
+      "text": "The 14.7% inorganic growth contribution from prior-year acquisition calendarisation will partly fade in Q3 and more so in Q4, absent new deals."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Prabhat Agrawal: \"See, to be honest, you know, I couldn't figure out much what's the root cause of this increase in growth rate because, you know, except for last three, four quarters, historical trend was like, any growth rate between 7% to 10%, right? And now it has gone as high as 15%, right? So I really don't know.\""
+     }
+    ]
+   },
+   {
+    "title": "Margin Architecture & Profitability",
+    "points": [
+     {
+      "label": "Three margin levers at work",
+      "text": "Scale-led procurement economies, a growing MedTech revenue share (now 15%+), and deliberate exits from low-margin accounts combined to expand EBITDA margin 135 bps YoY."
+     },
+     {
+      "label": "Provision masked underlying strength",
+      "text": "A ₹12 crore provision on a subsidiary and an ₹11.87 crore customer default write-off in the same entity weighed on Q2 margins; without them, margins would have been higher."
+     },
+     {
+      "label": "Trade margin cap a non-event",
+      "text": "The 137 molecules notified by NPPA represent only 2% of portfolio sales; management argues distributor margins did not change in 2019 and are unlikely to now, because most MRP reductions are absorbed by hospitals, not the distribution chain."
+     },
+     {
+      "label": "Margin tied to value-add, not product",
+      "text": "Management frames margin resilience around the services and reach provided, not the specific products sold, insulating the model from product-level price regulation."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Prabhat Agrawal: \"The margin is more dependent on the value-add that you have provided rather than the specific product that you are selling.\""
+     }
+    ]
+   },
+   {
+    "title": "Capital Allocation & Balance Sheet",
+    "points": [
+     {
+      "label": "Growth first, debt repayment second",
+      "text": "Management's explicit priority is deploying cash into high-ROCE opportunities rather than accelerating debt repayment, constrained only by an internal board mandate of 2x net debt to EBITDA."
+     },
+     {
+      "label": "Debt service begins Q3",
+      "text": "Repayment instalments on acquisition debt commence this quarter, which should mechanically lower interest costs over time."
+     },
+     {
+      "label": "Minority interest buyout optionality",
+      "text": "The company holds a call option on minority interest; the pace and mix of buyouts versus M&A versus organic investment will determine the trajectory of profit attributable to owners."
+     },
+     {
+      "label": "Subsidiary mergers deferred",
+      "text": "Management sees value in keeping subsidiaries separate for now, citing local goodwill and 30–40 year operating histories; consolidation may be evaluated later but is not a near-term priority."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Prabhat Agrawal: \"We are on a very high-growth phase. So, our first option would be to deploy that cash to chase more opportunities rather than to repay debt. Because we believe significant higher ROCE businesses can be created compared to the cost of debt.\""
+     }
+    ]
+   },
+   {
+    "title": "M&A Pipeline & Strategy",
+    "points": [
+     {
+      "label": "Product over geography",
+      "text": "Management is \"more excited by product expansion\" than entering new regions, though both are on the table alongside portfolio expansion."
+     },
+     {
+      "label": "Size floor set at ₹100 crore",
+      "text": "The company is not evaluating anything below that threshold, and large targets remain available in both pharma and MedTech; management is hopeful of closing something this fiscal year."
+     },
+     {
+      "label": "No upper bound disclosed",
+      "text": "When pressed on target size, management declined to specify a range, only reiterating the floor and that large opportunities exist."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Prabhat Agrawal: \"Generally, we are more excited by product expansion. I can just tell you that.\""
+     }
+    ]
+   },
+   {
+    "title": "Risks & Fragilities",
+    "points": [
+     {
+      "label": "Customer default in a subsidiary",
+      "text": "An ₹11.87 crore default by a pharmacy customer was disclosed to the exchange; the company holds post-dated checks and security and is pursuing legal recovery, but a significant portion was provided for this quarter."
+     },
+     {
+      "label": "Government payment timing",
+      "text": "The Maharashtra drought-related delay was resolved in November, but the episode exposes concentration risk in government receivables and the vulnerability of OCF to administrative reallocation of funds."
+     },
+     {
+      "label": "IPM growth opacity",
+      "text": "The 15% industry growth rate is a tailwind, but management's inability to explain it means the downside risk of normalization is unquantified."
+     },
+     {
+      "label": "Inorganic contribution cliff",
+      "text": "As prior-acquisition calendarisation rolls off, organic growth must accelerate or new M&A must land to sustain the consolidated growth rate."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Beat full-year guidance",
+       "Better than ~23% consolidated revenue growth (ex-new acquisitions) and 5% EBITDA margin, and 50% EBITDA to OCF conversion",
+       "FY27"
+      ],
+      [
+       "OCF conversion",
+       "50% of EBITDA to operating cash flow",
+       "FY27"
+      ],
+      [
+       "MedTech revenue",
+       "Exceed ₹1,000 crore",
+       "FY27"
+      ],
+      [
+       "Debt repayment",
+       "Instalments on prior-acquisition debt commence",
+       "Q3 FY27"
+      ],
+      [
+       "M&A closure",
+       "Evaluating opportunities above ₹100 crore; hopeful of closing",
+       "FY27"
+      ],
+      [
+       "FY28 guidance",
+       "Will be discussed",
+       "Q4 FY27"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Consolidated revenue",
+       "₹2,087 cr, +32.9% YoY"
+      ],
+      [
+       "Like-for-like revenue growth",
+       "34.7%, adjusted for net-margin revenue recognition and divestment of a subsidiary in the base period"
+      ],
+      [
+       "Organic revenue growth",
+       "18.2%; 20% on a like-for-like basis"
+      ],
+      [
+       "Inorganic revenue growth",
+       "14.7%, calendarisation of prior-year acquisitions"
+      ],
+      [
+       "Gross margin",
+       "11.5%, expanded 126 bps YoY"
+      ],
+      [
+       "EBITDA margin",
+       "5.3%, expanded 135 bps YoY"
+      ],
+      [
+       "EBITDA growth",
+       "78% YoY"
+      ],
+      [
+       "PAT",
+       "₹61 cr, +66% YoY"
+      ],
+      [
+       "PAT margin",
+       "2.9%"
+      ],
+      [
+       "PAT attributable to owners",
+       "₹46 cr, +44% YoY"
+      ],
+      [
+       "Non-controlling interest",
+       "~₹15 cr, approximately 25% of profit before minority interest"
+      ],
+      [
+       "Net working capital days",
+       "64 days; would have been 61 days adjusting for delayed government collections received in November"
+      ],
+      [
+       "ROCE",
+       "22.0%"
+      ],
+      [
+       "ROE",
+       "22.4%"
+      ],
+      [
+       "MedTech revenue share",
+       "15%+ of total revenues"
+      ],
+      [
+       "Customer default provision",
+       "₹11.87 cr provided in Other Expenses, 60 bps of sales"
+      ],
+      [
+       "Government business share",
+       "2–3% of total revenue"
+      ],
+      [
+       "Delayed government collection",
+       "~₹55 cr, received in November"
+      ],
+      [
+       "H1 FY27 revenue",
+       "₹4,028 cr, +35% YoY"
+      ],
+      [
+       "H1 FY27 EBITDA margin",
+       "5.2%"
+      ],
+      [
+       "H1 FY27 operating cash flow",
+       "Negative ₹46.5 cr; would have been positive if government collection had been received on due date"
+      ],
+      [
+       "H1 FY27 retail customers served",
+       ">92,200"
+      ],
+      [
+       "H1 FY27 hospital customers served",
+       ">2,900"
+      ],
+      [
+       "H1 FY27 SKUs distributed",
+       ">90,400"
+      ],
+      [
+       "H1 FY27 healthcare product manufacturers sourced from",
+       ">3,200"
+      ],
+      [
+       "FY27 guidance",
+       "~23% consolidated revenue growth (excluding new acquisitions), 5% EBITDA margin, 50% EBITDA to OCF conversion"
+      ],
+      [
+       "NPPA-notified molecules exposure",
+       "2% of portfolio sales"
+      ],
+      [
+       "H1 FY27 MedTech revenue",
+       "~₹600 cr"
+      ],
+      [
+       "Full-year MedTech revenue expectation",
+       "More than ₹1,000 cr"
+      ],
+      [
+       "H1 FY27 acquisition consideration paid",
+       "₹166 cr, deferred considerations from prior deals"
+      ],
+      [
+       "Deferred consideration balance at March",
+       "₹309 cr"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Entero Healthcare Solutions Ltd",
+  "sector": "Pharma Distribution",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "FY27 group guidance",
+    "text": "Management guided FY27 to ~23% revenue growth excluding new acquisitions, 5% EBITDA margin and 50% EBITDA-to-operating-cash conversion, and at Q2 FY27 reaffirmed it is \"in comfortable position to deliver better than our stated FY27 guidance\" on both growth and margin. On TTM revenue of ₹7,644 cr growing 34.75%, the guide implies roughly ₹9,400 cr of FY27 revenue at ~₹470 cr EBITDA before any new deals."
+   },
+   {
+    "title": "MedTech ₹1,000 crore vertical",
+    "text": "After seven FY26 acquisitions (Anand Chemiceutics 51.51% for ₹210-230 cr, Bioaide 80%, Ace Cardiopathy 60%), management says MedTech will exceed the ₹1,000 crore annual revenue target this year - \"of course we will be more than 1,000 crores in this year\" - at 15%-plus of total revenue. MedTech carries higher gross and EBITDA margins than core pharma distribution, with the acquisitions guided to add 70-90 bps to gross margin and 50-75 bps to EBITDA margin once integrated."
+   },
+   {
+    "title": "EBITDA margin beyond 5%",
+    "text": "EBITDA margin has climbed from 4.0% FY26 to 5.3% in Q2 FY27 (+135 bps YoY), with gross margin up 126 bps to 11.5%, driven by procurement scale, the full commercial role (10-15% of sales, margins at least double normal distribution) and exits from low-margin accounts. Management's internal target is above 6% EBITDA margin over 3-4 years at a 20% growth rate, with a potential revised guidance after Q2 FY27."
+   },
+   {
+    "title": "Organic growth at 1.4x IPM",
+    "text": "Like-for-like organic growth ran 19.6% and 20.0% in Q1 and Q2 FY27 versus IPM of ~15%, driven by wallet-share gains from existing customers, new customer additions and new categories. Management's internal target is growth above 20% over the next 3-4 years even with no acquisitions, lifting ROCE to 25-30%."
+   },
+   {
+    "title": "Acquisition pipeline reopening",
+    "text": "After a deliberate pause in H1 FY27 to integrate, management is \"working on multiple opportunities\" and evaluating \"some opportunity that can be closed in this year itself,\" with large targets available in both pharma and MedTech. The discipline is set: only deals above ₹100 crore of revenue adding a new geography or product category, at 5-7x EV/EBITDA with call options on the balance stake, funded within a 2x net debt/EBITDA cap."
+   },
+   {
+    "title": "GLP-1 distribution share",
+    "text": "Entero already does ₹10-12 crore of GLP sales a month, roughly 5% of industry value (and nearly 10% by volume per Q3 FY26), with cold-chain capability in every warehouse and disproportionate share built into FY27 guidance. The domestic GLP-1 market is expected to grow nearly fivefold from ~₹1,000-1,200 crore in 2025 to ₹4,500-5,000 crore by 2030 as post-patent generic entrants scale up from March/April 2026."
+   }
+  ]
+ }
+}

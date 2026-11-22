@@ -1,40 +1,31 @@
 {
- "build": "2611212300-ss",
- "folder": "Q2FY27-2611212300-ss",
+ "build": "2611221318-ss",
+ "folder": "Q2FY27-2611221318-ss",
  "season": "Q2FY27",
  "label": "Q2 FY27",
- "built": "2026-11-21T17:10:59Z",
+ "built": "2026-11-22T13:18:26Z",
  "report": {
   "season": "Q2FY27",
   "label": "Q2 FY27",
-  "folder": "Q2FY27-2611212300-ss",
-  "built": "2026-11-21T17:10:59Z",
+  "folder": "Q2FY27-2611221318-ss",
+  "built": "2026-11-22T13:18:26Z",
   "source": "StockScans",
-  "csvStocks": 47,
-  "concall": 46,
-  "concallLatest": 46,
-  "catalysts": 47,
+  "csvStocks": 46,
+  "concall": 45,
+  "concallLatest": 45,
+  "catalysts": 46,
   "noConcall": [
    "Marine Electricals (India) Ltd"
   ],
   "olderConcall": [],
   "noCatalysts": [],
   "refreshed": {
-   "concall": [
-    "DEEDEV",
-    "INNOVACAP",
-    "KDDL"
-   ],
+   "concall": [],
    "catalysts": []
   },
   "unmatched": {
    "concall": [],
    "catalysts": []
-  },
-  "extras": [
-   "COFORGE",
-   "DIVISLAB",
-   "MCX"
-  ]
+  }
  }
 }

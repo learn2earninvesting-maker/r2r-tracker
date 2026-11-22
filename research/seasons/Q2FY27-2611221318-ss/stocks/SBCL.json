@@ -1,0 +1,373 @@
+{
+ "ticker": "SBCL",
+ "name": "Shivalik Bimetal Controls Ltd",
+ "concall": {
+  "name": "Shivalik Bimetal Controls Ltd",
+  "sector": "Shunt Resistors",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Core components drive the quarter",
+    "text": "Shunt resistor assemblies and finished components, not raw strip, powered growth as multi-quarter development wins converted to regular business, lifting standalone margins to nearly 30%."
+   },
+   {
+    "label": "Assembly business to become a disclosed vertical",
+    "text": "A new fourth vertical will capture PCB/PCBA assembly revenue, which management sees as a ₹100–200 cr opportunity carrying 15–16% EBITDA margins, materially lower than the legacy ~26–27% for shunts and other legacy product lines."
+   },
+   {
+    "label": "US revenue decline is a geographic re-route, not a demand loss",
+    "text": "US shunt revenue fell because tariff-driven supply chain shifts now route 70–80% of those components directly to Asian end-users; the underlying customer demand remains intact."
+   },
+   {
+    "label": "Margins face a deliberate 1.5–2.5% dilution",
+    "text": "Adding lower-margin assembly business will compress blended EBITDA, but absolute profit rises and legacy vertical margins should improve further on volume, partially offsetting the mix effect."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the two or three CCS programs in advanced testing convert to mass production, the pace of inventory normalization, and any disclosure on the new special-materials product line management is analyzing."
+  },
+  "sections": [
+   {
+    "title": "Core Business: Shunt Resistor Evolution",
+    "points": [
+     {
+      "label": "Strip-to-component shift is the margin story",
+      "text": "Shunt output volume in kg fell ~16% because wide and thick strip previously sold as raw material has been drastically reduced; the company now ships more finished resistors with higher value-add, improving profitability."
+     },
+     {
+      "label": "Design wins converting after long gestation",
+      "text": "Multiple developments from the last 7–8 quarters at the sampling and pilot stage have now materialized into regular business, and one or two larger customers' design changes also started contributing."
+     },
+     {
+      "label": "Standalone margins near 30%",
+      "text": "The shift from strip to assembly drove the improvement, and the vast majority of the existing customer base has already been converted from strip to components."
+     },
+     {
+      "label": "Supply chain stickiness locks in programs",
+      "text": "Once a business is secured at the finished part or assembly level, it is essentially locked in for the life of that program, creating a durable revenue base."
+     },
+     {
+      "label": "Further value-add in progress",
+      "text": "The company is actively working on going one step forward to extract higher value from the same product across both thermostatic bimetal and shunt categories."
+     },
+     {
+      "label": "Growth sustainability tied to execution",
+      "text": "At least a few more quarters of value-added growth from core products are expected, because the developments that materialized are higher value-add and harder for competitors to replicate."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Kabir Ghumman: \"...if you secure a business at a finished part or an assembly level that's, you know, essentially virtually locked in for the life of that program.\""
+     },
+     {
+      "text": "Sumer Ghumman: \"...the scope is there, the market, the opportunity exists. If we handle it correctly, and if we do everything right, then definitely this is a...a sustainable growth possibility, not just for a few quarters, but for a few years.\""
+     }
+    ]
+   },
+   {
+    "title": "Assembly Business: The New Vertical",
+    "points": [
+     {
+      "label": "PCB/PCBA is an extension, not a pivot",
+      "text": "Management explicitly stated that PCBA and PCB assembly businesses are not becoming a core product; they exist only because clad or EB-welded components must be sold as assemblies to meet customer requirements."
+     },
+     {
+      "label": "Revenue opportunity of ₹100–200 cr",
+      "text": "The size depends on which developments materialize, and whether the company can capture that business is not definite."
+     },
+     {
+      "label": "Scale economics differ sharply from legacy",
+      "text": "Years of development in the legacy business may yield a highly profitable ₹20 cr addition that an outside investor barely notices; the assembly business offers a different kind of scaling opportunity, but at 15–16% EBITDA margins versus the legacy 26–27%."
+     },
+     {
+      "label": "At scale, still a minority of revenue",
+      "text": "Even at ₹200–250 cr, the PCBA business would represent only 15–18% of total revenue by the end of FY27–28."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Sumer Ghumman: \"We do not foresee, or we do not look at any of our PCBA assemblies, PCBA business, or PCB assembly businesses, or as becoming a core product of ours. This is a product that we are making assemblies of, A) for what the customer requires, B) because it is a, it has to be sold like that...\""
+     }
+    ]
+   },
+   {
+    "title": "Margins: Mix Shift and the Blended Trajectory",
+    "points": [
+     {
+      "label": "Overall EBITDA margin may dip by 1.5% to 2.5% in FY27–28",
+      "text": "The addition of 15–16% EBITDA margin assembly business will compress blended margins, though absolute profit rises."
+     },
+     {
+      "label": "Legacy verticals should partially compensate",
+      "text": "Margins in the legacy product verticals are expected to continue improving with further volume increases, potentially offsetting some of the lower-margin business."
+     },
+     {
+      "label": "Three-year blended view",
+      "text": "In a scenario where revenue splits 50–50 between 26–27% and 15–16% EBITDA businesses, the blended margin would be 20–21% or possibly 22%; at 3–4x current revenue, the blended margin sits somewhere between 15–16% and 25–26%."
+     },
+     {
+      "label": "Commodity prices are largely neutral to margins",
+      "text": "Pricing is structured so that material costs are a pass-through; copper and silver price changes have minimal impact on the bottom line, and silver would have to crash to 25% of its value to start showing up in margins."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Sumer Ghumman: \"We can expect that in that year, maybe our total profitability, of course, profit goes up, but, you know, our margin comes down maybe from a, maybe by 2 or maybe 1.5% to 2.5%, somewhere in those range, because of the addition of revenue coming in from these 15-16% EBITDA margins, margin businesses.\""
+     }
+    ]
+   },
+   {
+    "title": "Geographic and End-Market Dynamics",
+    "points": [
+     {
+      "label": "US shunt revenue decline is a routing change",
+      "text": "Due to tariff issues last year, many resistors are now shipped directly to end-use regions, mostly Asia, rather than routed through the US; 70–80% of major customers' components are used outside the US, so US business is showing up as Asian revenue."
+     },
+     {
+      "label": "India bimetal demand recovering",
+      "text": "A sharp uptick in India bimetal revenue was driven by retail demand, real estate, new construction, and infrastructure projects; prior sluggishness was due to over-inventorization in a flat market, and that inventory has now been absorbed."
+     },
+     {
+      "label": "India medium and low voltage switchgear outlook positive",
+      "text": "Management sees good demand for the next two or three quarters."
+     },
+     {
+      "label": "Domestic EV opportunity accelerating",
+      "text": "The EV ecosystem in India is advancing faster than anticipated, creating significant growth opportunity in high-value-add areas like shunt resistor components for the domestic market, not just exports."
+     },
+     {
+      "label": "EV busbar traction on two-wheelers",
+      "text": "Faster adoption is occurring on the two-wheeler side, where 30–40% of vehicles sold recently were electric; four-wheeler discussions remain in early stages."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "New Initiatives: CCS, Contacts, and Special Materials",
+    "points": [
+     {
+      "label": "CCS mass production running for one customer",
+      "text": "Two or three additional programs are in advanced stages with initial prototyping done and some undergoing testing; validation cycles are taking longer because the supply chain is new in India, but this is expected to improve rapidly."
+     },
+     {
+      "label": "Contacts business grew nearly 100%",
+      "text": "Of that growth, 40–50% is attributable to materials (silver price impact), with the balance from actual customer growth and product increases; the new facility became fully functional by June-end or early July this year, and existing customers wanted to give increased wallet share."
+     },
+     {
+      "label": "Contacts capacity and trajectory",
+      "text": "Half of expected contacts revenue has potential to double without added capex; overall capacity utilization is running at 50–60%, and the company expects to cross 50–60% of the ₹400 cr revenue potential this year, reaching ~55% utilization by year-end."
+     },
+     {
+      "label": "Special materials product line under analysis",
+      "text": "The company is in a deeper stage of analyzing new products related to special materials and metals for electronic applications, including specialized joining and special thicknesses or dimensions; management stated something will happen in this area \"very, very soon\" but declined to disclose specifics."
+     },
+     {
+      "label": "Data centers and BESS in very early stages",
+      "text": "There is indirect demand increase at the component level for switchgear and battery management systems, with some CCS and busbar applications directly related to BESS packs; India's reliance on China for complete battery packs is exponentially decreasing, which management expects will fuel growth speed domestically."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Capital Allocation and Organization",
+    "points": [
+     {
+      "label": "Inventory buildup is temporary",
+      "text": "Driven by the conversion from direct strip supplies to assemblies and finished components, where supply chain cycles are still stabilizing and programs require multiple validation cycles and design changes, plus bus bar assemblies and PCBA activity demanding slightly higher inventory; management is actively working on programs to reduce inventory cycles."
+     },
+     {
+      "label": "CAPEX focused on downstream and automation",
+      "text": "Capacity enhancement is needed on downstream processes (parts level, assembly level), automation (end-of-line calibration, testing), and expansions for PCB and PCBA type parts; most heavy CAPEX areas already have enough room available, and enhancements needed can be done in a short period at low cost."
+     },
+     {
+      "label": "No immediate large acquisition",
+      "text": "Projects are staggered, allowing time to plan funding; a dividend has been proposed and management stated it does not have a major impact on availability of funds for growth opportunities."
+     },
+     {
+      "label": "Leadership additions in progress",
+      "text": "A new CFO has been finalized and should be with the company by end of December; the company is actively pursuing a COO position; new people have already been added in R&D, with another senior R&D position being sought depending on projects."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Sumer Ghumman: \"Our focus is on sustaining core profitability, improving cash conversion and progressing new programs through customer adoption. We remain confident in the opportunities ahead, and will pursue them with discipline in execution and capital allocation.\""
+     }
+    ]
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Core product value-added growth",
+       "At least a few more quarters of growth from higher value-add developments that are harder for competitors to replicate",
+       "Next few quarters"
+      ],
+      [
+       "Assembly business disclosed as separate vertical",
+       "Shown as a fourth vertical within core business; larger percentage of total revenue to come from assembly",
+       "Foreseeable future"
+      ],
+      [
+       "Overall top-line growth",
+       "30–40% growth possible if many things fall into place; 30–35% sustainable over next 2 years",
+       "Next 2 years"
+      ],
+      [
+       "EBITDA margin dilution",
+       "Overall margin may dip 1.5% to 2.5% due to mix shift toward 15–16% EBITDA margin assembly business; absolute profit rises",
+       "FY27–28"
+      ],
+      [
+       "Legacy vertical margin improvement",
+       "Margins in legacy product verticals should continue improving with further volume increases, partially compensating for lower-margin business",
+       "Ongoing"
+      ],
+      [
+       "Contacts revenue",
+       "Expect to cross 50–60% of ₹400 cr revenue potential this year, reaching ~55% capacity utilization",
+       "By year-end FY27"
+      ],
+      [
+       "India bimetal demand",
+       "Outlook for medium and low voltage switchgear looks good",
+       "Next 2–3 quarters"
+      ],
+      [
+       "New CFO",
+       "Finalized, should join the company",
+       "By end of December"
+      ],
+      [
+       "New special-materials product",
+       "Something will happen in this area \"very, very soon\"",
+       "Undated (no specifics disclosed)"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Consolidated revenue growth (H1 FY27)",
+       "~39% YoY"
+      ],
+      [
+       "EBITDA growth (H1 FY27)",
+       "48% YoY"
+      ],
+      [
+       "PAT growth (H1 FY27)",
+       "40% YoY"
+      ],
+      [
+       "Shunt business revenue growth",
+       "~36% QoQ, despite ~16% decline in shunt volume"
+      ],
+      [
+       "Pure volume growth (ex-commodity)",
+       "25–26% (per an analyst's math)"
+      ],
+      [
+       "Standalone margin",
+       "~30%"
+      ],
+      [
+       "Contacts business revenue growth",
+       ">100% YoY, of which 40–50% from silver price, balance from volume and customer growth"
+      ],
+      [
+       "Contacts capacity utilization",
+       "50–60% overall, with one product type at 50–60% and another process at ~30%"
+      ],
+      [
+       "Contacts revenue potential at current silver",
+       "~₹400 cr, with ~55% utilization expected by year-end"
+      ],
+      [
+       "Assembly business opportunity",
+       "₹100–200 cr in revenue, with 15–16% EBITDA margin"
+      ],
+      [
+       "Legacy product EBITDA margin",
+       "26–27%"
+      ],
+      [
+       "Blended EBITDA margin outlook (3-year)",
+       "20–22%, assuming 50-50 revenue split between 26–27% and 15–16% margin businesses"
+      ],
+      [
+       "Overall margin dip expected",
+       "1.5–2.5% due to mix shift toward lower-margin assembly business"
+      ],
+      [
+       "PCBA/CCS contribution in standalone",
+       "₹5–7 cr, very minimal"
+      ],
+      [
+       "Shunts per vehicle (modern ICE)",
+       "30 to 50–55 depending on OEM and design"
+      ],
+      [
+       "Shunts per vehicle (top-end)",
+       ">200–250, smaller SMD shunts"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Shivalik Bimetal Controls Ltd",
+  "sector": "Shunt Resistors",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "Pune CCS & busbar facility",
+    "text": "Phase-I received Consent to Operate from the Maharashtra Pollution Control Board on 15 July 2026, the plant was fully functional by early July, and four-to-five projects have converted into firm orders with management sizing the opportunity at ₹250-300 crore over three years (~₹70-80 crore in FY27). Assembly topline runs ~10-15x the component-alone value at 12-16% EBITDA, with company-level margins guided to hold at 23-25% as volumes ramp."
+   },
+   {
+    "title": "Strip-to-component conversion",
+    "text": "Component share of the shunt business rose from ~55% to 65% in FY26, lifting per-kg realisation ~10-12%, and standalone shunt margins have reached close to 30% as old strip business converts to parts. With 5% volume growth potentially meaning 12-15% realisation growth, the mix shift keeps adding margin without new capex."
+   },
+   {
+    "title": "Vishay recovery in component form",
+    "text": "The large US shunt customer that drove muted growth is recovering, with revenue expected back at prior peak levels this year and above them in FY27-28, all in component form where value-addition is nearly double strip. Even at 50% of forecast revenue, contribution would exceed the strip-era level, and white-label supply to Vishay's own customers is being accelerated."
+   },
+   {
+    "title": "Contacts subsidiary (SEPPL) expansion",
+    "text": "Shivalik Engineered Products grew turnover 54.9% to ₹111 crore in FY26 with PAT up 194%, and its new Waknaghat plant received Consent to Operate in July 2026 with phased relocation underway. Management guides FY27 contacts growth above FY26's with business already in hand, and the expanded plant carries ₹300 crore revenue capacity."
+   },
+   {
+    "title": "Smart metering ramp",
+    "text": "Smart-meter revenue nearly doubled in FY26 to over ₹75-80 crore, and management expects similar growth in FY27 as the national rollout continues, with the contacts-side relay contribution only now scaling. RDSS has sanctioned 20.33 crore meters with ~₹1.31 lakh crore for smart metering, giving a multi-year demand base."
+   },
+   {
+    "title": "Bimetal export recovery",
+    "text": "US development projects that were on hold have restarted, including a couple of larger high-volume bulk opportunities, with added revenue expected from about four quarters out. Competitor EMS is failing to supply some old marquee customers, and Europe bimetal already grew 47% to ₹50.73 crore in FY26."
+   },
+   {
+    "title": "Capacity headroom without capex",
+    "text": "The existing asset base supports over ₹1,300 crore of revenue versus ₹577 crore FY26 consolidated revenue, with utilisation around 60% and FY27 guided to ~75% on only ₹10-15 crore annual maintenance/automation capex. Growth therefore converts to cash flow rather than greenfield spend, with capacity addable in a 2-3 month window where demand spikes."
+   }
+  ]
+ }
+}

@@ -1,0 +1,413 @@
+{
+ "ticker": "INDGN",
+ "name": "Indegene Ltd",
+ "concall": {
+  "name": "Indegene Ltd",
+  "sector": "Services Others",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Strong quarter, compounding signals",
+    "text": "Revenue grew 39.5% YoY and 5.6% QoQ, the fifth straight quarter above 5% sequential growth, while the CEO noted major industry signals are aligning for the first time in years."
+   },
+   {
+    "label": "Margins absorbed wage hikes and broke the pattern",
+    "text": "EBITDA margin held at 16.7% despite ~150 bps of wage impact, as productivity gains and favorable exchange largely offset the headwind, breaking from the usual Q2 margin dip."
+   },
+   {
+    "label": "The largest relationships are deepening, not stalling",
+    "text": "Top 5 accounts grew 9.2% QoQ and top 20 grew ~6.7%, even as the largest customer saw a slight revenue ease from gradual Tectonic ramp-ups and one customer temporarily dipped below the \\$25 mn cohort."
+   },
+   {
+    "label": "AI-led content model is hitting an inflection",
+    "text": "Agentic AOR, Tectonic and production work are blurring into one integrated proposition, and management believes the Enterprise Commercial segment is entering an important new growth phase that will play out over years."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether the \\$5 mn-plus deal ramp and Tectonic execution catch-up restore upward trajectory at the two largest accounts, and whether the Q4 margin exit toward 19% stays on track as the \\$10 mn outcome-based contract peaks in Q4."
+  },
+  "sections": [
+   {
+    "title": "Demand Environment & Industry Tailwinds",
+    "points": [
+     {
+      "label": "Signals compounding for the first time",
+      "text": "Capital returning, record FDA approvals, a deeper and more complex late-stage pipeline, and AI moving onto the operating agenda of nearly every large biopharma are turning together, an alignment management has not seen in several years."
+     },
+     {
+      "label": "Pharma reallocating toward flexible partnerships",
+      "text": "Large pharma companies are shifting toward partners that combine domain depth, technology and global scale, a structural tailwind that favors Indegene's integrated model as more medicines reach market with more complexity per medicine."
+     },
+     {
+      "label": "Commercial pulling ahead of Medical",
+      "text": "Deal wins in Q2 skewed toward Enterprise Commercial, and management expects Commercial to outpace Medical growth over the next few quarters, with Medical coming off a very strong growth base in prior periods."
+     },
+     {
+      "label": "Client base broadening steadily",
+      "text": "Active clients rose to 107 from 76 a year ago, clients above \\$1 mn/year rose to 59 from 54, and clients above \\$10 mn rose to 13 from 12, with each relationship starting small and expanding as trust builds."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Manish Gupta: \"For the first time in several years, the major signals are pointing the same way at the same time. Capital is back. Approvals are at a record pace. The pipeline is large and later stage. And AI has moved on to the operating agenda of almost every large biopharmaceutical company. When these turn together, the effect compounds.\""
+     }
+    ]
+   },
+   {
+    "title": "Deal Wins & Account Momentum",
+    "points": [
+     {
+      "label": "Largest win with a temporarily dipped customer",
+      "text": "The quarter's biggest deal, in the \\$5 mn to \\$10 mn range, was won from the same top customer that slipped just below the \\$25 mn cohort on a small volume variation, reinforcing management's view that the dip is temporary and the relationship is deepening."
+     },
+     {
+      "label": "Content platform migration expands geographically",
+      "text": "A top 5 customer mandate to migrate a content platform, won last quarter for the U.S., was extended to new geographies outside the U.S., with work commencing in Q3 and ramp-up likely to impact Q4 and beyond."
+     },
+     {
+      "label": "Consulting engagement converts to global content factory",
+      "text": "A sub-million-dollar change management consulting engagement with a top 20 pharma company, described last quarter as a start, converted into a \\$3 mn to \\$5 mn mandate to set up a global content factory across Commercial and Medical content for international business."
+     },
+     {
+      "label": "Large incumbent displaced",
+      "text": "A top 30 global pharma company selected Indegene to manage global digital content in a \\$3 mn to \\$5 mn deal, replacing a large incumbent."
+     },
+     {
+      "label": "Tectonic expands to third market in three quarters",
+      "text": "The GenAI-enabled Tectonic model was extended with the largest customer to Canada, the third market in three successive quarters after Germany and Spain, and the first outside Europe."
+     },
+     {
+      "label": "Agentic AOR pilot converts to full-scale",
+      "text": "An initial pilot with a top 20 pharma company turned into a full-scale engagement north of \\$1 mn, with the relationship having started in Tectonic and evolved into Agentic Agency of Record."
+     },
+     {
+      "label": "Emerging pharma extends launch partnership",
+      "text": "A fast-growing U.S.-based emerging pharma company, first partnered in Q3 last fiscal for new product launches, signed multiple additional work orders aggregating over \\$3 mn to continue launch activities."
+     },
+     {
+      "label": "Four more deals in the \\$1 mn to \\$3 mn range",
+      "text": "Split evenly between Enterprise Commercial and Enterprise Medical segments."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Manish Gupta: \"In fact, the lines are blurring to the point where Agentic AOR, Tectonic and production work, we believe in the future might not be distinct.\""
+     }
+    ]
+   },
+   {
+    "title": "Enterprise Commercial Inflection & AI-Led Content Model",
+    "points": [
+     {
+      "label": "An integrated AI-led content model is forming",
+      "text": "Clients can increasingly enter Indegene's ecosystem anywhere from strategy to creatives to production and expand across the value chain, with distinctions between Agentic AOR, Tectonic and production mattering less over time as the destination becomes one integrated model spanning the entire commercialization value chain."
+     },
+     {
+      "label": "Defining a market, not entering one",
+      "text": "Management believes it has taken time to build this model because Indegene is defining a market rather than simply entering one, and the company now sees itself at an important inflection point that represents a significant growth opportunity for the next few years."
+     },
+     {
+      "label": "Agentic AOR positioned as first-mover",
+      "text": "Management described the Agentic AOR offering as \"first in the industry\" with nobody close, while acknowledging realistically that changing how clients approach commercialization will take its own time."
+     },
+     {
+      "label": "IT companies not seen as competitors here",
+      "text": "Indegene sells to Chief Marketing Officers and Chief Medical Officers, a buying center where management says IT companies are not playing and not a segment they worry about, at least not today."
+     },
+     {
+      "label": "Outcome-based pricing keeps rising",
+      "text": "Most Q2 wins were output- or outcome-based rather than FTE-based, with a focused effort to convert pure FTE contracts to hybrid models at renewal cycles, and management believes this proportion will keep moving upward."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Manish Gupta: \"It has taken time to build this model because we are defining a market, not simply entering one. But now we believe, we are at an important inflection point.\""
+     }
+    ]
+   },
+   {
+    "title": "Margins: Absorption, Path & Confidence",
+    "points": [
+     {
+      "label": "Q2 broke the usual pattern",
+      "text": "EBITDA margin at 16.7% absorbed ~150 bps of wage hike impact, with improved productivity and favorable exchange rates largely offsetting the headwind, a break from the typical Q2 margin compression."
+     },
+     {
+      "label": "Three drivers to 19%-plus by Q4",
+      "text": "The wage cycle is now fully in the base, an outcome-linked omnichannel contract with a large customer progressed positively in the first two quarters, and productivity initiatives combined with operating leverage are anticipated to have a favorable impact in the coming two quarters."
+     },
+     {
+      "label": "PAT margin to expand faster than EBITDA",
+      "text": "Amortization charges will reduce in Q3 and beyond, and yields are anticipated to increase with higher interest rates plus a conscious shift toward held-to-maturity instruments to reduce volatility, together aggregating up to 90 to 95 bps of positive PBT impact."
+     },
+     {
+      "label": "Q4 is the margin inflection point",
+      "text": "The \\$10 mn outcome-based contract is expected to peak in Q4, with revenue recognition tied to calendar-year data lock and customer confirmation by February or March, having a meaningful impact on margin as the company exits Q4."
+     },
+     {
+      "label": "H2 margin growth to outpace revenue growth",
+      "text": "Management expects margin growth in the second half to outpace revenue growth as the company exits Q4, with productivity and workforce transformation contributions continuing and operating leverage adding positively in Q3 and more significantly in Q4."
+     },
+     {
+      "label": "Management declined to provide a detailed Q3/Q4 margin walk",
+      "text": "When asked for a step-by-step bridge from 16.7% to 18–19%, management referred to the Q1-to-Q2 walk and stated the favoring factors would continue, without giving specific quarterly guidance."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Suhas Prabhu: \"In July, we told you this quarter 2 would break from the usual pattern, and it has.\""
+     }
+    ]
+   },
+   {
+    "title": "BioPharm Integration & Contribution",
+    "points": [
+     {
+      "label": "First year completed, integration done",
+      "text": "BioPharm completed its first year as part of Indegene on October 1, with transition of finance, HR, IT, legal and seller's transition services completed by end of February with no disruption and strong retention."
+     },
+     {
+      "label": "Cost synergies realized and reinvested",
+      "text": "Approximately \\$1.5 mn in annual cost savings have been realized and reinvested in growth, with the go-to-market team expanded from 3 to 9 people."
+     },
+     {
+      "label": "Second tranche payout expected near maximum",
+      "text": "The earn-out requires over 15% revenue growth in CY2026 over CY2025, and based on the current trajectory, management expects the payout to be close to the maximum, with the entire amount already provided for in the balance sheet."
+     },
+     {
+      "label": "Biggest contribution still ahead",
+      "text": "Management believes BioPharm's largest contribution to Indegene is still to come, describing it as a capability now embedded in how the company wins rather than an acquisition they talk about separately."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Manish Gupta: \"BioPharm is no longer an acquisition we talk about. It is a capability embedded in how we win. And we believe its biggest contribution to Indegene is still ahead of us.\""
+     }
+    ]
+   },
+   {
+    "title": "Productivity, People & Operating Model",
+    "points": [
+     {
+      "label": "Revenue per employee jumped meaningfully",
+      "text": "Trailing 12-month revenue per employee rose to US\\$79,600 from ~US\\$69,000 a year ago, driven by most delivery now running on GenAI-enabled platforms and more work priced on output or outcomes rather than time spent."
+     },
+     {
+      "label": "Productivity and workforce transformation contributed ~85 bps Q1 to Q2",
+      "text": "Workforce transformation and productivity initiatives are expected to continue contributing to margin expansion in Q3 and Q4."
+     },
+     {
+      "label": "Unbilled revenue rose on timing, not risk",
+      "text": "The increase in unbilled revenue reflects a quarter with slight delays in customer confirmations due to summer in Europe and the U.S., with AR and unbilled expected to normalize in Q3 and Q4; net DSOs varied only 2 days from 67 to 69."
+     },
+     {
+      "label": "Interest income dipped on mark-to-market, not outflows",
+      "text": "Interest income fell 44% QoQ from ₹23.7 crore to ₹13.4 crore because markdowns in mutual fund portfolio NAVs from interest rate increases toward quarter-end compressed near-term yields, even though invested funds remained largely constant."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "EBITDA margin exit",
+       "Quarterly EBITDA margins of 19% plus",
+       "By Q4 FY27"
+      ],
+      [
+       "PAT margin expansion",
+       "Expand faster than EBITDA margin, with up to 90–95 bps positive PBT impact from lower amortization and higher yields",
+       "Q3 and beyond"
+      ],
+      [
+       "Customer returning to \\$25 mn+ cohort",
+       "Customer that dipped below \\$25 mn returns to that cohort as \\$5 mn+ deal ramps",
+       "2–3 quarters"
+      ],
+      [
+       "Largest customer revenue trajectory",
+       "Revenue returns to upward path as Tectonic execution catches up with contracted scope",
+       "Unspecified, execution-dependent"
+      ],
+      [
+       "BioPharm second tranche payout",
+       "Payout expected close to maximum, requiring >15% revenue growth in CY2026 over CY2025",
+       "CY2026"
+      ],
+      [
+       "Organic growth",
+       "Organically stronger than FY26, with H2 stronger than H1",
+       "FY27"
+      ],
+      [
+       "Commercial vs. Medical growth",
+       "Commercial to outpace Medical growth",
+       "Next few quarters"
+      ],
+      [
+       "Outcome-based revenue mix",
+       "Proportion of outcome-based contracts to keep moving upward as FTE contracts convert at renewal",
+       "Ongoing"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Revenue",
+       "₹1,122.3 cr, up 39.5% YoY and 5.6% QoQ"
+      ],
+      [
+       "Revenue (USD)",
+       "US\\$117.5 million, up 27.5% YoY and 4.4% QoQ"
+      ],
+      [
+       "EBITDA",
+       "₹187.3 cr, up 32% YoY"
+      ],
+      [
+       "EBITDA margin",
+       "16.7%, wage hike impact of 150 bps offset by productivity and forex"
+      ],
+      [
+       "Profit before tax",
+       "₹147.4 cr"
+      ],
+      [
+       "Profit after tax",
+       "₹112.3 cr, up 10% YoY, 10% of revenue"
+      ],
+      [
+       "Effective tax rate",
+       "23.8%"
+      ],
+      [
+       "Enterprise Commercial revenue share",
+       "~71% of revenue"
+      ],
+      [
+       "Enterprise Medical revenue share",
+       "25% of revenue"
+      ],
+      [
+       "North America revenue share",
+       "74% of revenue"
+      ],
+      [
+       "Europe revenue share",
+       "23% of revenue"
+      ],
+      [
+       "Active clients",
+       "107, 31 more than a year ago"
+      ],
+      [
+       "Clients over \\$1 million annual revenue",
+       "59, up from 54 last quarter"
+      ],
+      [
+       "Clients over \\$10 million annual revenue",
+       "13, one more than last quarter"
+      ],
+      [
+       "Revenue per employee (trailing 12-month)",
+       "US\\$79,600, up from ~US\\$69,000 a year ago"
+      ],
+      [
+       "Deal wins with ACV ~\\$1 million or more",
+       "9, including 3 large deals: one \\$5 million-plus, two \\$3 million to \\$5 million"
+      ],
+      [
+       "Tectonic quarterly run rate",
+       "\\$1.7 million, up from ~\\$1 million; contracted level crossed \\$2 million per quarter"
+      ],
+      [
+       "DSO (net of unearned and unbilled revenue)",
+       "69 days, up 2 days QoQ"
+      ],
+      [
+       "Cash and investments",
+       "₹1,389.6 cr"
+      ],
+      [
+       "Largest customer revenue share",
+       "7.8% of revenue"
+      ],
+      [
+       "Top 10 customers revenue share",
+       "49% of revenue"
+      ],
+      [
+       "Top 5 accounts sequential growth (INR)",
+       "9.2% QoQ"
+      ],
+      [
+       "Top 20 accounts sequential growth (INR)",
+       "~6.7% QoQ"
+      ],
+      [
+       "BioPharm annual cost synergies realized",
+       "~\\$1.5 million"
+      ],
+      [
+       "BioPharm CY2026 revenue growth condition for earnout",
+       ">15% over CY2025; payout expected close to maximum"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Indegene Ltd",
+  "sector": "Services Others",
+  "asof": "Oct 2026",
+  "items": [
+   {
+    "title": "Tectonic with largest customer",
+    "text": "Tectonic, Indegene's GenAI transformation model (2x faster at 40% lower spend), won a significant engagement with its largest customer starting in Germany, extended to Spain in Q1 FY27 and Canada in Q2 FY27, with run-rate up from ~$1 million to $1.7 million a quarter and contracted levels above $2 million a quarter. Management hopes this customer becomes Indegene's first $50 million-plus account, and each new market adds upstream work that pulls downstream production into larger engagements."
+   },
+   {
+    "title": "Outcome-based omnichannel deal",
+    "text": "A multiyear deal exceeding $10 million ACV with a top 5 pharma customer went live in Q4 FY26, running omnichannel orchestration across a US portfolio worth over $1 billion approaching patent expiry on pure outcome-based pricing. Revenue recognition starts in Q3 FY27 and peaks in Q4, with costs already incurred so most of it flows to the bottom line; the client's five-month revenue upticks were described as \"very encouraging\"."
+   },
+   {
+    "title": "Content platform migrations",
+    "text": "A top 5 customer's $3-5 million ACV US content platform migration won in Q1 FY27 expanded in Q2 FY27 into new geographies outside the US, with work starting Q3 and ramping into Q4 and beyond. A top 20 pharma's consulting start grew within one quarter into a full global content factory mandate, and a top 30 pharma awarded global omnichannel campaign operations, replacing a large incumbent."
+   },
+   {
+    "title": "Client pyramid deepening",
+    "text": "The active client base grew from 76 to 107 in a year, $1 million-plus clients from 40 to 59, and $10-25 million clients from 9 to 11, with revenue per employee up to $79,600 from $69,000 a year ago. Management is explicitly working toward first $50 million accounts and more $25 million-plus clients, with one $5 million-plus Q2 win expected to return a customer to that cohort within two or three quarters."
+   },
+   {
+    "title": "Emerging biotech commercialization",
+    "text": "Emerging Biotech revenue grew 47.7% YoY to 3.2% of Q2 FY27, supported by a $20 million TCV end-to-end commercialization mandate with a midsized biotech expected to yield $5 million in its first 12 months, and $3 million-plus of additional work orders from a US emerging pharma launch customer. Pharma/biotech funding up ~85% YoY through August 2026 feeds the Launch Engine blueprint aimed at hundreds of mid-tier companies."
+   },
+   {
+    "title": "Clinical platform build-out",
+    "text": "Enterprise Clinical Solutions, where Indegene is \"most actively investing to build our next growth platform,\" closed a $10 million ACV deal with a new customer, and a large December-quarter clinical deal went live with ramp-up in August driving a meaningful Others-segment uplift. The deal fully annualizes in Q3 FY27, with partnerships with Datavant and Komodo adding data depth for patient recruitment, the industry's costliest bottleneck."
+   }
+  ]
+ }
+}

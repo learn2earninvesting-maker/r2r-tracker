@@ -1,0 +1,468 @@
+{
+ "ticker": "LLOYDSME",
+ "name": "Lloyds Metals & Energy Ltd",
+ "concall": {
+  "name": "Lloyds Metals & Energy Ltd",
+  "sector": "Mining and Minerals Iron Ore",
+  "quarter": "Q2 FY27",
+  "date": "Sep 2026",
+  "status": "Latest quarter",
+  "takeaways": [
+   {
+    "label": "Best H1 in company history",
+    "text": "Standalone and consolidated records for revenue, EBITDA, PAT and margin, driven by higher EC limits, faster pellet ramp-up and a structural shift toward value-added products."
+   },
+   {
+    "label": "Value-added mix is structurally re-rating earnings",
+    "text": "Pellets and sponge iron now contribute 61% of standalone revenue and 67% of EBIT, up from 43%/49% a year ago, a shift management calls permanent rather than cyclical."
+   },
+   {
+    "label": "Copper is the transformation story",
+    "text": "Chemaf’s two plants, with captive mines and dedicated acid plants, are on track for FY27 completion and FY28 production, while Surya’s FY27 target was cut to 5,850 tons as the company redirects effort to higher-return Chemaf assets."
+   },
+   {
+    "label": "Thriveni’s Q2 dip is seasonal plus geopolitical",
+    "text": "Rainy-season weakness was compounded by higher HSD and explosives costs from the West Asia crisis; cost pass-through negotiations are underway and H2 is expected to scale back up."
+   }
+  ],
+  "watch": {
+   "label": "What to watch next quarter",
+   "text": "Whether Chemaf debt restructuring closes within 3–4 months as guided, the pace of Thriveni cost pass-through, and any further detail on the 0.3 crore ton HRC steel plant configuration."
+  },
+  "sections": [
+   {
+    "title": "Structural Margin Shift: From Iron Ore Miner to Value-Added Producer",
+    "points": [
+     {
+      "label": "Value-added products now dominate earnings",
+      "text": "Pellets and sponge iron reached 61% of standalone revenue and 67% of EBIT, up from 43%/49% a year ago, a shift management explicitly frames as permanent."
+     },
+     {
+      "label": "Slurry pipeline unlocked freight savings",
+      "text": "The first pipeline is running at full capacity, lowering logistics cost on iron ore and directly expanding pellet margins to ₹4,604/ton in Q2."
+     },
+     {
+      "label": "BHQ beneficiation as next raw-material moat",
+      "text": "The company is building what it calls “one of the largest manufacturing platforms in the world” to convert low-grade BHQ into high-quality feedstock, a capability it argues few can replicate and the foundation for low-cost, low-carbon steel."
+     },
+     {
+      "label": "Slurry network expanding",
+      "text": "A much longer pipeline network is being built to carry beneficiated materials over long distances, with the goal of eliminating truck movement of fine iron ore almost entirely."
+     },
+     {
+      "label": "Iron ore pricing reflects quality, not a benchmark",
+      "text": "Realization of ~₹6,700/ton is set internally based on end-product markets, stocks and order book; management believes this level can sustain, though it declined to quantify the premium over any external benchmark when pressed."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Gupta: “The margins we are reporting today are not one-off. They are the results of years of patient integrated building of captive ore, captive logistics, rising share of value-added products and disciplined cost control.”"
+     }
+    ]
+   },
+   {
+    "title": "Copper: The Transformation Bet, With Near-Term Recalibration",
+    "points": [
+     {
+      "label": "Chemaf is the high-conviction asset",
+      "text": "Both Etoile and Mutoshi complexes have dedicated sulphuric acid plants and captive mines within a 5 km radius, plus secured state power allocations, giving them a structural cost advantage over Surya."
+     },
+     {
+      "label": "Surya Mines is being repositioned",
+      "text": "The plant currently runs on third-party ore with no captive JORC reserves, faces a sulphuric acid shortage and diesel at ~$3.2/liter (~3x India) due to the West Asia crisis and landlocked DRC logistics, and mines sit 70–75 km from the plant. Production is limited and the FY27 target was cut to 5,850 tons from 8,000 tons."
+     },
+     {
+      "label": "Surya’s path to lower-cost restart",
+      "text": "Potential solutions include building a dedicated sulphuric acid plant or transferring intermediate product from Chemaf, but JORC resource definition on exploration licenses “will take some time.”"
+     },
+     {
+      "label": "Chemaf debt restructuring targeted within 3–4 months",
+      "text": "Management is renegotiating acquired debt on more favourable terms, with a long-term debt target of ~$500 million including capex debt and settlement of past creditors; closing would bring consolidated net debt down meaningfully."
+     },
+     {
+      "label": "Panguna is too early to model",
+      "text": "The Bougainville copper opportunity is at a “very early stage” with no contract signed and no projections; management is focused on community-first engagement and working with the government on an operating model."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Gupta: “Putting it simply, copper is transforming Lloyds from a domestic iron ore company transitioning to steel, and then finally, a relevant player in the minerals that the world needs most for its energy transition.”"
+     }
+    ]
+   },
+   {
+    "title": "Thriveni: Seasonal Dip, Geopolitical Drag, H2 Recovery Expected",
+    "points": [
+     {
+      "label": "Q2 is structurally the weakest quarter",
+      "text": "Rainy season in Odisha and Jharkhand hampers iron ore and coal production while costs stay fixed; this year was worse because the West Asia crisis pushed up HSD and explosives prices."
+     },
+     {
+      "label": "Cost pass-through is actively being negotiated",
+      "text": "Management is pursuing higher input-cost recovery from clients including NTPC and expressed confidence that the elevated costs will be absorbed, though no agreements were confirmed as closed."
+     },
+     {
+      "label": "H2 pipeline described as strong",
+      "text": "Operations across Gadchiroli, Odisha and coal are expected to scale up from Q2 levels, and H1 FY27 margins were already ~400 bps better than H1 FY26, suggesting the underlying trajectory is intact."
+     },
+     {
+      "label": "New operations are coming online",
+      "text": "Full-scale mining at Western Hill commenced, equipment rental at Tata Joda West Manganese Mine began with full mobilization from December, and production at DC Jain Dalpahar Mines started in October 2026."
+     },
+     {
+      "label": "Green fleet build underway",
+      "text": "A 100-ton diesel dumper was converted to LNG hybrid operation, part of a broader fleet transition."
+     },
+     {
+      "label": "Gold subsidiary renamed and advancing",
+      "text": "GeoMysore India is now Thriveni Lloyds Swarnagiri Private Limited; mining plan approved for opencast and underground operations at 0.15 crore tons per annum with matching processing capacity."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Steel: Building the Downstream, One Module at a Time",
+    "points": [
+     {
+      "label": "1.2 MT integrated plant progressing",
+      "text": "The wire rod facility is moving steadily toward commissioning, with blast furnace and coke oven expected in Q4 FY27 and the steel plant and wire rod mill in Q1 FY28, a delay of roughly one quarter."
+     },
+     {
+      "label": "0.3 crore ton HRC plant in configuration study",
+      "text": "Chinese partners are finalizing the plant capacity and machinery framework; a decision is expected in the next couple of months."
+     },
+     {
+      "label": "Power plant work has begun",
+      "text": "Active construction is limited to the power plant that will serve beneficiation and pellet operations, with land of ~1,200 acres acquired and an EC of 0.45 crore tons already in hand."
+     },
+     {
+      "label": "BRPL equipment contract taking shape",
+      "text": "The Tata Steel-Lloyds JV will rent equipment from Lloyds to scale production at expiring Tata Steel mining leases, targeting 1.2–1.4 crore tons of iron ore and 0.15–0.18 crore tons of manganese from next year onwards; rates are in advanced-stage discussion."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Capital Allocation & Balance Sheet",
+    "points": [
+     {
+      "label": "Capex runway remains elevated",
+      "text": "FY27 capex is ~₹13,000-odd crores, FY28 is expected to be similar, and FY29 is projected at ~₹10,000 crores or more, reflecting the simultaneous build-out across steel, beneficiation, slurry pipelines and copper."
+     },
+     {
+      "label": "$300 million NCD resolution passed",
+      "text": "No specific purpose yet identified; the enabling resolution is intended for capex if an opportunity arises."
+     },
+     {
+      "label": "Management frames debt as well within control",
+      "text": "The CEO noted that top line becomes bottom line every 2–2.5 years and argued that while absolute debt numbers may look high, they are “quite well under control” by any financial parameter given the growth and profitability trajectory."
+     },
+     {
+      "label": "Chemaf debt restructuring is the near-term deleveraging catalyst",
+      "text": "Renegotiating acquired debt on more favourable terms would bring consolidated net debt down meaningfully; investors will be informed when materialized."
+     }
+    ],
+    "quotes": [
+     {
+      "text": "Gupta: “We don't look at only from the start to the end, but each level, we have to have the value addition to be able to qualify for capital allocation.”"
+     }
+    ]
+   },
+   {
+    "title": "Volume & Product Trajectory",
+    "points": [
+     {
+      "label": "Pellet capacity expanding",
+      "text": "Two plants of 0.4 crore tons each are running above rated capacity and being debottlenecked; a third plant is being added, with FY27 volumes guided at 0.8 crore tons and FY28 at ~0.95 crore tons."
+     },
+     {
+      "label": "Iron ore resource secured through 2051",
+      "text": "2.6 crore tons of iron ore available, and management stated downstream expansion will not exceed iron ore availability."
+     },
+     {
+      "label": "Beneficiation volumes expected in FY29",
+      "text": "The BHQ beneficiation platform will begin contributing volumes later in the capex cycle."
+     },
+     {
+      "label": "DRI operations expected to be very strong in H2",
+      "text": "Management flagged sponge iron as a particular bright spot for the second half."
+     },
+     {
+      "label": "Copper production in FY28",
+      "text": "Chemaf’s two plants are targeted for completion by end of FY27, with production commencing in FY28."
+     }
+    ],
+    "quotes": []
+   },
+   {
+    "title": "Guidance & Commitments",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Commitment",
+      "Specifics",
+      "Timeline"
+     ],
+     "rows": [
+      [
+       "Chemaf plant completion",
+       "Both Etoile and Mutoshi complexes completed",
+       "End of FY27"
+      ],
+      [
+       "Chemaf copper/cobalt production",
+       "Production begins",
+       "FY28"
+      ],
+      [
+       "Chemaf debt restructuring",
+       "Renegotiation of acquired debt closed; long-term target ~$500 million",
+       "Within 3–4 months (before FY27 end)"
+      ],
+      [
+       "Blast furnace & coke oven commissioning",
+       "1.2 MT steel plant modules",
+       "Q4 FY27"
+      ],
+      [
+       "Steel plant & wire rod mill commissioning",
+       "1.2 MT steel plant downstream",
+       "Q1 FY28"
+      ],
+      [
+       "HRC plant configuration decision",
+       "Final framework for 0.3 crore ton plant",
+       "Next couple of months"
+      ],
+      [
+       "Pellet volumes",
+       "0.8 crore tons FY27; ~0.95 crore tons FY28",
+       "FY27 / FY28"
+      ],
+      [
+       "Beneficiation volumes",
+       "BHQ beneficiation output begins",
+       "FY29"
+      ],
+      [
+       "BRPL equipment contract volumes",
+       "1.2–1.4 crore tons iron ore, 0.15–0.18 crore tons manganese",
+       "From next year onwards"
+      ],
+      [
+       "Copper production (Surya, revised)",
+       "5,850 tons",
+       "FY27"
+      ],
+      [
+       "Capex",
+       "~₹13,000 crores FY27; similar FY28; ~₹10,000 crores or more FY29",
+       "FY27–FY29"
+      ]
+     ]
+    }
+   },
+   {
+    "title": "Key Metrics",
+    "points": [],
+    "quotes": [],
+    "table": {
+     "cols": [
+      "Metric",
+      "Q2 FY27"
+     ],
+     "rows": [
+      [
+       "Standalone revenue",
+       "₹4,132 crores, up 62% YoY"
+      ],
+      [
+       "Standalone EBITDA",
+       "₹1,538 crores, up 83% YoY"
+      ],
+      [
+       "Standalone PAT",
+       "₹1,112 crores, up 84% YoY"
+      ],
+      [
+       "Standalone EBITDA margin",
+       "37.22%, up 419 bps YoY"
+      ],
+      [
+       "H1 FY27 standalone EBITDA margin",
+       "38.33%, up 542 bps YoY, best half-year margin ever"
+      ],
+      [
+       "Value-added products share of standalone revenue",
+       "61%, versus 43% a year ago"
+      ],
+      [
+       "Value-added products share of standalone EBIT",
+       "67%, versus 49% a year ago"
+      ],
+      [
+       "Iron ore production",
+       "0.4 crore tons, up 15.5% YoY"
+      ],
+      [
+       "Iron ore realization",
+       "₹6,700 per ton"
+      ],
+      [
+       "Iron ore EBITDA per ton",
+       "₹2,082"
+      ],
+      [
+       "Pellet production",
+       "0.21 crore tons"
+      ],
+      [
+       "Pellet realization",
+       "₹11,348 per ton"
+      ],
+      [
+       "Pellet EBITDA per ton",
+       "₹4,604"
+      ],
+      [
+       "Pellet sales mix",
+       "71% domestic, 29% export"
+      ],
+      [
+       "DRI sales volumes",
+       "160.6 kilotons, up 81% YoY"
+      ],
+      [
+       "DRI realization",
+       "₹31,040 per ton"
+      ],
+      [
+       "DRI EBITDA per ton",
+       "₹9,231"
+      ],
+      [
+       "Standalone net debt",
+       "₹9,316 crores as of 30 Sep 2026"
+      ],
+      [
+       "Consolidated net debt",
+       "below ₹20,000 crores, significant portion from Chemaf acquisition"
+      ],
+      [
+       "Standalone capex (H1 FY27)",
+       "₹6,052 crores"
+      ],
+      [
+       "Full-year FY27 capex guidance",
+       "~₹13,000-odd crores"
+      ],
+      [
+       "Thriveni revenue",
+       "₹1,936 crores, up 22% YoY"
+      ],
+      [
+       "Thriveni EBITDA",
+       "₹884 crores (H1 FY27), up 85% YoY; H1 margin 19.18%, up 436 bps YoY"
+      ],
+      [
+       "Thriveni iron ore volumes (incl. BHQ)",
+       "1.12 crore tons"
+      ],
+      [
+       "Thriveni coal volumes (incl. overburden)",
+       "1.88 crore cubic meters"
+      ],
+      [
+       "Copper FY27 production target",
+       "5,850 tons, revised down from 8,000 tons earlier"
+      ],
+      [
+       "Chemaf net debt (longer-run target)",
+       "~$500 million, down from current ~$800 million"
+      ],
+      [
+       "Chemaf full-potential copper production",
+       "74,000 tons per year"
+      ],
+      [
+       "Chemaf full-potential cobalt production",
+       "20,000 tons per year"
+      ],
+      [
+       "Iron ore monthly run rate",
+       "upward of 0.2 crore tons"
+      ],
+      [
+       "Pellet volume guidance FY27",
+       "~0.8 crore tons"
+      ],
+      [
+       "Pellet volume guidance FY28",
+       "~0.95 crore tons"
+      ],
+      [
+       "Beneficiation volumes expected",
+       "FY29"
+      ],
+      [
+       "Steel plant land acquired",
+       "~1,200 acres; EC in hand of 0.45 crore tons"
+      ],
+      [
+       "Thriveni electric equipment at Western Hill",
+       "88 units operational, plus 20 at railway siding"
+      ],
+      [
+       "Thriveni BHQ crushing equipment mobilized",
+       "14 mobile crushers, 26 heavy earthmoving equipments"
+      ],
+      [
+       "DRC diesel cost",
+       "~$3.2 per liter, roughly 3x India"
+      ]
+     ]
+    }
+   }
+  ]
+ },
+ "catalysts": {
+  "name": "Lloyds Metals & Energy Ltd",
+  "sector": "Mining and Minerals Iron Ore",
+  "asof": "Nov 2026",
+  "items": [
+   {
+    "title": "Surjagarh iron ore scale-up",
+    "text": "Environmental clearance at Hedri has been raised from 1 crore to 5.5 crore tonnes per annum, with FY27 production guided at 26 MnT and dispatches of 2.7 crore tonnes, and management expects FY27 volume growth above 75% including BHQ. With the lease running to 2057, zero premium payable and Q2 FY27 EBITDA of ₹2,082/tonne, each incremental tonne flows through at high margin."
+   },
+   {
+    "title": "Chemaf copper commissioning, DRC",
+    "text": "Chemaf's Etoile and Mutoshi plants are 85-90% complete with $800+ million of the ~$1.1 billion capex spent, and management targets meaningful production from July 2027, ramping to ~90,000 tonnes of copper and 16,000 tonnes of cobalt on 100% captive ore. That adds a second, much larger metals profit pool alongside iron ore from FY28."
+   },
+   {
+    "title": "Wire rod steel entry at Ghugus",
+    "text": "The 1.2 MTPA integrated steel plant is in pre-commissioning, with blast furnace and sinter starting Q4 FY27 and the wire rod mill in Q1 FY28; FY27 guidance is ~150,000 tons of wire rod, rising to ~1 million tons in FY28. This completes the mine-to-steel chain and lifts internal ore offtake by ~0.24 crore tonnes once running."
+   },
+   {
+    "title": "BHQ beneficiation platform",
+    "text": "The 5 TPH pilot plant confirmed 38%+ yield and 66-67% grade, major equipment is ordered and construction machinery mobilised, with the first 30 MnT-throughput phase hoped to be commissioned by March '28 as per the original schedule and benefits starting FY29. It unlocks the bulk of the 70.6 crore tonne BHQ reserve, with royalty falling from ~₹1,200 to ~₹200/ton and EBITDA per ton expected to rise once commissioned."
+   },
+   {
+    "title": "Pellet capacity to 12 MTPA",
+    "text": "Pellet Plant-2 (4 MTPA) was commissioned in May 2026 within budget, taking own capacity to 8 MTPA, and the Board has approved debottlenecking both plants to 5 MTPA each, with Plant-3 (4 MTPA) under construction for fiscal 2028 commissioning. FY27 pellet guidance of 7.75-8 MnT at ₹4,604-4,988/ton EBITDA shows the margin each added tonne carries."
+   },
+   {
+    "title": "Thriveni MDO expansion",
+    "text": "Odisha volumes are guided up ~39-40% YoY to 3.4-3.5 crore tonnes in FY27 with new mines (Dalpahar, Lasarda-Pacheri) commenced, and Thriveni FY27 EBITDA is guided close to ₹3,000 crores on ₹10,000+ crores revenue. Tata MDO contracts are expected to add 1.2-1.4 crore tons of iron ore from next year, with rates under advanced negotiation."
+   },
+   {
+    "title": "Second slurry pipeline",
+    "text": "The 218 km new slurry pipeline (11 MTPA, Hedri to Chandrapur, plus 5 MTPA, Chandrapur to Ghugus) has survey and engineering complete with capex to be spent within 2 years, and is expected to save ₹800-1,000/ton on Hedri→Ghugus movement plus ₹250/ton on external sales via the new Chandrapur stockyard. Management expects total logistics and sustainability savings to surpass ₹2,000 crore per annum as initiatives mature by March 2028."
+   },
+   {
+    "title": "Chemaf debt settlement",
+    "text": "Per executed settlement agreements, management estimates the entire ~USD 804 million Chemaf debt will be settled for USD 250 million or less, cutting group debt by ~₹5,315 crore and net debt to ₹14,601.7 crore, with closing targeted within 3-4 months. That releases balance-sheet room to fund the DRC plant completion and domestic capex."
+   }
+  ]
+ }
+}
