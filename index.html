@@ -658,6 +658,17 @@
   .tab-actions .ta-up { background:#0f8b7d;color:#fff; }
   .tab-actions .ta-corp { background:#f0a500;color:#1a1300; }
   .tab-actions .ta-reset { background:#dc2626;color:#fff; }
+  /* Holdings selector (Stocks & ETFs / Mutual funds / Other assets): bigger and wider than the action buttons */
+  .subbar.has-actions .seg.tint { gap:8px; }
+  .subbar.has-actions .seg.tint button { min-height:52px;padding:0 28px;font-size:16px;font-weight:800;border-radius:12px; }
+  .tab-actions button { min-height:36px;padding:0 14px;font-size:12px; }
+  @media (max-width:699px) {
+    .subbar.has-actions { padding:0 10px;margin-top:8px; }
+    .subbar.has-actions .seg.tint { display:flex;width:100%;gap:0; }
+    .subbar.has-actions .seg.tint button { flex:1;min-width:0;min-height:54px;padding:0 4px;font-size:14px;border-radius:0;white-space:normal;line-height:1.15; }
+    .subbar.has-actions .seg.tint button:first-child { border-radius:12px 0 0 12px; }
+    .subbar.has-actions .seg.tint button:last-child { border-radius:0 12px 12px 0; }
+  }
   @media (max-width:699px) { .subbar.has-actions { gap:8px; } #sub-actions, .tab-actions { width:100%; } .tab-actions button { flex:1;min-height:38px;padding:0 10px;font-size:12px; } }
   .r2r-modal-card.up { border-color:var(--teal);max-height:90vh;overflow:auto; }
   .r2r-modal-card.up h3 { color:var(--teal); }
