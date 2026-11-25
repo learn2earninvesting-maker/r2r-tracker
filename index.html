@@ -649,6 +649,10 @@
   .up-btn { background:transparent;border:1px solid var(--teal);color:var(--teal);border-radius:8px;padding:8px 14px;font:600 12px var(--dm);cursor:pointer; }
   .up-btn:hover { background:var(--teal-dim); }
   .up-zone { border-style:solid;border-color:rgba(var(--teal-rgb),0.35); }
+  /* Top-right action buttons on Stocks & ETFs, Mutual funds and Other assets */
+  .tab-actions { display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin:0 0 14px; }
+  .tab-actions button { padding:7px 12px;font-size:12px;white-space:nowrap; }
+  @media (max-width:520px) { .tab-actions { gap:6px; } .tab-actions button { padding:6px 10px;font-size:11px; } }
   .r2r-modal-card.up { border-color:var(--teal);max-height:90vh;overflow:auto; }
   .r2r-modal-card.up h3 { color:var(--teal); }
   .r2r-modal-btns button.up-go { background:var(--teal);border-color:var(--teal);color:#0b1120; }
@@ -1848,10 +1852,10 @@ function sectorTip(e) {
 }
 function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
   let list = d.assets.filter(a => a.kind === 'stock' && filter(a)).sort((a, b) => b.value - a.value);
-  if (!list.length) { setHTML(bodyId, empty(emptyMsg) + uploadBlock('holdings')); return; }
+  if (!list.length) { setHTML(bodyId, (tab === 'stocks' ? tabActions('stocks', false) + empty(emptyMsg) : empty(emptyMsg) + uploadBlock('holdings'))); return; }
   const total = list.reduce((s, a) => s + a.value, 0), fullRank = list.slice();
   const plats = [...new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · ')).filter(Boolean))];
-  let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list, d, 'stocks');
+  let html = (tab === 'stocks' ? tabActions('stocks', true) : '') + fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list, d, 'stocks');
   if (tab === 'stocks') {
     if (!ALLOC_BANDS.some(b => b[0] === ALLOC_STATE)) ALLOC_STATE = 'all';
     html += sectorWrap(list, total);
@@ -1883,7 +1887,7 @@ function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
     const etf = a => a.type === 'ETF' ? ' <span class="tag" style="font-size:9px;padding:1px 5px;margin-left:4px">ETF</span>' : '';
     const rcols = [['#', a => fullRank.indexOf(a) + 1, 1], [cols[0][0], a => cols[0][1](a).replace('</span>', '</span>' + etf(a))]].concat(cols.slice(1));
     html += `<div class="section-title">${ALLOC_STATE === 'all' ? 'All holdings' : 'Holdings'} <span class="tag amber" style="margin-left:4px">${fmtCr(v)}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(v, total).toFixed(1)}% · # = rank by allocation · counted in Equity</span></div>` + fileTable(part, total, rcols);
-    setHTML(bodyId, html + uploadBlock('holdings') + corpBlock() + resetBlock('stocks')); return;
+    setHTML(bodyId, html); return;   // Upload / bonus & split / reset sit at the top right (tabActions)
   }
   const used = new Set();
   STOCK_GROUPS.forEach(([g, test]) => {
@@ -2511,7 +2515,19 @@ const RESET_TEXT = {
     what: 'every line on your stock list', also: 'This includes gold bonds, gold ETFs, REITs/InvITs and debt ETFs shown on the Other Assets tab — they come from the same broker holdings file.',
     again: 'your broker\'s holdings file' },
   funds: { btn: 'Reset mutual fund entries', head: '⚠️ All mutual fund entries will be deleted',
-    what: 'every fund on your mutual fund list', also: '', again: 'your mutual fund holdings statement' } };
+    what: 'every fund on your mutual fund list', also: '', again: 'your mutual fund holdings statement' },
+  other: { btn: 'Reset other assets', head: '⚠️ All other asset entries will be deleted',
+    what: 'every item you added under Other assets — savings accounts, FDs, gold, property, EPF/PPF/SSY, NPS and the rest',
+    also: 'Gold bonds, gold ETFs and REITs/InvITs from your broker\'s holdings file, and gold funds from your fund statement, are not touched — they reset with Stocks & ETFs or Mutual funds.',
+    again: 'your other assets', next: 'Then add your other assets again — tell the R2R Tracker bot (e.g. <i>HDFC savings 2.4 lakh</i>) or fill them in your Google Sheet.' } };
+// One row of buttons at the top right of Stocks & ETFs, Mutual funds and Other assets
+function tabActions(which, hasItems) {
+  const b = [];
+  if (which !== 'other') b.push(`<button class="up-btn" onclick="askUpload('holdings')" title="Upload a holdings file, tradebook or contract notes">📤 Upload file</button>`);
+  if (which === 'stocks') b.push(`<button class="corp-btn" onclick="askCorp()" title="Check NSE/BSE filings for bonus issues and stock splits">🎁 Apply bonus / split</button>`);
+  if (hasItems) b.push(`<button class="reset-btn" onclick="askReset('${which}')" title="${esc(RESET_TEXT[which].btn)}">🗑 Reset holdings</button>`);
+  return b.length ? `<div class="tab-actions">${b.join('')}</div>` : '';
+}
 function resetBlock(what) {
   const T = RESET_TEXT[what];
   return `<div class="reset-zone"><button class="reset-btn" onclick="askReset('${what}')">🗑 ${T.btn}</button><div class="muted">Made a mistake? This deletes the whole list so you can start again from ${T.again}. You'll confirm on Telegram, and /undo brings it back.</div></div>`;
@@ -2527,13 +2543,13 @@ function showModal(html) {
 }
 function askReset(what) {
   const T = RESET_TEXT[what];
-  const list = LAST_MODEL ? LAST_MODEL.assets.filter(a => a.kind === (what === 'stocks' ? 'stock' : 'mf')) : [];
+  const list = LAST_MODEL ? LAST_MODEL.assets.filter(a => what === 'other' ? !a.fromFile : a.kind === (what === 'stocks' ? 'stock' : 'mf')) : [];
   const v = list.reduce((s, a) => s + (a.value || 0), 0);
   showModal(`<h3>${T.head}</h3>
     <p>This deletes <b>${esc(T.what)}</b> — ${list.length} line${list.length === 1 ? '' : 's'}, worth <b>${fmtINR(v)}</b>.</p>
     ${T.also ? `<p>${esc(T.also)}</p>` : ''}
     <p>Your past transactions and returns history are <b>kept</b>.</p>
-    <p>To finish, you'll get a message on the <b>R2R Tracker bot</b> on Telegram — tap ✅ there. Then send ${esc(T.again)} again.</p>
+    <p>To finish, you'll get a message on the <b>R2R Tracker bot</b> on Telegram — tap ✅ there. ${T.next || 'Then send ' + esc(T.again) + ' again.'}</p>
     <div id="reset-result"></div>
     <div class="r2r-modal-btns" id="reset-btns"><button onclick="closeModal()">Cancel</button><button class="danger" id="reset-go" onclick="doReset('${what}')">Yes, delete</button></div>`);
 }
@@ -2699,12 +2715,12 @@ const MF_META = { Equity: ['#3b82f6', 'Equity funds', 'counted in Equity'], Hybr
   Debt: ['#a855f7', 'Debt funds', 'counted in Debt'], Gold: ['#f0a500', 'Gold funds', 'counted in Gold'], Other: ['#64748b', 'Other funds', ''] };
 function renderFunds(d) {
   const list = d.assets.filter(a => a.kind === 'mf' && a.mfClass !== 'Gold').sort((a, b) => b.value - a.value);
-  if (!list.length) { setHTML('funds-body', empty('No mutual funds yet. Send your mutual fund holdings statement (Excel or CSV from Kuvera, Groww, Coin, MF Central…) to the Tracker bot. Your funds are sorted into Equity, Hybrid, Debt and Gold here.') + uploadBlock('holdings')); return; }
+  if (!list.length) { setHTML('funds-body', tabActions('funds', false) + empty('No mutual funds yet. Send your mutual fund holdings statement (Excel or CSV from Kuvera, Groww, Coin, MF Central…) to the Tracker bot. Your funds are sorted into Equity, Hybrid, Debt and Gold here.')); return; }
   const total = list.reduce((s, a) => s + a.value, 0);
   const by = {}; list.forEach(a => by[a.mfClass] = (by[a.mfClass] || 0) + a.value);
   const order = ['Equity', 'Hybrid', 'Debt', 'Gold', 'Other'].filter(k => by[k]);
   const regular = list.filter(a => /regular/i.test(a.plan)).length;
-  let html = fileKpis(list, `<div class="kpi" style="--accent:#a855f7;"><div class="kpi-label">Funds</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${regular ? regular + ' Regular plan' + (regular === 1 ? '' : 's') : 'all Direct plans'}</div></div>`) + fileUpdated(list, d, 'funds');
+  let html = tabActions('funds', true) + fileKpis(list, `<div class="kpi" style="--accent:#a855f7;"><div class="kpi-label">Funds</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${regular ? regular + ' Regular plan' + (regular === 1 ? '' : 's') : 'all Direct plans'}</div></div>`) + fileUpdated(list, d, 'funds');
   const bar = sortBar('funds');
   html += `<div class="chart-card" style="margin-bottom:20px"><div class="chart-title">Fund mix</div>
     <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;margin:6px 0 10px">${order.map(k => `<div title="${k} ${pctOf(by[k], total).toFixed(1)}%" style="background:${MF_META[k][0]};width:${pctOf(by[k], total)}%"></div>`).join('')}</div>
@@ -2720,7 +2736,7 @@ function renderFunds(d) {
     const part = sortList(list.filter(a => a.mfClass === k), 'funds');
     html += `<div class="section-title">${MF_META[k][1]} <span class="tag amber" style="margin-left:4px">${fmtCr(by[k])}</span><span class="muted" style="font-size:11px;margin-left:8px;font-family:var(--dm);text-transform:none;letter-spacing:0">${part.length} · ${pctOf(by[k], total).toFixed(1)}%${MF_META[k][2] ? ' · ' + MF_META[k][2] : ''}</span></div>` + fileTable(part, total, cols);
   });
-  setHTML('funds-body', html + uploadBlock('holdings') + resetBlock('funds'));
+  setHTML('funds-body', html);   // Upload / reset sit at the top right (tabActions)
 }
 
 // ── Returns tab: one tile per group showing only its XIRR; tap a tile for the holdings and details
@@ -3596,13 +3612,14 @@ function liquidSummary(items) {
 function renderOtherTiles(d) {
   const list = d.assets.filter(a => !(a.kind === 'stock' && a.cls === 'Equity') && !(a.kind === 'mf' && a.mfClass !== 'Gold'));
   if (!list.length) { setHTML('other-tiles', ''); return; }
+  const manual = d.assets.some(a => !a.fromFile);   // reset clears only what was typed in (the sheet's Assets tab)
   const counted = list.filter(a => !isHome(a)), total = counted.reduce((s, a) => s + a.value, 0), homeVal = list.filter(isHome).reduce((s, a) => s + a.value, 0), g = {};
   list.forEach(a => { const k = otherGroup(a); (g[k] = g[k] || []).push(a); });
   const liqRows = liquidSummary(g['Liquid assets'] || []);
   const bg = { 'Liquid assets': 'var(--p-blue)', 'Gold': 'var(--p-butter)', 'REITs / InvITs / Real estate': 'var(--p-lilac)', 'Debt locked': 'var(--p-mint)', 'NPS': 'var(--p-blush)', 'Debt (other)': 'var(--p-mint)', 'Equity (other)': 'var(--p-butter)', 'Other': 'var(--card)' };
   const locked = (g['Debt locked'] || []).concat((g['NPS'] || []).filter(a => npsTier(a) === 1)).reduce((s, a) => s + a.value, 0);
   renderOtherDetail(g, Object.keys(bg).filter(k => g[k]));
-  setHTML('other-tiles', `<div class="pg-head"><div><div class="pg-kicker">Other assets · outside stocks and mutual funds</div><div class="pg-big">${fmtCr(total)}</div></div>
+  setHTML('other-tiles', `${tabActions('other', manual)}<div class="pg-head"><div><div class="pg-kicker">Other assets · outside stocks and mutual funds</div><div class="pg-big">${fmtCr(total)}</div></div>
     <div class="pills"><div class="pill blue"><span>Locked</span><b>${fmtCr(locked) === '—' ? '₹0' : fmtCr(locked)}</b></div><div class="pill mint"><span>Not locked</span><b>${fmtCr(total - locked)}</b></div>${homeVal ? `<div class="pill lilac"><span>Home, not counted</span><b>${fmtCr(homeVal)}</b></div>` : ''}</div></div>
     <div class="tiles">${Object.keys(bg).filter(k => g[k]).map(k => { const v = g[k].filter(a => !isHome(a)).reduce((s, a) => s + a.value, 0);
       return tileHTML(k, v, pctOf(v, total).toFixed(0) + '% of other assets' + (g[k].some(isHome) ? ' · home not counted' : ''), bg[k], k === 'Liquid assets' ? liqRows : g[k].sort((a, b) => isHome(a) - isHome(b) || b.value - a.value).map(a => [a.name,
