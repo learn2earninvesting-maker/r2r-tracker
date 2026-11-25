@@ -45,7 +45,7 @@
 </head>
 <body>
 <main>
-  <div class="brand"><b>R2R</b> · Risks to Reward</div>
+  <div class="brand" style="display:flex;justify-content:space-between"><span><b>R2R</b> · Risks to Reward</span><a id="back" href="index.html" style="font-weight:600">← Dashboard</a></div>
   <h1>Read your mutual fund statement</h1>
   <p class="sub">CAMS / KFintech Consolidated Account Statement (CAS), the PDF that comes by email.</p>
 
@@ -272,6 +272,7 @@ var R2R_API = 'https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8JM
   var API = Q.get('api') || R2R_API || (function () { try { return localStorage.getItem('r2r_api') || ''; } catch (e) { return ''; } })();
   try { if (Q.get('api')) localStorage.setItem('r2r_api', Q.get('api')); } catch (e) {}
   var $ = function (id) { return document.getElementById(id); };
+  if (CID && KEY) $('back').href = 'index.html?c=' + encodeURIComponent(CID) + '&k=' + encodeURIComponent(KEY);
   var bytes = null, fileName = 'statement.pdf', parsed = null;
 
   if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';

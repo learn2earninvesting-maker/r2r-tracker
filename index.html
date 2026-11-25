@@ -2595,7 +2595,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 const UP_KINDS = {
   holdings: ['📈 Holdings file', 'Your current shares or mutual funds — Zerodha Console → Portfolio → Holdings, or the Excel/CSV from Groww, Upstox, Kuvera, Coin, MF Central… Replaces that platform\'s list.', false],
   tradebook: ['📒 Tradebook / fund transactions', 'Every buy and sell, for exact returns (XIRR) — Zerodha Console → Reports → Tradebook → Equity, or your fund app\'s transaction statement. You can pick several at once (e.g. one per year). Lines already saved are skipped.', true],
-  contract: ['🧾 Contract notes', 'The Excel/CSV version of your broker\'s equity contract notes. You can pick several at once (e.g. a whole month). Their trades are added like a tradebook.', true] };
+  contract: ['🧾 Contract notes', 'The Excel/CSV version of your broker\'s equity contract notes. You can pick several at once (e.g. a whole month). Their trades are added like a tradebook.', true],
+  cas: ['📄 CAMS / KFintech statement (PDF)', 'The password-locked CAS that comes by email (ask for the Detailed one, with transactions). It opens on the next screen, where you type its password. Every fund transaction is read for exact returns.', false] };
 let UP_KIND = 'holdings';
 // "Whose file is this?" — null = not answered yet, '' = me (the account holder), '+' = someone new, else the member's name
 let UP_WHO = null;
@@ -2628,11 +2629,11 @@ function askUpload(kind) {
   UP_WHO = null;
   showModal(`<h3>Upload a file</h3>
     <div class="up-kinds">${Object.keys(UP_KINDS).map(k => `<label class="up-kind${k === UP_KIND ? ' on' : ''}" data-k="${k}"><input type="radio" name="upk" value="${k}"${k === UP_KIND ? ' checked' : ''} onchange="setUpKind('${k}')"><span><b>${UP_KINDS[k][0]}</b><br>${esc(UP_KINDS[k][1])}</span></label>`).join('')}</div>
-    <label class="up-field"><span id="up-pick">Choose the file</span> (.csv or .xlsx, max 8 MB)<input type="file" id="up-file" accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
+    <label class="up-field" id="up-file-wrap"><span id="up-pick">Choose the file</span> (.csv or .xlsx, max 8 MB)<input type="file" id="up-file" accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
     <div class="up-field" id="up-who-wrap"><b style="color:var(--text)">Whose file is this?</b> <span class="muted">— so it goes into the right person's list</span>
       <div class="up-who" id="up-who" role="group" aria-label="Whose file">${upWhoChips()}</div>
       <input type="text" id="up-other" maxlength="40" placeholder="Their first name, e.g. Priya" style="display:none" aria-label="Family member's first name"></div>
-    <p class="muted" style="font-size:11px">The file goes to your R2R Tracker bot on Telegram. It shows you a summary there, and only saves when you tap ✅. Password-protected PDFs can't be read — please download the Excel or CSV version.</p>
+    <p class="muted" style="font-size:11px">The file goes to your R2R Tracker bot on Telegram. It shows you a summary there, and only saves when you tap ✅. For a password-locked CAMS / KFintech PDF, choose 📄 CAMS / KFintech statement.</p>
     <div id="up-result"></div>
     <div class="r2r-modal-btns" id="up-btns"><button onclick="closeModal()">Cancel</button><button class="up-go" id="up-go" onclick="doUpload()">Upload</button></div>`);
   const card = document.querySelector('#r2r-modal .r2r-modal-card'); if (card) card.classList.add('up');
@@ -2644,18 +2645,27 @@ function setUpKind(k) {
   const f = document.getElementById('up-file'), multi = UP_KINDS[k][2];
   if (f) { f.multiple = multi; f.value = ''; }
   const pick = document.getElementById('up-pick'); if (pick) pick.textContent = k === 'contract' ? 'Choose the contract note files' : k === 'tradebook' ? 'Choose the file(s)' : 'Choose the file';
+  // the CAS PDF is opened on the statement reader page (cas.html): it has its own file, password and "whose" boxes
+  const cas = k === 'cas';
+  ['up-file-wrap', 'up-who-wrap'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = cas ? 'none' : ''; });
+  const go = document.getElementById('up-go'); if (go) go.textContent = cas ? 'Open the statement reader' : 'Upload';
 }
 function readAsBase64(file) {
   return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).replace(/^data:[^,]*,/, '')); r.onerror = () => rej(r.error); r.readAsDataURL(file); });
 }
 async function doUpload() {
+  if (UP_KIND === 'cas') {
+    if (DEMO || !AUTH) { document.getElementById('up-result').innerHTML = '<p class="err-msg">This is the demo — files can\'t be uploaded here.</p>'; return; }
+    location.href = `cas.html?cid=${encodeURIComponent(AUTH.c)}&k=${encodeURIComponent(AUTH.k)}&api=${encodeURIComponent(API_URL)}`;
+    return;
+  }
   const go = document.getElementById('up-go'), out = document.getElementById('up-result');
   const show = (cls, msg, bot) => { out.innerHTML = `<p class="${cls}">${esc(msg).replace(/\n/g, '<br>')}</p>${bot ? `<div class="up-bot">${esc(bot)}</div>` : ''}`; };
   const finish = (cls, msg, bot) => { show(cls, msg, bot); document.getElementById('up-btns').innerHTML = '<button onclick="closeModal()">Close</button>'; };
   const files = [...(document.getElementById('up-file').files || [])];
   if (!files.length) return show('err-msg', UP_KIND === 'contract' ? 'Please choose your contract note files first.' : 'Please choose the file first.');
   const bad = files.find(f => !/\.(csv|xlsx)$/i.test(f.name));
-  if (bad) return show('err-msg', /\.xls$/i.test(bad.name) ? `${bad.name} is an old Excel (.xls) file. Please download it as .xlsx or .csv.` : /\.pdf$/i.test(bad.name) ? `${bad.name} is a PDF. Please download the Excel or CSV version, or send the PDF to the Tracker bot on Telegram.` : `${bad.name} isn't a CSV or Excel (.xlsx) file.`);
+  if (bad) return show('err-msg', /\.xls$/i.test(bad.name) ? `${bad.name} is an old Excel (.xls) file. Please download it as .xlsx or .csv.` : /\.pdf$/i.test(bad.name) ? `${bad.name} is a PDF. If it's your CAMS / KFintech statement, choose 📄 CAMS / KFintech statement above. Otherwise please download the Excel or CSV version.` : `${bad.name} isn't a CSV or Excel (.xlsx) file.`);
   if (files.some(f => f.size > 8 * 1024 * 1024)) return show('err-msg', 'That file is too large (max 8 MB).');
   if (UP_KIND === 'contract' && files.length > 31) return show('err-msg', 'Up to 31 contract notes at a time, please.');
   if (UP_KIND === 'tradebook' && files.length > 12) return show('err-msg', 'Up to 12 tradebook files at a time, please.');
