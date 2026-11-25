@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eeede8">
+<meta name="robots" content="noindex">
+<title>R2R · Read your fund statement</title>
+<style>
+  :root { --bg:#eeede8; --card:#fff; --ink:#1d2523; --muted:#5f6b68; --line:#e2e0d8; --teal:#12706b; --teal-soft:#e3f0ee;
+          --gold:#c98a06; --gold-soft:#fbf1da; --red:#b4232c; --red-soft:#fbe8e8; --green:#1d7a3a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0f1514; --card:#18201f; --ink:#e9eeec; --muted:#9aa8a4; --line:#28322f; --teal:#4fb3a9; --teal-soft:#16302d;
+            --gold:#f0b43c; --gold-soft:#33290f; --red:#f08a8f; --red-soft:#3a1c1e; --green:#6fcf8f; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; }
+  main { max-width:560px; margin:0 auto; padding:18px 16px 48px; }
+  .brand { font-weight:700; letter-spacing:.02em; color:var(--muted); font-size:13px; }
+  .brand b { color:var(--gold); }
+  h1 { font-size:24px; line-height:1.2; margin:6px 0 4px; }
+  .sub { color:var(--muted); margin:0 0 16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin:12px 0; }
+  label { display:block; font-weight:600; font-size:14px; margin:12px 0 6px; }
+  .hint { color:var(--muted); font-size:13px; margin-top:4px; }
+  input[type=text], input[type=password] { width:100%; font:inherit; padding:12px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); }
+  input[type=file] { width:100%; font-size:14px; }
+  .pw { position:relative; } .pw button { position:absolute; right:6px; top:6px; background:none; border:0; color:var(--teal); font:inherit; font-size:13px; padding:6px 8px; }
+  .btn { display:block; width:100%; margin-top:16px; padding:13px 16px; border-radius:12px; border:0; background:var(--teal); color:#fff; font:inherit; font-weight:700; cursor:pointer; }
+  .btn.ghost { background:transparent; color:var(--teal); border:1px solid var(--line); font-weight:600; }
+  .btn:disabled { opacity:.5; cursor:default; }
+  .msg { border-radius:12px; padding:12px 14px; margin:12px 0; font-size:14px; white-space:pre-line; }
+  .msg.info { background:var(--teal-soft); } .msg.warn { background:var(--gold-soft); } .msg.err { background:var(--red-soft); color:var(--red); }
+  .tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .tile { background:var(--bg); border-radius:12px; padding:10px; } .tile .k { font-size:12px; color:var(--muted); } .tile .v { font-size:18px; font-weight:700; }
+  .fund { display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-top:1px solid var(--line); font-size:14px; }
+  .fund:first-child { border-top:0; } .fund .n { color:var(--muted); white-space:nowrap; } .fund .bad { color:var(--red); }
+  .bot { font-family:ui-monospace, Menlo, monospace; font-size:12px; background:var(--bg); border-radius:10px; padding:10px; white-space:pre-wrap; }
+  .hide { display:none !important; }
+  .spin { display:inline-block; width:14px; height:14px; border:2px solid currentColor; border-right-color:transparent; border-radius:50%; animation:s 1s linear infinite; vertical-align:-2px; margin-right:6px; }
+  @keyframes s { to { transform:rotate(360deg); } }
+  .foot { color:var(--muted); font-size:12px; text-align:center; margin-top:20px; }
+  a { color:var(--teal); }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand"><b>R2R</b> · Risks to Reward</div>
+  <h1>Read your mutual fund statement</h1>
+  <p class="sub">CAMS / KFintech Consolidated Account Statement (CAS), the PDF that comes by email.</p>
+
+  <div id="m-top"></div>
+
+  <section class="card" id="s-pick">
+    <div id="from-tg" class="hide">
+      <div class="msg info" id="tg-status"><span class="spin"></span>Getting the statement you sent on Telegram…</div>
+    </div>
+    <div id="pick-file">
+      <label for="f">Statement PDF</label>
+      <input type="file" id="f" accept="application/pdf,.pdf">
+      <div class="hint">Use the <b>Detailed</b> statement (with transactions), not the Summary one.</div>
+    </div>
+    <label for="pw">Password</label>
+    <div class="pw"><input type="password" id="pw" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="The password you set when you asked for it"><button type="button" id="pw-eye">Show</button></div>
+    <div class="hint">Leave it blank if the PDF has no password.</div>
+    <label for="who">Whose statement is this? <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+    <input type="text" id="who" maxlength="40" placeholder="e.g. Priya">
+    <button class="btn" id="go">Read statement</button>
+  </section>
+
+  <section class="card hide" id="s-result">
+    <div class="tiles">
+      <div class="tile"><div class="k">Transactions</div><div class="v" id="t-n">0</div></div>
+      <div class="tile"><div class="k">Funds</div><div class="v" id="t-f">0</div></div>
+      <div class="tile"><div class="k">Period</div><div class="v" id="t-p" style="font-size:14px">—</div></div>
+    </div>
+    <div id="check"></div>
+    <div id="funds" style="margin-top:8px"></div>
+    <button class="btn" id="send">Send to the R2R Tracker bot</button>
+    <button class="btn ghost" id="again">Read a different file</button>
+  </section>
+
+  <section class="card hide" id="s-done">
+    <div id="done-msg"></div>
+    <div id="done-bot" class="bot hide"></div>
+  </section>
+
+  <p class="foot">The password and PDF are opened on this phone only. Only the list of transactions is sent, and nothing is saved until you tap ✅ on Telegram.</p>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+/* ── R2R CAS reader core: pdf.js text items → transactions ──
+ * Works on the CAMS / KFintech "Detailed" Consolidated Account Statement (text PDF).
+ * pages: [[{str, x, y, w}]]  (pdf.js text items, x/y in PDF units, y grows upwards)
+ */
+var CASCORE = (function () {
+  var DATE_RE = /^(\d{2})-([A-Za-z]{3})-(\d{4})$/;
+  var NUM_RE = /^\(?-?[\d,]*\d(\.\d+)?\)?$/;
+  var MON = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+
+  function num(s) {
+    s = String(s || '').trim();
+    if (!s) return null;
+    var neg = /^\(.*\)$/.test(s) || /^-/.test(s);
+    var n = parseFloat(s.replace(/[(),\s-]/g, ''));
+    return isNaN(n) ? null : (neg ? -n : n);
+  }
+  function isoDate(s) {
+    var m = String(s).match(DATE_RE); if (!m) return '';
+    var mo = MON[m[2].toLowerCase()]; if (!mo) return '';
+    return m[3] + '-' + ('0' + mo).slice(-2) + '-' + m[1];
+  }
+
+  // Group a page's items into lines (top to bottom), each line's items left to right.
+  function toLines(items) {
+    var its = items.filter(function (i) { return String(i.str).trim(); })
+      .map(function (i) { return { str: String(i.str).replace(/\s+/g, ' ').trim(), x: i.x, y: i.y, w: i.w || 0 }; })
+      .sort(function (a, b) { return b.y - a.y || a.x - b.x; });
+    var lines = [];
+    its.forEach(function (it) {
+      var L = lines.length ? lines[lines.length - 1] : null;
+      if (L && Math.abs(L.y - it.y) <= 2.5) L.items.push(it); else lines.push({ y: it.y, items: [it] });
+    });
+    lines.forEach(function (L) {
+      L.items.sort(function (a, b) { return a.x - b.x; });
+      // pdf.js sometimes splits one word/number into pieces: glue pieces that touch
+      var out = [];
+      L.items.forEach(function (it) {
+        var p = out[out.length - 1];
+        if (p && it.x - (p.x + p.w) < 1.2 && it.x >= p.x) { p.str += it.str; p.w = it.x + it.w - p.x; }
+        else out.push({ str: it.str, x: it.x, y: it.y, w: it.w });
+      });
+      L.items = out;
+      L.text = out.map(function (i) { return i.str; }).join(' ');
+    });
+    return lines;
+  }
+
+  function cleanScheme(s) {
+    return String(s || '')
+      .replace(/\(\s*advisor\s*:[^)]*\)/ig, ' ')
+      .replace(/\((non[- ]?)?demat\)/ig, ' ')
+      .replace(/registrar\s*:.*$/i, ' ')
+      .replace(/^\s*[A-Z0-9]{2,12}\s*-\s*(?=[A-Za-z])/, '')      // scheme code, e.g. "HMCOD-"
+      .replace(/\s+/g, ' ').replace(/[\s\-–:]+$/, '').replace(/^[\s\-–:]+/, '').trim();
+  }
+
+  function parse(pages) {
+    var rows = [], funds = [], skipped = { charges: 0, info: 0 }, textChars = 0;
+    var cols = null;                    // {amount, units, price, balance} x-centres
+    var fund = null, schemeBuf = [], wantScheme = false, bal = null, lastRowLine = -1, lastDescX = 0, lineNo = 0;
+
+    pages.forEach(function (items) {
+      items.forEach(function (i) { textChars += String(i.str || '').trim().length; });
+      var lines = toLines(items);
+      lastRowLine = -1;                 // a description never wraps over a page break
+      lines.forEach(function (L, li) {
+        lineNo++;
+        var t = L.text;
+        var cx = function (it) { return it.x + it.w / 2; };
+        // column headings (repeat on every page)
+        var find = function (re, list) { list = list || L.items; for (var k = 0; k < list.length; k++) if (re.test(list[k].str)) return list[k]; return null; };
+        var hA = find(/^amount\b/i), hU = find(/^units$/i), hP = find(/^price\b/i);
+        if (hA && hU && hP && /date/i.test(t)) {
+          cols = { amount: cx(hA), units: cx(hU), price: cx(hP), balance: null };
+          var next = lines[li + 1];
+          var hB = find(/balance/i) || (next && find(/^balance$/i, next.items)) || find(/^unit$/i);
+          if (hB && cx(hB) > cols.price) cols.balance = cx(hB);
+          else cols.balance = cols.price + (cols.price - cols.units);
+          return;
+        }
+        // folio → the next lines name the scheme
+        if (/folio\s*no/i.test(t)) { wantScheme = true; schemeBuf = []; fund = null; return; }
+        var isin = t.match(/ISIN\s*:?\s*(IN[A-Z0-9]{10})/i);
+        var newFund = function (name, code) {
+          fund = { scheme: name || 'Unnamed scheme', isin: code, n: 0, units: 0, closing: null, mismatches: 0 };
+          funds.push(fund); wantScheme = false; schemeBuf = []; bal = 0;
+        };
+        if (isin) {
+          var name = cleanScheme(t.slice(0, t.search(/ISIN/i)));
+          if (name.length < 6 && schemeBuf.length) {   // scheme name wrapped onto the line(s) above
+            var withCode = schemeBuf.filter(function (s) { return /^[A-Z0-9]{2,12}\s*-\s*[A-Za-z]/.test(s); });
+            name = cleanScheme((withCode.length ? withCode[withCode.length - 1] : schemeBuf[schemeBuf.length - 1]) + ' ' + name);
+          }
+          newFund(name, isin[1].toUpperCase());
+          return;
+        }
+        if (wantScheme) {
+          var f0 = L.items[0];
+          if (f0 && DATE_RE.test(f0.str) && schemeBuf.length) newFund(cleanScheme(schemeBuf[schemeBuf.length - 1]), '');   // no ISIN printed
+          else { if (!/^(nominee|pan\b|kyc|opening)/i.test(t)) schemeBuf.push(t); return; }
+        }
+        var ob = t.match(/opening unit balance\s*:?\s*(\(?[\d,]+\.?\d*\)?)/i);
+        if (ob) { bal = num(ob[1]) || 0; return; }
+        var cb = t.match(/closing unit balance\s*:?\s*(\(?[\d,]+\.?\d*\)?)/i);
+        if (cb) { if (fund) fund.closing = num(cb[1]); fund = null; bal = null; return; }
+
+        var first = L.items[0];
+        if (!fund || !first || !DATE_RE.test(first.str)) {
+          // a description that wrapped onto a second line
+          if (fund && rows.length && lastRowLine === lineNo - 1 && first && first.x > lastDescX - 4 && first.x < lastDescX + 40 &&
+              !L.items.some(function (i) { return NUM_RE.test(i.str); }) && t.length < 80 && !/statement|page \d/i.test(t))
+            rows[rows.length - 1].type += ' ' + t;
+          return;
+        }
+        // a transaction line
+        var date = isoDate(first.str), desc = [], vals = {};
+        var numStart = cols ? cols.amount - 0.6 * (cols.units - cols.amount) : Infinity;
+        var rest = L.items.slice(1), numericTail = [];
+        rest.forEach(function (it) {
+          if (NUM_RE.test(it.str) && (cols ? cx(it) >= numStart : true)) numericTail.push(it);
+          else desc.push(it.str);
+        });
+        if (cols) {
+          numericTail.forEach(function (it) {
+            var best = null, bd = Infinity;
+            ['amount', 'units', 'price', 'balance'].forEach(function (k) { var d = Math.abs(cx(it) - cols[k]); if (d < bd) { bd = d; best = k; } });
+            vals[best] = num(it.str);
+          });
+        } else {
+          // no headings seen: read the trailing numbers by count
+          var ns = []; for (var q = rest.length - 1; q >= 0 && NUM_RE.test(rest[q].str); q--) ns.unshift(num(rest[q].str));
+          desc = rest.slice(0, rest.length - ns.length).map(function (i) { return i.str; });
+          if (ns.length === 4) vals = { amount: ns[0], units: ns[1], price: ns[2], balance: ns[3] };
+          else if (ns.length === 3) vals = { units: ns[0], price: ns[1], balance: ns[2] };
+          else if (ns.length === 2) vals = { units: ns[0], balance: ns[1] };
+          else if (ns.length === 1) vals = { amount: ns[0] };
+        }
+        var type = desc.join(' ').replace(/\*+/g, ' ').replace(/\s+/g, ' ').trim();
+        if (vals.units === undefined || vals.units === null) {
+          if (vals.amount !== undefined && vals.amount !== null) skipped.charges++; else skipped.info++;
+          return;
+        }
+        var ok = true;
+        if (vals.balance !== undefined && vals.balance !== null && bal !== null) {
+          ok = Math.abs(bal + vals.units - vals.balance) <= 0.0015 + Math.abs(vals.balance) * 1e-6;
+          if (!ok) fund.mismatches++;
+          bal = vals.balance;
+        } else if (bal !== null) bal += vals.units;
+        fund.n++; fund.units = bal !== null ? bal : fund.units + vals.units;
+        rows.push({ date: date, type: type || 'Transaction', scheme: fund.scheme, isin: fund.isin,
+          units: vals.units, nav: vals.price === undefined ? null : vals.price, amount: vals.amount === undefined ? null : vals.amount,
+          balance: vals.balance === undefined ? null : vals.balance, ok: ok });
+        lastRowLine = lineNo; lastDescX = rest.length ? rest[0].x : first.x + 50;
+      });
+    });
+    funds.forEach(function (f) { f.closingOk = f.closing === null || Math.abs(f.closing - f.units) <= 0.002 + Math.abs(f.closing) * 1e-6; });
+    return { rows: rows, funds: funds.filter(function (f) { return f.n || f.closing; }), skipped: skipped, textChars: textChars, hadColumns: !!cols };
+  }
+
+  function toCsv(rows) {
+    var head = ['Date', 'Transaction Type', 'Scheme', 'ISIN', 'Units', 'NAV', 'Amount'];
+    var q = function (v) { v = v === null || v === undefined ? '' : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+    return [head].concat(rows.map(function (r) {
+      return [r.date, r.type, r.scheme, r.isin, r.units, r.nav, r.amount === null ? '' : Math.abs(r.amount)];
+    })).map(function (r) { return r.map(q).join(','); }).join('\n');
+  }
+
+  return { parse: parse, toCsv: toCsv, toLines: toLines };
+})();
+
+
+</script>
+<script>
+// ▼ ONE SETTING: your Apps Script web-app address (ends in /exec). Links from the Telegram bot carry it anyway;
+//   this is only needed when the page is opened from the dashboard.
+var R2R_API = 'https://script.google.com/macros/s/AKfycbwe1MW6W7Q_vl9a4yznOJk8JMKIgGFdws6YdbhlWmX6MQQRrN4MRyVe4DrPxOif3e7x/exec';
+(function () {
+  var Q = new URLSearchParams(location.search);
+  var CID = Q.get('cid') || Q.get('c') || '', KEY = Q.get('k') || '', TOKEN = Q.get('t') || '';
+  var API = Q.get('api') || R2R_API || (function () { try { return localStorage.getItem('r2r_api') || ''; } catch (e) { return ''; } })();
+  try { if (Q.get('api')) localStorage.setItem('r2r_api', Q.get('api')); } catch (e) {}
+  var $ = function (id) { return document.getElementById(id); };
+  var bytes = null, fileName = 'statement.pdf', parsed = null;
+
+  if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  function msg(where, kind, text) { $(where).innerHTML = text ? '<div class="msg ' + kind + '"></div>' : ''; if (text) $(where).firstChild.textContent = text; }
+  function busy(btn, on, label) { btn.disabled = on; btn.innerHTML = on ? '<span class="spin"></span>' + label : label; }
+  function fmtD(iso) { var d = new Date(iso + 'T00:00:00'); return d.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }); }
+  function apiUrl(params) { return API + (API.indexOf('?') >= 0 ? '&' : '?') + params; }
+
+  if (!CID || !KEY) { msg('m-top', 'err', 'This link is incomplete. Please open it again from your R2R dashboard or the Telegram bot.'); $('go').disabled = true; }
+  else if (!API) { msg('m-top', 'err', 'This page needs one setting from your advisor (the tracker address). Please open it from the Telegram bot or your dashboard.'); $('go').disabled = true; }
+  if (!window.pdfjsLib) { msg('m-top', 'err', 'The PDF reader didn\'t load. Check your internet connection and reload the page.'); $('go').disabled = true; }
+
+  $('pw-eye').onclick = function () { var p = $('pw'); p.type = p.type === 'password' ? 'text' : 'password'; this.textContent = p.type === 'password' ? 'Show' : 'Hide'; };
+  $('f').onchange = function () {
+    var f = this.files && this.files[0]; if (!f) return;
+    if (f.size > 30 * 1024 * 1024) { msg('m-top', 'err', 'That PDF is very large (' + Math.round(f.size / 1048576) + ' MB). The real CAS is usually under 2 MB; a big file is usually a scanned copy, which can\'t be read. Please download the statement again from CAMS.'); this.value = ''; return; }
+    fileName = f.name; msg('m-top');
+    var r = new FileReader(); r.onload = function () { bytes = new Uint8Array(r.result); }; r.readAsArrayBuffer(f);
+  };
+
+  // Came from Telegram: fetch that exact file
+  if (TOKEN && CID && KEY && API) {
+    $('from-tg').classList.remove('hide'); $('pick-file').classList.add('hide');
+    fetch(apiUrl('act=casfile&cid=' + encodeURIComponent(CID) + '&k=' + encodeURIComponent(KEY) + '&t=' + encodeURIComponent(TOKEN)))
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j.ok) throw new Error(j.error || 'Could not get the statement.');
+        var bin = atob(j.data); bytes = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        fileName = j.name || fileName;
+        if (j.note && !$('who').value) $('who').value = String(j.note).replace(/['’]s\b.*$/i, '').slice(0, 40);
+        $('tg-status').textContent = '📄 ' + fileName + ' is ready. Type its password below.';
+        $('pw').focus();
+      })
+      .catch(function (e) {
+        $('tg-status').className = 'msg warn'; $('tg-status').textContent = e.message + '\n\nYou can also pick the PDF from your phone below.';
+        $('pick-file').classList.remove('hide');
+      });
+  }
+
+  $('go').onclick = async function () {
+    msg('m-top');
+    if (!bytes) { msg('m-top', 'err', TOKEN ? 'The statement is still loading. Please wait a moment.' : 'Please choose the statement PDF first.'); return; }
+    busy(this, true, 'Reading…');
+    try {
+      var doc;
+      try { doc = await pdfjsLib.getDocument({ data: bytes.slice(0), password: $('pw').value.trim() }).promise; }
+      catch (e) {
+        if (e && e.name === 'PasswordException') throw new Error(e.code === 2 ? 'That password didn\'t open the PDF. Check it and try again (passwords are case-sensitive).' : 'This PDF is locked. Please type its password.');
+        throw new Error('This file couldn\'t be opened as a PDF.');
+      }
+      var pages = [];
+      for (var i = 1; i <= doc.numPages; i++) {
+        var p = await doc.getPage(i), tc = await p.getTextContent();
+        pages.push(tc.items.map(function (it) { return { str: it.str, x: it.transform[4], y: it.transform[5], w: it.width }; }));
+      }
+      var r = CASCORE.parse(pages);
+      if (r.textChars < doc.numPages * 40) throw new Error('This PDF is a scan (pictures of the pages), so the figures can\'t be read reliably.\n\nPlease download the original statement: camsonline.com → Statements → CAS – CAMS+KFintech → Detailed (with transactions) → period from the start. It arrives by email as a small, password-locked PDF.');
+      if (!r.rows.length) throw new Error(r.funds.length ? 'I found ' + r.funds.length + ' funds but no transactions. This looks like the Summary statement. Please ask for the Detailed one (with transactions).' : 'This doesn\'t look like a CAMS / KFintech account statement. No fund transactions were found.');
+      parsed = r; show(r);
+    } catch (e) { msg('m-top', 'err', e.message); }
+    finally { busy(this, false, 'Read statement'); }
+  };
+
+  function show(r) {
+    $('s-pick').classList.add('hide'); $('s-result').classList.remove('hide');
+    var dates = r.rows.map(function (x) { return x.date; }).sort();
+    $('t-n').textContent = r.rows.length.toLocaleString('en-IN');
+    $('t-f').textContent = r.funds.filter(function (f) { return f.n; }).length;
+    $('t-p').textContent = fmtD(dates[0]) + ' → ' + fmtD(dates[dates.length - 1]);
+    var bad = r.rows.filter(function (x) { return !x.ok; }).length;
+    var badClose = r.funds.filter(function (f) { return !f.closingOk; }).length;
+    var skippedTxt = r.skipped.charges ? r.skipped.charges + ' stamp-duty / charge lines left out (they are not fund units).' : '';
+    if (!bad && !badClose) msg('check', 'info', '✅ Every line adds up to the running unit balance printed on the statement.' + (skippedTxt ? '\n' + skippedTxt : ''));
+    else msg('check', 'warn', '⚠️ ' + (bad ? bad + ' line' + (bad === 1 ? '' : 's') + ' did not add up to the unit balance printed next to ' + (bad === 1 ? 'it' : 'them') + '. ' : '') +
+      (badClose ? badClose + ' fund' + (badClose === 1 ? '' : 's') + ' did not end on the closing balance. ' : '') +
+      'You can still send it, but check those funds on Telegram before tapping ✅.' + (skippedTxt ? '\n' + skippedTxt : ''));
+    $('funds').innerHTML = '';
+    r.funds.filter(function (f) { return f.n; }).forEach(function (f) {
+      var d = document.createElement('div'); d.className = 'fund';
+      var a = document.createElement('div'); a.textContent = f.scheme;
+      var b = document.createElement('div'); b.className = 'n' + (f.mismatches || !f.closingOk ? ' bad' : '');
+      b.textContent = f.n + ' txn' + (f.n === 1 ? '' : 's') + (f.mismatches || !f.closingOk ? ' ⚠️' : '');
+      d.appendChild(a); d.appendChild(b); $('funds').appendChild(d);
+    });
+  }
+
+  $('again').onclick = function () { parsed = null; if (!TOKEN) { bytes = null; $('f').value = ''; } $('s-result').classList.add('hide'); $('s-pick').classList.remove('hide'); };
+
+  $('send').onclick = function () {
+    if (!parsed) return;
+    var btn = this; busy(btn, true, 'Sending…');
+    var csv = CASCORE.toCsv(parsed.rows);
+    var b64 = btoa(unescape(encodeURIComponent(csv)));
+    var who = $('who').value.replace(/[<>]/g, '').trim();
+    var dates = parsed.rows.map(function (x) { return x.date; }).sort();
+    var body = { cid: CID, k: KEY, what: 'tradebook', note: (who ? who + "'s " : '') + 'CAMS KFintech CAS',
+      whoSet: !!who, holder: who,
+      files: [{ name: 'CAS-transactions_' + dates[0] + '_to_' + dates[dates.length - 1] + '.csv', data: b64 }] };
+    fetch(apiUrl('act=upload'), { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        $('s-result').classList.add('hide'); $('s-done').classList.remove('hide');
+        msg('done-msg', j.ok ? 'info' : 'err', j.ok ? (j.message || 'Sent to the R2R Tracker bot ✅ Open Telegram to confirm.') : (j.error || 'Something went wrong.'));
+        if (j.bot) { $('done-bot').textContent = j.bot; $('done-bot').classList.remove('hide'); }
+        if (!j.ok) { var b2 = document.createElement('button'); b2.className = 'btn ghost'; b2.textContent = 'Back'; b2.onclick = function () { $('s-done').classList.add('hide'); $('s-result').classList.remove('hide'); }; $('s-done').appendChild(b2); }
+      })
+      .catch(function () { msg('check', 'err', 'Couldn\'t reach the tracker. Check your internet connection and try again.'); })
+      .finally(function () { busy(btn, false, 'Send to the R2R Tracker bot'); });
+  };
+})();
+</script>
+</body>
+</html>
