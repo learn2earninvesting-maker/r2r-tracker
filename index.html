@@ -650,9 +650,15 @@
   .up-btn:hover { background:var(--teal-dim); }
   .up-zone { border-style:solid;border-color:rgba(var(--teal-rgb),0.35); }
   /* Top-right action buttons on Stocks & ETFs, Mutual funds and Other assets */
-  .tab-actions { display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin:0 0 14px; }
-  .tab-actions button { padding:7px 12px;font-size:12px;white-space:nowrap; }
-  @media (max-width:520px) { .tab-actions { gap:6px; } .tab-actions button { padding:6px 10px;font-size:11px; } }
+  .subbar.has-actions { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 14px; }
+  #sub-actions { margin-left:auto; }
+  .tab-actions { display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px; }
+  .tab-actions button { min-height:40px;padding:0 16px;border:0;border-radius:999px;font:700 13px var(--dm);cursor:pointer;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.18);transition:filter .15s, transform .05s; }
+  .tab-actions button:hover { filter:brightness(1.08); } .tab-actions button:active { transform:translateY(1px); }
+  .tab-actions .ta-up { background:#0f8b7d;color:#fff; }
+  .tab-actions .ta-corp { background:#f0a500;color:#1a1300; }
+  .tab-actions .ta-reset { background:#dc2626;color:#fff; }
+  @media (max-width:699px) { .subbar.has-actions { gap:8px; } #sub-actions, .tab-actions { width:100%; } .tab-actions button { flex:1;min-height:38px;padding:0 10px;font-size:12px; } }
   .r2r-modal-card.up { border-color:var(--teal);max-height:90vh;overflow:auto; }
   .r2r-modal-card.up h3 { color:var(--teal); }
   .r2r-modal-btns button.up-go { background:var(--teal);border-color:var(--teal);color:#0b1120; }
@@ -1228,6 +1234,11 @@ let SUB_SEL = (() => { try { return JSON.parse(sessionStorage.getItem('r2r_sub')
   document.getElementById('nav-tabs').innerHTML = h; document.getElementById('mobile-nav').innerHTML = h;
 })();
 function openMenu() { document.body.classList.add('menu-open'); }
+// Upload / bonus & split / reset — in line with the Stocks & ETFs / Mutual funds / Other assets selector
+function subActions() {
+  const el = document.getElementById('sub-actions'); if (!el || typeof tabActions !== 'function') return;
+  try { el.innerHTML = tabActions(document.body.dataset.sub || 'stocks'); } catch (e) { /* first call runs before the rest of the script has loaded; renderAll fills it */ }
+}
 function closeMenu() { document.body.classList.remove('menu-open'); }
 function setTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
@@ -1249,7 +1260,11 @@ function switchTab(id, sub) {
   document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', show.includes(p.id.replace('panel-', ''))));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
   const sb = document.getElementById('subbar');
-  if (sb) sb.innerHTML = subs ? `<div class="seg${id === 'hold' || id === 'plan' ? ' tint' : ''}" role="group">${subs.map(s => `<button data-k="${s[0]}" class="${s[0] === sub ? 'on' : ''}" aria-pressed="${s[0] === sub}" onclick="switchTab('${id}','${s[0]}')">${s[1]}</button>`).join('')}</div>` : '';
+  if (sb) {
+    sb.innerHTML = subs ? `<div class="seg${id === 'hold' || id === 'plan' ? ' tint' : ''}" role="group">${subs.map(s => `<button data-k="${s[0]}" class="${s[0] === sub ? 'on' : ''}" aria-pressed="${s[0] === sub}" onclick="switchTab('${id}','${s[0]}')">${s[1]}</button>`).join('')}</div>${id === 'hold' ? '<div id="sub-actions"></div>' : ''}` : '';
+    sb.classList.toggle('has-actions', id === 'hold');
+    subActions();
+  }
   closeMenu();
   if (changed) window.scrollTo({ top: 0, behavior: 'smooth' });
   try { sessionStorage.setItem('r2r_tab', id); sessionStorage.setItem('r2r_sub', JSON.stringify(SUB_SEL)); } catch (e) {}
@@ -1632,7 +1647,7 @@ function renderAll(d) {
   const pl = pricesLine(d);
   setHTML('prices-asof', pl ? '⏱ ' + pl + '<br><span style="font-size:10px">Updates every hour on weekdays · share prices run about 20 min behind the market</span>' : '');
   renderOverview(d); renderAllocation(d); renderHoldings(d); renderAllocate(d); renderStocks(d); renderRebalance(d); renderOther(d); renderFunds(d); renderReturns(d); renderInsurance(d);
-  renderPayments(d); renderParameters(d.famMember && RAW_API ? model(famFilter(RAW_API, '*')) : d); renderOtherTiles(d); renderGoals(d); renderMore(d); renderXray(d); renderProfile(d); renderHome(d); askExtras();   // Health Check is always the whole family · renderFIRE / renderCashflow kept below, switched off
+  renderPayments(d); renderParameters(d.famMember && RAW_API ? model(famFilter(RAW_API, '*')) : d); renderOtherTiles(d); renderGoals(d); renderMore(d); renderXray(d); renderProfile(d); renderHome(d); subActions(); askExtras();   // Health Check is always the whole family · renderFIRE / renderCashflow kept below, switched off
   requestAnimationFrame(() => setTimeout(() => document.querySelectorAll('[data-w]').forEach(el => el.style.width = el.dataset.w), 60));
 }
 
@@ -1852,10 +1867,10 @@ function sectorTip(e) {
 }
 function renderBrokerTab(d, tab, bodyId, filter, emptyMsg) {
   let list = d.assets.filter(a => a.kind === 'stock' && filter(a)).sort((a, b) => b.value - a.value);
-  if (!list.length) { setHTML(bodyId, (tab === 'stocks' ? tabActions('stocks', false) + empty(emptyMsg) : empty(emptyMsg) + uploadBlock('holdings'))); return; }
+  if (!list.length) { setHTML(bodyId, (tab === 'stocks' ? empty(emptyMsg) : empty(emptyMsg) + uploadBlock('holdings'))); return; }
   const total = list.reduce((s, a) => s + a.value, 0), fullRank = list.slice();
   const plats = [...new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · ')).filter(Boolean))];
-  let html = (tab === 'stocks' ? tabActions('stocks', true) : '') + fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list, d, 'stocks');
+  let html = fileKpis(list, `<div class="kpi" style="--accent:#3b82f6;"><div class="kpi-label">Holdings</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${esc(plats.join(', ') || 'from your holdings file')}</div></div>`) + fileUpdated(list, d, 'stocks');
   if (tab === 'stocks') {
     if (!ALLOC_BANDS.some(b => b[0] === ALLOC_STATE)) ALLOC_STATE = 'all';
     html += sectorWrap(list, total);
@@ -2522,10 +2537,11 @@ const RESET_TEXT = {
     again: 'your other assets', next: 'Then add your other assets again — tell the R2R Tracker bot (e.g. <i>HDFC savings 2.4 lakh</i>) or fill them in your Google Sheet.' } };
 // One row of buttons at the top right of Stocks & ETFs, Mutual funds and Other assets
 function tabActions(which, hasItems) {
+  if (hasItems === undefined) { const A = LAST_MODEL ? LAST_MODEL.assets : []; hasItems = A.some(a => which === 'other' ? !a.fromFile : a.kind === (which === 'stocks' ? 'stock' : 'mf')); }
   const b = [];
-  if (which !== 'other') b.push(`<button class="up-btn" onclick="askUpload('holdings')" title="Upload a holdings file, tradebook or contract notes">📤 Upload file</button>`);
-  if (which === 'stocks') b.push(`<button class="corp-btn" onclick="askCorp()" title="Check NSE/BSE filings for bonus issues and stock splits">🎁 Apply bonus / split</button>`);
-  if (hasItems) b.push(`<button class="reset-btn" onclick="askReset('${which}')" title="${esc(RESET_TEXT[which].btn)}">🗑 Reset holdings</button>`);
+  if (which !== 'other') b.push(`<button class="ta-up" onclick="askUpload('holdings')" title="Upload a holdings file, tradebook or contract notes">📤 Upload file</button>`);
+  if (which === 'stocks') b.push(`<button class="ta-corp" onclick="askCorp()" title="Check NSE/BSE filings for bonus issues and stock splits">🎁 Apply bonus / split</button>`);
+  if (hasItems) b.push(`<button class="ta-reset" onclick="askReset('${which}')" title="${esc(RESET_TEXT[which].btn)}">🗑 Reset holdings</button>`);
   return b.length ? `<div class="tab-actions">${b.join('')}</div>` : '';
 }
 function resetBlock(what) {
@@ -2715,12 +2731,12 @@ const MF_META = { Equity: ['#3b82f6', 'Equity funds', 'counted in Equity'], Hybr
   Debt: ['#a855f7', 'Debt funds', 'counted in Debt'], Gold: ['#f0a500', 'Gold funds', 'counted in Gold'], Other: ['#64748b', 'Other funds', ''] };
 function renderFunds(d) {
   const list = d.assets.filter(a => a.kind === 'mf' && a.mfClass !== 'Gold').sort((a, b) => b.value - a.value);
-  if (!list.length) { setHTML('funds-body', tabActions('funds', false) + empty('No mutual funds yet. Send your mutual fund holdings statement (Excel or CSV from Kuvera, Groww, Coin, MF Central…) to the Tracker bot. Your funds are sorted into Equity, Hybrid, Debt and Gold here.')); return; }
+  if (!list.length) { setHTML('funds-body', empty('No mutual funds yet. Send your mutual fund holdings statement (Excel or CSV from Kuvera, Groww, Coin, MF Central…) to the Tracker bot. Your funds are sorted into Equity, Hybrid, Debt and Gold here.')); return; }
   const total = list.reduce((s, a) => s + a.value, 0);
   const by = {}; list.forEach(a => by[a.mfClass] = (by[a.mfClass] || 0) + a.value);
   const order = ['Equity', 'Hybrid', 'Debt', 'Gold', 'Other'].filter(k => by[k]);
   const regular = list.filter(a => /regular/i.test(a.plan)).length;
-  let html = tabActions('funds', true) + fileKpis(list, `<div class="kpi" style="--accent:#a855f7;"><div class="kpi-label">Funds</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${regular ? regular + ' Regular plan' + (regular === 1 ? '' : 's') : 'all Direct plans'}</div></div>`) + fileUpdated(list, d, 'funds');
+  let html = fileKpis(list, `<div class="kpi" style="--accent:#a855f7;"><div class="kpi-label">Funds</div><div class="kpi-val">${list.length}</div><div class="kpi-sub">${regular ? regular + ' Regular plan' + (regular === 1 ? '' : 's') : 'all Direct plans'}</div></div>`) + fileUpdated(list, d, 'funds');
   const bar = sortBar('funds');
   html += `<div class="chart-card" style="margin-bottom:20px"><div class="chart-title">Fund mix</div>
     <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;margin:6px 0 10px">${order.map(k => `<div title="${k} ${pctOf(by[k], total).toFixed(1)}%" style="background:${MF_META[k][0]};width:${pctOf(by[k], total)}%"></div>`).join('')}</div>
@@ -3612,14 +3628,13 @@ function liquidSummary(items) {
 function renderOtherTiles(d) {
   const list = d.assets.filter(a => !(a.kind === 'stock' && a.cls === 'Equity') && !(a.kind === 'mf' && a.mfClass !== 'Gold'));
   if (!list.length) { setHTML('other-tiles', ''); return; }
-  const manual = d.assets.some(a => !a.fromFile);   // reset clears only what was typed in (the sheet's Assets tab)
   const counted = list.filter(a => !isHome(a)), total = counted.reduce((s, a) => s + a.value, 0), homeVal = list.filter(isHome).reduce((s, a) => s + a.value, 0), g = {};
   list.forEach(a => { const k = otherGroup(a); (g[k] = g[k] || []).push(a); });
   const liqRows = liquidSummary(g['Liquid assets'] || []);
   const bg = { 'Liquid assets': 'var(--p-blue)', 'Gold': 'var(--p-butter)', 'REITs / InvITs / Real estate': 'var(--p-lilac)', 'Debt locked': 'var(--p-mint)', 'NPS': 'var(--p-blush)', 'Debt (other)': 'var(--p-mint)', 'Equity (other)': 'var(--p-butter)', 'Other': 'var(--card)' };
   const locked = (g['Debt locked'] || []).concat((g['NPS'] || []).filter(a => npsTier(a) === 1)).reduce((s, a) => s + a.value, 0);
   renderOtherDetail(g, Object.keys(bg).filter(k => g[k]));
-  setHTML('other-tiles', `${tabActions('other', manual)}<div class="pg-head"><div><div class="pg-kicker">Other assets · outside stocks and mutual funds</div><div class="pg-big">${fmtCr(total)}</div></div>
+  setHTML('other-tiles', `<div class="pg-head"><div><div class="pg-kicker">Other assets · outside stocks and mutual funds</div><div class="pg-big">${fmtCr(total)}</div></div>
     <div class="pills"><div class="pill blue"><span>Locked</span><b>${fmtCr(locked) === '—' ? '₹0' : fmtCr(locked)}</b></div><div class="pill mint"><span>Not locked</span><b>${fmtCr(total - locked)}</b></div>${homeVal ? `<div class="pill lilac"><span>Home, not counted</span><b>${fmtCr(homeVal)}</b></div>` : ''}</div></div>
     <div class="tiles">${Object.keys(bg).filter(k => g[k]).map(k => { const v = g[k].filter(a => !isHome(a)).reduce((s, a) => s + a.value, 0);
       return tileHTML(k, v, pctOf(v, total).toFixed(0) + '% of other assets' + (g[k].some(isHome) ? ' · home not counted' : ''), bg[k], k === 'Liquid assets' ? liqRows : g[k].sort((a, b) => isHome(a) - isHome(b) || b.value - a.value).map(a => [a.name,
