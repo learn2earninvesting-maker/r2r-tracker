@@ -1,5 +1,5 @@
 // Bump this string whenever you deploy a change you want pushed to installed apps.
-const CACHE = 'r2r-client-v70';
+const CACHE = 'r2r-client-v71';
 const PUSH_CACHE = 'r2r-push';            // phone-alert settings of this device (kept across updates)
 const PUSH_CFG = './__r2r-push-config';
 const SHELL = ['./', './index.html', './old.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-512-maskable.png', './apple-touch-icon.png',

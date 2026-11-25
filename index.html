@@ -2539,7 +2539,7 @@ const RESET_TEXT = {
 function tabActions(which, hasItems) {
   if (hasItems === undefined) { const A = LAST_MODEL ? LAST_MODEL.assets : []; hasItems = A.some(a => which === 'other' ? !a.fromFile : a.kind === (which === 'stocks' ? 'stock' : 'mf')); }
   const b = [];
-  if (which !== 'other') b.push(`<button class="ta-up" onclick="askUpload('holdings')" title="Upload a holdings file, tradebook or contract notes">📤 Upload file</button>`);
+  if (which !== 'other') b.push(`<button class="ta-up" onclick="askUpload('', '${which}')" title="${which === 'funds' ? 'Upload your CAMS / KFintech statement (PDF)' : 'Upload a holdings file, tradebook or contract notes'}">📤 Upload file</button>`);
   if (which === 'stocks') b.push(`<button class="ta-corp" onclick="askCorp()" title="Check NSE/BSE filings for bonus issues and stock splits">🎁 Apply bonus / split</button>`);
   if (hasItems) b.push(`<button class="ta-reset" onclick="askReset('${which}')" title="${esc(RESET_TEXT[which].btn)}">🗑 Reset holdings</button>`);
   return b.length ? `<div class="tab-actions">${b.join('')}</div>` : '';
@@ -2655,17 +2655,25 @@ function uploadBlock(kind) {
   const line = kind === 'tradebook' ? 'Upload your tradebook, fund transaction statement or contract notes for exact returns.' : 'Upload your latest holdings file (shares or mutual funds), a tradebook or contract notes.';
   return `<div class="reset-zone up-zone"><button class="up-btn" onclick="askUpload('${kind}')">Upload a file</button><div class="muted">${line} CSV or Excel (.xlsx). You'll check it and tap ✅ on Telegram before anything changes.</div></div>`;
 }
-function askUpload(kind) {
+// Which choices each Upload button shows: Stocks & ETFs → holdings / tradebook / contract notes; Mutual funds → CAMS / KFintech PDF only.
+const UP_SCOPES = { stocks: ['holdings', 'tradebook', 'contract'], funds: ['cas'] };
+const UP_STOCK_TEXT = { holdings: 'Your current shares and ETFs — Zerodha Console → Portfolio → Holdings, or the Excel/CSV from Groww, Upstox, ICICI Direct… Replaces that broker\'s list.',
+  tradebook: 'Every share buy and sell, for exact returns (XIRR) — Zerodha Console → Reports → Tradebook → Equity. You can pick several at once (e.g. one per year). Lines already saved are skipped.' };
+let UP_SCOPE = '';
+function askUpload(kind, scope) {
+  UP_SCOPE = UP_SCOPES[scope] ? scope : '';
+  const kinds = UP_SCOPE ? UP_SCOPES[UP_SCOPE] : Object.keys(UP_KINDS);
   if (!kind) { const t = document.querySelector('.tab-btn.active'); kind = t && t.dataset.tab === 'returns' ? 'tradebook' : 'holdings'; }
-  UP_KIND = UP_KINDS[kind] ? kind : 'holdings';
+  UP_KIND = UP_KINDS[kind] && kinds.includes(kind) ? kind : kinds[0];
+  const txt = k => UP_SCOPE === 'stocks' && UP_STOCK_TEXT[k] ? UP_STOCK_TEXT[k] : UP_KINDS[k][1];
   UP_WHO = null;
   showModal(`<h3>Upload a file</h3>
-    <div class="up-kinds">${Object.keys(UP_KINDS).map(k => `<label class="up-kind${k === UP_KIND ? ' on' : ''}" data-k="${k}"><input type="radio" name="upk" value="${k}"${k === UP_KIND ? ' checked' : ''} onchange="setUpKind('${k}')"><span><b>${UP_KINDS[k][0]}</b><br>${esc(UP_KINDS[k][1])}</span></label>`).join('')}</div>
+    <div class="up-kinds">${kinds.map(k => `<label class="up-kind${k === UP_KIND ? ' on' : ''}" data-k="${k}"><input type="radio" name="upk" value="${k}"${k === UP_KIND ? ' checked' : ''} onchange="setUpKind('${k}')"><span><b>${UP_KINDS[k][0]}</b><br>${esc(txt(k))}</span></label>`).join('')}</div>
     <label class="up-field" id="up-file-wrap"><span id="up-pick">Choose the file</span> (.csv or .xlsx, max 8 MB)<input type="file" id="up-file" accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>
     <div class="up-field" id="up-who-wrap"><b style="color:var(--text)">Whose file is this?</b> <span class="muted">— so it goes into the right person's list</span>
       <div class="up-who" id="up-who" role="group" aria-label="Whose file">${upWhoChips()}</div>
       <input type="text" id="up-other" maxlength="40" placeholder="Their first name, e.g. Priya" style="display:none" aria-label="Family member's first name"></div>
-    <p class="muted" style="font-size:11px">The file goes to your R2R Tracker bot on Telegram. It shows you a summary there, and only saves when you tap ✅. For a password-locked CAMS / KFintech PDF, choose 📄 CAMS / KFintech statement.</p>
+    <p class="muted" style="font-size:11px">The file goes to your R2R Tracker bot on Telegram. It shows you a summary there, and only saves when you tap ✅.${kinds.includes('cas') && kinds.length > 1 ? ' For a password-locked CAMS / KFintech PDF, choose 📄 CAMS / KFintech statement.' : ''}</p>
     <div id="up-result"></div>
     <div class="r2r-modal-btns" id="up-btns"><button onclick="closeModal()">Cancel</button><button class="up-go" id="up-go" onclick="doUpload()">Upload</button></div>`);
   const card = document.querySelector('#r2r-modal .r2r-modal-card'); if (card) card.classList.add('up');
