@@ -661,7 +661,9 @@
   @media (max-width:699px) { .subbar.has-actions { gap:8px; } #sub-actions, .tab-actions { width:100%; } .tab-actions button { flex:1;min-height:38px;padding:0 10px;font-size:12px; } }
   .r2r-modal-card.up { border-color:var(--teal);max-height:90vh;overflow:auto; }
   .r2r-modal-card.up h3 { color:var(--teal); }
-  .r2r-modal-btns button.up-go { background:var(--teal);border-color:var(--teal);color:#0b1120; }
+  .r2r-modal-btns button.up-go, #r2r-modal .r2r-modal-btns button.up-go { background:#bfe8d4;border:1px solid #86cfae;color:#0b3d2b;font-weight:700; }
+  .r2r-modal-btns button.up-go:hover:not(:disabled) { background:#a9dfc6; }
+  [data-theme=dark] .r2r-modal-btns button.up-go { background:#9fdcc0;border-color:#9fdcc0;color:#0b2a1e; }
   .up-kinds { display:grid;gap:8px;margin:4px 0 12px; }
   .up-kind { display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:12px;color:var(--text2);line-height:1.45; }
   .up-kind b { color:var(--text);font-size:13px; }
