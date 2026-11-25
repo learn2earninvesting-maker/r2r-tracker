@@ -662,6 +662,11 @@
   .subbar.has-actions .seg.tint { gap:8px; }
   .subbar.has-actions .seg.tint button { min-height:52px;padding:0 28px;font-size:16px;font-weight:800;border-radius:12px; }
   .tab-actions button { min-height:36px;padding:0 14px;font-size:12px; }
+  @media (min-width:700px) {   /* tablet & laptop: Upload / bonus sit next to the selector, Reset alone at the far right */
+    #sub-actions { flex:1;margin-left:0; }
+    #sub-actions .tab-actions { justify-content:flex-start; }
+    #sub-actions .ta-reset { margin-left:auto; }
+  }
   @media (max-width:699px) {
     .subbar.has-actions { padding:0 10px;margin-top:8px; }
     .subbar.has-actions .seg.tint { display:flex;width:100%;gap:0; }
