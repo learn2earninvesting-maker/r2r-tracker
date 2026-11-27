@@ -816,6 +816,14 @@
   .e40-note:active { transform:scale(.99); } .e40-note:active .go { background:#FDE7E5; }
   .e40-foot { margin-top:8px;font-size:10px;opacity:.85; }
   .e40.ok { background:var(--p-mint);color:var(--text); } .e40.ok h4 { color:var(--pos); }
+  .nwl { background:var(--p-lilac);border-radius:14px;padding:12px 14px;margin-bottom:14px; }
+  .nwl summary { cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px; } .nwl summary::-webkit-details-marker { display:none; }
+  .nwl h4 { margin:0 0 2px;font-size:13px;font-weight:800;color:#6C45A8; } .nwl .nwl-sub { font-size:11px;color:var(--text2); }
+  .nwl .tg { flex:none;background:#6C45A8;color:#fff;border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;white-space:nowrap; }
+  .nwl .tg .cl, .nwl[open] .tg .op { display:none; } .nwl[open] .tg .cl { display:inline; }
+  .nwl .rowx { border-top:1px solid rgba(108,69,168,.18);padding:7px 0; } .nwl .rowx:first-of-type { margin-top:8px; }
+  .nwl .nwl-note { margin-top:8px;font-size:11px;color:var(--text2);line-height:1.4; }
+  :root[data-theme="dark"] .nwl h4 { color:#C9A0FF; } :root[data-theme="dark"] .nwl .tg { background:#9B7BFF; }
   .note { font-size:12px;color:var(--text3);line-height:1.5;margin-top:12px; }
   .stack { display:flex;flex-direction:column;gap:14px; }
 
@@ -1974,6 +1982,7 @@ async function tgLoadServer() {
       TG_STARS = { codes: j.stars.codes || {}, names: j.stars.names || {}, list: j.stars.list || [] };
       if (j.rules && Object.keys(j.rules).length) TG_RULES = j.rules;
       try { localStorage.setItem('r2r_stars', JSON.stringify({ codes: TG_STARS.codes, names: TG_STARS.names, list: TG_STARS.list, rules: TG_RULES })); } catch (e) {}
+      if (LAST_MODEL) try { renderHome(LAST_MODEL); } catch (e) {}   // Home: stocks not on the watchlist
     }
     let dirty = false; try { dirty = localStorage.getItem(TG_LS() + '_dirty') === '1'; } catch (e) {}
     if (j.aa && j.aa.above && j.aa.below) { AA_RULES = Object.assign({}, AA_RULES, j.aa); try { localStorage.setItem('r2r_aa_rules', JSON.stringify(j.aa)); } catch (e) {} }
@@ -3595,7 +3604,7 @@ function renderHome(d) {
     <div class="home-grid"><div class="stack">
       <div class="home-donut"><div style="display:flex;justify-content:center">${donut}</div><div class="cream">${rows}</div></div>
       <div class="note" style="margin-top:0">Tap a row to see what is inside. ${homeVal ? 'Your home (' + fmtCr(homeVal) + ') and loans are not in the chart. ' : ''}Every holding is counted once.${pl ? '<br>' + pl : ''}</div>
-    </div><div class="stack">${e40HTML(d)}${upcomingHTML(up, 'No insurance premium or EMI is due this month.')}${liabHTML}${quick}</div></div>`);
+    </div><div class="stack">${e40HTML(d)}${nwlHTML(d)}${upcomingHTML(up, 'No insurance premium or EMI is due this month.')}${liabHTML}${quick}</div></div>`);
   setHTML('ins-upcoming', upcomingHTML(up.filter(e => !e.emi), 'No premium is due this month.'));
 }
 // ── Mutual funds as four tiles (gold funds live under Other assets → Gold)
@@ -3920,6 +3929,19 @@ async function loadExtras() {
     catch (e) { EXTRAS = EXTRAS || { ok: false, goals: null, xray: '' }; }
   }
   if (LAST_MODEL) { renderGoals(LAST_MODEL); renderMore(LAST_MODEL); }
+}
+// ── Home tile: the client's shares that are not on the R2R watchlist (CLIENT WATCHLIST LIVE, Active stocks, sent by Targets.gs)
+function nwlHTML(d) {
+  const L = nsList(); if (!L.length) return '';   // watchlist not loaded yet
+  const codes = new Set(L.map(x => x.c)), names = new Set(L.map(x => tgNameKey(x.n)).filter(Boolean));
+  const rows = tgRowsOf(d), stk = rows.filter(r => !r.etf), tot = stk.reduce((s, r) => s + r.value, 0);
+  if (!stk.length) return '';
+  const out = stk.filter(r => !codes.has(nsKey(r.sym)) && !(TG_STARS.codes || {})[r.sym] && !names.has(tgNameKey(r.name)));
+  if (!out.length) return '';
+  const v = out.reduce((s, r) => s + r.value, 0);
+  return `<details class="nwl"><summary><div><h4>📋 Your stocks not on the R2R watchlist</h4><div class="nwl-sub">${out.length} of your ${stk.length} stocks · ${pctOf(v, tot).toFixed(1)}% of your stock value</div></div><span class="tg"><span class="op">Show</span><span class="cl">Hide</span></span></summary>
+    ${out.map(r => `<div class="rowx"><div><div class="a">${esc(r.sym)}</div>${r.name && r.name.toUpperCase() !== r.sym ? `<div class="b">${esc(r.name)}</div>` : ''}</div><div class="c">${fmtCr(r.value)}<small style="display:block;font-weight:600;font-size:10px;color:var(--text2)">${pctOf(r.value, tot).toFixed(1)}% of your stocks</small></div></div>`).join('')}
+    <div class="nwl-note">These are not covered by R2R research, so they have no star rating, Stocks X-ray analysis or watchlist alerts. ETFs are left out. For education only, not a buy or sell recommendation.</div></details>`;
 }
 function askExtras() { if (Date.now() - EXTRAS_AT > 60000) { EXTRAS_AT = Date.now(); loadExtras(); loadEma40(); } }
 
