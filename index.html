@@ -1314,6 +1314,37 @@ const CLASS_META = {
   'Other':        { color:'#94a3b8', icon:'📦' },
 };
 const CLASS_ORDER = Object.keys(CLASS_META);
+// Asset-allocation view: each hybrid fund is split into equity / debt / gold by its SEBI category,
+// using a typical mix for that category, so the overall picture is realistic.
+// Holdings → Mutual funds still shows each hybrid fund once, under Hybrid funds.
+// Order matters: the first match wins. Arbitrage and equity savings use NET (unhedged) equity.
+const HYBRID_SPLITS = [
+  [/arbitrage/,                       { Equity: 0,    Debt: 1 },               'Arbitrage'],
+  [/multi ?asset/,                    { Equity: 0.60, Debt: 0.25, Gold: 0.15 }, 'Multi asset'],
+  [/equity savings/,                  { Equity: 0.35, Debt: 0.65 },            'Equity savings'],
+  [/conservative/,                    { Equity: 0.20, Debt: 0.80 },            'Conservative hybrid'],
+  [/balanced advantage|dynamic asset/, { Equity: 0.55, Debt: 0.45 },           'Balanced advantage'],
+  [/balanced hybrid|\bbalanced\b/,    { Equity: 0.50, Debt: 0.50 },            'Balanced hybrid'],
+  [/aggressive|equity (and|&) debt|equity hybrid/, { Equity: 0.75, Debt: 0.25 }, 'Aggressive hybrid'],
+];
+const HYBRID_DEFAULT = [{ Equity: 0.75, Debt: 0.25 }, 'Hybrid'];      // retirement / children's / unknown hybrid
+function hybridSplit(a) {
+  const t = ((a.category || '') + ' ' + (a.name || '')).toLowerCase();
+  const hit = HYBRID_SPLITS.find(x => x[0].test(t));
+  return hit ? { mix: hit[1], label: hit[2] } : { mix: HYBRID_DEFAULT[0], label: HYBRID_DEFAULT[1] };
+}
+function hybridSplitText(a) {
+  const m = hybridSplit(a).mix;
+  return Object.keys(m).filter(k => m[k] > 0).map(k => Math.round(m[k] * 100) + '% ' + k.toLowerCase()).join(' · ');
+}
+function allocParts(a) {
+  const v = a.value || 0;
+  if (a.kind === 'mf' && a.mfClass === 'Hybrid') {
+    const mix = hybridSplit(a).mix;
+    return Object.keys(mix).filter(k => mix[k] > 0).map(k => ({ cls: k, v: v * mix[k], type: 'Hybrid funds (' + k.toLowerCase() + ' part)' }));
+  }
+  return [{ cls: a.cls, v, type: a.type }];
+}
 const INVESTABLE = ['Equity','Debt','Gold','REITs/InvITs','Other'];
 const FREQ_N = { 'monthly':12, 'quarterly':4, 'half-yearly':2, 'annual':1, 'one-time':1 };
 
@@ -1522,7 +1553,7 @@ function model(api) {
     }
     assets.push(...stocks);
   }
-  // Mutual funds from the holdings statement (Mutual Funds tab). Hybrid funds count towards Equity
+  // Mutual funds from the holdings statement (Mutual Funds tab). Hybrid funds are split by type (allocParts)
   // but keep the "Hybrid MF" label. When present they replace manual mutual-fund rows in Assets.
   const MF_TYPE = { Equity: 'Equity MF', Hybrid: 'Hybrid MF', Debt: 'Debt MF', Gold: 'Gold MF', Other: 'Other MF' };
   const funds = rowsOf(t['Mutual Funds']).map(r => {
@@ -1543,7 +1574,7 @@ function model(api) {
     assets.push(...funds);
   }
   const byClass = {};
-  assets.forEach(a => { byClass[a.cls] = (byClass[a.cls] || 0) + a.value; });
+  assets.forEach(a => allocParts(a).forEach(p => { byClass[p.cls] = (byClass[p.cls] || 0) + p.v; }));
   const classes = Object.keys(byClass).sort((a, b) => (CLASS_ORDER.indexOf(a)+99*(CLASS_ORDER.indexOf(a)<0)) - (CLASS_ORDER.indexOf(b)+99*(CLASS_ORDER.indexOf(b)<0)));
   const totalAssets = assets.reduce((s, a) => s + a.value, 0);
 
@@ -1704,7 +1735,7 @@ function renderOverview(d) {
   setHTML('asset-inventory', d.classes.map(c => {
     const m = CLASS_META[c] || CLASS_META.Other;
     const groups = {};
-    d.assets.filter(a => a.cls === c).forEach(a => { groups[a.type] = (groups[a.type] || 0) + a.value; });
+    d.assets.forEach(a => allocParts(a).filter(p => p.cls === c).forEach(p => { groups[p.type] = (groups[p.type] || 0) + p.v; }));
     const items = Object.entries(groups).sort((a, b) => b[1] - a[1]);
     const total = d.byClass[c];
     return `<div class="inv-card">
@@ -2069,6 +2100,10 @@ function aaBuild(d) {
   let home = 0, rented = 0, plain = [];
   d.assets.forEach(a => {
     const v = a.value || 0; if (!(v > 0)) return;
+    if (a.kind === 'mf' && a.mfClass === 'Hybrid') {                 // split by hybrid type
+      allocParts(a).forEach(p => { const k = p.cls.toUpperCase(); rows[k].value += p.v; rows[k].parts[p.type] = (rows[k].parts[p.type] || 0) + p.v; });
+      return;
+    }
     let k, part = a.kind === 'stock' ? (a.type === 'Stocks' ? 'Stocks' : a.type === 'ETF' ? 'ETFs' : a.type) : a.type;
     if (a.cls === 'Real Estate') {
       if (/^property$/i.test(a.type)) plain.push(a.name);
@@ -2162,7 +2197,7 @@ function renderAllocate(d) {
     (D.home > 0 ? `<div class="aa-ref"><span>🏠 Self-occupied home · <b>${fmtCr(D.home)}</b></span><span class="muted">Shown for reference. Not in the corpus or the targets.</span></div>` : '');
   const notes = `<div class="muted tg-notes">
       <div id="aa-status" style="color:var(--teal);margin-bottom:4px"></div>
-      <div>• Corpus = all your assets except the home you live in. Hybrid mutual funds are counted as equity, the same as on the Breakdown tab.</div>
+      <div>• Corpus = all your assets except the home you live in. Hybrid mutual funds are split into equity, debt and gold by fund type (e.g. aggressive 75/25, balanced advantage 55/45, conservative 20/80, arbitrage counted as debt), the same as on Home and the Breakdown tab.</div>
       <div>• 🔒 EPF, PPF, NPS, SSY and similar are counted in your %, but this page never asks you to take money out of them. A property is never asked to be sold in parts.</div>
       ${D.plain.length ? `<div>• 🏠 ${D.plain.map(esc).join(', ')} ${D.plain.length === 1 ? 'is' : 'are'} listed only as “Property”, so ${D.plain.length === 1 ? 'it is' : 'they are'} treated as ${aaPropKind({ type: 'Property', name: D.plain[0] }) === 'home' && D.plain.length === 1 ? 'your own home' : 'described by the name'}. To change it, set the Type in your sheet to <b>Home (self-occupied)</b> or <b>Rented / second property</b>.</div>` : ''}
       <div>• “Add only” shares your new money between the classes that are short, in proportion to how short each one is.</div>
@@ -2765,7 +2800,7 @@ async function doUpload() {
 
 
 // ── Mutual Funds tab: everything from the MF holdings statement(s)
-const MF_META = { Equity: ['#3b82f6', 'Equity funds', 'counted in Equity'], Hybrid: ['#06b6d4', 'Hybrid funds', 'counted in Equity'],
+const MF_META = { Equity: ['#3b82f6', 'Equity funds', 'counted in Equity'], Hybrid: ['#06b6d4', 'Hybrid funds', 'split into Equity / Debt / Gold by type'],
   Debt: ['#a855f7', 'Debt funds', 'counted in Debt'], Gold: ['#f0a500', 'Gold funds', 'counted in Gold'], Other: ['#64748b', 'Other funds', ''] };
 function renderFunds(d) {
   const list = d.assets.filter(a => a.kind === 'mf' && a.mfClass !== 'Gold').sort((a, b) => b.value - a.value);
@@ -2779,7 +2814,7 @@ function renderFunds(d) {
   html += `<div class="chart-card" style="margin-bottom:20px"><div class="chart-title">Fund mix</div>
     <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;margin:6px 0 10px">${order.map(k => `<div title="${k} ${pctOf(by[k], total).toFixed(1)}%" style="background:${MF_META[k][0]};width:${pctOf(by[k], total)}%"></div>`).join('')}</div>
     <div style="display:flex;flex-wrap:wrap;gap:14px">${order.map(k => `<div class="legend-item" style="margin:0"><div class="legend-dot" style="background:${MF_META[k][0]}"></div><span class="legend-name">${k} ${fmtCr(by[k])} · ${pctOf(by[k], total).toFixed(1)}%</span></div>`).join('')}</div>
-    ${by.Hybrid ? `<div class="muted" style="font-size:11px;margin-top:8px">Hybrid funds are counted in your Equity total.</div>` : ''}</div>` + bar;
+    ${by.Hybrid ? `<div class="muted" style="font-size:11px;margin-top:8px">Hybrid funds are split into Equity, Debt and Gold by fund type (for example aggressive hybrid 75% equity, conservative hybrid 20%, arbitrage counted as debt).</div>` : ''}</div>` + bar;
   const multi = new Set(list.map(a => [a.platform, a.holder].filter(Boolean).join(' · '))).size > 1;
   const cols = [['Scheme', a => `<span style="color:var(--text)">${esc(String(a.name).replace(/ – .*$/, ''))}</span><div class="muted" style="font-size:10px">${esc([a.category, a.plan].filter(Boolean).join(' · '))}</div>`],
     multi && ['Platform', a => esc([a.platform, a.holder].filter(Boolean).join(' · '))],
@@ -3579,8 +3614,8 @@ function upcomingHTML(ev, emptyMsg) {
 function renderHome(d) {
   const homeVal = d.assets.filter(isHome).reduce((s, a) => s + a.value, 0), corpus = d.totalAssets - homeVal;
   const m = {};
-  d.assets.filter(a => !isHome(a)).forEach(a => { const k = (a.cls === 'REITs/InvITs' || a.cls === 'Real Estate') ? 'Real estate' : (HOME_COL[a.cls] ? a.cls : 'Other');
-    m[k] = m[k] || { k, v: 0, types: {} }; m[k].v += a.value; m[k].types[a.type] = (m[k].types[a.type] || 0) + a.value; });
+  d.assets.filter(a => !isHome(a)).forEach(a => allocParts(a).forEach(p => { const k = (p.cls === 'REITs/InvITs' || p.cls === 'Real Estate') ? 'Real estate' : (HOME_COL[p.cls] ? p.cls : 'Other');
+    m[k] = m[k] || { k, v: 0, types: {} }; m[k].v += p.v; m[k].types[p.type] = (m[k].types[p.type] || 0) + p.v; }));
   const cls = Object.keys(HOME_COL).filter(k => m[k]).map(k => m[k]);
   const R = 76, C = 2 * Math.PI * R; let off = 0;
   const segs = cls.map(c => { const len = corpus ? c.v / corpus * C : 0, s = `<circle cx="100" cy="100" r="${R}" fill="none" stroke="${HOME_COL[c.k]}" stroke-width="30" stroke-dasharray="${Math.max(0, len - 2).toFixed(2)} ${(C - len + 2).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" stroke-opacity="${!HOME_OPEN || HOME_OPEN === c.k ? 1 : 0.25}"></circle>`; off += len; return s; }).join('');
@@ -3624,8 +3659,8 @@ renderFunds = function (d) {
   list.forEach(a => { const k = mfGroup(a); (g[k] = g[k] || []).push(a); });
   const bg = { 'Equity funds': 'var(--p-butter)', 'Hybrid funds': 'var(--p-lilac)', 'Debt funds': 'var(--p-mint)', 'Liquid funds': 'var(--p-blue)', 'Other funds': 'var(--card)' };
   const html = `<div class="tiles">${Object.keys(bg).filter(k => g[k]).map(k => { const v = g[k].reduce((s, a) => s + a.value, 0);
-    return tileHTML(k, v, pctOf(v, total).toFixed(0) + '% of mutual funds' + (k === 'Hybrid funds' ? ' · counts as equity' : ''), bg[k], g[k].sort((a, b) => b.value - a.value).map(a => [a.name,
-      a.pnl !== null && a.invested ? `Return <span class="${a.pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${a.pnl >= 0 ? '+' : ''}${(a.pnl / a.invested * 100).toFixed(1)}%</span> · gain ${a.pnl >= 0 ? '+' : ''}${fmtCr(a.pnl)}` : esc(a.category || ''), fmtCr(a.value)])); }).join('')}</div>`;
+    return tileHTML(k, v, pctOf(v, total).toFixed(0) + '% of mutual funds' + (k === 'Hybrid funds' ? ' · each counted by its own equity / debt / gold mix' : ''), bg[k], g[k].sort((a, b) => b.value - a.value).map(a => [a.name,
+      (a.pnl !== null && a.invested ? `Return <span class="${a.pnl >= 0 ? 'gain-pos' : 'gain-neg'}">${a.pnl >= 0 ? '+' : ''}${(a.pnl / a.invested * 100).toFixed(1)}%</span> · gain ${a.pnl >= 0 ? '+' : ''}${fmtCr(a.pnl)}` : esc(a.category || '')) + (a.mfClass === 'Hybrid' ? `<br>Counted ${hybridSplitText(a)}` : ''), fmtCr(a.value)])); }).join('')}</div>`;
   const anchor = body.querySelector('.chart-card');
   if (anchor) anchor.insertAdjacentHTML('beforebegin', html); else body.insertAdjacentHTML('beforeend', html);
 };
