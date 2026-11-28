@@ -2003,8 +2003,14 @@ function wlFind(r, list) {   // list: [{ c: code, n: name }] → the matching wa
   for (const x of list) if (wlCode(x.c) === c) return x;
   for (const x of list) { const n = wlLoose(x.n); if (!n) continue;
     for (const h of [k, k2]) if (h && (h === n || (h.length >= 8 && (n.startsWith(h) || h.startsWith(n))))) return x; }
+  // broker short forms, word by word: "INTL GEMOLOGICAL INST LTD" → International Gemological Institute,
+  // "SAMVRDHNA MTHRSN INTL" → Samvardhana Motherson International (each short word: same first letter, letters in order)
+  for (const h of [r.name, r.sym]) { const ht = wlWords(h); if (ht.length < 2 || ht.join('').length < 8) continue;
+    for (const x of list) { const wt = wlWords(x.n); if (ht.length <= wt.length && ht.every((a, i) => wlAbbr(a, wt[i]))) return x; } }
   return null;
 }
+const wlWords = s => String(s || '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w && !/^(ltd|limited|the|india|co|company|corp|corporation|of|and|pvt|private)$/.test(w));
+function wlAbbr(a, b) { if (!b || a[0] !== b[0]) return false; let j = 0; for (const ch of b) if (ch === a[j]) j++; return j === a.length; }
 const tgStarOf = r => { const d = TG_STARS.codes[r.sym] || TG_STARS.names[tgNameKey(r.name)]; if (d) return d; const x = (TG_STARS.list || []).length ? wlFind(r, nsList()) : null; return x ? x.s : 0; };
 const tgRule = n => TG_RULES[n] || TG_RULES[String(n)] || null;
 const tgSuggest = n => { const b = tgRule(n); return b ? Math.round((Number(b[0]) + Number(b[1])) / 2 * 100) / 100 : null; };   // middle of the band
