@@ -1994,7 +1994,18 @@ const tgNameKey = s => String(s || '').toLowerCase().replace(/\b(ltd|limited|the
   try { const o = JSON.parse(localStorage.getItem('r2r_stars') || 'null'); if (o && o.codes) { TG_STARS = { codes: o.codes, names: o.names || {}, list: o.list || [] }; if (o.rules) TG_RULES = o.rules; } } catch (e) {}
   if (DEMO) TG_STARS = { codes: { HDFCBANK: 4, RELIANCE: 3, ITC: 3, INFY: 4, LT: 4, BAJFINANCE: 2, TITAN: 3, TRENT: 4, POLYCAB: 3, DIXON: 2 }, names: {}, list: [['BAJFINANCE','Bajaj Finance',2,7050],['DIXON','Dixon Technologies',2,16200],['HDFCBANK','HDFC Bank',4,1740],['INFY','Infosys',4,1880],['ITC','ITC',3,468],['KAYNES','Kaynes Technology',0,5980],['LT','Larsen & Toubro',4,3620],['POLYCAB','Polycab India',3,7110],['RELIANCE','Reliance Industries',3,1295],['TITAN','Titan Company',3,3480],['TRENT','Trent',4,5200]] };   // demo only
 })();
-const tgStarOf = r => TG_STARS.codes[r.sym] || TG_STARS.names[tgNameKey(r.name)] || 0;
+// Loose matching between a holding and the watchlist: broker codes can carry -EQ / -BE / .NS, and
+// broker names can be spelt or cut short differently ("International Gemmological Ins" vs "International Gemological Institute")
+const wlCode = v => String(v || '').toUpperCase().replace(/^(NSE|BSE|BOM):/, '').replace(/[-.](EQ|BE|BZ|SM|ST|NS|BO|NSE|BSE)$/, '').replace(/\s+/g, '').trim();
+const wlLoose = s => tgNameKey(s).replace(/(.)\1+/g, '$1');
+function wlFind(r, list) {   // list: [{ c: code, n: name }] → the matching watchlist item or null
+  const c = wlCode(r.sym), k = wlLoose(r.name), k2 = wlLoose(r.sym);
+  for (const x of list) if (wlCode(x.c) === c) return x;
+  for (const x of list) { const n = wlLoose(x.n); if (!n) continue;
+    for (const h of [k, k2]) if (h && (h === n || (h.length >= 8 && (n.startsWith(h) || h.startsWith(n))))) return x; }
+  return null;
+}
+const tgStarOf = r => { const d = TG_STARS.codes[r.sym] || TG_STARS.names[tgNameKey(r.name)]; if (d) return d; const x = (TG_STARS.list || []).length ? wlFind(r, nsList()) : null; return x ? x.s : 0; };
 const tgRule = n => TG_RULES[n] || TG_RULES[String(n)] || null;
 const tgSuggest = n => { const b = tgRule(n); return b ? Math.round((Number(b[0]) + Number(b[1])) / 2 * 100) / 100 : null; };   // middle of the band
 const tgBand = n => { const b = tgRule(n); return !b ? '' : Number(b[0]) === Number(b[1]) ? b[0] + '%' : b[0] + '–' + b[1] + '%'; };
@@ -3968,10 +3979,9 @@ async function loadExtras() {
 // ── Home tile: the client's shares that are not on the R2R watchlist (CLIENT WATCHLIST LIVE, Active stocks, sent by Targets.gs)
 function nwlHTML(d) {
   const L = nsList(); if (!L.length) return '';   // watchlist not loaded yet
-  const codes = new Set(L.map(x => x.c)), names = new Set(L.map(x => tgNameKey(x.n)).filter(Boolean));
   const rows = tgRowsOf(d), stk = rows.filter(r => !r.etf), tot = stk.reduce((s, r) => s + r.value, 0);
   if (!stk.length) return '';
-  const out = stk.filter(r => !codes.has(nsKey(r.sym)) && !(TG_STARS.codes || {})[r.sym] && !names.has(tgNameKey(r.name)));
+  const out = stk.filter(r => !(TG_STARS.codes || {})[r.sym] && !wlFind(r, L));
   if (!out.length) return '';
   const v = out.reduce((s, r) => s + r.value, 0);
   return `<details class="nwl"><summary><div><h4>📋 Your stocks not on the R2R watchlist</h4><div class="nwl-sub">${out.length} of your ${stk.length} stocks · ${pctOf(v, tot).toFixed(1)}% of your stock value</div></div><span class="tg"><span class="op">Show</span><span class="cl">Hide</span></span></summary>
@@ -4080,7 +4090,8 @@ function xrMatch(r) {
   const k = tgNameKey(r.name);
   if (k && XR.names[k]) return XR.names[k];
   if (k.length > 6) for (const nk in XR.names) if (nk.startsWith(k) || k.startsWith(nk)) return XR.names[nk];
-  return null;
+  const x = wlFind(r, Object.keys(S).map(t => ({ c: t, n: S[t].n })));
+  return x ? x.c : null;
 }
 // Demo: a family that holds stocks from the R2R Universe (the demo sheet's own shares are not in it)
 const XR_DEMO = [['COFORGE', 150], ['AARTIPHARM', 250], ['DIVISLAB', 20], ['NAVINFLUOR', 20], ['GRWRHITECH', 25], ['GRAVITA', 120], ['ASTRAMICRO', 100], ['HFCL', 800], ['NRBBEARING', 300], ['HBLENGINE', 150]];
